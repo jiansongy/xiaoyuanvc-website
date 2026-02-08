@@ -242,6 +242,24 @@
     });
   }
 
+  // ---- Auto-play video when scrolled into view ----
+  function initVideoAutoplay() {
+    var video = document.querySelector('.video__wrapper video');
+    if (!video) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.4 });
+
+    observer.observe(video);
+  }
+
   // ---- Init all modules on DOMContentLoaded ----
   document.addEventListener('DOMContentLoaded', function () {
     initNavScroll();
@@ -250,5 +268,6 @@
     initCounters();
     initFadeIn();
     initMobileMenu();
+    initVideoAutoplay();
   });
 })();
