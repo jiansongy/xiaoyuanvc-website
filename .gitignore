@@ -1,0 +1,20 @@
+# Screenshots and verification images
+screenshot-*.png
+verify-*.png
+final-*.png
+
+# Working images (generated intermediates)
+imgs/
+
+# Old hero illustrations (kept ghibli version in assets/)
+assets/hero-illustration.jpg
+assets/hero-illustration-new.png
+assets/hero-illustration-sketch.png
+
+# Editor and system files
+.DS_Store
+*.swp
+*.swo
+
+# Claude internal
+.claude/
