@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.xiaoyuanvc.com/sitemap.xml
+Sitemap: https://xiaoyuanvc.com/sitemap.xml
