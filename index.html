@@ -15,13 +15,13 @@
   <meta property="og:title" content="校园VC — 大学生创业教育">
   <meta property="og:description" content="10年推动100万大学生创业。AI+Crypto 创业大学，数字创业教程与加密创投教程。">
   <meta property="og:url" content="https://xiaoyuanvc.com/">
-  <meta property="og:image" content="https://xiaoyuanvc.com/assets/hero-illustration.jpg">
+  <meta property="og:image" content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="校园VC — 大学生创业教育">
   <meta name="twitter:description" content="10年推动100万大学生创业。AI+Crypto 创业大学。">
-  <meta name="twitter:image" content="https://xiaoyuanvc.com/assets/hero-illustration.jpg">
+  <meta name="twitter:image" content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png">
 
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,6 +78,7 @@
           <a href="#founder" class="nav__link" data-section="founder">创始人及著作</a>
           <a href="#team" class="nav__link" data-section="team">核心团队</a>
           <a href="#contact" class="nav__link" data-section="contact">联系我们</a>
+          <a href="https://learn.xiaoyuanvc.com" class="btn btn-primary nav__cta" target="_blank" rel="noopener">免费学习</a>
         </div>
       </div>
 
@@ -91,7 +92,8 @@
       <div class="hero__grid">
         <div class="hero__content fade-in">
           <div class="hero__badge">
-            🚀 AI+Crypto 的创业大学
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+            AI+Crypto 的创业大学
           </div>
           <h1 class="hero__title">
             <span>校园VC</span>
@@ -102,7 +104,7 @@
             校园VC是领先的创业教育机构，位于北京中关村，发源于清华x-lab，正在寻找10年之后的CEO们。VC是指 Venture Capital，是创业投资的意思。
           </p>
           <div class="hero__actions">
-            <a href="https://learn.xiaoyuanvc.com" class="btn btn-primary" target="_blank" rel="noopener">进入学习站 →</a>
+            <a href="https://learn.xiaoyuanvc.com" class="btn btn-primary" target="_blank" rel="noopener">开启创业之旅 →</a>
             <a href="#about" class="btn btn-secondary">了解更多</a>
           </div>
           <div class="hero__stats">
@@ -135,14 +137,16 @@
       </div>
       <div class="video__wrapper fade-in">
         <video
-          src="assets/event-video.mp4"
           controls
           muted
           preload="metadata"
           playsinline
           poster="assets/event-video-poster.jpg"
           title="校园VC清华火种节"
-        ></video>
+        >
+          <source src="assets/event-video.mp4" type="video/mp4">
+          <p>您的浏览器不支持视频播放。<a href="assets/event-video.mp4">点击下载视频</a>。</p>
+        </video>
       </div>
     </div>
   </section>
@@ -190,17 +194,23 @@
       <!-- Pain Points -->
       <div class="pain-points">
         <div class="pain-card fade-in">
-          <div class="pain-card__emoji">😶</div>
+          <div class="pain-card__icon pain-card__icon--slate">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15h8"/><path d="M9 9h.01"/><path d="M15 9h.01"/></svg>
+          </div>
           <h3 class="pain-card__title">空心病</h3>
           <p class="pain-card__desc">大学生内心的空虚和迷茫</p>
         </div>
         <div class="pain-card fade-in">
-          <div class="pain-card__emoji">🐢</div>
+          <div class="pain-card__icon pain-card__icon--amber">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5h.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg>
+          </div>
           <h3 class="pain-card__title">成长慢</h3>
           <p class="pain-card__desc">没想过人生目标是什么</p>
         </div>
         <div class="pain-card fade-in">
-          <div class="pain-card__emoji">📉</div>
+          <div class="pain-card__icon pain-card__icon--red">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </div>
           <h3 class="pain-card__title">就业难</h3>
           <p class="pain-card__desc">月薪3千招不到农民工但可以招到大学生</p>
         </div>
@@ -271,6 +281,17 @@
             <a href="https://css.xiaoyuanvc.com" class="product-card__cta" target="_blank" rel="noopener">了解详情 →</a>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CTA Bar (after Products) ====== -->
+  <section class="cta-bar section">
+    <div class="container">
+      <div class="cta-bar__inner fade-in">
+        <h2 class="cta-bar__title">准备好开启你的创业之旅了吗？</h2>
+        <p class="cta-bar__desc">加入校园VC，和全国优秀大学生一起成长</p>
+        <a href="https://learn.xiaoyuanvc.com" class="btn btn-primary" target="_blank" rel="noopener">免费开始学习 →</a>
       </div>
     </div>
   </section>
@@ -468,19 +489,33 @@
           <div class="contact__links-section">
             <h3 class="contact__links-title">快速访问</h3>
             <div class="contact__links">
-              <a href="https://learn.xiaoyuanvc.com" class="contact__link" target="_blank" rel="noopener">📚 校园VC学习站 learn.xiaoyuanvc.com →</a>
-              <a href="https://edu.xiaoyuanvc.com" class="contact__link" target="_blank" rel="noopener">🎓 创业教育智慧系统 edu.xiaoyuanvc.com →</a>
-              <a href="https://css.xiaoyuanvc.com" class="contact__link" target="_blank" rel="noopener">🔗 加密创投 CSS 网页版 css.xiaoyuanvc.com →</a>
+              <a href="https://learn.xiaoyuanvc.com" class="contact__link" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> 校园VC学习站 learn.xiaoyuanvc.com →</a>
+              <a href="https://edu.xiaoyuanvc.com" class="contact__link" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> 创业教育智慧系统 edu.xiaoyuanvc.com →</a>
+              <a href="https://css.xiaoyuanvc.com" class="contact__link" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 加密创投 CSS 网页版 css.xiaoyuanvc.com →</a>
             </div>
           </div>
 
           <div class="contact__links-section">
             <h3 class="contact__links-title">公司媒体</h3>
             <div class="contact__social">
-              <a href="https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e" class="contact__social-link" target="_blank" rel="noopener">🎙️ 小宇宙</a>
-              <a href="https://space.bilibili.com/501020157" class="contact__social-link" target="_blank" rel="noopener">📺 Bilibili</a>
+              <a href="https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e" class="contact__social-link" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/><circle cx="17" cy="7" r="5"/></svg> 小宇宙</a>
+              <a href="https://space.bilibili.com/501020157" class="contact__social-link" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg> Bilibili</a>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Final CTA ====== -->
+  <section class="final-cta section">
+    <div class="container">
+      <div class="final-cta__inner fade-in">
+        <h2 class="final-cta__title">立即加入校园VC</h2>
+        <p class="final-cta__desc">从零到英雄，寻找改变世界的疯子</p>
+        <div class="final-cta__actions">
+          <a href="https://learn.xiaoyuanvc.com" class="btn btn-primary" target="_blank" rel="noopener">开启创业之旅 →</a>
+          <a href="#contact" class="btn btn-secondary">联系我们</a>
         </div>
       </div>
     </div>
@@ -509,7 +544,7 @@
         <div class="footer__bottom">
           <div class="footer__filing">
             <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">京ICP备2021017602号</a>
-            <a href="http://www.beian.gov.cn/" target="_blank" rel="noopener">京公网安备11010802035175号</a>
+            <a href="https://www.beian.gov.cn/" target="_blank" rel="noopener">京公网安备11010802035175号</a>
           </div>
           <p class="footer__copyright">© 2026 校园VC. All rights reserved.</p>
         </div>

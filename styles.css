@@ -33,7 +33,7 @@
   /* Text */
   --color-text-primary: #0F172A;
   --color-text-secondary: #475569;
-  --color-text-tertiary: #94A3B8;
+  --color-text-tertiary: #64748B;
   --color-text-inverse: #FFFFFF;
 
   /* Gradient */
@@ -122,6 +122,11 @@ a:hover {
 
 ul, ol {
   list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
 }
 
 button {
@@ -319,6 +324,13 @@ button {
   width: 100%;
 }
 
+/* Nav CTA */
+.nav__cta {
+  padding: 8px 20px;
+  font-size: 0.875rem;
+  margin-left: var(--space-sm);
+}
+
 /* Mobile hamburger */
 .nav__hamburger {
   display: none;
@@ -496,7 +508,6 @@ button {
 
 .about__card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
 }
 
 .about__card-icon {
@@ -557,12 +568,29 @@ button {
 
 .pain-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
 }
 
-.pain-card__emoji {
-  font-size: 3rem;
-  margin-bottom: var(--space-md);
+.pain-card__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-md);
+  color: #fff;
+}
+
+.pain-card__icon--slate {
+  background: linear-gradient(135deg, #94A3B8, #64748B);
+}
+
+.pain-card__icon--amber {
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+}
+
+.pain-card__icon--red {
+  background: linear-gradient(135deg, #F87171, #EF4444);
 }
 
 .pain-card__title {
@@ -818,7 +846,6 @@ button {
 
 .team-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
 }
 
 .team-card__avatar {
@@ -878,7 +905,6 @@ button {
 
 .testimonial-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
 }
 
 .testimonial-card__quote {
@@ -1054,6 +1080,80 @@ button {
   color: var(--color-brand);
 }
 
+/* --- CTA Bar (after Products) --- */
+.cta-bar {
+  background: var(--color-bg-secondary);
+}
+
+.cta-bar__inner {
+  text-align: center;
+  padding: var(--space-2xl) 0;
+}
+
+.cta-bar__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.cta-bar__desc {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+/* --- Final CTA (before Footer) --- */
+.final-cta {
+  background: var(--gradient-brand);
+  color: var(--color-text-inverse);
+}
+
+.final-cta__inner {
+  text-align: center;
+  padding: var(--space-3xl) 0;
+}
+
+.final-cta__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text-inverse);
+  margin-bottom: var(--space-sm);
+}
+
+.final-cta__desc {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-xl);
+}
+
+.final-cta__actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+}
+
+.final-cta .btn-primary {
+  background: var(--color-bg-card);
+  color: var(--color-brand);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.final-cta .btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  color: var(--color-brand);
+}
+
+.final-cta .btn-secondary {
+  background: transparent;
+  color: var(--color-text-inverse);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.final-cta .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-text-inverse);
+}
+
 /* --- Footer --- */
 .footer {
   background: var(--gradient-dark);
@@ -1074,15 +1174,6 @@ button {
 
 .footer__logo img {
   height: 56px;
-}
-
-@keyframes breathe {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 1; }
-}
-
-.footer__logo img {
-  animation: breathe 3s ease-in-out infinite;
 }
 
 .footer__slogan {
@@ -1243,6 +1334,26 @@ button {
 
   .nav__overlay.open {
     display: block;
+  }
+
+  /* Nav CTA mobile */
+  .nav__cta {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin-left: 0;
+    margin-top: var(--space-md);
+  }
+
+  /* CTA sections mobile */
+  .cta-bar__title,
+  .final-cta__title {
+    font-size: 1.75rem;
+  }
+
+  .final-cta__actions {
+    flex-direction: column;
+    align-items: center;
   }
 
   /* Hero mobile */
