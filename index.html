@@ -54,6 +54,110 @@
     ]
   }
   </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "校园VC是什么？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "校园VC（Campus Venture Capital）是中国领先的大学生创业教育机构，成立于北京中关村，发源于清华大学 x-lab。品牌定位为"AI+Crypto 的创业大学"，使命是10年推动100万大学生创业。截至2025年，已服务超过18万名大学生学员。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "校园VC提供哪些课程和服务？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "校园VC提供四大核心产品：（1）创业教育智慧系统——面向高校创业学院的 SaaS 平台；（2）数创班课程——每学期一期的6周线上创业实践课程，已运行9期；（3）大创社群——200+活跃会员的大学生创业付费社群；（4）加密创投 CSS（Crypto Startup School）——面向 Web3 人才的就创投服务平台。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "校园VC的创始人是谁？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "校园VC由殷建松（Jason）创立。他是清华大学 x-lab 兼职顾问、清华 iCenter 创客导师、北大研究生院投资导师，曾任微软 Windows 产品经理和 IDG 战略咨询公司 In-Stat 总经理。著有创业教材《从零到英雄》（北京出版社出版，李开复、俞敏洪推荐）。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "如何加入校园VC的课程或社群？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "你可以通过以下方式加入：访问学习站 learn.xiaoyuanvc.com 免费开始学习数字创业教程和加密创投教程；关注校园VC微信公众号获取最新课程信息；或联系小助手加入大创社群。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "校园VC的课程适合哪些人？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "校园VC的课程主要面向全国高校创业学院和有创业意愿的大学生。无论你是对数字创业、AI 应用还是 Web3/Crypto 领域感兴趣，都能找到适合的课程和社群资源。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "什么是加密创投 CSS？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CSS（Crypto Startup School）是校园VC旗下面向 Web3 人才的就创投服务平台。包含 CSS 播客（小宇宙近万人订阅）、线上六周营和年度社群，已培养超过1万名 Web3 学员。"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Course Schema: 数创班 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "数创班课程",
+    "description": "每学期一期的高品质线上创业实践课程，6周体系涵盖时代认知、机会洞察、智慧开发、全域营销、价值实现和最终路演。已运行9期，累计培养超过900名大学生创业者。",
+    "provider": {
+      "@type": "EducationalOrganization",
+      "name": "校园VC",
+      "url": "https://xiaoyuanvc.com"
+    },
+    "educationalLevel": "大学生",
+    "inLanguage": "zh-CN",
+    "numberOfCredits": 6,
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "online",
+      "duration": "P6W"
+    }
+  }
+  </script>
+
+  <!-- Course Schema: 加密创投 CSS -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "加密创投 CSS（Crypto Startup School）",
+    "description": "面向 Web3 人才的就创投服务平台，包含 CSS 播客、线上六周营和年度社群。已培养超过1万名 Web3 学员。",
+    "provider": {
+      "@type": "EducationalOrganization",
+      "name": "校园VC",
+      "url": "https://xiaoyuanvc.com"
+    },
+    "educationalLevel": "大学生及Web3从业者",
+    "inLanguage": "zh-CN",
+    "url": "https://css.xiaoyuanvc.com",
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "online",
+      "duration": "P6W"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -77,6 +181,7 @@
           <a href="#products" class="nav__link" data-section="products">产品展示</a>
           <a href="#founder" class="nav__link" data-section="founder">创始人及著作</a>
           <a href="#team" class="nav__link" data-section="team">核心团队</a>
+          <a href="#faq" class="nav__link" data-section="faq">常见问题</a>
           <a href="#contact" class="nav__link" data-section="contact">联系我们</a>
           <a href="https://learn.xiaoyuanvc.com" class="btn btn-primary nav__cta" target="_blank" rel="noopener">免费学习</a>
         </div>
@@ -100,8 +205,7 @@
           </h1>
           <p class="hero__subtitle">10年推动100万大学生创业</p>
           <p class="hero__desc">
-            从零到英雄，寻找改变世界的疯子！<br>
-            校园VC是领先的创业教育机构，位于北京中关村，发源于清华x-lab，正在寻找10年之后的CEO们。VC是指 Venture Capital，是创业投资的意思。
+            <strong>校园VC（Campus Venture Capital）</strong>是中国领先的大学生创业教育机构，成立于北京中关村，发源于清华大学 x-lab。自创立以来已服务超过18万名大学生学员，提供数字创业教程、加密创投教程、创业社群和实战营，致力于解决大学生空心病、成长慢、就业难三大痛点。
           </p>
           <div class="hero__actions">
             <a href="https://learn.xiaoyuanvc.com" class="btn btn-primary" target="_blank" rel="noopener">开启创业之旅 →</a>
@@ -249,7 +353,7 @@
           <div class="product-card__body">
             <span class="tag tag--gold product-card__tag">改变人生的创业课</span>
             <h3 class="product-card__title">数创班课程</h3>
-            <p class="product-card__desc">每学期一期的高品质线上创业实践课程，已运行9期，培养近千名大学生。6周课程：时代认知→机会洞察→智慧开发→全域营销→价值实现→最终路演</p>
+            <p class="product-card__desc">每学期一期的高品质线上创业实践课程，已运行9期，累计培养超过900名大学生创业者。6周课程体系：时代认知→机会洞察→智慧开发→全域营销→价值实现→最终路演</p>
             <a href="https://mp.weixin.qq.com/s/_VambvnTRGni7A-0SM0LEA" class="product-card__cta" target="_blank" rel="noopener">了解详情 →</a>
           </div>
         </div>
@@ -262,7 +366,7 @@
             </div>
             <span class="tag tag--green product-card__tag">创业者社群</span>
             <h3 class="product-card__title">大创社群</h3>
-            <p class="product-card__desc">我们合伙人郑羽轩的社群运营组，正在运营大学生创业主题的付费社群（大创社群），拥有约200多个会员的活跃微信群，构成我们线下活动的社群基础，还定期开展创享会等线上活动。</p>
+            <p class="product-card__desc">合伙人郑羽轩主理的大学生创业付费社群，拥有超过200名活跃会员，构成线下活动的社群基础，定期开展创享会等线上线下活动。</p>
             <div class="product-card__stat">200+ <small>优秀成员</small></div>
             <a href="https://mp.weixin.qq.com/s/EcnANATD1vWOMpdwRlzSOg" class="product-card__cta" target="_blank" rel="noopener">了解详情 →</a>
           </div>
@@ -458,7 +562,61 @@
     </div>
   </section>
 
-  <!-- ====== Section 9: Contact ====== -->
+  <!-- ====== Section 9: FAQ ====== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">常见问题</h2>
+        <p class="section-subtitle">关于校园VC的常见问题解答</p>
+      </div>
+
+      <div class="faq__list fade-in">
+        <details class="faq__item" open>
+          <summary class="faq__question">校园VC是什么？</summary>
+          <div class="faq__answer">
+            <p>校园VC（Campus Venture Capital）是中国领先的大学生创业教育机构，成立于北京中关村，发源于清华大学 x-lab。品牌定位为"AI+Crypto 的创业大学"，使命是10年推动100万大学生创业。截至2025年，已服务超过18万名大学生学员。</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">校园VC提供哪些课程和服务？</summary>
+          <div class="faq__answer">
+            <p>校园VC提供四大核心产品：（1）创业教育智慧系统——面向高校创业学院的 SaaS 平台；（2）数创班课程——每学期一期的6周线上创业实践课程，已运行9期；（3）大创社群——200+活跃会员的大学生创业付费社群；（4）加密创投 CSS（Crypto Startup School）——面向 Web3 人才的就创投服务平台。</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">校园VC的创始人是谁？</summary>
+          <div class="faq__answer">
+            <p>校园VC由殷建松（Jason）创立。他是清华大学 x-lab 兼职顾问、清华 iCenter 创客导师、北大研究生院投资导师，曾任微软 Windows 产品经理和 IDG 战略咨询公司 In-Stat 总经理。著有创业教材《从零到英雄》（北京出版社出版，李开复、俞敏洪推荐）。</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">如何加入校园VC的课程或社群？</summary>
+          <div class="faq__answer">
+            <p>你可以通过以下方式加入：访问学习站 <a href="https://learn.xiaoyuanvc.com" target="_blank" rel="noopener">learn.xiaoyuanvc.com</a> 免费开始学习数字创业教程和加密创投教程；关注校园VC微信公众号获取最新课程信息；或联系小助手加入大创社群。</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">校园VC的课程适合哪些人？</summary>
+          <div class="faq__answer">
+            <p>校园VC的课程主要面向全国高校创业学院和有创业意愿的大学生。无论你是对数字创业、AI 应用还是 Web3/Crypto 领域感兴趣，都能找到适合的课程和社群资源。</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__question">什么是加密创投 CSS？</summary>
+          <div class="faq__answer">
+            <p>CSS（Crypto Startup School）是校园VC旗下面向 Web3 人才的就创投服务平台。包含 CSS 播客（小宇宙近万人订阅）、线上六周营和年度社群，已培养超过1万名 Web3 学员。</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Section 10: Contact ====== -->
   <section class="section" id="contact">
     <div class="container">
       <div class="section-header fade-in">
@@ -536,6 +694,7 @@
           <a href="#products">产品展示</a>
           <a href="#founder">创始人及著作</a>
           <a href="#team">核心团队</a>
+          <a href="#faq">常见问题</a>
           <a href="#contact">联系我们</a>
         </nav>
 
