@@ -1,0 +1,53 @@
+# 校园VC (Campus Venture Capital)
+
+> 校园VC 是中国领先的大学生创业教育机构，成立于北京中关村，发源于清华大学 x-lab。使命：10年推动100万大学生创业。
+
+## 关于校园VC
+
+校园VC（Campus Venture Capital）是一家专注于大学生创业教育的机构，由清华大学 x-lab 兼职顾问殷建松（Jason）创立。品牌定位为"AI+Crypto 的创业大学"，致力于解决大学生空心病、成长慢、就业难三大痛点。截至2025年，已服务超过18万名大学生学员。
+
+## 核心产品
+
+### 创业教育智慧系统
+- 面向高校创业学院的 SaaS 平台
+- 含火种节、教之宝、闯关课三大模块
+- 已有18万+学习人数
+- 网站: https://edu.xiaoyuanvc.com
+
+### 数创班课程
+- 每学期一期的高品质线上创业实践课程
+- 已运行9期，培养近千名大学生
+- 6周课程体系：时代认知 → 机会洞察 → 智慧开发 → 全域营销 → 价值实现 → 最终路演
+- 学习平台: https://learn.xiaoyuanvc.com
+
+### 大创社群
+- 大学生创业主题的付费社群
+- 200+活跃会员，定期开展创享会等线上线下活动
+
+### 加密创投 CSS（Crypto Startup School）
+- 面向 Web3 人才的就创投服务平台
+- CSS 播客（小宇宙近万人订阅）
+- 线上六周营 + 年度社群
+- 1万+ Web3 学员
+- 网站: https://css.xiaoyuanvc.com
+
+## 创始人
+
+殷建松（Jason）
+- 校园VC 创始合伙人
+- 清华 x-lab 兼职顾问、清华 iCenter 创客导师
+- 北大研究生院投资导师、"互联网+"大赛评委
+- 曾任微软 Windows 产品经理、IDG 战略咨询公司 In-Stat 总经理
+- 著有《从零到英雄》（北京出版社，李开复、俞敏洪推荐）
+
+## 网站地图
+
+- 主站: https://xiaoyuanvc.com
+- 学习站: https://learn.xiaoyuanvc.com
+- 教育系统: https://edu.xiaoyuanvc.com
+- 加密创投: https://css.xiaoyuanvc.com
+
+## 联系方式
+
+- 微信公众号: 校园VC
+- ICP备案: 京ICP备2021017602号
