@@ -7,39 +7,39 @@
 /* --- CSS Variables (from UI_Design_System.md) --- */
 :root {
   /* Canvas */
-  --color-bg-primary: #FAFBFE;
-  --color-bg-secondary: #F1F5F9;
-  --color-bg-card: #FFFFFF;
-  --color-bg-dark: #0F172A;
-  --color-bg-dark-secondary: #1E293B;
+  --color-bg-primary: #fafbfe;
+  --color-bg-secondary: #f1f5f9;
+  --color-bg-card: #ffffff;
+  --color-bg-dark: #0f172a;
+  --color-bg-dark-secondary: #1e293b;
 
   /* Brand */
-  --color-brand: #2563EB;
-  --color-brand-hover: #3B82F6;
-  --color-brand-active: #1D4ED8;
-  --color-brand-light: #DBEAFE;
+  --color-brand: #2563eb;
+  --color-brand-hover: #3b82f6;
+  --color-brand-active: #1d4ed8;
+  --color-brand-light: #dbeafe;
 
   /* Accent */
-  --color-accent-gold: #F59E0B;
-  --color-accent-green: #10B981;
-  --color-accent-purple: #8B5CF6;
+  --color-accent-gold: #f59e0b;
+  --color-accent-green: #10b981;
+  --color-accent-purple: #8b5cf6;
 
   /* Semantic */
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-info: #3B82F6;
-  --color-error: #EF4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+  --color-error: #ef4444;
 
   /* Text */
-  --color-text-primary: #0F172A;
+  --color-text-primary: #0f172a;
   --color-text-secondary: #475569;
-  --color-text-tertiary: #64748B;
-  --color-text-inverse: #FFFFFF;
+  --color-text-tertiary: #64748b;
+  --color-text-inverse: #ffffff;
 
   /* Gradient */
-  --gradient-brand: linear-gradient(135deg, #2563EB, #7C3AED);
-  --gradient-dawn: linear-gradient(180deg, #FAFBFE, #F1F5F9);
-  --gradient-dark: linear-gradient(180deg, #0F172A, #1E293B);
+  --gradient-brand: linear-gradient(135deg, #2563eb, #7c3aed);
+  --gradient-dawn: linear-gradient(180deg, #fafbfe, #f1f5f9);
+  --gradient-dark: linear-gradient(180deg, #0f172a, #1e293b);
 
   /* Spacing */
   --space-xs: 4px;
@@ -61,12 +61,15 @@
 
   /* Shadow */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 4px 16px rgba(37, 99, 235, 0.08), 0 8px 32px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 8px 32px rgba(37, 99, 235, 0.12), 0 16px 48px rgba(0, 0, 0, 0.08);
+  --shadow-md:
+    0 4px 16px rgba(37, 99, 235, 0.08), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --shadow-lg:
+    0 8px 32px rgba(37, 99, 235, 0.12), 0 16px 48px rgba(0, 0, 0, 0.08);
 
   /* Typography */
-  --font-sans: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-    -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:
+    Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system,
+    BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", monospace;
 
   /* Transition */
@@ -120,7 +123,8 @@ a:hover {
   color: var(--color-brand-hover);
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -221,25 +225,26 @@ button {
 }
 
 .tag--gold {
-  background: #FEF3C7;
-  color: #92400E;
+  background: #fef3c7;
+  color: #92400e;
 }
 
 .tag--purple {
-  background: #EDE9FE;
-  color: #6D28D9;
+  background: #ede9fe;
+  color: #6d28d9;
 }
 
 .tag--green {
-  background: #D1FAE5;
-  color: #065F46;
+  background: #d1fae5;
+  color: #065f46;
 }
 
 /* --- Fade In Animation --- */
 .fade-in {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity var(--duration-slow) var(--ease-out),
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
     transform var(--duration-slow) var(--ease-out);
 }
 
@@ -256,7 +261,8 @@ button {
   right: 0;
   height: var(--nav-height);
   z-index: 100;
-  transition: background var(--duration-normal) var(--ease-out),
+  transition:
+    background var(--duration-normal) var(--ease-out),
     box-shadow var(--duration-normal) var(--ease-out);
 }
 
@@ -305,7 +311,7 @@ button {
 }
 
 .nav__link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -522,19 +528,19 @@ button {
 }
 
 .about__card-icon--orange {
-  background: linear-gradient(135deg, #FB923C, #F97316);
+  background: linear-gradient(135deg, #fb923c, #f97316);
 }
 
 .about__card-icon--cyan {
-  background: linear-gradient(135deg, #22D3EE, #06B6D4);
+  background: linear-gradient(135deg, #22d3ee, #06b6d4);
 }
 
 .about__card-icon--purple {
-  background: linear-gradient(135deg, #A78BFA, #8B5CF6);
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
 }
 
 .about__card-icon--rose {
-  background: linear-gradient(135deg, #FB7185, #F43F5E);
+  background: linear-gradient(135deg, #fb7185, #f43f5e);
 }
 
 .about__card-title {
@@ -582,15 +588,15 @@ button {
 }
 
 .pain-card__icon--slate {
-  background: linear-gradient(135deg, #94A3B8, #64748B);
+  background: linear-gradient(135deg, #94a3b8, #64748b);
 }
 
 .pain-card__icon--amber {
-  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
 }
 
 .pain-card__icon--red {
-  background: linear-gradient(135deg, #F87171, #EF4444);
+  background: linear-gradient(135deg, #f87171, #ef4444);
 }
 
 .pain-card__title {
@@ -753,7 +759,7 @@ button {
 
 .founder-card__role {
   font-size: 0.9375rem;
-  color: #F43F5E;
+  color: #f43f5e;
   font-weight: 600;
   margin-bottom: var(--space-md);
 }
@@ -768,6 +774,46 @@ button {
 
 .founder-card__bio li + li {
   margin-top: var(--space-xs);
+}
+
+/* WeChat public account promotion */
+.founder-card__wechat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.founder-card__wechat-qr {
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.founder-card__wechat-qr img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.founder-card__wechat-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.founder-card__wechat-desc {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
 }
 
 /* Book card */
@@ -982,7 +1028,6 @@ button {
   transform: scale(1.05);
 }
 
-
 /* --- FAQ Section --- */
 .faq__list {
   max-width: 800px;
@@ -1028,7 +1073,7 @@ button {
 }
 
 .faq__question::after {
-  content: '+';
+  content: "+";
   font-size: 1.5rem;
   font-weight: 300;
   color: var(--color-text-tertiary);
@@ -1038,7 +1083,7 @@ button {
 }
 
 .faq__item[open] .faq__question::after {
-  content: '\2212';
+  content: "\2212";
 }
 
 .faq__question:hover {
@@ -1368,7 +1413,8 @@ button {
     height: 100vh;
     background: var(--color-bg-card);
     box-shadow: -4px 0 32px rgba(0, 0, 0, 0.1);
-    padding: calc(var(--nav-height) + var(--space-xl)) var(--space-xl) var(--space-xl);
+    padding: calc(var(--nav-height) + var(--space-xl)) var(--space-xl)
+      var(--space-xl);
     transition: right var(--duration-normal) var(--ease-out);
     z-index: 99;
     display: flex;
@@ -1578,9 +1624,9 @@ button {
 }
 
 .product-card__icon--green {
-  background: linear-gradient(135deg, #10B981, #059669);
+  background: linear-gradient(135deg, #10b981, #059669);
 }
 
 .product-card__icon--purple {
-  background: linear-gradient(135deg, #A78BFA, #8B5CF6);
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
 }
