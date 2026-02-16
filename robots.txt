@@ -31,4 +31,7 @@ Allow: /
 User-agent: *
 Allow: /
 
+# AI-readable site summary (llms.txt spec)
+# https://xiaoyuanvc.com/llms.txt
+
 Sitemap: https://xiaoyuanvc.com/sitemap.xml
