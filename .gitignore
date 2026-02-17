@@ -16,5 +16,8 @@ assets/hero-illustration-sketch.png
 *.swp
 *.swo
 
+# Internal docs (not published)
+docs/
+
 # Claude internal
 .claude/
