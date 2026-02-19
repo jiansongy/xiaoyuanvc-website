@@ -118,6 +118,7 @@
         </div>
         <h1 class="podcast-header__title" id="epTitle">加载中...</h1>
         <p class="podcast-header__guest" id="epGuest"></p>
+        <p class="podcast-header__guest-intro" id="epGuestIntro"></p>
       </div>
 
       <!-- Large Inline Player -->
@@ -340,6 +341,13 @@
               guestEl.textContent = "嘉宾: " + ep.guest;
             } else {
               guestEl.style.display = "none";
+            }
+
+            var guestIntroEl = document.getElementById("epGuestIntro");
+            if (ep.guestIntro) {
+              guestIntroEl.textContent = ep.guestIntro;
+            } else {
+              guestIntroEl.style.display = "none";
             }
 
             document.getElementById("epDescription").textContent =

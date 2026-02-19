@@ -987,6 +987,18 @@
   margin-top: var(--space-sm);
 }
 
+.podcast-header__guest-intro {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-xs);
+  max-width: 720px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-secondary);
+  border-left: 3px solid var(--color-brand);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
 /* --- Podcast Detail: Show Notes Placeholder --- */
 .show-notes-placeholder {
   text-align: center;
