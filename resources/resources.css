@@ -897,6 +897,8 @@
   border-radius: var(--radius-sm);
   border-left: 3px solid transparent;
   transition: border-color 0.2s;
+  font-weight: 600;
+  color: var(--color-text-primary);
 }
 
 .podcast-notes__content li:hover {
@@ -920,10 +922,10 @@
   display: block;
   margin-top: var(--space-xs);
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 0.9rem;
   line-height: 1.7;
-  color: var(--color-text-secondary);
+  color: var(--color-text-tertiary);
 }
 
 .podcast-notes__content a {
