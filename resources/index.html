@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>资源中心 | 校园VC</title>
+    <meta
+      name="description"
+      content="校园VC 资源中心 — 专题文章、CSS 播客节目、行业前沿资讯。数字创业教育、AI 创业、加密创投一站直达。"
+    />
+    <link rel="canonical" href="https://xiaoyuanvc.com/resources/" />
+    <link rel="icon" href="../assets/favicon.ico" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="校园VC" />
+    <meta property="og:title" content="资源中心 | 校园VC" />
+    <meta
+      property="og:description"
+      content="校园VC 资源中心 — 专题文章、CSS 播客节目、行业前沿资讯。数字创业教育、AI 创业、加密创投一站直达。"
+    />
+    <meta property="og:url" content="https://xiaoyuanvc.com/resources/" />
+    <meta
+      property="og:image"
+      content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png"
+    />
+
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="resources.css" />
+
+    <!-- Structured Data: CollectionPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "资源中心",
+        "description": "校园VC 资源中心 — 专题文章、CSS 播客节目、行业前沿资讯。数字创业教育、AI 创业、加密创投一站直达。",
+        "url": "https://xiaoyuanvc.com/resources/",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "校园VC",
+          "url": "https://xiaoyuanvc.com"
+        },
+        "publisher": {
+          "@type": "EducationalOrganization",
+          "name": "校园VC",
+          "url": "https://xiaoyuanvc.com",
+          "logo": "https://xiaoyuanvc.com/assets/logo-color.png"
+        }
+      }
+    </script>
+
+    <!-- Google Analytics (GA4) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LP5EB2HW33");
+    </script>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <div class="nav__inner">
+        <a href="/" class="nav__logo">
+          <img
+            src="../assets/logo-color.png"
+            alt="校园VC Logo"
+            width="140"
+            height="40"
+          />
+        </a>
+        <button
+          class="nav__hamburger"
+          id="navHamburger"
+          aria-label="打开导航菜单"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav__menu" id="navMenu">
+          <div class="nav__links">
+            <a href="/" class="nav__link">首页</a>
+            <a href="/#about" class="nav__link">品牌介绍</a>
+            <a href="/#products" class="nav__link">产品展示</a>
+            <a href="/resources/" class="nav__link active">资源</a>
+            <a href="/#founder" class="nav__link">创始人及著作</a>
+            <a href="/#team" class="nav__link">核心团队</a>
+            <a href="/#faq" class="nav__link">常见问题</a>
+            <a href="/#contact" class="nav__link">联系我们</a>
+            <a
+              href="https://learn.xiaoyuanvc.com"
+              class="btn btn-primary nav__cta"
+              target="_blank"
+              rel="noopener"
+              >免费学习</a
+            >
+          </div>
+        </div>
+        <div class="nav__overlay" id="navOverlay"></div>
+      </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="resource-hero">
+      <div class="resource-hero__inner">
+        <h1 class="resource-hero__title">校园VC 资源中心</h1>
+        <p class="resource-hero__desc">
+          专题文章、播客节目、行业前沿，一站直达
+        </p>
+      </div>
+    </section>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" id="filterBar">
+      <div class="filter-bar__inner">
+        <div class="filter-bar__group" data-filter-group="type">
+          <span class="filter-bar__label">类型</span>
+          <button class="filter-pill active" data-filter-value="all">
+            全部
+          </button>
+          <button class="filter-pill" data-filter-value="article">
+            专题文章
+          </button>
+          <button class="filter-pill" data-filter-value="podcast">播客</button>
+          <button class="filter-pill" data-filter-value="weekly">
+            每周前沿
+          </button>
+        </div>
+        <div class="filter-bar__group" data-filter-group="topic">
+          <span class="filter-bar__label">主题</span>
+          <button class="filter-pill active" data-filter-value="all">
+            全部
+          </button>
+          <button class="filter-pill" data-filter-value="数字创业">
+            数字创业
+          </button>
+          <button class="filter-pill" data-filter-value="AI创业">AI创业</button>
+          <button class="filter-pill" data-filter-value="加密创投">
+            加密创投
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resource Cards Grid -->
+    <section class="section">
+      <div class="container">
+        <div class="resource-grid" id="resourceGrid">
+          <!-- Article card 1 -->
+          <div class="resource-card" data-type="article" data-topic="数字创业">
+            <div class="resource-card__body">
+              <div class="resource-card__meta">
+                <span class="type-badge type-badge--article">专题文章</span>
+                <span class="resource-card__date">2026-02-15</span>
+              </div>
+              <h3 class="resource-card__title">
+                <a href="what-is-digital-entrepreneurship-education.html"
+                  >什么是数字创业教育？AI 时代大学生的新选择</a
+                >
+              </h3>
+              <p class="resource-card__excerpt">
+                数字创业教育是面向大学生的新型创业教育，聚焦 AI 和 Crypto
+                领域。本文解析数字创业教育的定义、与传统创业教育的区别、核心课程体系和学习路径。
+              </p>
+              <div class="resource-card__tags">
+                <span class="topic-tag">数字创业</span>
+                <span class="topic-tag">AI创业</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Article card 2 -->
+          <div class="resource-card" data-type="article" data-topic="数字创业">
+            <div class="resource-card__body">
+              <div class="resource-card__meta">
+                <span class="type-badge type-badge--article">专题文章</span>
+                <span class="resource-card__date">2026-02-15</span>
+              </div>
+              <h3 class="resource-card__title">
+                <a href="platforms-comparison.html"
+                  >大学生创业教育怎么选：校园VC 的品类解读</a
+                >
+              </h3>
+              <p class="resource-card__excerpt">
+                校园VC 是中国首个面向大学生的数字创业教育平台，聚焦 AI 和 Crypto
+                方向。本文从校园VC 的视角解读中国创业教育格局。
+              </p>
+              <div class="resource-card__tags">
+                <span class="topic-tag">数字创业</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Article card 3 -->
+          <div class="resource-card" data-type="article" data-topic="AI创业">
+            <div class="resource-card__body">
+              <div class="resource-card__meta">
+                <span class="type-badge type-badge--article">专题文章</span>
+                <span class="resource-card__date">2026-02-15</span>
+              </div>
+              <h3 class="resource-card__title">
+                <a href="ai-startup-roadmap.html"
+                  >从零开始的 AI 创业学习路线图</a
+                >
+              </h3>
+              <p class="resource-card__excerpt">
+                大学生从零基础到独立完成 AI 创业项目的完整学习路线图，涵盖 AI
+                认知、Vibe Coding、产品开发、内容营销四个阶段。
+              </p>
+              <div class="resource-card__tags">
+                <span class="topic-tag">AI创业</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Podcast cards (populated by JS) -->
+          <div id="podcastCards"></div>
+
+          <!-- Weekly digest placeholder -->
+          <div
+            class="resource-card resource-card--coming-soon"
+            data-type="weekly"
+            data-topic="数字创业"
+          >
+            <div class="resource-card__body">
+              <div class="resource-card__meta">
+                <span class="type-badge type-badge--weekly">每周前沿</span>
+                <span class="coming-soon-badge">即将上线</span>
+              </div>
+              <h3 class="resource-card__title">每周数创前沿</h3>
+              <p class="resource-card__excerpt">
+                每周精选数字创业、AI
+                产品、加密创投领域的前沿资讯和深度分析，敬请期待。
+              </p>
+              <div class="resource-card__tags">
+                <span class="topic-tag">数字创业</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- More podcast CTA -->
+        <div style="text-align: center; margin-top: var(--space-2xl)">
+          <a
+            href="https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener"
+            >在小宇宙收听更多 &rarr;</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Fixed Bottom Audio Player -->
+    <div class="audio-player" id="audioPlayer">
+      <div class="audio-player__inner">
+        <button class="audio-player__play" id="playerPlayBtn" aria-label="播放">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5,3 19,12 5,21" />
+          </svg>
+        </button>
+        <div class="audio-player__info">
+          <span class="audio-player__title" id="playerTitle">--</span>
+          <div class="audio-player__progress">
+            <div class="audio-player__bar" id="playerBar">
+              <div class="audio-player__bar-fill" id="playerBarFill"></div>
+            </div>
+            <span class="audio-player__time" id="playerTime">0:00 / 0:00</span>
+          </div>
+        </div>
+        <button
+          class="audio-player__close"
+          id="playerCloseBtn"
+          aria-label="关闭播放器"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__logo">
+            <img
+              src="../assets/logo-white.png"
+              alt="校园VC Logo"
+              width="196"
+              height="56"
+            />
+          </div>
+          <p class="footer__slogan">10年推动100万大学生创业</p>
+          <nav class="footer__nav">
+            <a href="/">首页</a>
+            <a href="/#about">品牌介绍</a>
+            <a href="/#products">产品展示</a>
+            <a href="/resources/">资源</a>
+            <a href="/#founder">创始人及著作</a>
+            <a href="/#team">核心团队</a>
+            <a href="/#contact">联系我们</a>
+          </nav>
+          <div class="footer__divider"></div>
+          <div class="footer__bottom">
+            <div class="footer__filing">
+              <a
+                href="https://beian.miit.gov.cn/"
+                target="_blank"
+                rel="noopener"
+                >京ICP备2021017602号</a
+              >
+              <a href="https://www.beian.gov.cn/" target="_blank" rel="noopener"
+                >京公网安备11010802035175号</a
+              >
+            </div>
+            <p class="footer__copyright">
+              &copy; 2026 校园VC. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="resources.js"></script>
+  </body>
+</html>
