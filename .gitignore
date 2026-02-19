@@ -19,5 +19,14 @@ assets/hero-illustration-sketch.png
 # Internal docs (not published)
 docs/
 
+# Environment secrets
+.env
+
+# Node.js
+node_modules/
+
+# Tingwu task tracking (temp)
+resources/data/tingwu-tasks.json
+
 # Claude internal
 .claude/
