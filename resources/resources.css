@@ -933,6 +933,70 @@
   flex-shrink: 0;
 }
 
+/* --- Podcast Detail: Guest Line --- */
+.podcast-header__guest {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-top: var(--space-sm);
+}
+
+/* --- Podcast Detail: Show Notes Placeholder --- */
+.show-notes-placeholder {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  color: var(--color-text-tertiary);
+}
+
+.show-notes-placeholder p {
+  margin-bottom: var(--space-xs);
+}
+
+.show-notes-placeholder__sub {
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+}
+
+/* --- Podcast Detail: Prev/Next Navigation --- */
+.podcast-nav {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.podcast-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.podcast-nav__link:hover {
+  color: var(--color-brand);
+  border-color: var(--color-brand-light);
+  background: var(--color-brand-light);
+}
+
+/* --- Podcast Detail: Breadcrumb Container --- */
+.breadcrumb-container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
 /* --- "Coming Soon" Placeholder Card --- */
 .resource-card--coming-soon {
   position: relative;
@@ -1104,6 +1168,16 @@
 
   .podcast-links {
     padding: 0 var(--space-md) var(--space-2xl);
+  }
+
+  .podcast-nav {
+    padding: var(--space-lg) var(--space-md) var(--space-2xl);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .breadcrumb-container {
+    padding: 0 var(--space-md);
   }
 
   .related-resources__grid {
