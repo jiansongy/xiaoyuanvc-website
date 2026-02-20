@@ -361,6 +361,64 @@
               showNotesContent.className = "podcast-notes__content";
             }
 
+            // JSON-LD structured data for SEO
+            (function () {
+              function durationToISO(dur) {
+                var parts = dur.split(":").map(Number);
+                if (parts.length === 3) {
+                  return (
+                    "PT" + parts[0] + "H" + parts[1] + "M" + parts[2] + "S"
+                  );
+                }
+                return "PT" + parts[0] + "M" + parts[1] + "S";
+              }
+
+              var jsonLd = {
+                "@context": "https://schema.org",
+                "@type": "PodcastEpisode",
+                name: "EP" + ep.ep + ": " + ep.title,
+                description: ep.description || "",
+                datePublished: ep.date,
+                url:
+                  "https://xiaoyuanvc.com/resources/podcast.html?ep=" + ep.ep,
+                episodeNumber: ep.ep,
+                partOfSeries: {
+                  "@type": "PodcastSeries",
+                  name: "CSS — 校园VC的创客频道",
+                  url: "https://xiaoyuanvc.com/resources/",
+                  author: {
+                    "@type": "Organization",
+                    name: "校园VC",
+                    url: "https://xiaoyuanvc.com",
+                  },
+                },
+              };
+
+              if (ep.duration) {
+                jsonLd.timeRequired = durationToISO(ep.duration);
+              }
+
+              if (ep.audioUrl) {
+                jsonLd.associatedMedia = {
+                  "@type": "AudioObject",
+                  contentUrl: ep.audioUrl,
+                };
+              }
+
+              if (ep.guest) {
+                jsonLd.performer = {
+                  "@type": "Person",
+                  name: ep.guest,
+                  description: ep.guestIntro || "",
+                };
+              }
+
+              var script = document.createElement("script");
+              script.type = "application/ld+json";
+              script.textContent = JSON.stringify(jsonLd);
+              document.head.appendChild(script);
+            })();
+
             // External link
             if (ep.xiaoyuzhouUrl) {
               document.getElementById("xiaoyuzhouLink").href = ep.xiaoyuzhouUrl;
