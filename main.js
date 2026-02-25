@@ -314,6 +314,36 @@
         gtag("event", "podcast_click", {});
       }
     });
+
+    // QR code view tracking — fire once when QR image scrolls into view
+    var qrTargets = [
+      { selector: ".contact__qr:nth-child(1) img", label: "official_account" },
+      { selector: ".contact__qr:nth-child(2) img", label: "assistant" },
+      { selector: ".founder-card__wechat-qr img", label: "founder_jason" },
+    ];
+
+    var qrObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var label = entry.target.getAttribute("data-qr-label");
+            if (label) {
+              gtag("event", "qr_view", { qr_type: label });
+            }
+            qrObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
+
+    qrTargets.forEach(function (t) {
+      var el = document.querySelector(t.selector);
+      if (el) {
+        el.setAttribute("data-qr-label", t.label);
+        qrObserver.observe(el);
+      }
+    });
   }
 
   // ---- Init all modules on DOMContentLoaded ----
