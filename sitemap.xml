@@ -31,6 +31,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://xiaoyuanvc.com/resources/podcast.html</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://xiaoyuanvc.com/resources/zero-to-hero-book.html</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://xiaoyuanvc.com/resources/episodes/ep182.html</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>

@@ -36,6 +36,16 @@ const staticPages = [
     changefreq: "monthly",
     priority: "0.7",
   },
+  {
+    loc: "https://xiaoyuanvc.com/resources/podcast.html",
+    changefreq: "weekly",
+    priority: "0.8",
+  },
+  {
+    loc: "https://xiaoyuanvc.com/resources/zero-to-hero-book.html",
+    changefreq: "monthly",
+    priority: "0.7",
+  },
 ];
 
 const episodes = JSON.parse(readFileSync(EPISODES_PATH, "utf-8"));
