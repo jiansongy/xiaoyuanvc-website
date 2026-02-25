@@ -279,6 +279,9 @@
           return;
         }
 
+        // Redirect to static episode page for better SEO/GEO
+        window.location.replace("episodes/ep" + epNum + ".html");
+
         fetch("data/episodes.json")
           .then(function (res) {
             return res.json();

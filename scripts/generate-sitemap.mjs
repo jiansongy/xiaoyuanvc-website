@@ -57,7 +57,7 @@ for (const page of staticPages) {
 for (const ep of episodes) {
   lines.push("  <url>");
   lines.push(
-    `    <loc>https://xiaoyuanvc.com/resources/podcast.html?ep=${ep.ep}</loc>`,
+    `    <loc>https://xiaoyuanvc.com/resources/episodes/ep${ep.ep}.html</loc>`,
   );
   lines.push(`    <lastmod>${ep.date}</lastmod>`);
   lines.push("    <changefreq>monthly</changefreq>");

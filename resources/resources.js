@@ -77,9 +77,9 @@
             "</span>" +
             "</div>" +
             '<h3 class="resource-card__title">' +
-            '<a href="podcast.html?ep=' +
+            '<a href="episodes/ep' +
             ep.ep +
-            '">EP' +
+            '.html">EP' +
             ep.ep +
             ": " +
             escapeHtml(ep.title) +
