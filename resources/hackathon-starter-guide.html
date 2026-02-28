@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>大学生参加黑客松完全指南 | 校园VC 资源中心</title>
+    <meta
+      name="description"
+      content="什么是黑客松？大学生不会编程可以参加吗？如何选择适合自己的赛事？48小时内怎么完成项目？校园VC整理了中国大学生参加黑客松的完整实战指南，从选赛到拿奖。"
+    />
+    <link
+      rel="canonical"
+      href="https://xiaoyuanvc.com/resources/hackathon-starter-guide.html"
+    />
+    <link rel="icon" href="../assets/favicon.ico" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="大学生参加黑客松完全指南" />
+    <meta
+      property="og:description"
+      content="什么是黑客松？大学生不会编程可以参加吗？如何选择适合自己的赛事？48小时内怎么完成项目？校园VC整理了中国大学生参加黑客松的完整实战指南。"
+    />
+    <meta
+      property="og:url"
+      content="https://xiaoyuanvc.com/resources/hackathon-starter-guide.html"
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="校园VC" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="resources.css" />
+
+    <!-- JSON-LD: Article + FAQPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "大学生参加黑客松完全指南",
+        "description": "什么是黑客松？大学生不会编程可以参加吗？如何选择适合自己的赛事？48小时内怎么完成项目？校园VC整理了中国大学生参加黑客松的完整实战指南。",
+        "datePublished": "2026-02-28",
+        "dateModified": "2026-02-28",
+        "author": { "@type": "Organization", "name": "校园VC" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "校园VC",
+          "url": "https://xiaoyuanvc.com"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "黑客松是什么？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "黑客松（Hackathon）是一种限时创造竞赛，参与者组成3-5人团队，在24-72小时内从零开始做出一个可以演示的产品，最后上台pitch，评委打分决出获奖团队。它被创业圈称为浓缩版创业体验，完整经历从找方向、组队、开发、到路演的全过程。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "不会编程可以参加黑客松吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "完全可以。黑客松团队需要多种角色：开发者（写代码）、设计师（UI/UX）、产品经理（需求定义）、商业分析（市场调研）和Pitcher（路演演讲）。非技术背景的同学可以主导产品方向和路演，这往往是团队最缺的能力。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "中国大学生适合参加哪些黑客松？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "推荐：1. AdventureX（中国最大学生黑客松，全球4500+参与者，免费参加，26岁以下均可报名）；2. Solana Hackathon（Web3方向，奖金丰厚）；3. 字节/阿里/Google等企业赞助黑客松（简历加分强）；4. 联合国黑客松（公益+技术方向）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "黑客松48小时内应该怎么规划时间？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "第一天：前2小时确定方向，2-4小时画原型，4-20小时开发核心功能（只做一个核心demo），20-24小时睡觉。第二天：前4小时完善demo，4-6小时准备pitch deck和排练，6-8小时路演。最大误区是想做完整产品导致什么都没完成，正确策略是砍到极简的核心demo加上清晰的story。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "黑客松参赛经历如何写进简历？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "建议格式：带领N人团队在[赛事名]黑客松中，48小时内完成[产品名]的开发和上线，获得[成绩/评委反馈]。同时把代码推上GitHub并写清晰README，作为投资人和HR眼中的活的简历。"
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- GA4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LP5EB2HW33");
+    </script>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <div class="nav__inner">
+        <a href="/" class="nav__logo">
+          <img
+            src="../assets/logo-color.png"
+            alt="校园VC Logo"
+            width="140"
+            height="40"
+          />
+        </a>
+        <button
+          class="nav__hamburger"
+          id="navHamburger"
+          aria-label="打开导航菜单"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav__menu" id="navMenu">
+          <div class="nav__links">
+            <a href="/" class="nav__link">首页</a>
+            <a href="/#about" class="nav__link">品牌介绍</a>
+            <a href="/#products" class="nav__link">产品展示</a>
+            <a href="/resources/" class="nav__link active">资源中心</a>
+            <a href="/#founder" class="nav__link">团队介绍</a>
+            <a href="/#faq" class="nav__link">常见问题</a>
+            <a href="/#contact" class="nav__link">联系我们</a>
+            <a
+              href="https://learn.xiaoyuanvc.com"
+              class="btn btn-primary nav__cta"
+              target="_blank"
+              rel="noopener"
+              >免费学习</a
+            >
+          </div>
+        </div>
+        <div class="nav__overlay" id="navOverlay"></div>
+      </div>
+    </nav>
+
+    <!-- Breadcrumb + Article Header -->
+    <div class="article-page">
+      <div class="article-header">
+        <div class="breadcrumb">
+          <a href="/">首页</a>
+          <span class="breadcrumb__separator">/</span>
+          <a href="/resources/">资源</a>
+          <span class="breadcrumb__separator">/</span>
+          <span class="breadcrumb__current">黑客松完全指南</span>
+        </div>
+
+        <div class="article-header__meta">
+          <span class="type-badge type-badge--article">专题文章</span>
+          <time datetime="2026-02-28">2026-02-28</time>
+          <span>&middot;</span>
+          <span>阅读约 8 分钟</span>
+        </div>
+        <h1 class="article-header__title">大学生参加黑客松完全指南</h1>
+        <p class="article-header__subtitle">从选赛事到拿奖的实战攻略</p>
+        <div class="resource-card__tags">
+          <span class="topic-tag">黑客松</span>
+          <span class="topic-tag">大学生创业</span>
+          <span class="topic-tag">实战项目</span>
+          <span class="topic-tag">数字创业</span>
+        </div>
+      </div>
+
+      <!-- Article Content -->
+      <article class="article-content">
+        <div class="callout callout--info">
+          <div>
+            <p>
+              <strong
+                >大学生如何通过黑客松完成第一个真实项目、认识创业伙伴、进入创投圈？</strong
+              >
+            </p>
+            <p>
+              本文整理了黑客松的核心知识：它是什么、中国有哪些适合大学生的赛事、非技术背景如何参赛、48
+              小时怎么规划、以及怎样把这段经历最大化利用。
+            </p>
+          </div>
+        </div>
+
+        <h2>黑客松是什么？</h2>
+
+        <p>
+          <strong>黑客松 = Hackathon = Hack（创造）+ Marathon（马拉松）</strong>
+        </p>
+
+        <p>
+          不是黑客攻击，不是跑步比赛——而是一场<strong>限时创造竞赛</strong>。
+        </p>
+
+        <p>
+          几十到几千人聚在一起，组成 3-5 人的团队，在 24-72
+          小时内从零开始做出一个可以演示的产品，最后上台
+          pitch，评委打分决出获奖团队。
+        </p>
+
+        <p>
+          它被创业圈称为「<strong>浓缩版创业体验</strong>」——从找方向、组队、开发、到路演，全程走一遍，只是时间压缩到了两天。
+        </p>
+
+        <h3>黑客松 vs 传统编程比赛</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>传统编程比赛</th>
+              <th>黑客松</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>关注点</td>
+              <td>算法正确性</td>
+              <td>产品完整性 + 创意</td>
+            </tr>
+            <tr>
+              <td>团队要求</td>
+              <td>通常独立或小团队</td>
+              <td>鼓励多角色混合（开发+设计+运营）</td>
+            </tr>
+            <tr>
+              <td>结果形式</td>
+              <td>代码/分数</td>
+              <td>可 demo 的产品 + 3-5 分钟 pitch</td>
+            </tr>
+            <tr>
+              <td>不会编程能参加吗</td>
+              <td>通常不行</td>
+              <td><strong>可以</strong>，产品、设计、运营角色同样重要</td>
+            </tr>
+            <tr>
+              <td>核心收获</td>
+              <td>技术能力</td>
+              <td>人脉、项目经验、投资人接触机会</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>中国大学生应该参加哪些黑客松？</h2>
+
+        <h3>AdventureX — 中国最大学生黑客松</h3>
+
+        <p>
+          全球 4,500+ 报名者（2025 年），来自 182 个国家。面向 26
+          岁以下或在读学生，不要求技术背景。非盈利性质，<strong>免费参加，提供差旅报销和住宿</strong>。由两名中国高中生创办，现已成为亚洲规模最大的学生黑客松。
+        </p>
+        <p>
+          官网：<a
+            href="https://adventure-x.org/zh"
+            target="_blank"
+            rel="noopener"
+            >adventure-x.org</a
+          >
+        </p>
+
+        <h3>Solana Hackathon — Web3 方向首选</h3>
+
+        <p>
+          线上 + 线下（全球多城市），奖金通常达数万美元量级。不限背景，可以做
+          DeFi/NFT/GameFi 等项目。适合对区块链/加密感兴趣的同学，可以配合校园VC
+          <a
+            href="https://learn.xiaoyuanvc.com/zh/bitcoin-tutorial/start/solana/"
+            target="_blank"
+            rel="noopener"
+            >Solana 入门教程</a
+          >
+          学习。
+        </p>
+
+        <h3>企业赞助黑客松（字节 / 阿里 / Google）</h3>
+
+        <ul>
+          <li>
+            <strong>字节 CloudWeGo 黑客松</strong>：面向全国高校学生，聚焦 AI +
+            微服务
+          </li>
+          <li><strong>阿里天池黑客松</strong>：AI 应用方向，线上参赛</li>
+          <li><strong>Google 创变者黑客松</strong>：强调社会影响力</li>
+        </ul>
+        <p>企业赞助赛事的优势：奖金高、背书强、简历加分明显。</p>
+
+        <h3>联合国黑客松</h3>
+
+        <p>
+          面向全球学生，主题围绕
+          SDGs（可持续发展目标）。适合想做「技术+公益」方向的同学。
+        </p>
+
+        <h2>不会编程，能参加黑客松吗？</h2>
+
+        <p><strong>完全可以。</strong> 这是最常见的误解。</p>
+
+        <p>一个完整的黑客松团队通常需要：</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>角色</th>
+              <th>做什么</th>
+              <th>需要会编程吗</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>开发者</strong></td>
+              <td>写代码、搭建产品</td>
+              <td>是</td>
+            </tr>
+            <tr>
+              <td><strong>设计师</strong></td>
+              <td>UI/UX、原型图</td>
+              <td>否（会 Figma 即可）</td>
+            </tr>
+            <tr>
+              <td><strong>产品经理</strong></td>
+              <td>需求定义、功能优先级</td>
+              <td>否</td>
+            </tr>
+            <tr>
+              <td><strong>商业分析</strong></td>
+              <td>市场调研、商业模式</td>
+              <td>否</td>
+            </tr>
+            <tr>
+              <td><strong>Pitcher</strong></td>
+              <td>路演、演讲</td>
+              <td>否</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          实际上，很多黑客松团队<strong>最缺的不是开发者，而是能清晰讲清楚「为什么要做这个」的产品思维</strong>。
+        </p>
+
+        <div class="callout callout--tip">
+          <div>
+            <p><strong>零编程背景的参赛策略</strong></p>
+            <ol>
+              <li>
+                <strong>先定义问题</strong
+                >：黑客松开始前，想清楚你想解决什么问题
+              </li>
+              <li>
+                <strong>找技术队友</strong
+                >：在赛前组队群/现场认识开发者，你负责产品方向
+              </li>
+              <li>
+                <strong>用 AI 工具辅助</strong>：Claude Code / Cursor /
+                豆包可以帮你快速生成原型
+              </li>
+              <li>
+                <strong>专攻 pitch</strong>：路演是你最大的舞台，准备好清晰的 3
+                分钟演讲
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <h2>48 小时实战节奏</h2>
+
+        <p>大多数黑客松的典型时间线，提前了解能大幅提升发挥：</p>
+
+        <h3>Day 0（开赛前）</h3>
+        <ul>
+          <li>确认队友（3-5 人，覆盖开发+产品+设计）</li>
+          <li>研究赛题方向，准备 2-3 个初步想法</li>
+          <li>带好笔记本、充电宝、换洗衣物</li>
+        </ul>
+
+        <h3>Day 1（第一天）</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>任务</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0–2h</td>
+              <td>破冰 + 选题讨论，确定一个方向</td>
+            </tr>
+            <tr>
+              <td>2–4h</td>
+              <td>画出最简原型（纸笔或 Figma）</td>
+            </tr>
+            <tr>
+              <td>4–20h</td>
+              <td>
+                开发核心功能（<strong>只做一个核心 demo</strong>，不求完整）
+              </td>
+            </tr>
+            <tr>
+              <td>20–24h</td>
+              <td>睡觉（严肃建议：熬夜通宵会让 Day 2 pitch 完全垮掉）</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Day 2（第二天）</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>任务</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0–4h</td>
+              <td>完善 demo，修复最影响演示的 bug</td>
+            </tr>
+            <tr>
+              <td>4–6h</td>
+              <td>写 pitch deck（5-7 页即可）、反复排练</td>
+            </tr>
+            <tr>
+              <td>6–8h</td>
+              <td>路演 + 评委问答</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout--warning">
+          <div>
+            <p><strong>最常见失误</strong></p>
+            <ul>
+              <li>❌ 第一天想做「完整产品」，导致什么都没做完</li>
+              <li>❌ 过度纠结技术细节，忽视 pitch 准备</li>
+              <li>❌ 熬通宵后第二天精神恍惚，路演表现差</li>
+              <li>
+                ✅ 正确策略：<strong
+                  >砍到极简的核心 demo + 一个清晰的 story</strong
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <h2>如何准备一个好 Pitch</h2>
+
+        <p>评委在 3-5 分钟内要听懂你的项目，pitch 结构越简单越好：</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>环节</th>
+              <th>时长</th>
+              <th>内容</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>问题</td>
+              <td>30 秒</td>
+              <td>你在解决什么痛点？谁有这个问题？</td>
+            </tr>
+            <tr>
+              <td>方案</td>
+              <td>60 秒</td>
+              <td>你做了什么？演示一遍核心功能</td>
+            </tr>
+            <tr>
+              <td>为什么是你</td>
+              <td>30 秒</td>
+              <td>团队有什么独特优势？</td>
+            </tr>
+            <tr>
+              <td>下一步</td>
+              <td>30 秒</td>
+              <td>如果得奖/获得支持，打算怎么做？</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>一个好 pitch 的标准：你的奶奶听完能明白你在做什么。</p>
+
+        <h2>黑客松之后：如何最大化收益</h2>
+
+        <p>参赛结果不是最重要的，<strong>重要的是你怎么用这段经历</strong>：</p>
+
+        <h3>1. 整理项目进 GitHub</h3>
+        <p>
+          无论结果如何，把代码推上 GitHub，写一个清晰的
+          README。这是你在投资人/HR 眼中的「活的简历」。
+        </p>
+
+        <h3>2. 把故事写进简历</h3>
+        <p>
+          「带领 4 人团队在 AdventureX 2025 黑客松中，48 小时内完成 [产品名]
+          的开发和上线，获得 [成绩/评委反馈]。」
+        </p>
+
+        <h3>3. 认识的人比奖金更值钱</h3>
+        <p>
+          黑客松里认识的开发者、设计师、投资人，往往比奖金更有长期价值。<strong>加微信时说一句你印象最深的细节</strong>，而不是只交换名片。
+        </p>
+
+        <h3>4. 好项目可以继续做</h3>
+        <p>
+          很多真实公司从黑客松 demo 成长而来。如果你 48
+          小时内做的东西得到了真实用户的反馈，这是继续做下去的最好信号。
+        </p>
+
+        <h2>常见问题</h2>
+
+        <h3>黑客松是什么？</h3>
+        <p>
+          黑客松（Hackathon）是一种限时创造竞赛，参与者组成 3-5 人团队，在 24-72
+          小时内从零做出可以演示的产品，最后上台
+          pitch。它被创业圈称为浓缩版创业体验。
+        </p>
+
+        <h3>不会编程可以参加黑客松吗？</h3>
+        <p>
+          完全可以。黑客松需要产品、设计、运营、路演等多种角色，不是只要开发者。很多团队最缺的恰恰是能清晰表达产品价值的非技术成员。
+        </p>
+
+        <h3>中国大学生适合参加哪些黑客松？</h3>
+        <p>
+          首选 AdventureX（全球最大学生黑客松之一，26 岁以下免费参加）；Web3
+          方向可以参加 Solana Hackathon；想要企业背书可选字节/阿里/Google
+          赞助赛事。
+        </p>
+
+        <h3>黑客松 48 小时内怎么规划时间？</h3>
+        <p>
+          第一天前 2 小时定方向，2-4 小时做原型，4-20 小时开发核心
+          demo，然后睡觉。第二天打磨 demo，准备
+          pitch，最后路演。最大忌讳是熬通宵和想做完整产品。
+        </p>
+
+        <h3>参赛经历如何写进简历？</h3>
+        <p>
+          「带领 N 人团队在 [赛事名] 中，48 小时内完成 [产品名] 开发，获得
+          [成绩]。」配合 GitHub 项目链接，是对投资人和 HR 最有说服力的展示方式。
+        </p>
+
+        <div class="callout callout--tip">
+          <div>
+            <p><strong>准备好开始了？</strong></p>
+            <p>
+              浏览
+              <a
+                href="https://adventure-x.org/zh"
+                target="_blank"
+                rel="noopener"
+                >AdventureX 官网</a
+              >，确认下一届报名时间。 同时，学会
+              <a
+                href="https://learn.xiaoyuanvc.com/zh/scb-tutorial/product/vibe-coding-practice/"
+                target="_blank"
+                rel="noopener"
+                >Vibe Coding</a
+              >
+              可以让你在黑客松现场快速搭出原型，即使没有技术队友也不怕。
+            </p>
+            <p>
+              校园VC 学习站提供完整的数字创业课程（63
+              课，完全免费），帮你在黑客松前建立产品思维和技术基础：
+              <a
+                href="https://learn.xiaoyuanvc.com"
+                target="_blank"
+                rel="noopener"
+                >learn.xiaoyuanvc.com</a
+              >
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Related Resources -->
+    <section class="related-resources">
+      <div class="related-resources__inner">
+        <h2 class="related-resources__heading">相关资源</h2>
+        <div class="related-resources__grid">
+          <div class="resource-card">
+            <div class="resource-card__body">
+              <div class="resource-card__meta">
+                <span class="type-badge type-badge--article">专题文章</span>
+              </div>
+              <h3 class="resource-card__title">
+                <a href="ai-startup-roadmap.html"
+                  >从零开始的 AI 创业学习路线图</a
+                >
+              </h3>
+              <p class="resource-card__excerpt">
+                大学生从零基础到独立完成 AI
+                创业项目的完整学习路线图，涵盖认知、技能、实战、增长四个阶段。
+              </p>
+            </div>
+          </div>
+          <div class="resource-card">
+            <div class="resource-card__body">
+              <div class="resource-card__meta">
+                <span class="type-badge type-badge--article">专题文章</span>
+              </div>
+              <h3 class="resource-card__title">
+                <a href="what-is-digital-entrepreneurship-education.html"
+                  >什么是数字创业教育？AI 时代大学生的新选择</a
+                >
+              </h3>
+              <p class="resource-card__excerpt">
+                数字创业教育是面向大学生的新型创业教育，聚焦 AI 和 Crypto
+                领域。本文解析其定义、课程体系和学习路径。
+              </p>
+            </div>
+          </div>
+          <div class="resource-card">
+            <div class="resource-card__body">
+              <div class="resource-card__meta">
+                <span class="type-badge type-badge--article">免费课程</span>
+              </div>
+              <h3 class="resource-card__title">
+                <a
+                  href="https://learn.xiaoyuanvc.com"
+                  target="_blank"
+                  rel="noopener"
+                  >开始免费学习</a
+                >
+              </h3>
+              <p class="resource-card__excerpt">
+                校园VC 学习站提供 63 课完全免费的数字创业课程，由清华大学 x-lab
+                创业导师殷建松主讲。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__logo">
+            <img
+              src="../assets/logo-white.png"
+              alt="校园VC Logo"
+              width="196"
+              height="56"
+            />
+          </div>
+          <p class="footer__slogan">10年推动100万大学生创业</p>
+          <nav class="footer__nav">
+            <a href="/">首页</a>
+            <a href="/#about">品牌介绍</a>
+            <a href="/#products">产品展示</a>
+            <a href="/resources/">资源中心</a>
+            <a href="/#founder">团队介绍</a>
+            <a href="/#contact">联系我们</a>
+          </nav>
+          <div class="footer__divider"></div>
+          <div class="footer__bottom">
+            <div class="footer__filing">
+              <a
+                href="https://beian.miit.gov.cn/"
+                target="_blank"
+                rel="noopener"
+                >京ICP备2021017602号</a
+              >
+              <a href="https://www.beian.gov.cn/" target="_blank" rel="noopener"
+                >京公网安备11010802035175号</a
+              >
+            </div>
+            <p class="footer__copyright">
+              &copy; 2026 校园VC. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="resources.js"></script>
+  </body>
+</html>
