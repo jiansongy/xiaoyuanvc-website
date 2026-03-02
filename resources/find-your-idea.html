@@ -1596,13 +1596,19 @@
         function updateSummary() {
           const el = document.getElementById("summaryBox");
           if (!el) return;
+          const fallbacks = [S.refs.top1, S.refs.top2, S.refs.top3];
           el.innerHTML = ["gold", "silver", "bronze"]
-            .map((k) => {
+            .map((k, i) => {
               const d = S.medals[k];
               const icon = { gold: "🥇", silver: "🥈", bronze: "🥉" }[k];
-              const txt = d.p
-                ? `${d.p} — ${d.q || "（问题待填）"}`
-                : "（未填写）";
+              let txt;
+              if (d.p) {
+                txt = d.q ? `${d.p} — ${d.q}` : d.p;
+              } else if (fallbacks[i]) {
+                txt = fallbacks[i];
+              } else {
+                txt = "（待填写）";
+              }
               return `<span class="niche-chip">${icon} ${txt}</span>`;
             })
             .join("");
