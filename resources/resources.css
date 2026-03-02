@@ -271,11 +271,6 @@
   color: #6d28d9;
 }
 
-.type-badge--weekly {
-  background: var(--color-bg-secondary);
-  color: var(--color-text-tertiary);
-}
-
 /* --- Topic Tags --- */
 .topic-tag {
   display: inline-block;
@@ -1054,42 +1049,6 @@
   max-width: 760px;
   margin: 0 auto;
   padding: 0 var(--space-lg);
-}
-
-/* --- "Coming Soon" Placeholder Card --- */
-.resource-card--coming-soon {
-  position: relative;
-  pointer-events: none;
-  user-select: none;
-}
-
-.resource-card--coming-soon .resource-card__body,
-.resource-card--coming-soon .resource-card__image {
-  opacity: 0.5;
-}
-
-.resource-card--coming-soon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(250, 251, 254, 0.4);
-  border-radius: var(--radius-lg);
-}
-
-.coming-soon-badge {
-  position: absolute;
-  top: var(--space-md);
-  right: var(--space-md);
-  z-index: 2;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-text-tertiary);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 /* --- Related Resources Section --- */
