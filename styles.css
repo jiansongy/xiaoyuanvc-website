@@ -936,7 +936,7 @@ button {
 /* --- Testimonials Section --- */
 .testimonials__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-lg);
 }
 
@@ -951,6 +951,17 @@ button {
 
 .testimonial-card:hover {
   box-shadow: var(--shadow-md);
+}
+
+.testimonial-card__outcome {
+  display: inline-block;
+  background: var(--color-brand-light);
+  color: var(--color-brand);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: var(--space-md);
 }
 
 .testimonial-card__quote {
@@ -995,6 +1006,38 @@ button {
 .testimonial-card__school {
   font-size: 0.8125rem;
   color: var(--color-text-tertiary);
+}
+
+/* --- Daily Preview Section --- */
+.daily__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2xl);
+  max-width: 680px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.daily__item {
+  text-align: center;
+}
+
+.daily__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand);
+  margin-bottom: var(--space-sm);
+  letter-spacing: 0.04em;
+}
+
+.daily__image {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display: block;
+}
+
+.daily__cta {
+  text-align: center;
 }
 
 /* --- Gallery Section --- */
@@ -1545,6 +1588,12 @@ button {
   /* Testimonials mobile */
   .testimonials__grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Daily Preview mobile */
+  .daily__grid {
+    grid-template-columns: 1fr;
+    max-width: 320px;
   }
 
   /* Gallery mobile */
