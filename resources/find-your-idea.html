@@ -1463,7 +1463,7 @@
           // Restore AI
           if (S.ai4) {
             document.getElementById("aiCard4").style.display = "block";
-            document.getElementById("aiBody4").textContent = S.ai4;
+            document.getElementById("aiBody4").innerHTML = renderMd(S.ai4);
           }
         }
 
@@ -1537,7 +1537,7 @@
           });
           if (S.ai5) {
             document.getElementById("aiCard5").style.display = "block";
-            document.getElementById("aiBody5").textContent = S.ai5;
+            document.getElementById("aiBody5").innerHTML = renderMd(S.ai5);
           }
         }
 
@@ -1569,7 +1569,7 @@
           // Restore AI
           if (S.ai6) {
             document.getElementById("aiCard6").style.display = "block";
-            document.getElementById("aiBody6").textContent = S.ai6;
+            document.getElementById("aiBody6").innerHTML = renderMd(S.ai6);
           }
         }
 
@@ -1680,7 +1680,7 @@
                     JSON.parse(line.slice(6)).choices?.[0]?.delta?.content ||
                     "";
                   full += delta;
-                  body.textContent = full;
+                  body.innerHTML = renderMd(full);
                 } catch (e) {
                   /* ignore parse errors */
                 }
@@ -1692,7 +1692,9 @@
             else S.ai6 = full;
             save();
           } catch (err) {
-            body.textContent = `⚠️ 出错了：${err.message}\n\n请检查 API Key 是否正确，或网络是否正常。`;
+            body.innerHTML = renderMd(
+              `⚠️ 出错了：${esc(err.message)}\n\n请检查网络是否正常。`,
+            );
           }
 
           btn.disabled = false;
@@ -1905,6 +1907,57 @@ ${rows || "（暂无填写）"}
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;");
+        }
+
+        // 轻量 Markdown 渲染（无外部依赖）
+        function renderMd(text) {
+          if (!text) return "";
+          let t = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+          // bold
+          t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+          // headings
+          t = t.replace(
+            /^### (.+)$/gm,
+            '<h4 style="font-size:14px;font-weight:600;margin:12px 0 4px;color:#1e293b">$1</h4>',
+          );
+          t = t.replace(
+            /^## (.+)$/gm,
+            '<h3 style="font-size:15px;font-weight:700;margin:14px 0 5px;color:#1e293b">$1</h3>',
+          );
+          t = t.replace(
+            /^# (.+)$/gm,
+            '<h3 style="font-size:15px;font-weight:700;margin:14px 0 5px;color:#1e293b">$1</h3>',
+          );
+          // horizontal rule
+          t = t.replace(
+            /^---+$/gm,
+            '<hr style="border:none;border-top:1px solid #e5e7eb;margin:10px 0">',
+          );
+          // bullet list items
+          t = t.replace(/^[*-] (.+)$/gm, '<li style="margin:3px 0">$1</li>');
+          // wrap consecutive <li> in <ul>
+          t = t.replace(
+            /((?:<li[^>]*>[^\n]*<\/li>\n?)+)/g,
+            '<ul style="padding-left:18px;margin:6px 0">$1</ul>',
+          );
+          // split on double newlines, wrap non-block content in <p>
+          return t
+            .split(/\n\n+/)
+            .map(function (block) {
+              block = block.trim();
+              if (!block) return "";
+              if (/^<(h[1-6]|ul|ol|hr)/.test(block)) return block;
+              return (
+                '<p style="margin:0 0 10px">' +
+                block.replace(/\n/g, "<br>") +
+                "</p>"
+              );
+            })
+            .filter(Boolean)
+            .join("");
         }
 
         // Expose S for inline handlers
