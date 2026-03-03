@@ -823,12 +823,38 @@
                   <div class="st">我的 Top 3</div>
                 </div>
               </div>
+              <div
+                style="
+                  background: #e8f5e9;
+                  border-radius: 8px;
+                  padding: 11px 14px;
+                  margin-bottom: 14px;
+                  font-size: 13px;
+                  color: #1b5e20;
+                  line-height: 1.65;
+                "
+              >
+                💡 还不了解这个框架？先看看 Ali Abdaal 的原版视频，10
+                分钟理清思路：<br />
+                <a
+                  href="https://www.youtube.com/watch?v=TX1Ij51esI0"
+                  target="_blank"
+                  rel="noopener"
+                  style="
+                    color: var(--green-dark);
+                    font-weight: 700;
+                    display: inline-block;
+                    margin-top: 5px;
+                  "
+                  >📺 How to Find Your Niche as a Creator →</a
+                >
+              </div>
               <button
                 class="btn btn-primary"
                 style="
                   width: 100%;
                   justify-content: center;
-                  margin-top: 18px;
+                  margin-top: 0;
                   padding: 13px;
                   font-size: 15px;
                 "
@@ -984,95 +1010,9 @@
           <div class="card-body">
             <p class="step-title">Step 5：缩小你的定位选择</p>
             <p class="step-desc">
-              对每个提示，自由书写 2-3 分钟。不要想太多，跟着直觉走。
+              对每个提示，先从上面步骤的定位中选出<strong>最符合的一个</strong>，再写下你的理由（可选）。
             </p>
-
-            <div class="ref-card">
-              <div class="ref-head">🕐 2年测试</div>
-              <div class="ref-body">
-                <p>
-                  想象你将在某个定位深耕 2-3
-                  年。哪个让你最兴奋？哪个让你觉得「对，我能看见自己做这件事」？
-                </p>
-                <textarea id="r1" placeholder="自由书写…"></textarea>
-              </div>
-            </div>
-
-            <div class="ref-card">
-              <div class="ref-head">🎯 不败测试</div>
-              <div class="ref-body">
-                <p>
-                  如果你知道自己不会失败——成功是保证的——你会选哪个定位？（排除恐惧，让你看见自己真正想要的。）
-                </p>
-                <textarea id="r2" placeholder="自由书写…"></textarea>
-              </div>
-            </div>
-
-            <div class="ref-card">
-              <div class="ref-head">🪞 镜子测试</div>
-              <div class="ref-body">
-                <p>
-                  哪个定位最「像你」？哪个与你的价值观、你的故事、你想成为的人最契合？哪个你会自豪地告诉朋友和家人？
-                </p>
-                <textarea id="r3" placeholder="自由书写…"></textarea>
-              </div>
-            </div>
-
-            <div class="ref-card">
-              <div class="ref-head">😬 恐惧检查</div>
-              <div class="ref-body">
-                <p>
-                  哪个定位让你有点害怕——是那种好的害怕？有时候让我们略感紧张的事，恰恰是我们最在乎的。什么在吸引着你？
-                </p>
-                <textarea id="r4" placeholder="自由书写…"></textarea>
-              </div>
-            </div>
-
-            <div class="ref-card">
-              <div class="ref-head">🆘 生存测试</div>
-              <div class="ref-body">
-                <p>
-                  假设你明天失去工作和所有积蓄——但你还有技能和人脉。你需要在
-                  30-60 天内赚到至少 1 万元。你会选哪个定位？
-                </p>
-                <textarea id="r5" placeholder="自由书写…"></textarea>
-              </div>
-            </div>
-
-            <div class="ref-card">
-              <div class="ref-head">📞 人脉测试</div>
-              <div class="ref-body">
-                <p>
-                  看看你的手机联系人和微信好友。在这些定位中，哪个你已经有人脉？在哪里你能拿到温热的引荐？谁会接你的电话？
-                </p>
-                <textarea id="r6" placeholder="自由书写…"></textarea>
-              </div>
-            </div>
-
-            <div class="ref-card">
-              <div class="ref-head">🏆 可信度测试</div>
-              <div class="ref-body">
-                <p>
-                  在哪个定位，人们会真的相信你能帮到他们？你在哪里有证明、经验或故事给你足够的可信度？
-                </p>
-                <textarea id="r7" placeholder="自由书写…"></textarea>
-              </div>
-            </div>
-
-            <div class="ref-card final">
-              <div class="ref-head">✨ 最终反思</div>
-              <div class="ref-body">
-                <p>
-                  根据以上回答，哪 3 个定位正在浮出水面？你的直觉在告诉你什么？
-                </p>
-                <div style="display: flex; flex-direction: column; gap: 7px">
-                  <input type="text" id="top1" placeholder="第 1 名：" />
-                  <input type="text" id="top2" placeholder="第 2 名：" />
-                  <input type="text" id="top3" placeholder="第 3 名：" />
-                </div>
-              </div>
-            </div>
-
+            <div id="s5Body"></div>
             <div class="mt-14">
               <button class="btn btn-ai" id="aiBtn5" onclick="callAI(5)">
                 🤖 AI 帮我综合分析，找出最适合的定位
@@ -1193,12 +1133,19 @@
           ai6: "",
           refs: {
             r1: "",
+            r1_pick: "",
             r2: "",
+            r2_pick: "",
             r3: "",
+            r3_pick: "",
             r4: "",
+            r4_pick: "",
             r5: "",
+            r5_pick: "",
             r6: "",
+            r6_pick: "",
             r7: "",
+            r7_pick: "",
             top1: "",
             top2: "",
             top3: "",
@@ -1247,10 +1194,11 @@
         // ══════════════════════════════════════════════
         load();
         if (PROXY_URL) {
-          // 代理模式：跳过 Key 输入，直接进入步骤
-          if (S.step < 1) S.step = 1;
-          showStep(S.step);
-          render(S.step);
+          // 代理模式：跳过 Key 输入；首次使用（step=0）保留介绍页
+          if (S.step >= 1) {
+            showStep(S.step);
+            render(S.step);
+          }
         } else {
           if (S.step > 0) {
             showStep(S.step);
@@ -1320,12 +1268,19 @@
           if (S.step === 5) {
             [
               "r1",
+              "r1_pick",
               "r2",
+              "r2_pick",
               "r3",
+              "r3_pick",
               "r4",
+              "r4_pick",
               "r5",
+              "r5_pick",
               "r6",
+              "r6_pick",
               "r7",
+              "r7_pick",
               "top1",
               "top2",
               "top3",
@@ -1517,24 +1472,152 @@
           renderScores();
         };
 
+        // ── Step 5 helpers ──
+        function buildNicheOptions() {
+          const src = S.scores.filter((s) => s.p || s.q);
+          const list = src.length ? src : S.niches.filter((n) => n.p || n.q);
+          return list.map((n) => [n.p, n.q].filter(Boolean).join(" — "));
+        }
+
+        window.updateVoteTally = function () {
+          const el = document.getElementById("voteTally");
+          if (!el) return;
+          const picks = [
+            "r1_pick",
+            "r2_pick",
+            "r3_pick",
+            "r4_pick",
+            "r5_pick",
+            "r6_pick",
+            "r7_pick",
+          ]
+            .map((k) => S.refs[k])
+            .filter(Boolean);
+          if (!picks.length) {
+            el.innerHTML = "";
+            return;
+          }
+          const counts = {};
+          picks.forEach((p) => {
+            counts[p] = (counts[p] || 0) + 1;
+          });
+          const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+          const max = sorted[0][1];
+          el.innerHTML = `<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 14px;margin-bottom:12px">
+  <div style="font-size:12px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">🗳️ 7次测试的投票汇总（仅供参考）</div>
+  ${sorted
+    .map(
+      ([label, cnt]) => `
+  <div style="margin-bottom:8px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+      <span style="font-size:13px;color:var(--navy);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:8px">${esc(label)}</span>
+      <span style="font-size:13px;font-weight:700;color:var(--green-dark);flex-shrink:0">${cnt} 票</span>
+    </div>
+    <div style="height:5px;background:#dcfce7;border-radius:3px;overflow:hidden">
+      <div style="height:100%;background:var(--green);border-radius:3px;width:${Math.round((cnt / max) * 100)}%;transition:width 0.3s"></div>
+    </div>
+  </div>`,
+    )
+    .join("")}
+</div>`;
+        };
+
         // ── Step 5 ──
         function renderS5() {
           const r = S.refs;
-          [
-            "r1",
-            "r2",
-            "r3",
-            "r4",
-            "r5",
-            "r6",
-            "r7",
-            "top1",
-            "top2",
-            "top3",
-          ].forEach((id) => {
-            const el = document.getElementById(id);
-            if (el) el.value = r[id] || "";
+          const opts = buildNicheOptions();
+          const tests = [
+            {
+              id: "r1",
+              icon: "🕐",
+              title: "2年测试",
+              desc: "想象你将在某个定位深耕 2-3 年。哪个让你最兴奋？哪个让你觉得「对，我能看见自己做这件事」？",
+            },
+            {
+              id: "r2",
+              icon: "🎯",
+              title: "不败测试",
+              desc: "如果你知道自己不会失败——成功是保证的——你会选哪个定位？（排除恐惧，让你看见自己真正想要的。）",
+            },
+            {
+              id: "r3",
+              icon: "🪞",
+              title: "镜子测试",
+              desc: "哪个定位最「像你」？哪个与你的价值观、你的故事、你想成为的人最契合？哪个你会自豪地告诉朋友和家人？",
+            },
+            {
+              id: "r4",
+              icon: "😬",
+              title: "恐惧检查",
+              desc: "哪个定位让你有点害怕——是那种好的害怕？有时候让我们略感紧张的事，恰恰是我们最在乎的。什么在吸引着你？",
+            },
+            {
+              id: "r5",
+              icon: "🆘",
+              title: "生存测试",
+              desc: "假设你明天失去工作和所有积蓄——但你还有技能和人脉。你需要在 30-60 天内赚到至少 1 万元。你会选哪个定位？",
+            },
+            {
+              id: "r6",
+              icon: "📞",
+              title: "人脉测试",
+              desc: "看看你的手机联系人和微信好友。在这些定位中，哪个你已经有人脉？在哪里你能拿到温热的引荐？谁会接你的电话？",
+            },
+            {
+              id: "r7",
+              icon: "🏆",
+              title: "可信度测试",
+              desc: "在哪个定位，人们会真的相信你能帮到他们？你在哪里有证明、经验或故事给你足够的可信度？",
+            },
+          ];
+
+          const body = document.getElementById("s5Body");
+          body.innerHTML = "";
+
+          tests.forEach(function ({ id, icon, title, desc }) {
+            const pickId = id + "_pick";
+            const cur = r[pickId] || "";
+            const perOptHtml = opts.length
+              ? opts
+                  .map(
+                    (o) =>
+                      `<option value="${esc(o)}"${cur === o ? " selected" : ""}>${esc(o)}</option>`,
+                  )
+                  .join("")
+              : '<option value="" disabled>（请先在第 3-4 步添加定位）</option>';
+            const div = document.createElement("div");
+            div.className = "ref-card";
+            div.innerHTML = `
+  <div class="ref-head">${icon} ${title}</div>
+  <div class="ref-body">
+    <p>${desc}</p>
+    <select id="${pickId}" onchange="S.refs['${pickId}']=this.value;updateVoteTally()"
+      style="width:100%;border:1.5px solid #e5e7eb;border-radius:8px;padding:9px 13px;font-size:14px;font-family:inherit;color:var(--navy);background:var(--beige);margin-bottom:8px;cursor:pointer">
+      <option value="">— 选择最符合的定位 —</option>
+      ${perOptHtml}
+    </select>
+    <textarea id="${id}" placeholder="写下你的理由（可选）…" oninput="S.refs['${id}']=this.value" style="min-height:60px">${esc(r[id] || "")}</textarea>
+  </div>`;
+            body.appendChild(div);
           });
+
+          // Final reflection card with vote tally
+          const fin = document.createElement("div");
+          fin.className = "ref-card final";
+          fin.innerHTML = `
+  <div class="ref-head">✨ 最终反思</div>
+  <div class="ref-body">
+    <p>根据以上回答，哪 3 个定位正在浮出水面？你的直觉在告诉你什么？</p>
+    <div id="voteTally"></div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <input type="text" id="top1" value="${esc(r.top1 || "")}" placeholder="第 1 名：" oninput="S.refs.top1=this.value">
+      <input type="text" id="top2" value="${esc(r.top2 || "")}" placeholder="第 2 名：" oninput="S.refs.top2=this.value">
+      <input type="text" id="top3" value="${esc(r.top3 || "")}" placeholder="第 3 名：" oninput="S.refs.top3=this.value">
+    </div>
+  </div>`;
+          body.appendChild(fin);
+
+          updateVoteTally();
           if (S.ai5) {
             document.getElementById("aiCard5").style.display = "block";
             document.getElementById("aiBody5").innerHTML = renderMd(S.ai5);
@@ -1783,18 +1866,26 @@ ${rows || "（暂无评分数据）"}
                 .join("\n")}`
             : "";
 
-          // Step 5: 7 tests
-          const entries = [
-            ["2年测试（是否愿意深耕2年）", r.r1],
-            ["不败测试（若收入减半是否继续）", r.r2],
-            ["镜子测试（对这个方向是否真诚）", r.r3],
-            ["恐惧检查（最担心什么）", r.r4],
-            ["生存测试（能否养活自己）", r.r5],
-            ["人脉测试（认识这领域的人吗）", r.r6],
-            ["可信度测试（凭什么让人信任你）", r.r7],
-          ]
-            .filter(([, v]) => v?.trim())
-            .map(([k, v]) => `【${k}】\n${v}`)
+          // Step 5: 7 tests (pick + reason)
+          const testDefs = [
+            { name: "2年测试（是否愿意深耕2年）", id: "r1" },
+            { name: "不败测试（若收入减半是否继续）", id: "r2" },
+            { name: "镜子测试（对这个方向是否真诚）", id: "r3" },
+            { name: "恐惧检查（最担心什么）", id: "r4" },
+            { name: "生存测试（能否养活自己）", id: "r5" },
+            { name: "人脉测试（认识这领域的人吗）", id: "r6" },
+            { name: "可信度测试（凭什么让人信任你）", id: "r7" },
+          ];
+          const entries = testDefs
+            .filter(({ id }) => r[id + "_pick"]?.trim() || r[id]?.trim())
+            .map(({ name, id }) => {
+              const pick = r[id + "_pick"]?.trim();
+              const text = r[id]?.trim();
+              let s = `【${name}】`;
+              if (pick) s += `\n选择的定位：${pick}`;
+              if (text) s += `\n理由：${text}`;
+              return s;
+            })
             .join("\n\n");
 
           const top3 =
