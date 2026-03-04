@@ -9,6 +9,22 @@
       content="基于八木仁平《如何找到想做的事》，通过卡片滑动 + AI 教练追问，发现你的喜欢 × 擅长 × 价值观交集。"
     />
     <link rel="icon" href="../assets/favicon.ico" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "如何找到想做的事",
+        "description": "基于八木仁平《如何找到想做的事》的互动探索工具，帮助大学生通过喜欢的事 × 擅长的事 × 价值观发现人生方向。",
+        "url": "https://xiaoyuanvc.com/resources/find-what-you-want.html",
+        "applicationCategory": "EducationalApplication",
+        "inLanguage": "zh-CN",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "校园VC",
+          "url": "https://xiaoyuanvc.com"
+        }
+      }
+    </script>
     <!-- GA4 -->
     <script
       async
@@ -838,6 +854,293 @@
       </div>
     </div>
 
+    <!-- ── 阶段2：擅长的事 ── -->
+    <div id="s2" class="screen">
+      <div class="container">
+        <div class="phase-header">
+          <div class="phase-badge">第二步 · 擅长的事</div>
+          <h2>你在哪些事上最有成就感？</h2>
+          <p>才能不是"我会什么"，而是"什么事让我做起来得心应手、停不下来"。</p>
+        </div>
+
+        <div class="question-card">
+          <label
+            ><span class="q-num">★</span
+            >描述你人生中最充实、最有成就感的一次经历</label
+          >
+          <p style="font-size: 12px; color: var(--gray); margin-bottom: 8px">
+            工作、学习、生活均可。尽量具体，100字以上。
+          </p>
+          <textarea
+            id="experienceInput"
+            rows="6"
+            placeholder="例如：大二时我负责组织学院的创业大赛，从零开始联系赞助商、设计赛制、拉来100多名同学参与，最后活动比预期成功很多…"
+            oninput="window.onExperienceInput()"
+          ></textarea>
+          <div class="char-hint" id="expCharHint">0 / 100字</div>
+        </div>
+
+        <div class="angles-section">
+          <button class="angles-toggle" onclick="window.toggleAngles()">
+            <span id="anglesArrow">▶</span> 可选：8个角度帮 AI
+            更准确理解你的才能
+          </button>
+          <div class="angles-grid" id="anglesGrid">
+            <div class="angle-item">
+              <label>① 当时做了什么准备？</label
+              ><textarea id="a1" rows="2"></textarea>
+            </div>
+            <div class="angle-item">
+              <label>② 那个环境有什么特点？</label
+              ><textarea id="a2" rows="2"></textarea>
+            </div>
+            <div class="angle-item">
+              <label>③ 你具体做了什么行动？</label
+              ><textarea id="a3" rows="2"></textarea>
+            </div>
+            <div class="angle-item">
+              <label>④ 你当时怎么思考的？</label
+              ><textarea id="a4" rows="2"></textarea>
+            </div>
+            <div class="angle-item">
+              <label>⑤ 你意识到了什么？</label
+              ><textarea id="a5" rows="2"></textarea>
+            </div>
+            <div class="angle-item">
+              <label>⑥ 是什么给了你动力？</label
+              ><textarea id="a6" rows="2"></textarea>
+            </div>
+            <div class="angle-item">
+              <label>⑦ 如何保持状态？</label
+              ><textarea id="a7" rows="2"></textarea>
+            </div>
+            <div class="angle-item">
+              <label>⑧ 如果重来你会怎么改进？</label
+              ><textarea id="a8" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="btn-primary"
+          id="p2SubmitBtn"
+          disabled
+          onclick="window.submitPhase2()"
+        >
+          让 AI 分析我的才能 →
+        </button>
+
+        <div class="ai-card" id="aiCard2">
+          <div class="ai-label">🤖 AI 才能分析</div>
+          <div class="ai-body" id="aiBody2"></div>
+        </div>
+
+        <button
+          class="btn-primary"
+          id="p2NextBtn"
+          style="display: none"
+          onclick="window.goPhase3()"
+        >
+          下一步：探索你的价值观 →
+        </button>
+      </div>
+    </div>
+
+    <!-- ── 阶段3：价值观 ── -->
+    <div id="s3" class="screen">
+      <div class="container">
+        <div class="phase-header">
+          <div class="phase-badge">第三步 · 价值观</div>
+          <h2>什么对你来说真正重要？</h2>
+          <p>价值观是你做选择的底层逻辑，决定你做什么事会持续有动力。</p>
+        </div>
+
+        <div class="question-card">
+          <label
+            ><span class="q-num">1</span
+            >你最尊敬的人有什么特质？（真实或虚构均可）</label
+          >
+          <textarea
+            id="v1"
+            rows="3"
+            placeholder="例如：我最尊敬马斯克，因为他愿意用全部资产赌一个几乎不可能实现的愿景…"
+            oninput="window.onValueInput()"
+          ></textarea>
+        </div>
+        <div class="question-card">
+          <label
+            ><span class="q-num">2</span
+            >某段童年经历，如何影响了你现在看重的东西？</label
+          >
+          <textarea
+            id="v2"
+            rows="3"
+            placeholder="例如：小时候家里穷，所以我特别在意财务安全感，同时也很珍视努力能改变命运这件事…"
+            oninput="window.onValueInput()"
+          ></textarea>
+        </div>
+        <div class="question-card">
+          <label
+            ><span class="q-num">3</span
+            >你觉得社会/世界有什么地方让你感到不满或愤怒？</label
+          >
+          <textarea
+            id="v3"
+            rows="3"
+            placeholder="例如：我很不满教育系统只教学生应试，却从不教他们如何思考和创造…"
+            oninput="window.onValueInput()"
+          ></textarea>
+        </div>
+        <div class="question-card">
+          <label><span class="q-num">4</span>身边朋友觉得你最看重什么？</label>
+          <textarea
+            id="v4"
+            rows="3"
+            placeholder="例如：朋友说我对「公平」很执着，也很重视说到做到…"
+            oninput="window.onValueInput()"
+          ></textarea>
+        </div>
+        <div class="question-card">
+          <label
+            ><span class="q-num">5</span
+            >如果你能教会年轻人一件事，那是什么？</label
+          >
+          <textarea
+            id="v5"
+            rows="3"
+            placeholder="例如：我会教他们如何识别真正属于自己的欲望，而不是别人强加给你的…"
+            oninput="window.onValueInput()"
+          ></textarea>
+        </div>
+
+        <button
+          class="btn-primary"
+          id="p3SubmitBtn"
+          disabled
+          onclick="window.submitPhase3()"
+        >
+          AI 提炼我的价值观关键词 →
+        </button>
+
+        <!-- 关键词选择区（AI生成后显示） -->
+        <div id="keywordsSection" style="display: none">
+          <div class="ai-card" style="display: block; margin-bottom: 16px">
+            <div class="ai-label">🤖 AI 为你提炼的价值观关键词</div>
+            <div class="ai-body" id="aiBody3">正在生成…</div>
+          </div>
+          <p style="font-size: 14px; font-weight: 600; margin-bottom: 8px">
+            从中选择最能代表你的
+            <strong style="color: var(--purple)">5个</strong>：
+          </p>
+          <div class="keyword-count">
+            已选 <span class="num" id="kwCount">0</span> / 5
+          </div>
+          <div class="keywords-grid" id="keywordsGrid"></div>
+          <div class="ai-card" id="aiCard3confirm" style="margin-top: 12px">
+            <div class="ai-label">🤖 价值观确认</div>
+            <div class="ai-body" id="aiBody3confirm"></div>
+          </div>
+          <!-- 向外翻转问题：选完5个关键词后显示 -->
+          <div class="followup-box" id="outwardBox">
+            <label>🔄 把价值观翻转成对外的影响：</label>
+            <p style="font-size: 12px; color: var(--gray); margin-bottom: 8px">
+              市场只为「你帮别人解决了什么」买单。把你的价值观朝外看一眼。
+            </p>
+            <textarea
+              id="outwardInput"
+              rows="3"
+              placeholder="例如：我想帮对Web3感兴趣却不知从何入手的大学生，系统地建立加密领域的认知框架，让他们少走弯路…"
+              oninput="window.onOutwardInput()"
+            ></textarea>
+          </div>
+          <button
+            class="btn-primary"
+            id="p3NextBtn"
+            style="display: none"
+            onclick="window.goPhase4()"
+          >
+            最后一步：发现你想做的事 →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 阶段4：综合分析 ── -->
+    <div id="s4" class="screen">
+      <div class="container">
+        <div class="phase-header">
+          <div class="phase-badge">第四步 · 你想做的事</div>
+          <h2>AI 正在整合你的三个维度</h2>
+          <p>喜欢的事 × 擅长的事，价值观为底座</p>
+        </div>
+
+        <div id="p4Loading" class="loading-full">
+          <div class="pulse"><span></span><span></span><span></span></div>
+          <p>正在为你生成专属的「想做的事」候选…</p>
+        </div>
+
+        <div id="p4Results" style="display: none">
+          <p
+            style="
+              font-size: 14px;
+              color: var(--gray);
+              margin-bottom: 16px;
+              text-align: center;
+            "
+          >
+            以下是 AI 为你生成的 3 个候选，点击最有共鸣的一个：
+          </p>
+          <div id="resultCards"></div>
+        </div>
+
+        <div id="p4Final" style="display: none">
+          <div class="final-box">
+            <h3>🎉 你想做的事</h3>
+            <div class="final-title" id="finalTitle"></div>
+            <div class="final-meta" id="finalMeta"></div>
+          </div>
+          <div class="ai-card" style="display: block; margin-top: 12px">
+            <div class="ai-label">💡 第一步可以做</div>
+            <div class="ai-body" id="finalStep"></div>
+          </div>
+
+          <!-- 变现路径区块 -->
+          <div style="margin-top: 20px">
+            <p style="font-size: 14px; font-weight: 700; margin-bottom: 12px">
+              💰 三种变现路径（手段可变，核心不散）
+            </p>
+            <div class="monetize-card" id="monoLow">
+              <div class="mono-label">🎯 低杠杆 / 高单价</div>
+              <div class="mono-body" id="monoLowBody"></div>
+            </div>
+            <div class="monetize-card" id="monoMid">
+              <div class="mono-label">🏘️ 中杠杆 / 社群型</div>
+              <div class="mono-body" id="monoMidBody"></div>
+            </div>
+            <div class="monetize-card" id="monoHigh">
+              <div class="mono-label">🚀 高杠杆 / 产品型</div>
+              <div class="mono-body" id="monoHighBody"></div>
+            </div>
+          </div>
+
+          <button class="btn-secondary" onclick="window.copyResult()">
+            📋 复制结果
+          </button>
+          <a
+            href="index.html"
+            style="
+              display: block;
+              text-align: center;
+              margin-top: 16px;
+              font-size: 14px;
+              color: var(--gray);
+            "
+            >← 返回资源中心</a
+          >
+        </div>
+      </div>
+    </div>
+
     <script>
       (function () {
         "use strict";
@@ -1052,16 +1355,435 @@
           });
         }
 
-        // callAI 占位（Task 3 实现）
-        function callAI(phase) {}
+        // ══════════════════════════════════════════════
+        // Streaming AI helper
+        // ══════════════════════════════════════════════
+        async function streamAI(prompt, bodyEl) {
+          bodyEl.innerHTML =
+            '<div style="display:flex;align-items:center;gap:8px;color:var(--gray)">' +
+            '<div class="pulse"><span></span><span></span><span></span></div> AI 分析中…</div>';
+          try {
+            var res = await fetch(PROXY_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                model: "glm-4-flash",
+                messages: [{ role: "user", content: prompt }],
+                stream: true,
+              }),
+            });
+            if (!res.ok) throw new Error("API \u9519\u8BEF " + res.status);
+            var reader = res.body.getReader();
+            var decoder = new TextDecoder();
+            var full = "";
+            bodyEl.textContent = "";
+            while (true) {
+              var chunk = await reader.read();
+              if (chunk.done) break;
+              var lines = decoder
+                .decode(chunk.value, { stream: true })
+                .split("\n");
+              for (var li = 0; li < lines.length; li++) {
+                var line = lines[li];
+                if (
+                  !line.startsWith("data: ") ||
+                  line.trim() === "data: [DONE]"
+                )
+                  continue;
+                try {
+                  var delta =
+                    JSON.parse(line.slice(6)).choices[0].delta.content || "";
+                  full += delta;
+                  bodyEl.textContent = full;
+                } catch (e) {
+                  /* ignore parse errors */
+                }
+              }
+            }
+            return full;
+          } catch (err) {
+            bodyEl.textContent =
+              "\u26A0\uFE0F \u51FA\u9519\u4E86\uFF1A" + err.message;
+            return "";
+          }
+        }
 
-        // 追问输入占位（Task 3 实现）
-        window.onFollowupInput = function () {};
+        // ══════════════════════════════════════════════
+        // callAI dispatcher
+        // ══════════════════════════════════════════════
+        async function callAI(phase) {
+          if (phase === 1) {
+            var likeList =
+              S.likes.length > 0
+                ? S.likes.join("\u3001")
+                : "\uFF08\u7528\u6237\u672A\u9009\u62E9\u4EFB\u4F55\u9879\uFF09";
+            var prompt =
+              "\u7528\u6237\u5728\u201C\u559C\u6B22\u7684\u4E8B\u201D\u63A2\u7D22\u4E2D\uFF0C\u53F3\u6ED1\uFF08\u559C\u6B22\uFF09\u4E86\u4EE5\u4E0B\u5185\u5BB9\uFF1A" +
+              likeList +
+              "\n\u8BF7\u505A\u4E24\u4EF6\u4E8B\uFF1A\n1. \u7528\u0031\u53E5\u8BDD\u70B9\u51FA\u7528\u6237\u70ED\u60C5\u7684\u6838\u5FC3\u4E3B\u9898\n2. \u95EE\u4E00\u4E2A\u8FFD\u95EE\uFF1A\u300C\u6211\u6CE8\u610F\u5230\u4F60\u5BF9[\u67D0\u7C7B]\u5F88\u611F\u5174\u8DA3\uFF0C\u8FD9\u662F\u56E0\u4E3A\u5B83\u8BA9\u4F60\u611F\u5230[A]\u8FD8\u662F[B]\uFF1F\u300D\n\u8BED\u6C14\u50CF\u670B\u53CB\uFF0C\u4E0D\u8D85\u8FC780\u5B57\u3002";
+            var card = document.getElementById("aiCard1");
+            var body = document.getElementById("aiBody1");
+            card.style.display = "block";
+            S.phase1AI = await streamAI(prompt, body);
+            document.getElementById("followupBox").style.display = "block";
+          } else if (phase === 2) {
+            var anglesText = Object.values(S.angles)
+              .filter(function (v) {
+                return v;
+              })
+              .join("\n");
+            var prompt2 =
+              "\u7528\u6237\u5206\u4EAB\u4E86\u6700\u5145\u5B9E\u7684\u7ECF\u5386\uFF1A\n" +
+              S.experience +
+              (anglesText
+                ? "\n\n\u8865\u5145\u4FE1\u606F\uFF088\u89D2\u5EA6\uFF09\uFF1A\n" +
+                  anglesText
+                : "") +
+              "\n\n\u8BF7\uFF1A\n1. \u63D0\u70BC3-4\u4E2A\u624D\u80FD\u5173\u952E\u8BCD\uFF08\u52A8\u8BCD\u77ED\u8BED\u5F62\u5F0F\uFF0C\u5982\u300C\u7ED3\u6784\u5316\u601D\u8003\u300D\u300C\u611F\u67D3\u4ED6\u4EBA\u300D\u300C\u7CFB\u7EDF\u642D\u5EFA\u300D\uFF09\n2. \u4E00\u53E5\u8BDD\u8BF4\u660E\u4E3A\u4EC0\u4E48\u8FD9\u662F\u4ED6\u7684\u624D\u80FD\n\n\u4E0D\u8D85\u8FC7120\u5B57\u3002";
+            var card2 = document.getElementById("aiCard2");
+            var body2 = document.getElementById("aiBody2");
+            card2.style.display = "block";
+            S.phase2AI = await streamAI(prompt2, body2);
+          } else if (phase === 3) {
+            var valText = S.valueAnswers
+              .map(function (a, i) {
+                return "Q" + (i + 1) + ": " + a;
+              })
+              .join("\n");
+            var prompt3 =
+              "\u524D\u4E24\u8F6E\u5206\u6790\uFF1A\n- \u559C\u6B22\u7684\u4E8B\u6838\u5FC3\uFF1A" +
+              S.phase1AI +
+              "\uFF0C\u7528\u6237\u8FFD\u95EE\u56DE\u7B54\uFF1A" +
+              S.followupAnswer +
+              "\n- \u64C5\u957F\u7684\u624D\u80FD\uFF1A" +
+              S.phase2AI +
+              "\n\n\u7528\u6237\u56DE\u7B54\u4E865\u9053\u4EF7\u503C\u89C2\u95EE\u9898\uFF1A\n" +
+              valText +
+              "\n\n\u8BF7\u751F\u621012-15\u4E2A\u4EF7\u503C\u89C2\u5173\u952E\u8BCD\uFF082-4\u5B57\uFF0C\u4E2D\u6587\uFF09\uFF0C\u7528\u4E8E\u7528\u6237\u70B9\u9009\u3002\n\u683C\u5F0F\uFF1A\u53EA\u8F93\u51FA\u5173\u952E\u8BCD\uFF0C\u7528\u4E2D\u6587\u987F\u53F7\u300C\u3001\u300D\u5206\u9694\uFF0C\u4E0D\u6DFB\u52A0\u4EFB\u4F55\u5176\u4ED6\u6587\u5B57\u3002\n\u793A\u4F8B\uFF1A\u81EA\u7531\u3001\u5F71\u54CD\u529B\u3001\u521B\u9020\u3001\u7A33\u5B9A\u3001\u63A2\u7D22\u3001\u516C\u5E73\u3001\u6210\u957F\u3001\u8D21\u732E";
+
+            document.getElementById("p3SubmitBtn").style.display = "none";
+            document.getElementById("keywordsSection").style.display = "block";
+            var body3 = document.getElementById("aiBody3");
+            var raw = await streamAI(prompt3, body3);
+            S.allKeywords = raw
+              .split(/[\u3001,\uFF0C\s]+/)
+              .map(function (k) {
+                return k.trim();
+              })
+              .filter(function (k) {
+                return k.length >= 2 && k.length <= 6;
+              });
+            var grid = document.getElementById("keywordsGrid");
+            grid.innerHTML = S.allKeywords
+              .map(function (kw) {
+                return (
+                  '<button class="keyword-chip" onclick="window.selectKeyword(this,\'' +
+                  kw +
+                  "')\">" +
+                  kw +
+                  "</button>"
+                );
+              })
+              .join("");
+            body3.textContent =
+              "\u8BF7\u4ECE\u4E0B\u65B9\u9009\u62E9\u6700\u80FD\u4EE3\u8868\u4F60\u7684 5 \u4E2A\u5173\u952E\u8BCD\uFF1A";
+          } else if (phase === 4) {
+            var prompt4 =
+              "\u4EE5\u4E0B\u662F\u7528\u6237\u7684\u81EA\u6211\u63A2\u7D22\u7ED3\u679C\uFF1A\n\n\u559C\u6B22\u7684\u4E8B\uFF08\u53F3\u6ED1\u9009\u9879\uFF09\uFF1A" +
+              (S.likes.join("\u3001") || "\u672A\u9009\u62E9") +
+              "\n\u70ED\u60C5\u6838\u5FC3\uFF08AI\u5206\u6790\uFF09\uFF1A" +
+              S.phase1AI +
+              "\n\u8FFD\u95EE\u56DE\u7B54\uFF1A" +
+              S.followupAnswer +
+              "\n\n\u64C5\u957F\u7684\u4E8B\uFF08\u7ECF\u5386\u6458\u8981\uFF09\uFF1A" +
+              S.experience.slice(0, 200) +
+              "\n\u624D\u80FD\u5173\u952E\u8BCD\uFF08AI\u5206\u6790\uFF09\uFF1A" +
+              S.phase2AI +
+              "\n\n\u4EF7\u503C\u89C2\u5173\u952E\u8BCD\uFF08\u7528\u6237\u9009\u62E9\uFF09\uFF1A" +
+              S.selectedKeywords.join("\u3001") +
+              "\n\u4EF7\u503C\u89C2\u786E\u8BA4\uFF08AI\u5206\u6790\uFF09\uFF1A" +
+              S.phase3AI +
+              "\n\u5411\u5916\u4EF7\u503C\u89C2\uFF08\u7528\u6237\u81EA\u8FF0\uFF09\uFF1A" +
+              S.outwardValue +
+              "\n\n\u8BF7\u4E25\u683C\u6309\u4EE5\u4E0B\u683C\u5F0F\u8F93\u51FA\uFF0C\u5171\u4E24\u90E8\u5206\uFF1A\n\n\u7B2C\u4E00\u90E8\u5206\uFF1A3\u4E2A\u300C\u60F3\u505A\u7684\u4E8B\u300D\u5019\u9009\n\n\u3010\u5019\u9009\u4E00\u3011\n\u6807\u9898\uFF1A[\u559C\u6B22\u7684X] \u00D7 [\u64C5\u957F\u7684Y]\n\u4E3A\u4EC0\u4E48\u9002\u5408\u4F60\uFF1A[2\u53E5\u8BDD\uFF0C\u7ED3\u5408\u7528\u6237\u4EF7\u503C\u89C2\u548C\u5411\u5916\u76EE\u7684]\n\u7B2C\u4E00\u6B65\u53EF\u4EE5\u505A\uFF1A[\u5177\u4F53\u53EF\u6267\u884C\u7684\u6700\u5C0F\u884C\u52A8\uFF0C\u4E0D\u8D85\u8FC720\u5B57]\n\n\u3010\u5019\u9009\u4E8C\u3011\n\u6807\u9898\uFF1A[\u559C\u6B22\u7684X] \u00D7 [\u64C5\u957F\u7684Y]\n\u4E3A\u4EC0\u4E48\u9002\u5408\u4F60\uFF1A[2\u53E5\u8BDD\uFF0C\u7ED3\u5408\u7528\u6237\u4EF7\u503C\u89C2\u548C\u5411\u5916\u76EE\u7684]\n\u7B2C\u4E00\u6B65\u53EF\u4EE5\u505A\uFF1A[\u5177\u4F53\u53EF\u6267\u884C\u7684\u6700\u5C0F\u884C\u52A8\uFF0C\u4E0D\u8D85\u8FC720\u5B57]\n\n\u3010\u5019\u9009\u4E09\u3011\n\u6807\u9898\uFF1A[\u559C\u6B22\u7684X] \u00D7 [\u64C5\u957F\u7684Y]\n\u4E3A\u4EC0\u4E48\u9002\u5408\u4F60\uFF1A[2\u53E5\u8BDD\uFF0C\u7ED3\u5408\u7528\u6237\u4EF7\u503C\u89C2\u548C\u5411\u5916\u76EE\u7684]\n\u7B2C\u4E00\u6B65\u53EF\u4EE5\u505A\uFF1A[\u5177\u4F53\u53EF\u6267\u884C\u7684\u6700\u5C0F\u884C\u52A8\uFF0C\u4E0D\u8D85\u8FC720\u5B57]\n\n\u7B2C\u4E8C\u90E8\u5206\uFF1A\u53D8\u73B0\u8DEF\u5F84\uFF08\u57FA\u4E8E\u7528\u6237\u7684\u300C\u60F3\u505A\u7684\u4E8B\u300D\u6838\u5FC3\uFF0C\u7ED9\u51FA3\u79CD\u7075\u6D3B\u8F7D\u4F53\uFF09\n\n\u3010\u53D8\u73B0\u8DEF\u5F84\u3011\n\u4F4E\u6760\u6746/\u9AD8\u5355\u4EF7\uFF1A[\u5177\u4F53\u5F62\u5F0F\uFF0C15\u5B57\u4EE5\u5185]\n\u4E2D\u6760\u6746/\u793E\u7FA4\u578B\uFF1A[\u5177\u4F53\u5F62\u5F0F\uFF0C15\u5B57\u4EE5\u5185]\n\u9AD8\u6760\u6746/\u4EA7\u54C1\u578B\uFF1A[\u5177\u4F53\u5F62\u5F0F\uFF0C15\u5B57\u4EE5\u5185]\n\n\u8BED\u6C14\u771F\u8BDA\uFF0C\u50CF\u4E00\u4E2A\u4E86\u89E3\u7528\u6237\u7684\u670B\u53CB\u3002";
+
+            var tempDiv = document.createElement("div");
+            tempDiv.style.position = "absolute";
+            tempDiv.style.left = "-9999px";
+            document.body.appendChild(tempDiv);
+            var full = await streamAI(prompt4, tempDiv);
+            document.body.removeChild(tempDiv);
+            S.finalCandidates = parseCandidates(full);
+            renderResults();
+          }
+        }
+
+        // ══════════════════════════════════════════════
+        // Phase 1 followup
+        // ══════════════════════════════════════════════
+        window.onFollowupInput = function () {
+          var val = document.getElementById("followupInput").value.trim();
+          var btn = document.getElementById("p1NextBtn");
+          btn.style.display = val.length >= 5 ? "block" : "none";
+        };
+
         window.submitPhase1Followup = function () {
           S.followupAnswer = document
             .getElementById("followupInput")
             .value.trim();
-          // 后续 Task 实现跳转
+          showPhase(2);
+          renderPhase2();
+        };
+
+        // ══════════════════════════════════════════════
+        // Phase 2 logic
+        // ══════════════════════════════════════════════
+        function renderPhase2() {
+          document.getElementById("experienceInput").value = S.experience;
+          updateExpChar();
+        }
+
+        window.onExperienceInput = function () {
+          S.experience = document.getElementById("experienceInput").value;
+          updateExpChar();
+          document.getElementById("p2SubmitBtn").disabled =
+            S.experience.trim().length < 100;
+        };
+
+        function updateExpChar() {
+          var len = (S.experience || "").trim().length;
+          var hint = document.getElementById("expCharHint");
+          hint.textContent = len + " / 100\u5B57";
+          hint.className = "char-hint" + (len >= 100 ? " ok" : "");
+        }
+
+        window.toggleAngles = function () {
+          var grid = document.getElementById("anglesGrid");
+          var arrow = document.getElementById("anglesArrow");
+          var isOpen = grid.classList.contains("open");
+          grid.classList.toggle("open", !isOpen);
+          arrow.textContent = isOpen ? "\u25B6" : "\u25BC";
+        };
+
+        window.submitPhase2 = async function () {
+          for (var i = 1; i <= 8; i++) {
+            S.angles["q" + i] = document.getElementById("a" + i).value.trim();
+          }
+          document.getElementById("p2SubmitBtn").disabled = true;
+          document.getElementById("p2SubmitBtn").innerHTML =
+            '<div class="pulse"><span></span><span></span><span></span></div> AI \u5206\u6790\u4E2D\u2026';
+          await callAI(2);
+          document.getElementById("p2SubmitBtn").style.display = "none";
+          document.getElementById("p2NextBtn").style.display = "block";
+        };
+
+        window.goPhase3 = function () {
+          showPhase(3);
+          renderPhase3();
+        };
+
+        // ══════════════════════════════════════════════
+        // Phase 3 logic
+        // ══════════════════════════════════════════════
+        function renderPhase3() {
+          for (var i = 1; i <= 5; i++) {
+            document.getElementById("v" + i).value =
+              S.valueAnswers[i - 1] || "";
+          }
+          checkPhase3Ready();
+        }
+
+        window.onValueInput = function () {
+          for (var i = 1; i <= 5; i++) {
+            S.valueAnswers[i - 1] = document
+              .getElementById("v" + i)
+              .value.trim();
+          }
+          checkPhase3Ready();
+        };
+
+        function checkPhase3Ready() {
+          var filled = S.valueAnswers.filter(function (v) {
+            return v.length >= 10;
+          }).length;
+          document.getElementById("p3SubmitBtn").disabled = filled < 3;
+        }
+
+        window.submitPhase3 = async function () {
+          document.getElementById("p3SubmitBtn").disabled = true;
+          document.getElementById("p3SubmitBtn").innerHTML =
+            '<div class="pulse"><span></span><span></span><span></span></div> AI \u63D0\u70BC\u4E2D\u2026';
+          await callAI(3);
+        };
+
+        window.selectKeyword = function (el, keyword) {
+          var already = el.classList.contains("selected");
+          if (!already && S.selectedKeywords.length >= 5) return;
+          el.classList.toggle("selected", !already);
+          if (already) {
+            S.selectedKeywords = S.selectedKeywords.filter(function (k) {
+              return k !== keyword;
+            });
+          } else {
+            S.selectedKeywords.push(keyword);
+          }
+          document.getElementById("kwCount").textContent =
+            S.selectedKeywords.length;
+          if (S.selectedKeywords.length === 5) {
+            showValueConfirm();
+          } else {
+            document.getElementById("aiCard3confirm").style.display = "none";
+            document.getElementById("outwardBox").style.display = "none";
+            document.getElementById("p3NextBtn").style.display = "none";
+          }
+        };
+
+        async function showValueConfirm() {
+          var card = document.getElementById("aiCard3confirm");
+          var body = document.getElementById("aiBody3confirm");
+          card.style.display = "block";
+          var prompt =
+            "\u7528\u6237\u4ECE\u4EF7\u503C\u89C2\u5173\u952E\u8BCD\u4E2D\u9009\u62E9\u4E86\uFF1A" +
+            S.selectedKeywords.join("\u3001") +
+            "\n\u7ED3\u5408\u524D\u4E24\u8F6E\u5206\u6790\uFF1A\n- \u559C\u6B22\u7684\u4E8B\uFF1A" +
+            S.phase1AI +
+            "\n- \u64C5\u957F\u7684\u624D\u80FD\uFF1A" +
+            S.phase2AI +
+            "\n\n\u8BF7\u75281-2\u53E5\u8BDD\u786E\u8BA4\u7528\u6237\u7684\u4EF7\u503C\u89C2\u5E95\u5EA7\uFF0C\u8BA9\u7528\u6237\u611F\u5230\u300C\u88AB\u770B\u89C1\u300D\u3002\u4E0D\u8D85\u8FC760\u5B57\u3002";
+          S.phase3AI = await streamAI(prompt, body);
+          document.getElementById("outwardBox").style.display = "block";
+        }
+
+        window.onOutwardInput = function () {
+          var val = document.getElementById("outwardInput").value.trim();
+          S.outwardValue = val;
+          document.getElementById("p3NextBtn").style.display =
+            val.length >= 10 ? "block" : "none";
+        };
+
+        window.goPhase4 = function () {
+          S.outwardValue = document.getElementById("outwardInput").value.trim();
+          showPhase(4);
+          callAI(4);
+        };
+
+        // ══════════════════════════════════════════════
+        // Phase 4 parsing and rendering
+        // ══════════════════════════════════════════════
+        function parseCandidates(raw) {
+          var results = [];
+          var candidateSection = raw.split(
+            "\u3010\u53D8\u73B0\u8DEF\u5F84\u3011",
+          )[0];
+          var blocks = candidateSection
+            .split(/\u3010\u5019\u9009[\u4E00\u4E8C\u4E09]\u3011/)
+            .filter(function (b) {
+              return b.trim();
+            });
+          for (var bi = 0; bi < blocks.length; bi++) {
+            var block = blocks[bi];
+            var titleMatch = block.match(/\u6807\u9898\uFF1A(.+)/);
+            var whyMatch = block.match(
+              /\u4E3A\u4EC0\u4E48\u9002\u5408\u4F60\uFF1A([\s\S]+?)(?=\u7B2C\u4E00\u6B65|$)/,
+            );
+            var stepMatch = block.match(
+              /\u7B2C\u4E00\u6B65\u53EF\u4EE5\u505A\uFF1A(.+)/,
+            );
+            if (titleMatch) {
+              results.push({
+                title: titleMatch[1].trim(),
+                why: whyMatch ? whyMatch[1].trim() : "",
+                step: stepMatch ? stepMatch[1].trim() : "",
+              });
+            }
+          }
+          var monoSection =
+            raw.split("\u3010\u53D8\u73B0\u8DEF\u5F84\u3011")[1] || "";
+          var lowMatch = monoSection.match(
+            /\u4F4E\u6760\u6746[^\uFF1A]*\uFF1A(.+)/,
+          );
+          var midMatch = monoSection.match(
+            /\u4E2D\u6760\u6746[^\uFF1A]*\uFF1A(.+)/,
+          );
+          var highMatch = monoSection.match(
+            /\u9AD8\u6760\u6746[^\uFF1A]*\uFF1A(.+)/,
+          );
+          S.monetization = {
+            low: lowMatch ? lowMatch[1].trim() : "",
+            mid: midMatch ? midMatch[1].trim() : "",
+            high: highMatch ? highMatch[1].trim() : "",
+          };
+          return results;
+        }
+
+        function renderMonetization() {
+          if (!S.monetization) return;
+          document.getElementById("monoLowBody").textContent =
+            S.monetization.low;
+          document.getElementById("monoMidBody").textContent =
+            S.monetization.mid;
+          document.getElementById("monoHighBody").textContent =
+            S.monetization.high;
+        }
+
+        function renderResults() {
+          document.getElementById("p4Loading").style.display = "none";
+          var container = document.getElementById("resultCards");
+          container.innerHTML = S.finalCandidates
+            .map(function (c, i) {
+              return (
+                '<div class="result-card" onclick="window.selectResult(' +
+                i +
+                ')">' +
+                '<div class="rc-title">' +
+                c.title +
+                "</div>" +
+                '<div class="rc-why">' +
+                c.why +
+                "</div>" +
+                '<div class="rc-step">' +
+                c.step +
+                "</div>" +
+                "</div>"
+              );
+            })
+            .join("");
+          document.getElementById("p4Results").style.display = "block";
+        }
+
+        window.selectResult = function (i) {
+          S.chosenIndex = i;
+          document.querySelectorAll(".result-card").forEach(function (el, idx) {
+            el.classList.toggle("chosen", idx === i);
+          });
+          var c = S.finalCandidates[i];
+          document.getElementById("finalTitle").textContent = c.title;
+          document.getElementById("finalMeta").textContent =
+            "\u57FA\u4E8E\u4F60\u7684\u559C\u6B22 \u00D7 \u64C5\u957F \u00D7 \u4EF7\u503C\u89C2";
+          document.getElementById("finalStep").textContent = c.step;
+          document.getElementById("p4Results").style.display = "none";
+          document.getElementById("p4Final").style.display = "block";
+          renderMonetization();
+        };
+
+        window.copyResult = function () {
+          if (S.chosenIndex < 0) return;
+          var c = S.finalCandidates[S.chosenIndex];
+          var text =
+            "\u6211\u60F3\u505A\u7684\u4E8B\uFF1A" +
+            c.title +
+            "\n\n" +
+            c.why +
+            "\n\n\u7B2C\u4E00\u6B65\uFF1A" +
+            c.step +
+            "\n\n\u2014\u2014 \u901A\u8FC7\u300C\u5982\u4F55\u627E\u5230\u60F3\u505A\u7684\u4E8B\u300D\u4E92\u52A8\u5DE5\u5177 @ \u6821\u56EDVC";
+          navigator.clipboard.writeText(text).then(function () {
+            var btn = document.querySelector(".btn-secondary");
+            btn.textContent = "\u2705 \u5DF2\u590D\u5236\uFF01";
+            setTimeout(function () {
+              btn.textContent = "\uD83D\uDCCB \u590D\u5236\u7ED3\u679C";
+            }, 2000);
+          });
         };
       })();
     </script>
