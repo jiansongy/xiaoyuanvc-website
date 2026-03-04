@@ -768,14 +768,300 @@
       </div>
     </div>
 
+    <!-- 阶段1：喜欢的事 -->
+    <div id="s1" class="screen">
+      <div class="container">
+        <a
+          href="#"
+          onclick="
+            window.goWelcome();
+            return false;
+          "
+          class="back-link"
+          >← 重新开始</a
+        >
+        <div class="phase-header">
+          <div class="phase-badge">第一步 · 喜欢的事</div>
+          <h2>你对什么感兴趣？</h2>
+          <p>左滑「无感」，右滑「喜欢」。不用想太多，相信第一感觉。</p>
+        </div>
+        <div class="swipe-hint">
+          <span>← 无感</span>
+          <span>喜欢 →</span>
+        </div>
+        <div class="card-arena" id="cardArena"></div>
+        <div class="card-progress">
+          <span class="num" id="cardCurrent">1</span> /
+          <span id="cardTotal">40</span>
+        </div>
+        <div class="card-btns">
+          <button
+            class="btn-nope"
+            onclick="window.swipeCard('left')"
+            title="无感 (←)"
+          >
+            ✗
+          </button>
+          <button
+            class="btn-like"
+            onclick="window.swipeCard('right')"
+            title="喜欢 (→)"
+          >
+            ♥
+          </button>
+        </div>
+        <div class="likes-result" id="likesResult">
+          <h3>你喜欢的（<span id="likeCount">0</span>项）</h3>
+          <div class="tags-wrap" id="likesTags"></div>
+        </div>
+        <div class="ai-card" id="aiCard1">
+          <div class="ai-label">🤖 AI 分析</div>
+          <div class="ai-body" id="aiBody1"></div>
+        </div>
+        <div class="followup-box" id="followupBox">
+          <label>你的回答：</label>
+          <textarea
+            id="followupInput"
+            rows="3"
+            placeholder="写下你的想法…"
+            oninput="window.onFollowupInput()"
+          ></textarea>
+        </div>
+        <button
+          class="btn-primary"
+          id="p1NextBtn"
+          style="display: none"
+          onclick="window.submitPhase1Followup()"
+        >
+          下一步：发现你的才能 →
+        </button>
+      </div>
+    </div>
+
     <script>
       (function () {
         "use strict";
         const PROXY_URL = "https://glm-proxy-snowy.vercel.app/api/glm-proxy";
 
+        const CARDS = [
+          { id: "c1", emoji: "✍️", text: "创作内容/故事" },
+          { id: "c2", emoji: "🎨", text: "设计视觉作品" },
+          { id: "c3", emoji: "📝", text: "写作/文字表达" },
+          { id: "c4", emoji: "🎬", text: "拍摄/剪辑视频" },
+          { id: "c5", emoji: "🛠️", text: "开发产品/工具" },
+          { id: "c6", emoji: "🎵", text: "做音乐/艺术创作" },
+          { id: "e1", emoji: "🔭", text: "探索未知领域" },
+          { id: "e2", emoji: "🔬", text: "研究学术问题" },
+          { id: "e3", emoji: "📊", text: "分析数据找规律" },
+          { id: "e4", emoji: "📚", text: "阅读/深度学习" },
+          { id: "e5", emoji: "🌐", text: "追踪行业前沿" },
+          { id: "e6", emoji: "🧩", text: "解开复杂谜题" },
+          { id: "p1", emoji: "🤝", text: "帮助他人解决问题" },
+          { id: "p2", emoji: "🎓", text: "传授知识/教学" },
+          { id: "p3", emoji: "🎤", text: "演讲/公开表达" },
+          { id: "p4", emoji: "🏘️", text: "组织活动/社群" },
+          { id: "p5", emoji: "👂", text: "倾听与陪伴他人" },
+          { id: "p6", emoji: "🔗", text: "建立人脉/连接" },
+          { id: "b1", emoji: "💻", text: "编写代码/程序" },
+          { id: "b2", emoji: "⚙️", text: "搭建系统/流程" },
+          { id: "b3", emoji: "💼", text: "创业/做生意" },
+          { id: "b4", emoji: "📋", text: "管理项目/团队" },
+          { id: "b5", emoji: "⚡", text: "优化效率/改进流程" },
+          { id: "b6", emoji: "♟️", text: "制定策略/计划" },
+          { id: "k1", emoji: "🏆", text: "挑战自我极限" },
+          { id: "k2", emoji: "🥇", text: "赢得竞争/比赛" },
+          { id: "k3", emoji: "🗣️", text: "谈判/说服他人" },
+          { id: "k4", emoji: "✨", text: "追求卓越/完美" },
+          { id: "k5", emoji: "🎯", text: "承担风险/冒险" },
+          { id: "k6", emoji: "⚡", text: "快速做决策" },
+          { id: "x1", emoji: "✈️", text: "旅行/体验新文化" },
+          { id: "x2", emoji: "🏃", text: "运动/身体训练" },
+          { id: "x3", emoji: "🌍", text: "关注社会议题" },
+          { id: "x4", emoji: "💪", text: "推动公益/改变世界" },
+          { id: "x5", emoji: "🌿", text: "慢下来/享受过程" },
+          { id: "x6", emoji: "🧘", text: "独处/内省思考" },
+          { id: "m1", emoji: "💰", text: "商业谈判/赚钱" },
+          { id: "m2", emoji: "🌱", text: "培养/孵化新想法" },
+          { id: "m3", emoji: "🔍", text: "发现被忽视的真相" },
+          { id: "m4", emoji: "🎭", text: "表演/角色扮演" },
+        ];
+
+        const S = {
+          phase: 0,
+          cardIndex: 0,
+          likes: [],
+          phase1AI: "",
+          followupAnswer: "",
+          experience: "",
+          angles: {
+            q1: "",
+            q2: "",
+            q3: "",
+            q4: "",
+            q5: "",
+            q6: "",
+            q7: "",
+            q8: "",
+          },
+          phase2AI: "",
+          valueAnswers: ["", "", "", "", ""],
+          allKeywords: [],
+          selectedKeywords: [],
+          phase3AI: "",
+          outwardValue: "",
+          finalCandidates: [],
+          monetization: null,
+          chosenIndex: -1,
+        };
+
+        function showPhase(n) {
+          document.querySelectorAll(".screen").forEach(function (el) {
+            el.classList.remove("on");
+          });
+          document.getElementById("s" + n).classList.add("on");
+          S.phase = n;
+          var pw = document.getElementById("progressWrap");
+          pw.style.display = n > 0 ? "block" : "none";
+          if (n > 0) {
+            document.getElementById("phaseLabel").textContent =
+              "阶段 " + n + " / 4";
+            document.getElementById("phaseCount").textContent = n + " / 4";
+            document.getElementById("progressFill").style.width = n * 25 + "%";
+          }
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
         window.startApp = function () {
-          // 后续实现
-          alert("即将实现");
+          showPhase(1);
+          renderCard();
+        };
+
+        window.goWelcome = function () {
+          showPhase(0);
+        };
+
+        function renderCard() {
+          var arena = document.getElementById("cardArena");
+          if (S.cardIndex >= CARDS.length) {
+            arena.innerHTML =
+              '<div style="text-align:center;padding:20px;color:var(--gray);font-size:14px">全部完成！</div>';
+            showLikesResult();
+            callAI(1);
+            return;
+          }
+          var card = CARDS[S.cardIndex];
+          arena.innerHTML =
+            '<div class="swipe-card" id="currentCard"><div class="card-emoji">' +
+            card.emoji +
+            '</div><div class="card-text">' +
+            card.text +
+            "</div></div>";
+          document.getElementById("cardCurrent").textContent = S.cardIndex + 1;
+          initCardDrag();
+        }
+
+        function showLikesResult() {
+          var box = document.getElementById("likesResult");
+          box.style.display = "block";
+          document.getElementById("likeCount").textContent = S.likes.length;
+          var wrap = document.getElementById("likesTags");
+          wrap.innerHTML = S.likes.length
+            ? S.likes
+                .map(function (t) {
+                  return '<span class="tag">' + t + "</span>";
+                })
+                .join("")
+            : '<span style="color:var(--gray);font-size:13px">你没有选择任何项，AI 会根据这个来分析</span>';
+        }
+
+        window.swipeCard = function (dir) {
+          if (S.cardIndex >= CARDS.length) return;
+          var card = document.getElementById("currentCard");
+          if (!card) return;
+          if (dir === "right") {
+            S.likes.push(CARDS[S.cardIndex].text);
+            card.classList.add("swipe-right");
+          } else {
+            card.classList.add("swipe-left");
+          }
+          setTimeout(function () {
+            S.cardIndex++;
+            renderCard();
+          }, 280);
+        };
+
+        document.addEventListener("keydown", function (e) {
+          if (S.phase !== 1) return;
+          if (e.key === "ArrowRight") window.swipeCard("right");
+          if (e.key === "ArrowLeft") window.swipeCard("left");
+        });
+
+        function initCardDrag() {
+          var card = document.getElementById("currentCard");
+          if (!card) return;
+          var startX = 0,
+            isDragging = false;
+
+          function onStart(x) {
+            startX = x;
+            isDragging = true;
+          }
+          function onMove(x) {
+            if (!isDragging) return;
+            var dx = x - startX;
+            card.style.transform =
+              "translateX(" + dx + "px) rotate(" + dx * 0.05 + "deg)";
+          }
+          function onEnd(x) {
+            if (!isDragging) return;
+            isDragging = false;
+            card.style.transform = "";
+            var dx = x - startX;
+            if (dx > 60) window.swipeCard("right");
+            else if (dx < -60) window.swipeCard("left");
+          }
+
+          card.addEventListener("mousedown", function (e) {
+            onStart(e.clientX);
+          });
+          card.addEventListener("mousemove", function (e) {
+            onMove(e.clientX);
+          });
+          card.addEventListener("mouseup", function (e) {
+            onEnd(e.clientX);
+          });
+          card.addEventListener("mouseleave", function (e) {
+            if (isDragging) onEnd(e.clientX);
+          });
+          card.addEventListener(
+            "touchstart",
+            function (e) {
+              onStart(e.touches[0].clientX);
+            },
+            { passive: true },
+          );
+          card.addEventListener(
+            "touchmove",
+            function (e) {
+              onMove(e.touches[0].clientX);
+            },
+            { passive: true },
+          );
+          card.addEventListener("touchend", function (e) {
+            onEnd(e.changedTouches[0].clientX);
+          });
+        }
+
+        // callAI 占位（Task 3 实现）
+        function callAI(phase) {}
+
+        // 追问输入占位（Task 3 实现）
+        window.onFollowupInput = function () {};
+        window.submitPhase1Followup = function () {
+          S.followupAnswer = document
+            .getElementById("followupInput")
+            .value.trim();
+          // 后续 Task 实现跳转
         };
       })();
     </script>
