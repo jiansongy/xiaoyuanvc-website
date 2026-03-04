@@ -747,7 +747,29 @@
 
     <!-- 欢迎页 -->
     <div id="s0" class="screen on">
-      <div class="welcome-header">
+      <div class="welcome-header" style="position: relative">
+        <a
+          href="https://xiaoyuanvc.com"
+          style="
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            align-items: center;
+          "
+        >
+          <img
+            src="../assets/logo-color.png"
+            alt="校园VC"
+            style="
+              height: 32px;
+              background: white;
+              border-radius: 6px;
+              padding: 3px 8px;
+              display: block;
+            "
+          />
+        </a>
         <div style="font-size: 40px; margin-bottom: 12px">🌱</div>
         <h1>如何找到想做的事</h1>
         <p>基于八木仁平同名书籍的互动探索工具</p>
@@ -1248,6 +1270,9 @@
           if (S.cardIndex >= CARDS.length) {
             arena.innerHTML =
               '<div style="text-align:center;padding:20px;color:var(--gray);font-size:14px">全部完成！</div>';
+            document.querySelector(".card-btns").style.display = "none";
+            document.querySelector(".swipe-hint").style.display = "none";
+            document.querySelector(".card-progress").style.display = "none";
             showLikesResult();
             callAI(1);
             return;
@@ -1402,8 +1427,7 @@
             }
             return full;
           } catch (err) {
-            bodyEl.textContent =
-              "⚠️ 出错了：" + err.message;
+            bodyEl.textContent = "⚠️ 出错了：" + err.message;
             return "";
           }
         }
@@ -1414,9 +1438,7 @@
         async function callAI(phase) {
           if (phase === 1) {
             var likeList =
-              S.likes.length > 0
-                ? S.likes.join("、")
-                : "（用户未选择任何项）";
+              S.likes.length > 0 ? S.likes.join("、") : "（用户未选择任何项）";
             var prompt =
               "用户在“喜欢的事”探索中，右滑（喜欢）了以下内容：" +
               likeList +
@@ -1426,6 +1448,7 @@
             card.style.display = "block";
             S.phase1AI = await streamAI(prompt, body);
             document.getElementById("followupBox").style.display = "block";
+            document.getElementById("p1NextBtn").style.display = "block";
           } else if (phase === 2) {
             var anglesText = Object.values(S.angles)
               .filter(function (v) {
@@ -1435,10 +1458,7 @@
             var prompt2 =
               "用户分享了最充实的经历：\n" +
               S.experience +
-              (anglesText
-                ? "\n\n补充信息（8角度）：\n" +
-                  anglesText
-                : "") +
+              (anglesText ? "\n\n补充信息（8角度）：\n" + anglesText : "") +
               "\n\n请：\n1. 提炼3-4个才能关键词（动词短语形式，如「结构化思考」「感染他人」「系统搭建」）\n2. 一句话说明为什么这是他的才能\n\n不超过120字。";
             var card2 = document.getElementById("aiCard2");
             var body2 = document.getElementById("aiBody2");
@@ -1485,8 +1505,7 @@
                 );
               })
               .join("");
-            body3.textContent =
-              "请从下方选择最能代表你的 5 个关键词：";
+            body3.textContent = "请从下方选择最能代表你的 5 个关键词：";
           } else if (phase === 4) {
             var prompt4 =
               "以下是用户的自我探索结果：\n\n喜欢的事（右滑选项）：" +
@@ -1522,9 +1541,7 @@
         // Phase 1 followup
         // ══════════════════════════════════════════════
         window.onFollowupInput = function () {
-          var val = document.getElementById("followupInput").value.trim();
-          var btn = document.getElementById("p1NextBtn");
-          btn.style.display = val.length >= 5 ? "block" : "none";
+          // followup is optional; button already shown after AI completes
         };
 
         window.submitPhase1Followup = function () {
@@ -1672,9 +1689,7 @@
         // ══════════════════════════════════════════════
         function parseCandidates(raw) {
           var results = [];
-          var candidateSection = raw.split(
-            "【变现路径】",
-          )[0];
+          var candidateSection = raw.split("【变现路径】")[0];
           var blocks = candidateSection
             .split(/【候选[一二三]】/)
             .filter(function (b) {
@@ -1683,12 +1698,8 @@
           for (var bi = 0; bi < blocks.length; bi++) {
             var block = blocks[bi];
             var titleMatch = block.match(/标题：(.+)/);
-            var whyMatch = block.match(
-              /为什么适合你：([\s\S]+?)(?=第一步|$)/,
-            );
-            var stepMatch = block.match(
-              /第一步可以做：(.+)/,
-            );
+            var whyMatch = block.match(/为什么适合你：([\s\S]+?)(?=第一步|$)/);
+            var stepMatch = block.match(/第一步可以做：(.+)/);
             if (titleMatch) {
               results.push({
                 title: titleMatch[1].trim(),
@@ -1697,17 +1708,10 @@
               });
             }
           }
-          var monoSection =
-            raw.split("【变现路径】")[1] || "";
-          var lowMatch = monoSection.match(
-            /低杠杆[^：]*：(.+)/,
-          );
-          var midMatch = monoSection.match(
-            /中杠杆[^：]*：(.+)/,
-          );
-          var highMatch = monoSection.match(
-            /高杠杆[^：]*：(.+)/,
-          );
+          var monoSection = raw.split("【变现路径】")[1] || "";
+          var lowMatch = monoSection.match(/低杠杆[^：]*：(.+)/);
+          var midMatch = monoSection.match(/中杠杆[^：]*：(.+)/);
+          var highMatch = monoSection.match(/高杠杆[^：]*：(.+)/);
           S.monetization = {
             low: lowMatch ? lowMatch[1].trim() : "",
             mid: midMatch ? midMatch[1].trim() : "",
