@@ -94,16 +94,22 @@
         font-weight: 600;
         color: var(--purple);
       }
-      .progress-bar {
-        height: 4px;
-        background: #e5e7eb;
-        border-radius: 99px;
+      .progress-dots {
+        display: flex;
+        gap: 6px;
       }
-      .progress-fill {
-        height: 100%;
+      .p-dot {
+        height: 5px;
+        border-radius: 3px;
+        background: #e5e7eb;
+        flex: 1;
+        transition: background 0.3s;
+      }
+      .p-dot.done {
+        background: var(--purple-medium);
+      }
+      .p-dot.active {
         background: var(--purple);
-        border-radius: 99px;
-        transition: width 0.3s ease;
       }
 
       /* 容器 */
@@ -720,7 +726,7 @@
         .pulse span {
           animation: none;
         }
-        .progress-fill,
+        .p-dot,
         .btn-start,
         .btn-primary,
         .btn-secondary,
@@ -737,12 +743,28 @@
     <!-- 进度条 -->
     <div class="progress-wrap" id="progressWrap">
       <div class="progress-info">
-        <span id="phaseLabel">阶段 1 / 4</span>
-        <span class="count" id="phaseCount">1 / 4</span>
+        <span id="phaseLabel" style="color: var(--gray)">第一步：喜欢的事</span>
+        <span style="display: flex; align-items: center; gap: 8px">
+          <span class="count" id="phaseCount">1 / 4</span>
+          <button
+            id="homeBtn"
+            onclick="window.goWelcome()"
+            style="
+              background: rgba(124, 58, 237, 0.1);
+              border: none;
+              color: var(--purple);
+              border-radius: 6px;
+              padding: 4px 10px;
+              font-size: 12px;
+              cursor: pointer;
+              font-family: inherit;
+            "
+          >
+            🏠 首页
+          </button>
+        </span>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill" style="width: 25%"></div>
-      </div>
+      <div class="progress-dots" id="pDots"></div>
     </div>
 
     <!-- 欢迎页 -->
@@ -895,6 +917,15 @@
     <!-- ── 阶段2：擅长的事 ── -->
     <div id="s2" class="screen">
       <div class="container">
+        <a
+          href="#"
+          onclick="
+            showPhase(1);
+            return false;
+          "
+          class="back-link"
+          >← 上一步</a
+        >
         <div class="phase-header">
           <div class="phase-badge">第二步 · 擅长的事</div>
           <h2>你在哪些事上最有成就感？</h2>
@@ -987,6 +1018,15 @@
     <!-- ── 阶段3：价值观 ── -->
     <div id="s3" class="screen">
       <div class="container">
+        <a
+          href="#"
+          onclick="
+            showPhase(2);
+            return false;
+          "
+          class="back-link"
+          >← 上一步</a
+        >
         <div class="phase-header">
           <div class="phase-badge">第三步 · 价值观</div>
           <h2>什么对你来说真正重要？</h2>
@@ -1106,6 +1146,15 @@
     <!-- ── 阶段4：综合分析 ── -->
     <div id="s4" class="screen">
       <div class="container">
+        <a
+          href="#"
+          onclick="
+            showPhase(3);
+            return false;
+          "
+          class="back-link"
+          >← 上一步</a
+        >
         <div class="phase-header">
           <div class="phase-badge">第四步 · 你想做的事</div>
           <h2>AI 正在整合你的三个维度</h2>
@@ -1255,6 +1304,8 @@
           chosenIndex: -1,
         };
 
+        var PHASE_NAMES = ["喜欢的事", "擅长的事", "价值观", "综合分析"];
+
         function showPhase(n) {
           document.querySelectorAll(".screen").forEach(function (el) {
             el.classList.remove("on");
@@ -1265,9 +1316,19 @@
           pw.style.display = n > 0 ? "block" : "none";
           if (n > 0) {
             document.getElementById("phaseLabel").textContent =
-              "阶段 " + n + " / 4";
+              "第" +
+              ["一", "二", "三", "四"][n - 1] +
+              "步：" +
+              PHASE_NAMES[n - 1];
             document.getElementById("phaseCount").textContent = n + " / 4";
-            document.getElementById("progressFill").style.width = n * 25 + "%";
+            var dots = document.getElementById("pDots");
+            dots.innerHTML = "";
+            for (var i = 1; i <= 4; i++) {
+              var d = document.createElement("div");
+              d.className =
+                "p-dot" + (i < n ? " done" : i === n ? " active" : "");
+              dots.appendChild(d);
+            }
           }
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -1685,13 +1746,12 @@
             "\n\n请用1-2句话确认用户的价值观底座，让用户感到「被看见」。不超过60字。";
           S.phase3AI = await streamAI(prompt, body);
           document.getElementById("outwardBox").style.display = "block";
+          document.getElementById("p3NextBtn").style.display = "block";
         }
 
         window.onOutwardInput = function () {
           var val = document.getElementById("outwardInput").value.trim();
           S.outwardValue = val;
-          document.getElementById("p3NextBtn").style.display =
-            val.length >= 10 ? "block" : "none";
         };
 
         window.goPhase4 = function () {

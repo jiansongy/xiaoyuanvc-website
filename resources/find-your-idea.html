@@ -1988,10 +1988,14 @@ ${rows || "（暂无填写）"}
         window.goHome = function () {
           save();
           if (PROXY_URL) {
-            // 代理模式没有 Key 输入页，返回第一步
-            S.step = 1;
-            showStep(1);
-            render(1);
+            // 代理模式：返回封面页
+            document
+              .querySelectorAll(".screen")
+              .forEach((el) => el.classList.remove("on"));
+            document.getElementById("s0").classList.add("on");
+            document.getElementById("progressWrap").style.display = "none";
+            document.getElementById("navBar").style.display = "none";
+            document.getElementById("settingsBtn").style.display = "none";
             window.scrollTo({ top: 0, behavior: "smooth" });
           } else {
             document
