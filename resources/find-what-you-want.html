@@ -1372,7 +1372,7 @@
                 stream: true,
               }),
             });
-            if (!res.ok) throw new Error("API \u9519\u8BEF " + res.status);
+            if (!res.ok) throw new Error("API 错误 " + res.status);
             var reader = res.body.getReader();
             var decoder = new TextDecoder();
             var full = "";
@@ -1403,7 +1403,7 @@
             return full;
           } catch (err) {
             bodyEl.textContent =
-              "\u26A0\uFE0F \u51FA\u9519\u4E86\uFF1A" + err.message;
+              "⚠️ 出错了：" + err.message;
             return "";
           }
         }
@@ -1415,12 +1415,12 @@
           if (phase === 1) {
             var likeList =
               S.likes.length > 0
-                ? S.likes.join("\u3001")
-                : "\uFF08\u7528\u6237\u672A\u9009\u62E9\u4EFB\u4F55\u9879\uFF09";
+                ? S.likes.join("、")
+                : "（用户未选择任何项）";
             var prompt =
-              "\u7528\u6237\u5728\u201C\u559C\u6B22\u7684\u4E8B\u201D\u63A2\u7D22\u4E2D\uFF0C\u53F3\u6ED1\uFF08\u559C\u6B22\uFF09\u4E86\u4EE5\u4E0B\u5185\u5BB9\uFF1A" +
+              "用户在“喜欢的事”探索中，右滑（喜欢）了以下内容：" +
               likeList +
-              "\n\u8BF7\u505A\u4E24\u4EF6\u4E8B\uFF1A\n1. \u7528\u0031\u53E5\u8BDD\u70B9\u51FA\u7528\u6237\u70ED\u60C5\u7684\u6838\u5FC3\u4E3B\u9898\n2. \u95EE\u4E00\u4E2A\u8FFD\u95EE\uFF1A\u300C\u6211\u6CE8\u610F\u5230\u4F60\u5BF9[\u67D0\u7C7B]\u5F88\u611F\u5174\u8DA3\uFF0C\u8FD9\u662F\u56E0\u4E3A\u5B83\u8BA9\u4F60\u611F\u5230[A]\u8FD8\u662F[B]\uFF1F\u300D\n\u8BED\u6C14\u50CF\u670B\u53CB\uFF0C\u4E0D\u8D85\u8FC780\u5B57\u3002";
+              "\n请做两件事：\n1. 用1句话点出用户热情的核心主题\n2. 问一个追问：「我注意到你对[某类]很感兴趣，这是因为它让你感到[A]还是[B]？」\n语气像朋友，不超过80字。";
             var card = document.getElementById("aiCard1");
             var body = document.getElementById("aiBody1");
             card.style.display = "block";
@@ -1433,13 +1433,13 @@
               })
               .join("\n");
             var prompt2 =
-              "\u7528\u6237\u5206\u4EAB\u4E86\u6700\u5145\u5B9E\u7684\u7ECF\u5386\uFF1A\n" +
+              "用户分享了最充实的经历：\n" +
               S.experience +
               (anglesText
-                ? "\n\n\u8865\u5145\u4FE1\u606F\uFF088\u89D2\u5EA6\uFF09\uFF1A\n" +
+                ? "\n\n补充信息（8角度）：\n" +
                   anglesText
                 : "") +
-              "\n\n\u8BF7\uFF1A\n1. \u63D0\u70BC3-4\u4E2A\u624D\u80FD\u5173\u952E\u8BCD\uFF08\u52A8\u8BCD\u77ED\u8BED\u5F62\u5F0F\uFF0C\u5982\u300C\u7ED3\u6784\u5316\u601D\u8003\u300D\u300C\u611F\u67D3\u4ED6\u4EBA\u300D\u300C\u7CFB\u7EDF\u642D\u5EFA\u300D\uFF09\n2. \u4E00\u53E5\u8BDD\u8BF4\u660E\u4E3A\u4EC0\u4E48\u8FD9\u662F\u4ED6\u7684\u624D\u80FD\n\n\u4E0D\u8D85\u8FC7120\u5B57\u3002";
+              "\n\n请：\n1. 提炼3-4个才能关键词（动词短语形式，如「结构化思考」「感染他人」「系统搭建」）\n2. 一句话说明为什么这是他的才能\n\n不超过120字。";
             var card2 = document.getElementById("aiCard2");
             var body2 = document.getElementById("aiBody2");
             card2.style.display = "block";
@@ -1451,22 +1451,22 @@
               })
               .join("\n");
             var prompt3 =
-              "\u524D\u4E24\u8F6E\u5206\u6790\uFF1A\n- \u559C\u6B22\u7684\u4E8B\u6838\u5FC3\uFF1A" +
+              "前两轮分析：\n- 喜欢的事核心：" +
               S.phase1AI +
-              "\uFF0C\u7528\u6237\u8FFD\u95EE\u56DE\u7B54\uFF1A" +
+              "，用户追问回答：" +
               S.followupAnswer +
-              "\n- \u64C5\u957F\u7684\u624D\u80FD\uFF1A" +
+              "\n- 擅长的才能：" +
               S.phase2AI +
-              "\n\n\u7528\u6237\u56DE\u7B54\u4E865\u9053\u4EF7\u503C\u89C2\u95EE\u9898\uFF1A\n" +
+              "\n\n用户回答了5道价值观问题：\n" +
               valText +
-              "\n\n\u8BF7\u751F\u621012-15\u4E2A\u4EF7\u503C\u89C2\u5173\u952E\u8BCD\uFF082-4\u5B57\uFF0C\u4E2D\u6587\uFF09\uFF0C\u7528\u4E8E\u7528\u6237\u70B9\u9009\u3002\n\u683C\u5F0F\uFF1A\u53EA\u8F93\u51FA\u5173\u952E\u8BCD\uFF0C\u7528\u4E2D\u6587\u987F\u53F7\u300C\u3001\u300D\u5206\u9694\uFF0C\u4E0D\u6DFB\u52A0\u4EFB\u4F55\u5176\u4ED6\u6587\u5B57\u3002\n\u793A\u4F8B\uFF1A\u81EA\u7531\u3001\u5F71\u54CD\u529B\u3001\u521B\u9020\u3001\u7A33\u5B9A\u3001\u63A2\u7D22\u3001\u516C\u5E73\u3001\u6210\u957F\u3001\u8D21\u732E";
+              "\n\n请生成12-15个价值观关键词（2-4字，中文），用于用户点选。\n格式：只输出关键词，用中文顿号「、」分隔，不添加任何其他文字。\n示例：自由、影响力、创造、稳定、探索、公平、成长、贡献";
 
             document.getElementById("p3SubmitBtn").style.display = "none";
             document.getElementById("keywordsSection").style.display = "block";
             var body3 = document.getElementById("aiBody3");
             var raw = await streamAI(prompt3, body3);
             S.allKeywords = raw
-              .split(/[\u3001,\uFF0C\s]+/)
+              .split(/[、,，\s]+/)
               .map(function (k) {
                 return k.trim();
               })
@@ -1486,26 +1486,26 @@
               })
               .join("");
             body3.textContent =
-              "\u8BF7\u4ECE\u4E0B\u65B9\u9009\u62E9\u6700\u80FD\u4EE3\u8868\u4F60\u7684 5 \u4E2A\u5173\u952E\u8BCD\uFF1A";
+              "请从下方选择最能代表你的 5 个关键词：";
           } else if (phase === 4) {
             var prompt4 =
-              "\u4EE5\u4E0B\u662F\u7528\u6237\u7684\u81EA\u6211\u63A2\u7D22\u7ED3\u679C\uFF1A\n\n\u559C\u6B22\u7684\u4E8B\uFF08\u53F3\u6ED1\u9009\u9879\uFF09\uFF1A" +
-              (S.likes.join("\u3001") || "\u672A\u9009\u62E9") +
-              "\n\u70ED\u60C5\u6838\u5FC3\uFF08AI\u5206\u6790\uFF09\uFF1A" +
+              "以下是用户的自我探索结果：\n\n喜欢的事（右滑选项）：" +
+              (S.likes.join("、") || "未选择") +
+              "\n热情核心（AI分析）：" +
               S.phase1AI +
-              "\n\u8FFD\u95EE\u56DE\u7B54\uFF1A" +
+              "\n追问回答：" +
               S.followupAnswer +
-              "\n\n\u64C5\u957F\u7684\u4E8B\uFF08\u7ECF\u5386\u6458\u8981\uFF09\uFF1A" +
+              "\n\n擅长的事（经历摘要）：" +
               S.experience.slice(0, 200) +
-              "\n\u624D\u80FD\u5173\u952E\u8BCD\uFF08AI\u5206\u6790\uFF09\uFF1A" +
+              "\n才能关键词（AI分析）：" +
               S.phase2AI +
-              "\n\n\u4EF7\u503C\u89C2\u5173\u952E\u8BCD\uFF08\u7528\u6237\u9009\u62E9\uFF09\uFF1A" +
-              S.selectedKeywords.join("\u3001") +
-              "\n\u4EF7\u503C\u89C2\u786E\u8BA4\uFF08AI\u5206\u6790\uFF09\uFF1A" +
+              "\n\n价值观关键词（用户选择）：" +
+              S.selectedKeywords.join("、") +
+              "\n价值观确认（AI分析）：" +
               S.phase3AI +
-              "\n\u5411\u5916\u4EF7\u503C\u89C2\uFF08\u7528\u6237\u81EA\u8FF0\uFF09\uFF1A" +
+              "\n向外价值观（用户自述）：" +
               S.outwardValue +
-              "\n\n\u8BF7\u4E25\u683C\u6309\u4EE5\u4E0B\u683C\u5F0F\u8F93\u51FA\uFF0C\u5171\u4E24\u90E8\u5206\uFF1A\n\n\u7B2C\u4E00\u90E8\u5206\uFF1A3\u4E2A\u300C\u60F3\u505A\u7684\u4E8B\u300D\u5019\u9009\n\n\u3010\u5019\u9009\u4E00\u3011\n\u6807\u9898\uFF1A[\u559C\u6B22\u7684X] \u00D7 [\u64C5\u957F\u7684Y]\n\u4E3A\u4EC0\u4E48\u9002\u5408\u4F60\uFF1A[2\u53E5\u8BDD\uFF0C\u7ED3\u5408\u7528\u6237\u4EF7\u503C\u89C2\u548C\u5411\u5916\u76EE\u7684]\n\u7B2C\u4E00\u6B65\u53EF\u4EE5\u505A\uFF1A[\u5177\u4F53\u53EF\u6267\u884C\u7684\u6700\u5C0F\u884C\u52A8\uFF0C\u4E0D\u8D85\u8FC720\u5B57]\n\n\u3010\u5019\u9009\u4E8C\u3011\n\u6807\u9898\uFF1A[\u559C\u6B22\u7684X] \u00D7 [\u64C5\u957F\u7684Y]\n\u4E3A\u4EC0\u4E48\u9002\u5408\u4F60\uFF1A[2\u53E5\u8BDD\uFF0C\u7ED3\u5408\u7528\u6237\u4EF7\u503C\u89C2\u548C\u5411\u5916\u76EE\u7684]\n\u7B2C\u4E00\u6B65\u53EF\u4EE5\u505A\uFF1A[\u5177\u4F53\u53EF\u6267\u884C\u7684\u6700\u5C0F\u884C\u52A8\uFF0C\u4E0D\u8D85\u8FC720\u5B57]\n\n\u3010\u5019\u9009\u4E09\u3011\n\u6807\u9898\uFF1A[\u559C\u6B22\u7684X] \u00D7 [\u64C5\u957F\u7684Y]\n\u4E3A\u4EC0\u4E48\u9002\u5408\u4F60\uFF1A[2\u53E5\u8BDD\uFF0C\u7ED3\u5408\u7528\u6237\u4EF7\u503C\u89C2\u548C\u5411\u5916\u76EE\u7684]\n\u7B2C\u4E00\u6B65\u53EF\u4EE5\u505A\uFF1A[\u5177\u4F53\u53EF\u6267\u884C\u7684\u6700\u5C0F\u884C\u52A8\uFF0C\u4E0D\u8D85\u8FC720\u5B57]\n\n\u7B2C\u4E8C\u90E8\u5206\uFF1A\u53D8\u73B0\u8DEF\u5F84\uFF08\u57FA\u4E8E\u7528\u6237\u7684\u300C\u60F3\u505A\u7684\u4E8B\u300D\u6838\u5FC3\uFF0C\u7ED9\u51FA3\u79CD\u7075\u6D3B\u8F7D\u4F53\uFF09\n\n\u3010\u53D8\u73B0\u8DEF\u5F84\u3011\n\u4F4E\u6760\u6746/\u9AD8\u5355\u4EF7\uFF1A[\u5177\u4F53\u5F62\u5F0F\uFF0C15\u5B57\u4EE5\u5185]\n\u4E2D\u6760\u6746/\u793E\u7FA4\u578B\uFF1A[\u5177\u4F53\u5F62\u5F0F\uFF0C15\u5B57\u4EE5\u5185]\n\u9AD8\u6760\u6746/\u4EA7\u54C1\u578B\uFF1A[\u5177\u4F53\u5F62\u5F0F\uFF0C15\u5B57\u4EE5\u5185]\n\n\u8BED\u6C14\u771F\u8BDA\uFF0C\u50CF\u4E00\u4E2A\u4E86\u89E3\u7528\u6237\u7684\u670B\u53CB\u3002";
+              "\n\n请严格按以下格式输出，共两部分：\n\n第一部分：3个「想做的事」候选\n\n【候选一】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选二】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选三】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n第二部分：变现路径（基于用户的「想做的事」核心，给出3种灵活载体）\n\n【变现路径】\n低杠杆/高单价：[具体形式，15字以内]\n中杠杆/社群型：[具体形式，15字以内]\n高杠杆/产品型：[具体形式，15字以内]\n\n语气真诚，像一个了解用户的朋友。";
 
             var tempDiv = document.createElement("div");
             tempDiv.style.position = "absolute";
@@ -1553,7 +1553,7 @@
         function updateExpChar() {
           var len = (S.experience || "").trim().length;
           var hint = document.getElementById("expCharHint");
-          hint.textContent = len + " / 100\u5B57";
+          hint.textContent = len + " / 100字";
           hint.className = "char-hint" + (len >= 100 ? " ok" : "");
         }
 
@@ -1562,7 +1562,7 @@
           var arrow = document.getElementById("anglesArrow");
           var isOpen = grid.classList.contains("open");
           grid.classList.toggle("open", !isOpen);
-          arrow.textContent = isOpen ? "\u25B6" : "\u25BC";
+          arrow.textContent = isOpen ? "▶" : "▼";
         };
 
         window.submitPhase2 = async function () {
@@ -1571,7 +1571,7 @@
           }
           document.getElementById("p2SubmitBtn").disabled = true;
           document.getElementById("p2SubmitBtn").innerHTML =
-            '<div class="pulse"><span></span><span></span><span></span></div> AI \u5206\u6790\u4E2D\u2026';
+            '<div class="pulse"><span></span><span></span><span></span></div> AI 分析中…';
           await callAI(2);
           document.getElementById("p2SubmitBtn").style.display = "none";
           document.getElementById("p2NextBtn").style.display = "block";
@@ -1612,7 +1612,7 @@
         window.submitPhase3 = async function () {
           document.getElementById("p3SubmitBtn").disabled = true;
           document.getElementById("p3SubmitBtn").innerHTML =
-            '<div class="pulse"><span></span><span></span><span></span></div> AI \u63D0\u70BC\u4E2D\u2026';
+            '<div class="pulse"><span></span><span></span><span></span></div> AI 提炼中…';
           await callAI(3);
         };
 
@@ -1643,13 +1643,13 @@
           var body = document.getElementById("aiBody3confirm");
           card.style.display = "block";
           var prompt =
-            "\u7528\u6237\u4ECE\u4EF7\u503C\u89C2\u5173\u952E\u8BCD\u4E2D\u9009\u62E9\u4E86\uFF1A" +
-            S.selectedKeywords.join("\u3001") +
-            "\n\u7ED3\u5408\u524D\u4E24\u8F6E\u5206\u6790\uFF1A\n- \u559C\u6B22\u7684\u4E8B\uFF1A" +
+            "用户从价值观关键词中选择了：" +
+            S.selectedKeywords.join("、") +
+            "\n结合前两轮分析：\n- 喜欢的事：" +
             S.phase1AI +
-            "\n- \u64C5\u957F\u7684\u624D\u80FD\uFF1A" +
+            "\n- 擅长的才能：" +
             S.phase2AI +
-            "\n\n\u8BF7\u75281-2\u53E5\u8BDD\u786E\u8BA4\u7528\u6237\u7684\u4EF7\u503C\u89C2\u5E95\u5EA7\uFF0C\u8BA9\u7528\u6237\u611F\u5230\u300C\u88AB\u770B\u89C1\u300D\u3002\u4E0D\u8D85\u8FC760\u5B57\u3002";
+            "\n\n请用1-2句话确认用户的价值观底座，让用户感到「被看见」。不超过60字。";
           S.phase3AI = await streamAI(prompt, body);
           document.getElementById("outwardBox").style.display = "block";
         }
@@ -1673,21 +1673,21 @@
         function parseCandidates(raw) {
           var results = [];
           var candidateSection = raw.split(
-            "\u3010\u53D8\u73B0\u8DEF\u5F84\u3011",
+            "【变现路径】",
           )[0];
           var blocks = candidateSection
-            .split(/\u3010\u5019\u9009[\u4E00\u4E8C\u4E09]\u3011/)
+            .split(/【候选[一二三]】/)
             .filter(function (b) {
               return b.trim();
             });
           for (var bi = 0; bi < blocks.length; bi++) {
             var block = blocks[bi];
-            var titleMatch = block.match(/\u6807\u9898\uFF1A(.+)/);
+            var titleMatch = block.match(/标题：(.+)/);
             var whyMatch = block.match(
-              /\u4E3A\u4EC0\u4E48\u9002\u5408\u4F60\uFF1A([\s\S]+?)(?=\u7B2C\u4E00\u6B65|$)/,
+              /为什么适合你：([\s\S]+?)(?=第一步|$)/,
             );
             var stepMatch = block.match(
-              /\u7B2C\u4E00\u6B65\u53EF\u4EE5\u505A\uFF1A(.+)/,
+              /第一步可以做：(.+)/,
             );
             if (titleMatch) {
               results.push({
@@ -1698,15 +1698,15 @@
             }
           }
           var monoSection =
-            raw.split("\u3010\u53D8\u73B0\u8DEF\u5F84\u3011")[1] || "";
+            raw.split("【变现路径】")[1] || "";
           var lowMatch = monoSection.match(
-            /\u4F4E\u6760\u6746[^\uFF1A]*\uFF1A(.+)/,
+            /低杠杆[^：]*：(.+)/,
           );
           var midMatch = monoSection.match(
-            /\u4E2D\u6760\u6746[^\uFF1A]*\uFF1A(.+)/,
+            /中杠杆[^：]*：(.+)/,
           );
           var highMatch = monoSection.match(
-            /\u9AD8\u6760\u6746[^\uFF1A]*\uFF1A(.+)/,
+            /高杠杆[^：]*：(.+)/,
           );
           S.monetization = {
             low: lowMatch ? lowMatch[1].trim() : "",
@@ -1759,7 +1759,7 @@
           var c = S.finalCandidates[i];
           document.getElementById("finalTitle").textContent = c.title;
           document.getElementById("finalMeta").textContent =
-            "\u57FA\u4E8E\u4F60\u7684\u559C\u6B22 \u00D7 \u64C5\u957F \u00D7 \u4EF7\u503C\u89C2";
+            "基于你的喜欢 × 擅长 × 价值观";
           document.getElementById("finalStep").textContent = c.step;
           document.getElementById("p4Results").style.display = "none";
           document.getElementById("p4Final").style.display = "block";
@@ -1770,18 +1770,18 @@
           if (S.chosenIndex < 0) return;
           var c = S.finalCandidates[S.chosenIndex];
           var text =
-            "\u6211\u60F3\u505A\u7684\u4E8B\uFF1A" +
+            "我想做的事：" +
             c.title +
             "\n\n" +
             c.why +
-            "\n\n\u7B2C\u4E00\u6B65\uFF1A" +
+            "\n\n第一步：" +
             c.step +
-            "\n\n\u2014\u2014 \u901A\u8FC7\u300C\u5982\u4F55\u627E\u5230\u60F3\u505A\u7684\u4E8B\u300D\u4E92\u52A8\u5DE5\u5177 @ \u6821\u56EDVC";
+            "\n\n—— 通过「如何找到想做的事」互动工具 @ 校园VC";
           navigator.clipboard.writeText(text).then(function () {
             var btn = document.querySelector(".btn-secondary");
-            btn.textContent = "\u2705 \u5DF2\u590D\u5236\uFF01";
+            btn.textContent = "✅ 已复制！";
             setTimeout(function () {
-              btn.textContent = "\uD83D\uDCCB \u590D\u5236\u7ED3\u679C";
+              btn.textContent = "📋 复制结果";
             }, 2000);
           });
         };
