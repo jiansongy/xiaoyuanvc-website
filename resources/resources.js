@@ -94,7 +94,7 @@
             escapeHtml(ep.description || "").substring(0, 120) +
             "...</p>" +
             '<div class="resource-card__tags" style="margin-top:auto;padding-top:var(--space-md);">' +
-            '<button class="filter-pill" onclick="playEpisode(\'' +
+            '<button class="play-btn" onclick="playEpisode(\'' +
             escapeAttr(ep.audioUrl) +
             "', 'EP" +
             ep.ep +
@@ -121,6 +121,7 @@
 
   function applyFilters(filters) {
     var cards = document.querySelectorAll(".resource-card");
+    var visible = 0;
     cards.forEach(function (card) {
       var typeMatch =
         filters.type === "all" ||
@@ -128,8 +129,38 @@
       var topicMatch =
         filters.topic === "all" ||
         card.getAttribute("data-topic") === filters.topic;
-      card.style.display = typeMatch && topicMatch ? "" : "none";
+      var show = typeMatch && topicMatch;
+      if (show) {
+        card.classList.remove("hidden");
+        card.style.display = "";
+        visible++;
+      } else {
+        card.classList.add("hidden");
+        card.style.display = "none";
+      }
     });
+
+    // Empty state
+    var grid = document.getElementById("resourceGrid");
+    var emptyMsg = document.getElementById("emptyMsg");
+    if (visible === 0) {
+      if (!emptyMsg) {
+        emptyMsg = document.createElement("p");
+        emptyMsg.id = "emptyMsg";
+        emptyMsg.className = "resource-grid__empty-msg";
+        emptyMsg.textContent = "暂无匹配的内容，试试其他筛选条件";
+        grid.appendChild(emptyMsg);
+      }
+      emptyMsg.style.display = "";
+    } else if (emptyMsg) {
+      emptyMsg.style.display = "none";
+    }
+
+    // Result count
+    var filterCount = document.getElementById("filterCount");
+    if (filterCount) {
+      filterCount.textContent = visible + " 条内容";
+    }
   }
 
   function initFilters() {
@@ -289,5 +320,10 @@
   document.addEventListener("DOMContentLoaded", function () {
     renderPodcastCards();
     initFilters();
+
+    // Initial count after podcast cards load
+    setTimeout(function () {
+      applyFilters(activeFilters);
+    }, 500);
   });
 })();

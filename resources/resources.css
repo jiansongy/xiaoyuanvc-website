@@ -79,9 +79,9 @@
   margin: 0 auto;
   padding: 0 var(--space-lg);
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-sm);
-  align-items: center;
 }
 
 .filter-bar__group {
@@ -92,17 +92,56 @@
 }
 
 .filter-bar__group + .filter-bar__group {
-  margin-left: var(--space-md);
-  padding-left: var(--space-md);
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  margin-left: 0;
+  padding-left: 0;
+  border-left: none;
 }
 
 .filter-bar__label {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
   margin-right: var(--space-xs);
   white-space: nowrap;
+}
+
+/* --- Filter Count --- */
+.filter-bar__count {
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* --- Empty State --- */
+.resource-grid__empty-msg {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: 1rem;
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+/* --- Play Button (podcast cards) --- */
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.play-btn:hover {
+  color: var(--color-brand);
+  background: var(--color-brand-light);
 }
 
 .filter-pill {
@@ -149,20 +188,6 @@
 
 #podcastCards {
   display: contents;
-}
-
-.resource-grid--empty {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 240px;
-}
-
-.resource-grid__empty-msg {
-  text-align: center;
-  color: var(--color-text-tertiary);
-  font-size: 1rem;
-  padding: var(--space-3xl) var(--space-lg);
 }
 
 /* --- Resource Card --- */
@@ -1232,20 +1257,8 @@
     font-size: 1rem;
   }
 
-  .filter-bar {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .filter-bar__inner {
-    flex-wrap: nowrap;
-    min-width: max-content;
-    padding-right: var(--space-xl);
-  }
-
-  .filter-bar__group + .filter-bar__group {
-    margin-left: var(--space-sm);
-    padding-left: var(--space-sm);
+  .filter-bar__group {
+    flex-wrap: wrap;
   }
 
   .resource-grid {
