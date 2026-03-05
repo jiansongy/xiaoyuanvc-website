@@ -1255,26 +1255,30 @@
         function load() {
           try {
             const raw = localStorage.getItem(SK);
-            if (raw) S = Object.assign(S, JSON.parse(raw));
-          } catch (e) {}
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              // Validate step is a valid number in range
+              if (
+                typeof parsed.step !== "number" ||
+                parsed.step < 0 ||
+                parsed.step > 6
+              ) {
+                parsed.step = 0;
+              }
+              S = Object.assign(S, parsed);
+            }
+          } catch (e) {
+            // Corrupted data — clear it
+            try {
+              localStorage.removeItem(SK);
+            } catch (e2) {}
+          }
         }
 
         // ══════════════════════════════════════════════
-        // BOOT
+        // EXPOSE GLOBAL FUNCTIONS FIRST (before boot)
+        // so onclick handlers never break even if boot fails
         // ══════════════════════════════════════════════
-        load();
-        if (PROXY_URL) {
-          // 代理模式：跳过 Key 输入；首次使用（step=0）保留介绍页
-          if (S.step >= 1) {
-            showStep(S.step);
-            render(S.step);
-          }
-        } else {
-          if (S.step > 0) {
-            showStep(S.step);
-            render(S.step);
-          }
-        }
 
         window.startApp = function () {
           S.step = 1;
@@ -2133,6 +2137,42 @@ ${rows || "（暂无填写）"}
 
         // Expose S for inline handlers
         window.S = S;
+
+        // ══════════════════════════════════════════════
+        // BOOT (after all functions are defined)
+        // ══════════════════════════════════════════════
+        try {
+          load();
+          if (PROXY_URL) {
+            if (S.step >= 1) {
+              showStep(S.step);
+              render(S.step);
+            }
+          } else {
+            if (S.step > 0) {
+              showStep(S.step);
+              render(S.step);
+            }
+          }
+        } catch (e) {
+          // Boot failed — reset to welcome screen
+          console.error("Boot error, resetting:", e);
+          try {
+            localStorage.removeItem(SK);
+          } catch (e2) {}
+          S.step = 0;
+          document.querySelectorAll(".screen").forEach(function (el) {
+            el.classList.remove("on");
+          });
+          var s0 = document.getElementById("s0");
+          if (s0) s0.classList.add("on");
+          var pw = document.getElementById("progressWrap");
+          if (pw) pw.style.display = "none";
+          var nb = document.getElementById("navBar");
+          if (nb) nb.style.display = "none";
+          var sb = document.getElementById("settingsBtn");
+          if (sb) sb.style.display = "none";
+        }
       })();
     </script>
   </body>

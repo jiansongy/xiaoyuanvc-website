@@ -116,7 +116,7 @@
       .container {
         max-width: 480px;
         margin: 0 auto;
-        padding: 24px 20px;
+        padding: 24px 20px 72px;
       }
       .screen {
         display: none;
@@ -738,6 +738,22 @@
           transition: none;
         }
       }
+
+      /* ── Nav bar ── */
+      .nav-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+        padding: 10px 16px;
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.06);
+        z-index: 100;
+      }
     </style>
   </head>
   <body>
@@ -1288,6 +1304,47 @@
       </div>
     </div>
 
+    <!-- ══════════════ NAV BAR ══════════════ -->
+    <div class="nav-bar" id="navBar">
+      <button
+        class="btn-secondary"
+        id="prevBtn"
+        onclick="window.nav(-1)"
+        style="
+          padding: 9px 18px;
+          font-size: 14px;
+          border: 1.5px solid #c4b5fd;
+          border-radius: 10px;
+          background: white;
+          color: var(--purple);
+          cursor: pointer;
+          font-family: inherit;
+          font-weight: 600;
+        "
+      >
+        ← 上一步
+      </button>
+      <span style="font-size: 12px; color: var(--gray)" id="navHint"></span>
+      <button
+        class="btn-primary"
+        id="nextBtn"
+        onclick="window.nav(1)"
+        style="
+          padding: 9px 18px;
+          font-size: 14px;
+          border: none;
+          border-radius: 10px;
+          background: var(--purple);
+          color: white;
+          cursor: pointer;
+          font-family: inherit;
+          font-weight: 600;
+        "
+      >
+        下一步 →
+      </button>
+    </div>
+
     <script>
       (function () {
         "use strict";
@@ -1367,13 +1424,18 @@
         var PHASE_NAMES = ["喜欢的事", "擅长的事", "价值观", "综合分析"];
 
         function showPhase(n) {
+          if (n < 0 || n > 4) return;
           document.querySelectorAll(".screen").forEach(function (el) {
             el.classList.remove("on");
           });
-          document.getElementById("s" + n).classList.add("on");
+          var target = document.getElementById("s" + n);
+          if (!target) return;
+          target.classList.add("on");
           S.phase = n;
           var pw = document.getElementById("progressWrap");
+          var nb = document.getElementById("navBar");
           pw.style.display = n > 0 ? "block" : "none";
+          nb.style.display = n > 0 ? "flex" : "none";
           if (n > 0) {
             document.getElementById("phaseLabel").textContent =
               "第" +
@@ -1389,9 +1451,26 @@
                 "p-dot" + (i < n ? " done" : i === n ? " active" : "");
               dots.appendChild(d);
             }
+            // Nav buttons
+            document.getElementById("prevBtn").style.visibility =
+              n === 1 ? "hidden" : "visible";
+            document.getElementById("nextBtn").textContent =
+              n === 4 ? "✅ 完成" : "下一步 →";
           }
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
+        // Expose showPhase to window for inline onclick handlers
+        window.showPhase = showPhase;
+
+        window.nav = function (dir) {
+          var next = S.phase + dir;
+          if (next < 1 || next > 4) return;
+          showPhase(next);
+          // Re-render content for the target phase
+          if (next === 1) renderCard();
+          else if (next === 2) renderPhase2();
+          else if (next === 3) renderPhase3();
+        };
 
         window.startApp = function () {
           showPhase(1);
