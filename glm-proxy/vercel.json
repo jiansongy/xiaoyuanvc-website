@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/glm-proxy.js": {
+      "maxDuration": 30
+    }
+  }
+}
