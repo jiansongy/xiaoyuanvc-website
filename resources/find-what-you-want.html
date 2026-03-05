@@ -212,7 +212,7 @@
       /* 卡片滑动 */
       .card-arena {
         position: relative;
-        height: 260px;
+        height: 320px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -221,11 +221,12 @@
       }
       .swipe-card {
         position: absolute;
-        width: 280px;
+        width: 340px;
+        max-width: 90vw;
         background: white;
         border-radius: 16px;
         box-shadow: var(--shadow);
-        padding: 32px 24px;
+        padding: 40px 28px;
         text-align: center;
         cursor: grab;
         transition:
@@ -237,11 +238,11 @@
         cursor: grabbing;
       }
       .swipe-card .card-emoji {
-        font-size: 36px;
-        margin-bottom: 12px;
+        font-size: 42px;
+        margin-bottom: 14px;
       }
       .swipe-card .card-text {
-        font-size: 17px;
+        font-size: 19px;
         font-weight: 600;
       }
       .swipe-card.swipe-left {
@@ -832,6 +833,58 @@
           很多人不知道自己想做什么，不是因为选择太少，而是从未系统地认识过自己。这个工具会带你从三个维度深度探索，最后由
           AI 帮你整合出最适合你的方向。
         </p>
+        <details
+          style="
+            background: white;
+            border: 1px solid #c4b5fd;
+            border-radius: 8px;
+            padding: 0;
+            margin-bottom: 16px;
+            font-size: 13px;
+            line-height: 1.7;
+          "
+        >
+          <summary
+            style="
+              padding: 11px 14px;
+              cursor: pointer;
+              font-weight: 700;
+              color: var(--purple-dark);
+              list-style: none;
+            "
+          >
+            📖 工具原理：八木仁平「想做的事」公式
+            <span style="float: right; font-weight: 400">▶</span>
+          </summary>
+          <div style="padding: 0 14px 14px; color: #374151">
+            <p style="margin-bottom: 8px">
+              日本作家八木仁平在《如何找到想做的事》中提出一个核心公式：<strong
+                >想做的事 = 喜欢的事 × 擅长的事</strong
+              >，而<strong>价值观</strong>是底座，确保方向真正属于你。
+            </p>
+            <ol style="padding-left: 18px; margin-bottom: 8px">
+              <li>
+                <strong>喜欢的事</strong> —
+                通过卡片滑动快速筛选，找出你本能被吸引的领域
+              </li>
+              <li>
+                <strong>擅长的事</strong> —
+                盘点你的天赋和技能，发现自然而然就做得好的事
+              </li>
+              <li>
+                <strong>价值观</strong> —
+                追问什么对你真正重要，作为最终方向的筛选器
+              </li>
+              <li>
+                <strong>综合分析</strong> — AI
+                将三个维度交叉匹配，生成你专属的「想做的事」
+              </li>
+            </ol>
+            <p style="color: var(--gray); font-size: 12px">
+              核心理念：不是「找到正确答案」，而是「认识真正的自己」后，答案自然浮现。
+            </p>
+          </div>
+        </details>
         <button class="btn-start" onclick="window.startApp()">
           开始探索 →
         </button>
@@ -1212,6 +1265,13 @@
 
           <button class="btn-secondary" onclick="window.copyResult()">
             📋 复制结果
+          </button>
+          <button
+            class="btn-secondary"
+            onclick="window.printResult()"
+            style="margin-top: 8px"
+          >
+            🖨️ 打印结果
           </button>
           <a
             href="index.html"
@@ -1864,6 +1924,40 @@
               btn.textContent = "📋 复制结果";
             }, 2000);
           });
+        };
+
+        window.printResult = function () {
+          if (S.chosenIndex < 0) return;
+          var el = document.getElementById("p4Final");
+          if (!el) return;
+          var printWin = window.open("", "_blank");
+          printWin.document.write(
+            '<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8">' +
+              "<title>我的探索结果 - 校园VC</title>" +
+              "<style>" +
+              "body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;max-width:600px;margin:40px auto;padding:0 20px;color:#1e1b4b;}" +
+              "h1{font-size:20px;text-align:center;margin-bottom:24px;}" +
+              ".final-box{background:#7c3aed;color:white;border-radius:12px;padding:24px;text-align:center;margin:16px 0;}" +
+              ".final-box h3{font-size:18px;font-weight:700;margin-bottom:8px;}" +
+              ".final-title{font-size:22px;font-weight:800;margin:12px 0;}" +
+              ".final-meta{font-size:13px;opacity:.85;}" +
+              ".ai-card{background:#f5f3ff;border-radius:8px;padding:14px;margin-top:12px;}" +
+              ".ai-label{font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:6px;}" +
+              ".ai-body{font-size:14px;line-height:1.6;}" +
+              ".monetize-card{background:#f5f3ff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #c4b5fd;}" +
+              ".mono-label{font-size:13px;font-weight:700;color:#5b21b6;margin-bottom:4px;}" +
+              ".mono-body{font-size:14px;line-height:1.5;}" +
+              ".footer{text-align:center;margin-top:32px;font-size:12px;color:#6b7280;}" +
+              ".btn-secondary{display:none;}" +
+              "</style></head><body>" +
+              "<h1>🔮 我的「想做的事」探索结果</h1>" +
+              el.innerHTML +
+              '<div class="footer">—— 通过「如何找到想做的事」互动工具 @ 校园VC<br>xiaoyuanvc.com/resources/find-what-you-want.html</div>' +
+              "</body></html>",
+          );
+          printWin.document.close();
+          printWin.focus();
+          printWin.print();
         };
       })();
     </script>
