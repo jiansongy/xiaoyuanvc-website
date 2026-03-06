@@ -1168,6 +1168,17 @@
         >
           AI 提炼我的价值观关键词 →
         </button>
+        <p
+          id="p3Hint"
+          style="
+            font-size: 12px;
+            color: var(--gray);
+            text-align: center;
+            margin-top: 8px;
+          "
+        >
+          请至少填写 3 个问题（每个不少于 10 字）
+        </p>
 
         <!-- 关键词选择区（AI生成后显示） -->
         <div id="keywordsSection" style="display: none">
@@ -1465,6 +1476,10 @@
         window.nav = function (dir) {
           var next = S.phase + dir;
           if (next < 1 || next > 4) return;
+          if (next === 4) {
+            window.goPhase4();
+            return;
+          }
           showPhase(next);
           // Re-render content for the target phase
           if (next === 1) renderCard();
@@ -1698,6 +1713,8 @@
               "\n\n请生成12-15个价值观关键词（2-4字，中文），用于用户点选。\n格式：只输出关键词，用中文顿号「、」分隔，不添加任何其他文字。\n示例：自由、影响力、创造、稳定、探索、公平、成长、贡献";
 
             document.getElementById("p3SubmitBtn").style.display = "none";
+            var p3Hint = document.getElementById("p3Hint");
+            if (p3Hint) p3Hint.style.display = "none";
             document.getElementById("keywordsSection").style.display = "block";
             var body3 = document.getElementById("aiBody3");
             var raw = await streamAI(prompt3, body3);
@@ -1823,6 +1840,21 @@
             document.getElementById("v" + i).value =
               S.valueAnswers[i - 1] || "";
           }
+          // Restore button visibility if user navigated back
+          var btn = document.getElementById("p3SubmitBtn");
+          var p3Hint = document.getElementById("p3Hint");
+          if (S.allKeywords && S.allKeywords.length > 0) {
+            // Already generated keywords — hide button, show keywords
+            btn.style.display = "none";
+            if (p3Hint) p3Hint.style.display = "none";
+            document.getElementById("keywordsSection").style.display = "block";
+          } else {
+            // Not yet generated — show button
+            btn.style.display = "";
+            btn.innerHTML = "AI 提炼我的价值观关键词 →";
+            if (p3Hint) p3Hint.style.display = "";
+            document.getElementById("keywordsSection").style.display = "none";
+          }
           checkPhase3Ready();
         }
 
@@ -1839,7 +1871,19 @@
           var filled = S.valueAnswers.filter(function (v) {
             return v.length >= 10;
           }).length;
-          document.getElementById("p3SubmitBtn").disabled = filled < 3;
+          var btn = document.getElementById("p3SubmitBtn");
+          btn.disabled = filled < 3;
+          var hint = document.getElementById("p3Hint");
+          if (hint) {
+            if (filled >= 3) {
+              hint.textContent = "✅ 已达标，点击上方按钮继续";
+              hint.style.color = "var(--purple)";
+            } else {
+              hint.textContent =
+                "已填写 " + filled + "/3 个问题（每个不少于 10 字）";
+              hint.style.color = "var(--gray)";
+            }
+          }
         }
 
         window.submitPhase3 = async function () {
