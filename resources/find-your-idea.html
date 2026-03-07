@@ -96,7 +96,7 @@
         background: var(--green-medium);
       }
       .p-dot.active {
-        background: var(--green);
+        background: #2563eb;
       }
 
       /* ── Main ── */
@@ -115,38 +115,41 @@
         overflow: hidden;
       }
       .card-head {
-        background: var(--green);
-        color: white;
-        padding: 14px 20px;
+        background: white;
+        padding: 18px 20px 14px;
+        border-bottom: 1px solid #f0f2f5;
       }
       .card-head .badge {
         display: inline-block;
-        background: rgba(255, 255, 255, 0.25);
+        background: #f1f5f9;
+        color: #64748b;
         border-radius: 20px;
         padding: 2px 9px;
         font-size: 11px;
-        margin-bottom: 5px;
+        font-weight: 600;
+        margin-bottom: 8px;
       }
       .card-head h2 {
-        font-size: 20px;
+        font-size: 22px;
         font-weight: 800;
+        color: var(--navy);
       }
       .card-head p {
         font-size: 13px;
-        opacity: 0.9;
-        margin-top: 3px;
+        color: var(--gray);
+        margin-top: 4px;
       }
       .card-body {
         padding: 18px 20px;
       }
 
       .step-title {
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 700;
         margin-bottom: 5px;
       }
       .step-desc {
-        font-size: 13px;
+        font-size: 14px;
         color: var(--gray);
         line-height: 1.65;
         margin-bottom: 16px;
@@ -154,9 +157,8 @@
 
       .formula {
         background: var(--green-light);
-        border-left: 3px solid var(--green);
         padding: 9px 13px;
-        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        border-radius: var(--radius-sm);
         font-weight: 700;
         font-size: 13px;
         color: var(--green-dark);
@@ -204,11 +206,11 @@
         font-family: inherit;
       }
       .btn-primary {
-        background: var(--green);
+        background: #2563eb;
         color: white;
       }
       .btn-primary:hover {
-        background: var(--green-dark);
+        background: #1d4ed8;
         transform: translateY(-1px);
       }
       .btn-outline {
@@ -229,7 +231,7 @@
         color: var(--red);
       }
       .btn-ai {
-        background: linear-gradient(135deg, #43a047, #1e88e5);
+        background: #2563eb;
         color: white;
         width: 100%;
         justify-content: center;
@@ -417,8 +419,8 @@
 
       /* ── AI card ── */
       .ai-card {
-        background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
-        border: 1.5px solid #a5d6a7;
+        background: #f0f7ff;
+        border: 1.5px solid #dbeafe;
         border-radius: var(--radius);
         padding: 18px;
         margin-top: 14px;
@@ -430,7 +432,7 @@
         gap: 7px;
         font-weight: 700;
         font-size: 14px;
-        color: var(--green-dark);
+        color: #1d4ed8;
         margin-bottom: 10px;
       }
       .ai-body {
@@ -438,6 +440,21 @@
         line-height: 1.85;
         color: var(--navy);
         white-space: pre-wrap;
+      }
+
+      /* ── AI reveal animation ── */
+      @keyframes ai-reveal {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .ai-card.revealed {
+        animation: ai-reveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
 
       /* ── Dot pulse ── */
@@ -1895,7 +1912,6 @@
         }
 
         window.callAI = async function (step) {
-
           const btnId = `aiBtn${step}`;
           const cardId = `aiCard${step}`;
           const bodyId = `aiBody${step}`;
@@ -1907,6 +1923,9 @@
           btn.disabled = true;
           btn.innerHTML = `<div class="pulse"><span></span><span></span><span></span></div> AI 思考中…`;
           card.style.display = "block";
+          card.classList.remove("revealed");
+          void card.offsetWidth;
+          card.classList.add("revealed");
           body.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--gray)">
       <div class="pulse"><span></span><span></span><span></span></div> 正在分析你的创业想法…</div>`;
 

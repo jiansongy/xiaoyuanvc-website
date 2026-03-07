@@ -170,7 +170,7 @@
         background: var(--purple-medium);
       }
       .p-dot.active {
-        background: var(--purple);
+        background: #2563eb;
       }
 
       /* 容器 */
@@ -397,8 +397,8 @@
 
       /* AI 卡片 */
       .ai-card {
-        background: linear-gradient(135deg, #faf5ff, #ede9fe);
-        border: 1px solid var(--purple-medium);
+        background: #f0f7ff;
+        border: 1px solid #dbeafe;
         border-radius: var(--radius);
         padding: 16px;
         margin: 16px 0;
@@ -407,7 +407,7 @@
       .ai-card .ai-label {
         font-size: 12px;
         font-weight: 600;
-        color: var(--purple);
+        color: #1d4ed8;
         margin-bottom: 8px;
         display: flex;
         align-items: center;
@@ -419,7 +419,27 @@
         color: var(--navy);
       }
 
-      /* 追问输入 */
+
+      /* ── Animations ── */
+      @keyframes ai-reveal {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .ai-card.revealed {
+        animation: ai-reveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .revealed {
+        animation: ai-reveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      @keyframes final-entrance {
+        from { opacity: 0; transform: scale(0.96) translateY(12px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      .final-box.entering {
+        animation: final-entrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+            /* 追问输入 */
       .followup-box {
         background: white;
         border-radius: var(--radius);
@@ -625,12 +645,10 @@
 
       /* 变现路径卡片 */
       .monetize-card {
-        background: white;
+        background: #fafafa;
         border-radius: var(--radius-sm);
         padding: 12px 14px;
         margin-bottom: 8px;
-        box-shadow: var(--shadow-sm);
-        border-left: 3px solid var(--purple-medium);
       }
       .mono-label {
         font-size: 12px;
@@ -814,6 +832,43 @@
         align-items: center;
         box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.06);
         z-index: 100;
+      }
+      .nav-btn-prev {
+        padding: 9px 18px;
+        font-size: 14px;
+        border: 1.5px solid #c4b5fd;
+        border-radius: 10px;
+        background: white;
+        color: var(--purple);
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+        transition: border-color 0.18s, color 0.18s;
+      }
+      .nav-btn-prev:hover {
+        border-color: var(--purple);
+        color: var(--purple-dark);
+      }
+      .nav-btn-next {
+        padding: 9px 18px;
+        font-size: 14px;
+        border: none;
+        border-radius: 10px;
+        background: #2563eb;
+        color: white;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+        transition: background 0.18s, transform 0.15s;
+      }
+      .nav-btn-next:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+      }
+      .nav-btn-next:disabled {
+        background: #94a3b8;
+        cursor: not-allowed;
+        transform: none;
       }
     </style>
   </head>
@@ -1378,43 +1433,9 @@
 
     <!-- ══════════════ NAV BAR ══════════════ -->
     <div class="nav-bar" id="navBar">
-      <button
-        class="btn-secondary"
-        id="prevBtn"
-        onclick="window.nav(-1)"
-        style="
-          padding: 9px 18px;
-          font-size: 14px;
-          border: 1.5px solid #c4b5fd;
-          border-radius: 10px;
-          background: white;
-          color: var(--purple);
-          cursor: pointer;
-          font-family: inherit;
-          font-weight: 600;
-        "
-      >
-        ← 上一步
-      </button>
+      <button class="nav-btn-prev" id="prevBtn" onclick="window.nav(-1)">← 上一步</button>
       <span style="font-size: 12px; color: var(--gray)" id="navHint"></span>
-      <button
-        class="btn-primary"
-        id="nextBtn"
-        onclick="window.nav(1)"
-        style="
-          padding: 9px 18px;
-          font-size: 14px;
-          border: none;
-          border-radius: 10px;
-          background: var(--purple);
-          color: white;
-          cursor: pointer;
-          font-family: inherit;
-          font-weight: 600;
-        "
-      >
-        下一步 →
-      </button>
+      <button class="nav-btn-next" id="nextBtn" onclick="window.nav(1)">下一步 →</button>
     </div>
 
     <script>
@@ -1821,6 +1842,7 @@
             var card = document.getElementById("aiCard1");
             var body = document.getElementById("aiBody1");
             card.style.display = "block";
+            card.classList.remove("revealed"); void card.offsetWidth; card.classList.add("revealed");
             S.phase1AI = await streamAI(prompt, body);
             document.getElementById("followupBox").style.display = "block";
             document.getElementById("p1NextBtn").style.display = "block";
@@ -1838,6 +1860,7 @@
             var card2 = document.getElementById("aiCard2");
             var body2 = document.getElementById("aiBody2");
             card2.style.display = "block";
+            card2.classList.remove("revealed"); void card2.offsetWidth; card2.classList.add("revealed");
             S.phase2AI = await streamAI(prompt2, body2);
           } else if (phase === 3) {
             var valText = S.valueAnswers
@@ -1859,7 +1882,9 @@
             document.getElementById("p3SubmitBtn").style.display = "none";
             var p3Hint = document.getElementById("p3Hint");
             if (p3Hint) p3Hint.style.display = "none";
-            document.getElementById("keywordsSection").style.display = "block";
+            var ks = document.getElementById("keywordsSection");
+            ks.style.display = "block";
+            ks.classList.remove("revealed"); void ks.offsetWidth; ks.classList.add("revealed");
             var body3 = document.getElementById("aiBody3");
             var raw = await streamAI(prompt3, body3);
             S.allKeywords = raw
@@ -2063,6 +2088,7 @@
           var card = document.getElementById("aiCard3confirm");
           var body = document.getElementById("aiBody3confirm");
           card.style.display = "block";
+          card.classList.remove("revealed"); void card.offsetWidth; card.classList.add("revealed");
           var prompt =
             "用户从价值观关键词中选择了：" +
             S.selectedKeywords.join("、") +
@@ -2170,6 +2196,8 @@
           document.getElementById("finalStep").textContent = c.step;
           document.getElementById("p4Results").style.display = "none";
           document.getElementById("p4Final").style.display = "block";
+          var fb = document.querySelector("#p4Final .final-box");
+          if (fb) { fb.classList.remove("entering"); void fb.offsetWidth; fb.classList.add("entering"); }
           renderMonetization();
         };
 
@@ -2208,10 +2236,10 @@
               ".final-box h3{font-size:18px;font-weight:700;margin-bottom:8px;}" +
               ".final-title{font-size:22px;font-weight:800;margin:12px 0;}" +
               ".final-meta{font-size:13px;opacity:.85;}" +
-              ".ai-card{background:#f5f3ff;border-radius:8px;padding:14px;margin-top:12px;}" +
+              ".ai-card{background:#f0f7ff;border:1px solid #dbeafe;border-radius:8px;padding:14px;margin-top:12px;}" +
               ".ai-label{font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:6px;}" +
               ".ai-body{font-size:14px;line-height:1.6;}" +
-              ".monetize-card{background:#f5f3ff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #c4b5fd;}" +
+              ".monetize-card{background:#fafafa;border-radius:8px;padding:12px 14px;margin-bottom:8px;}" +
               ".mono-label{font-size:13px;font-weight:700;color:#5b21b6;margin-bottom:4px;}" +
               ".mono-body{font-size:14px;line-height:1.5;}" +
               ".footer{text-align:center;margin-top:32px;font-size:12px;color:#6b7280;}" +
