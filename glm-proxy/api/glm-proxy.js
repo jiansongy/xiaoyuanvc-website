@@ -37,6 +37,11 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  if (req.method === "HEAD") {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method === "GET") {
     res.status(200).json({
       ok: true,
