@@ -1172,7 +1172,6 @@
         // ══════════════════════════════════════════════
         const SK = "xyvc-find-idea-v1";
         // AI 统一走代理，支持同域 /api 和外部代理自动切换
-        const PROXY_URL = "https://api.xiaoyuanvc.com/api/glm-proxy";
         const AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
         const AI_PROXY_CANDIDATES = [
           window.__XYVC_AI_PROXY__,
@@ -1187,7 +1186,7 @@
           /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
             ? window.location.origin.replace(/\/$/, "") + "/api/glm-proxy"
             : "",
-          PROXY_URL,
+          "https://api.xiaoyuanvc.com/api/glm-proxy",
         ].filter(Boolean);
         const STEP_NAMES = [
           "初始灵感",

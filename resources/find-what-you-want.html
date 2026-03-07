@@ -1359,7 +1359,6 @@
     <script>
       (function () {
         "use strict";
-        const PROXY_URL = "https://api.xiaoyuanvc.com/api/glm-proxy";
         const AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
         const AI_PROXY_CANDIDATES = [
           window.__XYVC_AI_PROXY__,
@@ -1374,7 +1373,7 @@
           /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
             ? window.location.origin.replace(/\/$/, "") + "/api/glm-proxy"
             : "",
-          PROXY_URL,
+          "https://api.xiaoyuanvc.com/api/glm-proxy",
         ].filter(Boolean);
 
         const CARDS = [
