@@ -1359,7 +1359,23 @@
     <script>
       (function () {
         "use strict";
-        const PROXY_URL = "https://glm-proxy-snowy.vercel.app/api/glm-proxy";
+        const PROXY_URL = "https://api.xiaoyuanvc.com/api/glm-proxy";
+        const AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
+        const AI_PROXY_CANDIDATES = [
+          window.__XYVC_AI_PROXY__,
+          new URLSearchParams(window.location.search).get("ai_proxy"),
+          (function () {
+            try {
+              return localStorage.getItem(AI_PROXY_HINT_KEY);
+            } catch (e) {
+              return "";
+            }
+          })(),
+          /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
+            ? window.location.origin.replace(/\/$/, "") + "/api/glm-proxy"
+            : "",
+          PROXY_URL,
+        ].filter(Boolean);
 
         const CARDS = [
           { id: "c1", emoji: "✍️", text: "创作内容/故事" },
@@ -1614,51 +1630,119 @@
         // ══════════════════════════════════════════════
         // Streaming AI helper
         // ══════════════════════════════════════════════
+        function normalizeAIError(err) {
+          var msg = (err && err.message) || String(err) || "未知错误";
+          if (/Failed to fetch/i.test(msg)) {
+            return "AI 服务连接失败，通常是代理不可达、跨域拦截或网络异常。";
+          }
+          if (/AbortError/i.test(msg)) {
+            return "AI 服务响应超时，请稍后重试。";
+          }
+          return msg;
+        }
+
+        function rememberWorkingProxy(url) {
+          try {
+            localStorage.setItem(AI_PROXY_HINT_KEY, url);
+          } catch (e) {}
+        }
+
+        async function readAIResponse(res, bodyEl, wantsStream) {
+          if (!wantsStream) {
+            var json = await res.json();
+            var text =
+              (((json || {}).choices || [])[0] || {}).message?.content || "";
+            bodyEl.textContent = text;
+            return text;
+          }
+
+          if (!res.body || typeof res.body.getReader !== "function") {
+            throw new Error("当前浏览器不支持流式响应");
+          }
+
+          var reader = res.body.getReader();
+          var decoder = new TextDecoder();
+          var full = "";
+          var pending = "";
+          bodyEl.textContent = "";
+
+          while (true) {
+            var chunk = await reader.read();
+            if (chunk.done) break;
+            pending += decoder.decode(chunk.value, { stream: true });
+            var lines = pending.split("\n");
+            pending = lines.pop() || "";
+            for (var li = 0; li < lines.length; li++) {
+              var line = lines[li].trim();
+              if (!line || !line.startsWith("data: ")) continue;
+              if (line === "data: [DONE]") continue;
+              try {
+                var delta =
+                  JSON.parse(line.slice(6)).choices?.[0]?.delta?.content || "";
+                if (!delta) continue;
+                full += delta;
+                bodyEl.textContent = full;
+              } catch (e) {
+                /* ignore parse errors */
+              }
+            }
+          }
+
+          return full;
+        }
+
+        async function fetchAIResult(prompt, bodyEl) {
+          var wantsStream =
+            typeof ReadableStream !== "undefined" &&
+            typeof TextDecoder !== "undefined";
+          var lastErr = null;
+
+          for (let i = 0; i < AI_PROXY_CANDIDATES.length; i++) {
+            let endpoint = AI_PROXY_CANDIDATES[i];
+            let ctrl =
+              typeof AbortController !== "undefined"
+                ? new AbortController()
+                : null;
+            let timer = ctrl
+              ? setTimeout(function () {
+                  ctrl.abort();
+                }, 25000)
+              : null;
+            try {
+              let res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  model: "glm-4-flash",
+                  messages: [{ role: "user", content: prompt }],
+                  stream: wantsStream,
+                }),
+                signal: ctrl ? ctrl.signal : undefined,
+              });
+              if (timer) clearTimeout(timer);
+              if (!res.ok) {
+                throw new Error("API 错误 " + res.status);
+              }
+              let text = await readAIResponse(res, bodyEl, wantsStream);
+              rememberWorkingProxy(endpoint);
+              return text;
+            } catch (err) {
+              if (timer) clearTimeout(timer);
+              lastErr = err;
+            }
+          }
+
+          throw lastErr || new Error("没有可用的 AI 代理");
+        }
+
         async function streamAI(prompt, bodyEl) {
           bodyEl.innerHTML =
             '<div style="display:flex;align-items:center;gap:8px;color:var(--gray)">' +
             '<div class="pulse"><span></span><span></span><span></span></div> AI 分析中…</div>';
           try {
-            var res = await fetch(PROXY_URL, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                model: "glm-4-flash",
-                messages: [{ role: "user", content: prompt }],
-                stream: true,
-              }),
-            });
-            if (!res.ok) throw new Error("API 错误 " + res.status);
-            var reader = res.body.getReader();
-            var decoder = new TextDecoder();
-            var full = "";
-            bodyEl.textContent = "";
-            while (true) {
-              var chunk = await reader.read();
-              if (chunk.done) break;
-              var lines = decoder
-                .decode(chunk.value, { stream: true })
-                .split("\n");
-              for (var li = 0; li < lines.length; li++) {
-                var line = lines[li];
-                if (
-                  !line.startsWith("data: ") ||
-                  line.trim() === "data: [DONE]"
-                )
-                  continue;
-                try {
-                  var delta =
-                    JSON.parse(line.slice(6)).choices[0].delta.content || "";
-                  full += delta;
-                  bodyEl.textContent = full;
-                } catch (e) {
-                  /* ignore parse errors */
-                }
-              }
-            }
-            return full;
+            return await fetchAIResult(prompt, bodyEl);
           } catch (err) {
-            bodyEl.textContent = "⚠️ 出错了：" + err.message;
+            bodyEl.textContent = "⚠️ 出错了：" + normalizeAIError(err);
             return "";
           }
         }
