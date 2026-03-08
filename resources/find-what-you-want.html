@@ -338,6 +338,27 @@
         gap: 16px;
         justify-content: center;
         margin-top: 8px;
+        flex-wrap: wrap;
+      }
+      .btn-undo {
+        min-width: 108px;
+        height: 48px;
+        border-radius: 999px;
+        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        color: var(--navy);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-undo:hover:not(:disabled) {
+        background: #eef2ff;
+        border-color: #a5b4fc;
+      }
+      .btn-undo:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
       }
       .btn-nope {
         width: 64px;
@@ -1057,7 +1078,17 @@
         </div>
         <div class="card-btns">
           <button
+            class="btn-undo"
+            id="undoSwipeBtn"
+            onclick="window.undoSwipe()"
+            title="撤回上一步"
+            disabled
+          >
+            ↶ 撤回上一步
+          </button>
+          <button
             class="btn-nope"
+            id="swipeLeftBtn"
             onclick="window.swipeCard('left')"
             title="无感 (←)"
           >
@@ -1065,6 +1096,7 @@
           </button>
           <button
             class="btn-like"
+            id="swipeRightBtn"
             onclick="window.swipeCard('right')"
             title="喜欢 (→)"
           >
@@ -1501,33 +1533,40 @@
           { id: "m4", emoji: "🎭", text: "表演/角色扮演" },
         ];
 
-        const S = {
-          phase: 0,
-          cardIndex: 0,
-          likes: [],
-          phase1AI: "",
-          followupAnswer: "",
-          experience: "",
-          angles: {
-            q1: "",
-            q2: "",
-            q3: "",
-            q4: "",
-            q5: "",
-            q6: "",
-            q7: "",
-            q8: "",
-          },
-          phase2AI: "",
-          valueAnswers: ["", "", "", "", ""],
-          allKeywords: [],
-          selectedKeywords: [],
-          phase3AI: "",
-          outwardValue: "",
-          finalCandidates: [],
-          monetization: null,
-          chosenIndex: -1,
-        };
+        function createInitialState() {
+          return {
+            phase: 0,
+            cardIndex: 0,
+            swipeHistory: [],
+            swipeLocked: false,
+            phase1AnalysisNonce: 0,
+            likes: [],
+            phase1AI: "",
+            followupAnswer: "",
+            experience: "",
+            angles: {
+              q1: "",
+              q2: "",
+              q3: "",
+              q4: "",
+              q5: "",
+              q6: "",
+              q7: "",
+              q8: "",
+            },
+            phase2AI: "",
+            valueAnswers: ["", "", "", "", ""],
+            allKeywords: [],
+            selectedKeywords: [],
+            phase3AI: "",
+            outwardValue: "",
+            finalCandidates: [],
+            monetization: null,
+            chosenIndex: -1,
+          };
+        }
+
+        const S = createInitialState();
 
         var PHASE_NAMES = ["喜欢的事", "擅长的事", "价值观", "综合分析"];
 
@@ -1585,24 +1624,72 @@
         };
 
         window.startApp = function () {
+          resetAppState();
           showPhase(1);
           renderCard();
         };
 
         window.goWelcome = function () {
+          resetAppState();
           showPhase(0);
         };
+
+        function updateSwipeControls() {
+          var undoBtn = document.getElementById("undoSwipeBtn");
+          var noBtn = document.getElementById("swipeLeftBtn");
+          var likeBtn = document.getElementById("swipeRightBtn");
+          var canUndo = S.swipeHistory.length > 0 && !S.swipeLocked;
+          var canSwipe = S.cardIndex < CARDS.length && !S.swipeLocked;
+          if (undoBtn) undoBtn.disabled = !canUndo;
+          if (noBtn) noBtn.disabled = !canSwipe;
+          if (likeBtn) likeBtn.disabled = !canSwipe;
+        }
+
+        function resetPhase1CompletionState() {
+          S.phase1AnalysisNonce++;
+          S.phase1AI = "";
+          S.followupAnswer = "";
+          document.getElementById("likesResult").style.display = "none";
+          document.getElementById("aiCard1").style.display = "none";
+          document.getElementById("aiBody1").textContent = "";
+          document.getElementById("followupBox").style.display = "none";
+          document.getElementById("followupInput").value = "";
+          document.getElementById("p1NextBtn").style.display = "none";
+          document.querySelector(".card-btns").style.display = "flex";
+          document.getElementById("swipeLeftBtn").style.display = "";
+          document.getElementById("swipeRightBtn").style.display = "";
+          document.querySelector(".swipe-hint").style.display = "flex";
+          document.querySelector(".card-progress").style.display = "block";
+        }
+
+        function resetPhase1() {
+          S.cardIndex = 0;
+          S.swipeHistory = [];
+          S.swipeLocked = false;
+          S.likes = [];
+          resetPhase1CompletionState();
+          updateSwipeControls();
+        }
+
+        function resetAppState() {
+          Object.assign(S, createInitialState());
+          resetPhase1CompletionState();
+          updateSwipeControls();
+        }
 
         function renderCard() {
           var arena = document.getElementById("cardArena");
           if (S.cardIndex >= CARDS.length) {
             arena.innerHTML =
               '<div style="text-align:center;padding:20px;color:var(--gray);font-size:14px">全部完成！</div>';
-            document.querySelector(".card-btns").style.display = "none";
+            document.querySelector(".card-btns").style.display = "flex";
+            document.getElementById("swipeLeftBtn").style.display = "none";
+            document.getElementById("swipeRightBtn").style.display = "none";
             document.querySelector(".swipe-hint").style.display = "none";
             document.querySelector(".card-progress").style.display = "none";
             showLikesResult();
             callAI(1);
+            updateSwipeControls();
             return;
           }
           var card = CARDS[S.cardIndex];
@@ -1614,6 +1701,7 @@
             "</div></div>";
           document.getElementById("cardCurrent").textContent = S.cardIndex + 1;
           initCardDrag();
+          updateSwipeControls();
         }
 
         function showLikesResult() {
@@ -1631,25 +1719,57 @@
         }
 
         window.swipeCard = function (dir) {
-          if (S.cardIndex >= CARDS.length) return;
+          if (S.cardIndex >= CARDS.length || S.swipeLocked) return;
           var card = document.getElementById("currentCard");
           if (!card) return;
+          S.swipeLocked = true;
+          S.swipeHistory.push({
+            cardIndex: S.cardIndex,
+            dir: dir,
+            text: CARDS[S.cardIndex].text,
+          });
           if (dir === "right") {
             S.likes.push(CARDS[S.cardIndex].text);
             card.classList.add("swipe-right");
           } else {
             card.classList.add("swipe-left");
           }
+          updateSwipeControls();
           setTimeout(function () {
             S.cardIndex++;
+            S.swipeLocked = false;
             renderCard();
           }, 280);
+        };
+
+        window.undoSwipe = function () {
+          if (!S.swipeHistory.length || S.swipeLocked) return;
+          var last = S.swipeHistory.pop();
+          S.cardIndex = last.cardIndex;
+          if (last.dir === "right") {
+            for (var i = S.likes.length - 1; i >= 0; i--) {
+              if (S.likes[i] === last.text) {
+                S.likes.splice(i, 1);
+                break;
+              }
+            }
+          }
+          if (S.cardIndex < CARDS.length) {
+            resetPhase1CompletionState();
+          }
+          renderCard();
         };
 
         document.addEventListener("keydown", function (e) {
           if (S.phase !== 1) return;
           if (e.key === "ArrowRight") window.swipeCard("right");
           if (e.key === "ArrowLeft") window.swipeCard("left");
+          if (
+            (e.key === "z" || e.key === "Z") &&
+            !/input|textarea/i.test((e.target && e.target.tagName) || "")
+          ) {
+            window.undoSwipe();
+          }
         });
 
         function initCardDrag() {
@@ -1728,9 +1848,12 @@
           } catch (e) {}
         }
 
-        async function readAIResponse(res, bodyEl, wantsStream) {
+        async function readAIResponse(res, bodyEl, wantsStream, shouldContinue) {
+          var canContinue =
+            typeof shouldContinue === "function" ? shouldContinue : function () { return true; };
           if (!wantsStream) {
             var json = await res.json();
+            if (!canContinue()) return "";
             var text =
               (((json || {}).choices || [])[0] || {}).message?.content || "";
             bodyEl.textContent = text;
@@ -1754,6 +1877,7 @@
             var lines = pending.split("\n");
             pending = lines.pop() || "";
             for (var li = 0; li < lines.length; li++) {
+              if (!canContinue()) return full;
               var line = lines[li].trim();
               if (!line || !line.startsWith("data: ")) continue;
               if (line === "data: [DONE]") continue;
@@ -1772,7 +1896,7 @@
           return full;
         }
 
-        async function fetchAIResult(prompt, bodyEl) {
+        async function fetchAIResult(prompt, bodyEl, shouldContinue) {
           var wantsStream =
             typeof ReadableStream !== "undefined" &&
             typeof TextDecoder !== "undefined";
@@ -1804,7 +1928,12 @@
               if (!res.ok) {
                 throw new Error("API 错误 " + res.status);
               }
-              let text = await readAIResponse(res, bodyEl, wantsStream);
+              let text = await readAIResponse(
+                res,
+                bodyEl,
+                wantsStream,
+                shouldContinue,
+              );
               rememberWorkingProxy(endpoint);
               return text;
             } catch (err) {
@@ -1816,14 +1945,20 @@
           throw lastErr || new Error("没有可用的 AI 代理");
         }
 
-        async function streamAI(prompt, bodyEl) {
-          bodyEl.innerHTML =
-            '<div style="display:flex;align-items:center;gap:8px;color:var(--gray)">' +
-            '<div class="pulse"><span></span><span></span><span></span></div> AI 分析中…</div>';
+        async function streamAI(prompt, bodyEl, shouldContinue) {
+          var canContinue =
+            typeof shouldContinue === "function" ? shouldContinue : function () { return true; };
+          if (canContinue()) {
+            bodyEl.innerHTML =
+              '<div style="display:flex;align-items:center;gap:8px;color:var(--gray)">' +
+              '<div class="pulse"><span></span><span></span><span></span></div> AI 分析中…</div>';
+          }
           try {
-            return await fetchAIResult(prompt, bodyEl);
+            return await fetchAIResult(prompt, bodyEl, canContinue);
           } catch (err) {
-            bodyEl.textContent = "⚠️ 出错了：" + normalizeAIError(err);
+            if (canContinue()) {
+              bodyEl.textContent = "⚠️ 出错了：" + normalizeAIError(err);
+            }
             return "";
           }
         }
@@ -1833,6 +1968,10 @@
         // ══════════════════════════════════════════════
         async function callAI(phase) {
           if (phase === 1) {
+            var phase1Nonce = ++S.phase1AnalysisNonce;
+            var isCurrentPhase1Request = function () {
+              return phase1Nonce === S.phase1AnalysisNonce;
+            };
             var likeList =
               S.likes.length > 0 ? S.likes.join("、") : "（用户未选择任何项）";
             var prompt =
@@ -1843,7 +1982,8 @@
             var body = document.getElementById("aiBody1");
             card.style.display = "block";
             card.classList.remove("revealed"); void card.offsetWidth; card.classList.add("revealed");
-            S.phase1AI = await streamAI(prompt, body);
+            S.phase1AI = await streamAI(prompt, body, isCurrentPhase1Request);
+            if (!isCurrentPhase1Request()) return;
             document.getElementById("followupBox").style.display = "block";
             document.getElementById("p1NextBtn").style.display = "block";
           } else if (phase === 2) {
