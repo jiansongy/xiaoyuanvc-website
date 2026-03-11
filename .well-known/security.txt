@@ -1,0 +1,5 @@
+Contact: https://xiaoyuanvc.com/#contact
+Canonical: https://xiaoyuanvc.com/.well-known/security.txt
+Policy: https://xiaoyuanvc.com/SECURITY.md
+Preferred-Languages: zh, en
+Expires: 2027-03-11T00:00:00.000Z

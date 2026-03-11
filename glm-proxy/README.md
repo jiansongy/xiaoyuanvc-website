@@ -23,7 +23,7 @@ Goal:
 - `ALLOWED_ORIGINS`
   - comma-separated list
   - example:
-    - `https://xiaoyuanvc.com,https://www.xiaoyuanvc.com,http://localhost:8080`
+    - `https://xiaoyuanvc.com,http://localhost:8080`
 
 ## Recommended Vercel Setup
 

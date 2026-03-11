@@ -1201,6 +1201,10 @@ button {
   color: var(--color-text-primary);
 }
 
+.contact__links-title--spaced {
+  margin-bottom: 24px;
+}
+
 .contact__links {
   display: flex;
   flex-direction: column;

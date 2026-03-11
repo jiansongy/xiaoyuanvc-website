@@ -6,6 +6,18 @@
 (function () {
   "use strict";
 
+  function initAnalytics() {
+    if (typeof window.gtag === "function") return;
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      window.dataLayer.push(arguments);
+    };
+
+    window.gtag("js", new Date());
+    window.gtag("config", "G-LP5EB2HW33");
+  }
+
   // ---- Scroll Nav: transparent → blurred background ----
   function initNavScroll() {
     var nav = document.getElementById("nav");
@@ -348,6 +360,7 @@
 
   // ---- Init all modules on DOMContentLoaded ----
   document.addEventListener("DOMContentLoaded", function () {
+    initAnalytics();
     initNavScroll();
     initNavHighlight();
     initSmoothScroll();

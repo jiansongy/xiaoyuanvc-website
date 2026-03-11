@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data:; media-src 'self' https:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; form-action 'self'; upgrade-insecure-requests"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <title>大学生创业平台 | 校园VC - AI时代的创业教育</title>
     <meta
       name="description"
@@ -196,14 +202,6 @@
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
     ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-LP5EB2HW33");
-    </script>
   </head>
   <body>
     <!-- ====== Navigation ====== -->
@@ -1230,7 +1228,7 @@
         <div class="contact__grid fade-in">
           <!-- QR Codes -->
           <div>
-            <h3 class="contact__links-title" style="margin-bottom: 24px">
+            <h3 class="contact__links-title contact__links-title--spaced">
               微信联系
             </h3>
             <div class="contact__qr-group">

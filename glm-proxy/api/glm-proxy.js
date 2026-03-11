@@ -7,7 +7,6 @@
 
 const DEFAULT_ALLOWED_ORIGINS = [
   "https://xiaoyuanvc.com",
-  "https://www.xiaoyuanvc.com",
   "http://localhost:8080",
   "http://127.0.0.1:8080",
 ];

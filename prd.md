@@ -271,7 +271,7 @@ Logo | 首页 | 品牌介绍 | 产品展示 | 创始人及著作 | 核心团队 
 
 | 子域 | 用途 | 状态 |
 |------|------|------|
-| www.xiaoyuanvc.com | 品牌官网（本 PRD） | 在线 |
+| xiaoyuanvc.com | 品牌官网（本 PRD） | 在线 |
 | learn.xiaoyuanvc.com | 学习站（VitePress） | 在线 |
 | edu.xiaoyuanvc.com | 创业教育智慧系统 SaaS | 在线 |
 | css.xiaoyuanvc.com | 加密创投 CSS 网页版 | 在线 |
