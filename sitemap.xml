@@ -140,7 +140,13 @@
   </url>
   <url>
     <loc>https://xiaoyuanvc.com/resources/ai-era-entrepreneurship-skills.html</loc>
-    <lastmod>2026-03-04</lastmod>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://xiaoyuanvc.com/resources/chinese-web3-startup-course.html</loc>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -182,7 +188,7 @@
   </url>
   <url>
     <loc>https://xiaoyuanvc.com/resources/no-code-ai-startup.html</loc>
-    <lastmod>2026-03-04</lastmod>
+    <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
