@@ -176,6 +176,11 @@
   outline-offset: 2px;
 }
 
+/* Reduce top padding when section follows filter bar */
+.filter-bar + .section {
+  padding-top: 0;
+}
+
 /* --- Resource Card Grid --- */
 .resource-grid {
   max-width: var(--max-width);
