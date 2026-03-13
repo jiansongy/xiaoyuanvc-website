@@ -863,7 +863,7 @@
             type="text"
             id="customer_input"
             placeholder="例：汽车零部件制造厂的设备管理部门"
-            oninput="S.customer = this.value"
+            oninput="S.customer = this.value; updateNextButtonState()"
           />
         </div>
         <div>
@@ -1297,6 +1297,41 @@
             .replace(/"/g, "&quot;");
         }
 
+        function getStepValidationMessage(step) {
+          if (step === 1) {
+            if (
+              !S.ml_tech.trim() ||
+              !S.ml_scene.trim() ||
+              !S.ml_customer.trim() ||
+              !S.ml_problem.trim()
+            ) {
+              return "请先补全项目描述的 4 个字段。";
+            }
+          } else if (step === 2) {
+            if (!S.trl) return "请先选择技术成熟度。";
+          } else if (step === 3) {
+            if (!S.ip) return "请先选择 IP 归属。";
+            if (!S.team.length) return "请至少选择 1 个团队角色。";
+          } else if (step === 4) {
+            if (!S.customer.trim()) return "请先填写目标客户。";
+            if (!S.path) return "请先选择商业路径。";
+          } else if (step === 5) {
+            if (!S.stage) return "请先选择当前阶段。";
+          } else if (step === 6) {
+            if (!S.difficulties.length) return "请至少选择 1 个当前最大困难。";
+          }
+          return "";
+        }
+
+        function updateNextButtonState() {
+          var nextBtn = document.getElementById("nextBtn");
+          if (!nextBtn) return;
+          nextBtn.disabled =
+            S.step >= 1 &&
+            S.step <= 6 &&
+            !!getStepValidationMessage(S.step);
+        }
+
         // ── NAVIGATION ──
         window.startApp = function () {
           S.step = 1;
@@ -1319,6 +1354,14 @@
 
         window.nav = function (dir) {
           save();
+          if (dir === 1 && S.step >= 1 && S.step <= 6) {
+            var validationMessage = getStepValidationMessage(S.step);
+            if (validationMessage) {
+              window.alert(validationMessage);
+              updateNextButtonState();
+              return;
+            }
+          }
           var next = S.step + dir;
           if (next < 1) return;
           // Step 6 → confirm (step 7)
@@ -1384,6 +1427,7 @@
               n === 1 ? "hidden" : "visible";
             document.getElementById("nextBtn").textContent =
               n === 6 ? "确认信息 →" : "下一步 →";
+            updateNextButtonState();
           }
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -1412,6 +1456,7 @@
             S.ml_customer || "【目标客户】";
           document.getElementById("prev_problem").textContent =
             S.ml_problem || "【核心问题】";
+          updateNextButtonState();
         };
         function renderS1() {
           document.getElementById("ml_tech").value = S.ml_tech;
@@ -1424,6 +1469,7 @@
         // ── STEP 2: TRL radio ──
         function renderS2() {
           restoreRadio("trlGrid", S.trl);
+          updateNextButtonState();
         }
 
         // ── STEP 3: IP + team chips ──
@@ -1432,6 +1478,7 @@
           document.querySelectorAll("#teamChips .chip").forEach(function (c) {
             c.classList.toggle("active", S.team.includes(c.dataset.v));
           });
+          updateNextButtonState();
         }
         window.toggleTeam = function (el) {
           var v = el.dataset.v;
@@ -1439,17 +1486,20 @@
           if (idx === -1) S.team.push(v);
           else S.team.splice(idx, 1);
           el.classList.toggle("active", S.team.includes(v));
+          updateNextButtonState();
         };
 
         // ── STEP 4: customer + path ──
         function renderS4() {
           document.getElementById("customer_input").value = S.customer;
           restoreRadio("pathGrid", S.path);
+          updateNextButtonState();
         }
 
         // ── STEP 5: stage ──
         function renderS5() {
           restoreRadio("stageGrid", S.stage);
+          updateNextButtonState();
         }
 
         // ── STEP 6: difficulties ──
@@ -1459,6 +1509,7 @@
           });
           document.getElementById("diffNote").value = S.diff_note;
           updateDiffLimit();
+          updateNextButtonState();
         }
         window.toggleDiff = function (el) {
           var v = el.dataset.v;
@@ -1472,6 +1523,7 @@
             el.classList.add("active");
           }
           updateDiffLimit();
+          updateNextButtonState();
         };
         function updateDiffLimit() {
           document.getElementById("diffLimit").textContent =
@@ -1511,6 +1563,7 @@
           if (name === "ip") S.ip = inp.value;
           if (name === "path") S.path = inp.value;
           if (name === "stage") S.stage = inp.value;
+          updateNextButtonState();
         });
 
         // ── CONFIRM PAGE ──
@@ -1773,6 +1826,18 @@
 
         // ── GENERATE REPORT ──
         window.generateReport = function () {
+          var validationMessage = "";
+          for (var step = 1; step <= 6; step++) {
+            validationMessage = getStepValidationMessage(step);
+            if (validationMessage) {
+              S.step = step;
+              save();
+              showStep(step);
+              render(step);
+              window.alert(validationMessage);
+              return;
+            }
+          }
           S.step = 8;
           save();
           showStep(8);
