@@ -1,0 +1,1857 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>硬科技创业自检 | 校园VC</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --orange: #f97316;
+        --orange-dark: #c2410c;
+        --orange-light: #fff7ed;
+        --bg: #fef3e2;
+        --navy: #1a1a2e;
+        --gray: #6b7280;
+        --white: #ffffff;
+        --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.07);
+        --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+      body {
+        font-family:
+          -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: var(--bg);
+        color: var(--navy);
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        background: var(--orange);
+        color: white;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+      }
+      .header h1 {
+        font-size: 17px;
+        font-weight: 700;
+      }
+      .header p {
+        font-size: 12px;
+        opacity: 0.85;
+        margin-top: 2px;
+      }
+
+      /* Progress bar */
+      .progress-wrap {
+        background: white;
+        padding: 12px 20px;
+        border-bottom: 1px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: none;
+      }
+      .progress-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .progress-info span {
+        font-size: 13px;
+      }
+      .progress-info .count {
+        color: var(--orange);
+        font-weight: 600;
+      }
+      .progress-bar {
+        height: 4px;
+        background: #e5e7eb;
+        border-radius: 2px;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--orange);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+      .p-dots {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+      }
+      .p-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        transition: all 0.2s;
+      }
+      .p-dot.done {
+        background: var(--orange-dark);
+      }
+      .p-dot.active {
+        background: var(--orange);
+        transform: scale(1.3);
+      }
+
+      /* Screen */
+      .screen {
+        display: none;
+        max-width: 560px;
+        margin: 0 auto;
+        padding: 20px 16px 100px;
+      }
+      .screen.on {
+        display: block;
+      }
+
+      /* Cover screen override */
+      #s0.screen {
+        padding: 20px 0 40px;
+        max-width: none;
+      }
+
+      /* Intro / Cover */
+      .intro-wrap {
+        padding: 0 16px 20px;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+      .intro-card {
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .intro-head {
+        background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+        color: white;
+        padding: 32px 24px 28px;
+        text-align: center;
+      }
+      .intro-head h2 {
+        font-size: 22px;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      .intro-head p {
+        font-size: 14px;
+        opacity: 0.9;
+        line-height: 1.6;
+      }
+      .intro-body {
+        padding: 20px 24px 28px;
+      }
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .s-preview {
+        background: var(--orange-light);
+        border-radius: var(--radius-sm);
+        padding: 10px 8px;
+        text-align: center;
+      }
+      .s-preview .sn {
+        font-size: 11px;
+        color: var(--orange);
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
+      .s-preview .st {
+        font-size: 12px;
+        color: var(--navy);
+        font-weight: 600;
+      }
+      .intro-meta {
+        font-size: 13px;
+        color: var(--gray);
+        text-align: center;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+      .intro-framework {
+        background: var(--orange-light);
+        border-radius: var(--radius-sm);
+        padding: 14px 16px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--navy);
+      }
+      .intro-framework strong {
+        color: var(--orange-dark);
+      }
+
+      /* Card */
+      .card {
+        background: white;
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 16px;
+      }
+      .step-title {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .step-desc {
+        font-size: 14px;
+        color: var(--gray);
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+
+      /* Inputs */
+      input[type="text"],
+      textarea {
+        width: 100%;
+        border: 1.5px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        padding: 10px 13px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--navy);
+        background: white;
+        transition: border-color 0.2s;
+      }
+      input[type="text"]:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--orange);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 72px;
+      }
+
+      /* Radio cards */
+      .radio-grid {
+        display: grid;
+        gap: 10px;
+      }
+      .radio-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px;
+        border: 1.5px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .radio-card:hover {
+        border-color: var(--orange);
+        background: var(--orange-light);
+      }
+      .radio-card.active {
+        border-color: var(--orange);
+        background: var(--orange-light);
+      }
+      .radio-card input[type="radio"] {
+        display: none;
+      }
+      .radio-dot {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #d1d5db;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .radio-card.active .radio-dot {
+        border-color: var(--orange);
+        background: var(--orange);
+      }
+      .radio-card.active .radio-dot::after {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: white;
+      }
+      .radio-label {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .radio-sub {
+        font-size: 12px;
+        color: var(--gray);
+        margin-top: 2px;
+      }
+
+      /* Chip tags */
+      .chip-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .chip {
+        padding: 7px 14px;
+        border-radius: 20px;
+        border: 1.5px solid #e5e7eb;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.15s;
+        background: white;
+        color: var(--navy);
+      }
+      .chip:hover {
+        border-color: var(--orange);
+      }
+      .chip.active {
+        border-color: var(--orange);
+        background: var(--orange);
+        color: white;
+      }
+
+      /* Difficulty multi-select (same chip style, max 2) */
+      .difficulty-limit-note {
+        font-size: 12px;
+        color: var(--gray);
+        margin-bottom: 10px;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 11px 22px;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.15s;
+      }
+      .btn-primary {
+        background: var(--orange);
+        color: white;
+      }
+      .btn-primary:hover {
+        background: var(--orange-dark);
+      }
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--gray);
+        border: 1.5px solid #e5e7eb;
+      }
+      .btn-ghost:hover {
+        border-color: var(--orange);
+        color: var(--orange);
+      }
+      .btn-full {
+        width: 100%;
+      }
+
+      /* Nav bar */
+      .nav-bar {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+        padding: 12px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+
+      /* Mad-libs Step 1 */
+      .madlib-row {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .madlib-label {
+        font-size: 13px;
+        color: var(--gray);
+        white-space: nowrap;
+        min-width: 72px;
+      }
+      .madlib-preview {
+        background: var(--orange-light);
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--navy);
+        margin-top: 4px;
+      }
+      .madlib-placeholder {
+        color: var(--orange);
+        font-weight: 600;
+      }
+
+      /* Confirm screen */
+      .confirm-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #f3f4f6;
+        font-size: 14px;
+      }
+      .confirm-label {
+        color: var(--gray);
+        flex-shrink: 0;
+        width: 90px;
+      }
+      .confirm-value {
+        font-weight: 500;
+        text-align: right;
+      }
+
+      /* Report screen */
+      .report-section {
+        margin-bottom: 20px;
+      }
+      .report-section h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--orange-dark);
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--orange-light);
+      }
+      .stage-bar {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+      .stage-pill {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        background: #f3f4f6;
+        color: var(--gray);
+      }
+      .stage-pill.current {
+        background: var(--orange);
+        color: white;
+        font-weight: 600;
+      }
+      .ai-body {
+        font-size: 14px;
+        line-height: 1.8;
+        color: var(--navy);
+      }
+      .ai-body p {
+        margin-bottom: 8px;
+      }
+      .pulse {
+        display: inline-flex;
+        gap: 4px;
+      }
+      .pulse span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--orange);
+        animation: pulse 1.2s infinite;
+      }
+      .pulse span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .pulse span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes pulse {
+        0%,
+        80%,
+        100% {
+          transform: scale(0);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Footer attribution */
+      .attribution {
+        text-align: center;
+        font-size: 12px;
+        color: var(--gray);
+        padding: 16px;
+        margin-top: 8px;
+      }
+      .attribution strong {
+        color: var(--orange-dark);
+      }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .pulse span {
+          animation: none;
+        }
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 375px) {
+        .madlib-row {
+          grid-template-columns: 1fr;
+        }
+        .madlib-label {
+          min-width: unset;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── Header ── -->
+    <header class="header">
+      <span style="font-size: 22px">🔬</span>
+      <div style="flex: 1">
+        <h1 style="margin-bottom: 0">硬科技创业自检</h1>
+        <p>基于共创验证式创业法 · 三层九阶段模型</p>
+      </div>
+      <button
+        id="homeBtn"
+        onclick="goHome()"
+        style="
+          display: none;
+          background: rgba(255, 255, 255, 0.2);
+          border: none;
+          color: white;
+          border-radius: 8px;
+          padding: 6px 12px;
+          font-size: 12px;
+          cursor: pointer;
+          font-family: inherit;
+        "
+      >
+        🏠 首页
+      </button>
+      <a
+        href="https://xiaoyuanvc.com"
+        target="_blank"
+        style="
+          display: flex;
+          align-items: center;
+          margin-left: 10px;
+          flex-shrink: 0;
+        "
+      >
+        <img
+          src="../assets/logo-color.png"
+          alt="校园VC"
+          style="
+            height: 32px;
+            background: white;
+            border-radius: 6px;
+            padding: 3px 8px;
+            display: block;
+          "
+        />
+      </a>
+    </header>
+
+    <!-- ── Progress ── -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-info">
+        <span id="pLabel" style="color: var(--gray)">Step 1</span>
+        <span class="count" id="pCount">1 / 6</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 16%"></div>
+      </div>
+      <div class="p-dots" id="pDots"></div>
+    </div>
+
+    <!-- ── Screen 0: Cover ── -->
+    <div class="screen on" id="s0">
+      <div class="intro-wrap">
+        <div class="intro-card">
+          <div class="intro-head">
+            <img
+              src="../assets/keloma-cover.webp"
+              alt="从学生创业到师生共创 封面"
+              style="
+                width: 100%;
+                max-width: 400px;
+                border-radius: 12px;
+                margin-bottom: 16px;
+              "
+            />
+            <h2>硬科技创业自检</h2>
+            <p>
+              6 个问题，AI
+              基于共创验证式创业法为你定位当前阶段，找出最大断点，给出 Top 3
+              行动建议。
+            </p>
+          </div>
+          <div class="intro-body">
+            <div class="steps-grid">
+              <div class="s-preview">
+                <div class="sn">Step 1</div>
+                <div class="st">项目描述</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 2</div>
+                <div class="st">技术成熟度</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 3</div>
+                <div class="st">IP 与团队</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 4</div>
+                <div class="st">客户与路径</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 5</div>
+                <div class="st">当前阶段</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 6</div>
+                <div class="st">主要困难</div>
+              </div>
+            </div>
+            <div class="intro-framework">
+              <strong>三层九阶段模型：</strong
+              >共创生成层（成果识别→共创组队→权责建模）→
+              验证转译层（市场界定→价值转译→双十验证）→
+              放大闭环层（MVTP→三重闭环→平台复制）
+            </div>
+            <div class="intro-meta">
+              ⏱ 预计 3-5 分钟 &nbsp;|&nbsp; 🤖 1 次 AI 诊断 &nbsp;|&nbsp; 🔬
+              专为高校硬科技创业设计
+            </div>
+            <button
+              class="btn btn-primary btn-full"
+              onclick="startApp()"
+              style="
+                width: 100%;
+                justify-content: center;
+                margin-top: 0;
+                padding: 13px;
+                font-size: 15px;
+              "
+            >
+              开始自检 →
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="attribution">
+        方法论来源：共创验证式创业法 · <strong>Roma@地球行走</strong> ·
+        清华经管学院
+      </div>
+    </div>
+
+    <!-- ── Screen 1: Mad-libs 项目描述 ── -->
+    <div class="screen" id="s1">
+      <div class="card">
+        <p class="step-title">Step 1：项目描述</p>
+        <p class="step-desc">
+          用一句话描述你的项目——填写下面四个空，完成后可以预览效果。
+        </p>
+        <div class="madlib-row">
+          <span class="madlib-label">核心技术</span>
+          <input
+            type="text"
+            id="ml_tech"
+            placeholder="例：轻量化边缘 AI 推理引擎"
+            oninput="updateMadlib()"
+          />
+        </div>
+        <div class="madlib-row">
+          <span class="madlib-label">应用场景</span>
+          <input
+            type="text"
+            id="ml_scene"
+            placeholder="例：工业设备预测性维护"
+            oninput="updateMadlib()"
+          />
+        </div>
+        <div class="madlib-row">
+          <span class="madlib-label">目标客户</span>
+          <input
+            type="text"
+            id="ml_customer"
+            placeholder="例：制造业工厂设备管理员"
+            oninput="updateMadlib()"
+          />
+        </div>
+        <div class="madlib-row">
+          <span class="madlib-label">核心问题</span>
+          <input
+            type="text"
+            id="ml_problem"
+            placeholder="例：非计划停机难以提前预警"
+            oninput="updateMadlib()"
+          />
+        </div>
+        <div class="madlib-preview" id="madlibPreview">
+          我们用
+          <span class="madlib-placeholder" id="prev_tech">【核心技术】</span>，
+          解决
+          <span class="madlib-placeholder" id="prev_scene">【应用场景】</span>
+          中
+          <span class="madlib-placeholder" id="prev_customer"
+            >【目标客户】</span
+          >
+          面临的
+          <span class="madlib-placeholder" id="prev_problem">【核心问题】</span
+          >。
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 2: 技术成熟度 ── -->
+    <div class="screen" id="s2">
+      <div class="card">
+        <p class="step-title">Step 2：技术成熟度</p>
+        <p class="step-desc">你的技术目前处于哪个状态？</p>
+        <div class="radio-grid" id="trlGrid">
+          <label class="radio-card" data-v="concept">
+            <input type="radio" name="trl" value="concept" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">概念 / 论文阶段</div>
+              <div class="radio-sub">有理论成果或发表论文，尚未做出实物</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="lab">
+            <input type="radio" name="trl" value="lab" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">实验室原型</div>
+              <div class="radio-sub">可在实验室条件下运行，未对外展示</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="demo">
+            <input type="radio" name="trl" value="demo" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">可演示原型</div>
+              <div class="radio-sub">可向外部人员演示核心功能</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="validated">
+            <input type="radio" name="trl" value="validated" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">外部验证</div>
+              <div class="radio-sub">已在合作方或真实用户处完成测试</div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 3: IP 归属 + 团队 ── -->
+    <div class="screen" id="s3">
+      <div class="card">
+        <p class="step-title">Step 3：IP 归属</p>
+        <p class="step-desc">
+          技术成果的知识产权归属？（这是高校创业最关键的起点问题）
+        </p>
+        <div class="radio-grid" id="ipGrid">
+          <label class="radio-card" data-v="school">
+            <input type="radio" name="ip" value="school" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">高校 / 学院持有</div>
+              <div class="radio-sub">需走技术转让流程</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="professor">
+            <input type="radio" name="ip" value="professor" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">教授个人专利</div>
+              <div class="radio-sub">教授持有，需与教授协商入股或授权</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="student">
+            <input type="radio" name="ip" value="student" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">学生自研，产权清晰</div>
+              <div class="radio-sub">完全由学生团队自主研发</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="unclear">
+            <input type="radio" name="ip" value="unclear" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">尚未明确</div>
+              <div class="radio-sub">还没有正式讨论过 IP 归属</div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div class="card">
+        <p class="step-title">团队构成</p>
+        <p class="step-desc">选择团队中有哪些角色（可多选）</p>
+        <div class="chip-grid" id="teamChips">
+          <button class="chip" data-v="pi" onclick="toggleTeam(this)">
+            导师 / PI 参与
+          </button>
+          <button class="chip" data-v="phd" onclick="toggleTeam(this)">
+            博士 / 硕士
+          </button>
+          <button class="chip" data-v="eng" onclick="toggleTeam(this)">
+            工程开发
+          </button>
+          <button class="chip" data-v="product" onclick="toggleTeam(this)">
+            产品设计
+          </button>
+          <button class="chip" data-v="biz" onclick="toggleTeam(this)">
+            商业 / 销售
+          </button>
+          <button class="chip" data-v="industry" onclick="toggleTeam(this)">
+            产业导师
+          </button>
+          <button class="chip" data-v="fulltime" onclick="toggleTeam(this)">
+            全职创始人
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 4: 目标客户 + 商业路径 ── -->
+    <div class="screen" id="s4">
+      <div class="card">
+        <p class="step-title">Step 4：目标客户与商业路径</p>
+        <p class="step-desc">你最想服务的客户是谁？你计划如何赚钱？</p>
+        <div style="margin-bottom: 16px">
+          <div style="font-size: 13px; color: var(--gray); margin-bottom: 6px">
+            目标客户 / 应用场景
+          </div>
+          <input
+            type="text"
+            id="customer_input"
+            placeholder="例：汽车零部件制造厂的设备管理部门"
+            oninput="S.customer = this.value"
+          />
+        </div>
+        <div>
+          <div style="font-size: 13px; color: var(--gray); margin-bottom: 10px">
+            商业化路径
+          </div>
+          <div class="radio-grid" id="pathGrid">
+            <label class="radio-card" data-v="product">
+              <input type="radio" name="path" value="product" />
+              <div class="radio-dot"></div>
+              <div><div class="radio-label">卖产品 / 硬件</div></div>
+            </label>
+            <label class="radio-card" data-v="project">
+              <input type="radio" name="path" value="project" />
+              <div class="radio-dot"></div>
+              <div><div class="radio-label">做项目 / 定制服务</div></div>
+            </label>
+            <label class="radio-card" data-v="license">
+              <input type="radio" name="path" value="license" />
+              <div class="radio-dot"></div>
+              <div><div class="radio-label">技术转让 / 授权</div></div>
+            </label>
+            <label class="radio-card" data-v="unknown">
+              <input type="radio" name="path" value="unknown" />
+              <div class="radio-dot"></div>
+              <div><div class="radio-label">还没确定</div></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 5: 当前阶段 ── -->
+    <div class="screen" id="s5">
+      <div class="card">
+        <p class="step-title">Step 5：当前所处阶段</p>
+        <p class="step-desc">选择最符合你现状的描述</p>
+        <div class="radio-grid" id="stageGrid">
+          <label
+            class="radio-card"
+            data-v="stage1"
+            data-label="阶段1：成果识别"
+          >
+            <input type="radio" name="stage" value="stage1" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">成果刚出来，还没想好怎么做</div>
+              <div class="radio-sub">共创生成层 · 阶段1</div>
+            </div>
+          </label>
+          <label
+            class="radio-card"
+            data-v="stage23"
+            data-label="阶段2-3：共创组队/权责建模"
+          >
+            <input type="radio" name="stage" value="stage23" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">已组建初步团队，但分工和权责未清晰</div>
+              <div class="radio-sub">共创生成层 · 阶段2-3</div>
+            </div>
+          </label>
+          <label
+            class="radio-card"
+            data-v="stage4"
+            data-label="阶段4：切入点市场界定"
+          >
+            <input type="radio" name="stage" value="stage4" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">在找切入市场，还没接触过真实客户</div>
+              <div class="radio-sub">验证转译层 · 阶段4</div>
+            </div>
+          </label>
+          <label
+            class="radio-card"
+            data-v="stage5"
+            data-label="阶段5：用户画像与价值主张转译"
+          >
+            <input type="radio" name="stage" value="stage5" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">已访谈客户，正在打磨价值主张</div>
+              <div class="radio-sub">验证转译层 · 阶段5</div>
+            </div>
+          </label>
+          <label
+            class="radio-card"
+            data-v="stage6"
+            data-label="阶段6：双十验证"
+          >
+            <input type="radio" name="stage" value="stage6" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">已有试点 / PoC，正在验证中</div>
+              <div class="radio-sub">验证转译层 · 阶段6</div>
+            </div>
+          </label>
+          <label
+            class="radio-card"
+            data-v="stage79"
+            data-label="阶段7-9：放大闭环层"
+          >
+            <input type="radio" name="stage" value="stage79" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">已有付费客户，在做规模化</div>
+              <div class="radio-sub">放大闭环层 · 阶段7-9</div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 6: 困难多选 ── -->
+    <div class="screen" id="s6">
+      <div class="card">
+        <p class="step-title">Step 6：当前最大困难</p>
+        <p class="step-desc">选择你现在最卡的问题（最多选 2 个）</p>
+        <p class="difficulty-limit-note" id="diffLimit">已选 0 / 2</p>
+        <div class="chip-grid" id="diffChips" style="flex-direction: column">
+          <button
+            class="chip"
+            style="text-align: left"
+            data-v="no_market"
+            onclick="toggleDiff(this)"
+          >
+            找不到精准落地的应用场景，不知道从哪个市场切入
+          </button>
+          <button
+            class="chip"
+            style="text-align: left"
+            data-v="ip_unclear"
+            onclick="toggleDiff(this)"
+          >
+            科研产权归属或师生股权分配不清晰
+          </button>
+          <button
+            class="chip"
+            style="text-align: left"
+            data-v="no_biz"
+            onclick="toggleDiff(this)"
+          >
+            团队缺少懂商业或懂产业的合伙人
+          </button>
+          <button
+            class="chip"
+            style="text-align: left"
+            data-v="no_prototype"
+            onclick="toggleDiff(this)"
+          >
+            技术可以做出来，但没有可演示或可验证的原型
+          </button>
+          <button
+            class="chip"
+            style="text-align: left"
+            data-v="no_pilot"
+            onclick="toggleDiff(this)"
+          >
+            缺少试点场景、合作单位或第一个付费客户
+          </button>
+          <button
+            class="chip"
+            style="text-align: left"
+            data-v="no_path"
+            onclick="toggleDiff(this)"
+          >
+            不确定该卖产品、做项目还是做技术转让
+          </button>
+        </div>
+        <div style="margin-top: 14px">
+          <div style="font-size: 13px; color: var(--gray); margin-bottom: 6px">
+            补充说明（可选）
+          </div>
+          <textarea
+            id="diffNote"
+            placeholder="还有什么想告诉 AI 的…"
+            oninput="S.diff_note = this.value"
+            style="min-height: 60px"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Screen 7: 确认页 ── -->
+    <div class="screen" id="s7">
+      <div class="card">
+        <p class="step-title">确认你的信息</p>
+        <p class="step-desc">
+          确认无误后点击"生成诊断报告"，AI 将基于共创验证式创业法为你分析。
+        </p>
+        <div id="confirmRows"></div>
+        <button
+          class="btn btn-ghost btn-full"
+          onclick="nav(-1)"
+          style="margin-top: 14px; margin-bottom: 10px"
+        >
+          ← 修改
+        </button>
+        <button
+          class="btn btn-primary btn-full"
+          id="generateBtn"
+          onclick="generateReport()"
+        >
+          🔬 生成诊断报告
+        </button>
+      </div>
+      <div class="attribution">
+        方法论来源：共创验证式创业法 · <strong>Roma@地球行走</strong> ·
+        清华经管学院
+      </div>
+    </div>
+
+    <!-- ── Screen 8: 报告页 ── -->
+    <div class="screen" id="s8">
+      <div class="card" id="reportCard">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+          "
+        >
+          <div style="font-size: 20px">🔬</div>
+          <div>
+            <div style="font-weight: 700; font-size: 16px">
+              硬科技创业诊断报告
+            </div>
+            <div
+              style="font-size: 12px; color: var(--gray)"
+              id="reportSubtitle"
+            ></div>
+          </div>
+        </div>
+        <div
+          id="reportLoading"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            padding: 20px 0;
+          "
+        >
+          <div class="pulse"><span></span><span></span><span></span></div>
+          正在用共创验证式创业法分析你的项目…
+        </div>
+        <div id="reportContent" style="display: none">
+          <div class="ai-body" id="aiBody"></div>
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          gap: 10px;
+          max-width: 560px;
+          margin: 0 auto;
+          padding: 0 16px;
+        "
+      >
+        <button class="btn btn-ghost" style="flex: 1" onclick="nav(-1)">
+          ← 修改
+        </button>
+        <button
+          class="btn btn-primary"
+          style="flex: 1"
+          id="copyBtn"
+          onclick="copyReport()"
+        >
+          📋 复制报告
+        </button>
+      </div>
+      <div class="attribution">
+        方法论来源：共创验证式创业法 · <strong>Roma@地球行走</strong> ·
+        清华经管学院
+      </div>
+    </div>
+
+    <!-- ── Nav bar ── -->
+    <div
+      id="navBar"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+        padding: 12px 20px;
+        justify-content: space-between;
+        align-items: center;
+      "
+    >
+      <button class="btn btn-ghost" id="prevBtn" onclick="nav(-1)">
+        ← 上一步
+      </button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nav(1)">
+        下一步 →
+      </button>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        // ── CONSTANTS ──
+        var SK = "xyvc-hard-tech-check-v1";
+        var TOTAL_STEPS = 6;
+        var AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
+        var AI_PROXY_CANDIDATES = [
+          window.__XYVC_AI_PROXY__,
+          new URLSearchParams(window.location.search).get("ai_proxy"),
+          (function () {
+            try {
+              return localStorage.getItem(AI_PROXY_HINT_KEY);
+            } catch (e) {
+              return "";
+            }
+          })(),
+          /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
+            ? window.location.origin.replace(/\/$/, "") + "/api/glm-proxy"
+            : "",
+          "https://api.xiaoyuanvc.com/api/glm-proxy",
+        ].filter(Boolean);
+
+        var STEP_NAMES = [
+          "项目描述",
+          "技术成熟度",
+          "IP与团队",
+          "客户与路径",
+          "当前阶段",
+          "主要困难",
+        ];
+        var TRL_LABELS = {
+          concept: "概念/论文",
+          lab: "实验室原型",
+          demo: "可演示原型",
+          validated: "外部验证",
+        };
+        var IP_LABELS = {
+          school: "高校持有",
+          professor: "教授专利",
+          student: "学生自研",
+          unclear: "尚未明确",
+        };
+        var PATH_LABELS = {
+          product: "卖产品/硬件",
+          project: "做项目/服务",
+          license: "技术转让",
+          unknown: "未确定",
+        };
+        var STAGE_LABELS = {
+          stage1: "阶段1：成果识别",
+          stage23: "阶段2-3：共创组队/权责建模",
+          stage4: "阶段4：切入点市场界定",
+          stage5: "阶段5：价值主张转译",
+          stage6: "阶段6：双十验证",
+          stage79: "阶段7-9：放大闭环层",
+        };
+        var DIFF_LABELS = {
+          no_market: "找不到精准落地场景",
+          ip_unclear: "产权/股权不清晰",
+          no_biz: "缺商业/产业合伙人",
+          no_prototype: "缺可验证原型",
+          no_pilot: "缺试点或首个客户",
+          no_path: "商业路径不清",
+        };
+        var TEAM_LABELS = {
+          pi: "导师/PI",
+          phd: "博士/硕士",
+          eng: "工程开发",
+          product: "产品设计",
+          biz: "商业/销售",
+          industry: "产业导师",
+          fulltime: "全职创始人",
+        };
+
+        // ── STATE ──
+        var S = {
+          step: 0,
+          ml_tech: "",
+          ml_scene: "",
+          ml_customer: "",
+          ml_problem: "",
+          trl: "",
+          ip: "",
+          team: [],
+          customer: "",
+          path: "",
+          stage: "",
+          difficulties: [],
+          diff_note: "",
+          report: "",
+        };
+        // expose S for inline oninput handlers
+        window.S = S;
+
+        // ── PERSISTENCE ──
+        function save() {
+          try {
+            localStorage.setItem(SK, JSON.stringify(S));
+          } catch (e) {
+            /* localStorage may be unavailable in incognito */
+          }
+        }
+        function load() {
+          try {
+            var raw = localStorage.getItem(SK);
+            if (raw) {
+              var p = JSON.parse(raw);
+              if (typeof p.step !== "number" || p.step < 0 || p.step > 8)
+                p.step = 0;
+              S = Object.assign(S, p);
+              window.S = S;
+            }
+          } catch (e) {
+            try {
+              localStorage.removeItem(SK);
+            } catch (e2) {}
+          }
+        }
+
+        // ── ESCAPE HELPER ──
+        function esc(s) {
+          return String(s || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+        }
+
+        // ── NAVIGATION ──
+        window.startApp = function () {
+          S.step = 1;
+          save();
+          showStep(1);
+          render(1);
+        };
+
+        window.goHome = function () {
+          save();
+          document.querySelectorAll(".screen").forEach(function (el) {
+            el.classList.remove("on");
+          });
+          document.getElementById("s0").classList.add("on");
+          document.getElementById("progressWrap").style.display = "none";
+          document.getElementById("navBar").style.display = "none";
+          document.getElementById("homeBtn").style.display = "none";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
+        window.nav = function (dir) {
+          save();
+          var next = S.step + dir;
+          if (next < 1) return;
+          // Step 6 → confirm (step 7)
+          if (S.step === 6 && dir === 1) {
+            S.step = 7;
+            save();
+            showStep(7);
+            renderConfirm();
+            return;
+          }
+          // From confirm page, back goes to step 6
+          if (S.step === 7 && dir === -1) {
+            S.step = 6;
+            save();
+            showStep(6);
+            render(6);
+            return;
+          }
+          // From report page, back goes to confirm
+          if (S.step === 8 && dir === -1) {
+            S.step = 7;
+            save();
+            showStep(7);
+            renderConfirm();
+            return;
+          }
+          if (next > TOTAL_STEPS) return;
+          S.step = next;
+          save();
+          showStep(next);
+          render(next);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
+        function showStep(n) {
+          document.querySelectorAll(".screen").forEach(function (el) {
+            el.classList.remove("on");
+          });
+          document.getElementById("s" + n).classList.add("on");
+          var pw = document.getElementById("progressWrap");
+          var nb = document.getElementById("navBar");
+          var isForm = n >= 1 && n <= 6;
+          pw.style.display = isForm ? "block" : "none";
+          nb.style.display = isForm ? "flex" : "none";
+          document.getElementById("homeBtn").style.display =
+            n > 0 ? "block" : "none";
+          if (isForm) {
+            var pct = Math.round((n / TOTAL_STEPS) * 100);
+            document.getElementById("progressFill").style.width = pct + "%";
+            var dots = document.getElementById("pDots");
+            dots.innerHTML = "";
+            for (var i = 1; i <= TOTAL_STEPS; i++) {
+              var d = document.createElement("div");
+              d.className =
+                "p-dot" + (i < n ? " done" : i === n ? " active" : "");
+              dots.appendChild(d);
+            }
+            document.getElementById("pLabel").textContent =
+              "Step " + n + "：" + STEP_NAMES[n - 1];
+            document.getElementById("pCount").textContent =
+              n + " / " + TOTAL_STEPS;
+            document.getElementById("prevBtn").style.visibility =
+              n === 1 ? "hidden" : "visible";
+            document.getElementById("nextBtn").textContent =
+              n === 6 ? "确认信息 →" : "下一步 →";
+          }
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // ── RENDER DISPATCH ──
+        function render(n) {
+          if (n === 1) renderS1();
+          else if (n === 2) renderS2();
+          else if (n === 3) renderS3();
+          else if (n === 4) renderS4();
+          else if (n === 5) renderS5();
+          else if (n === 6) renderS6();
+        }
+
+        // ── STEP 1: Mad-libs ──
+        window.updateMadlib = function () {
+          S.ml_tech = document.getElementById("ml_tech").value;
+          S.ml_scene = document.getElementById("ml_scene").value;
+          S.ml_customer = document.getElementById("ml_customer").value;
+          S.ml_problem = document.getElementById("ml_problem").value;
+          document.getElementById("prev_tech").textContent =
+            S.ml_tech || "【核心技术】";
+          document.getElementById("prev_scene").textContent =
+            S.ml_scene || "【应用场景】";
+          document.getElementById("prev_customer").textContent =
+            S.ml_customer || "【目标客户】";
+          document.getElementById("prev_problem").textContent =
+            S.ml_problem || "【核心问题】";
+        };
+        function renderS1() {
+          document.getElementById("ml_tech").value = S.ml_tech;
+          document.getElementById("ml_scene").value = S.ml_scene;
+          document.getElementById("ml_customer").value = S.ml_customer;
+          document.getElementById("ml_problem").value = S.ml_problem;
+          updateMadlib();
+        }
+
+        // ── STEP 2: TRL radio ──
+        function renderS2() {
+          restoreRadio("trlGrid", S.trl);
+        }
+
+        // ── STEP 3: IP + team chips ──
+        function renderS3() {
+          restoreRadio("ipGrid", S.ip);
+          document.querySelectorAll("#teamChips .chip").forEach(function (c) {
+            c.classList.toggle("active", S.team.includes(c.dataset.v));
+          });
+        }
+        window.toggleTeam = function (el) {
+          var v = el.dataset.v;
+          var idx = S.team.indexOf(v);
+          if (idx === -1) S.team.push(v);
+          else S.team.splice(idx, 1);
+          el.classList.toggle("active", S.team.includes(v));
+        };
+
+        // ── STEP 4: customer + path ──
+        function renderS4() {
+          document.getElementById("customer_input").value = S.customer;
+          restoreRadio("pathGrid", S.path);
+        }
+
+        // ── STEP 5: stage ──
+        function renderS5() {
+          restoreRadio("stageGrid", S.stage);
+        }
+
+        // ── STEP 6: difficulties ──
+        function renderS6() {
+          document.querySelectorAll("#diffChips .chip").forEach(function (c) {
+            c.classList.toggle("active", S.difficulties.includes(c.dataset.v));
+          });
+          document.getElementById("diffNote").value = S.diff_note;
+          updateDiffLimit();
+        }
+        window.toggleDiff = function (el) {
+          var v = el.dataset.v;
+          var idx = S.difficulties.indexOf(v);
+          if (idx !== -1) {
+            S.difficulties.splice(idx, 1);
+            el.classList.remove("active");
+          } else {
+            if (S.difficulties.length >= 2) return; // max 2
+            S.difficulties.push(v);
+            el.classList.add("active");
+          }
+          updateDiffLimit();
+        };
+        function updateDiffLimit() {
+          document.getElementById("diffLimit").textContent =
+            "已选 " + S.difficulties.length + " / 2";
+        }
+
+        // ── RADIO HELPER ──
+        function restoreRadio(gridId, val) {
+          document
+            .querySelectorAll("#" + gridId + " .radio-card")
+            .forEach(function (card) {
+              card.classList.toggle("active", card.dataset.v === val);
+            });
+          if (val) {
+            var inp = document.querySelector(
+              "#" + gridId + ' input[value="' + val + '"]',
+            );
+            if (inp) inp.checked = true;
+          }
+        }
+
+        // radio-card click binding (delegated)
+        document.addEventListener("click", function (e) {
+          var card = e.target.closest(".radio-card");
+          if (!card) return;
+          var grid = card.closest(".radio-grid");
+          if (!grid) return;
+          grid.querySelectorAll(".radio-card").forEach(function (c) {
+            c.classList.remove("active");
+          });
+          card.classList.add("active");
+          var inp = card.querySelector("input[type=radio]");
+          if (!inp) return;
+          inp.checked = true;
+          var name = inp.name;
+          if (name === "trl") S.trl = inp.value;
+          if (name === "ip") S.ip = inp.value;
+          if (name === "path") S.path = inp.value;
+          if (name === "stage") S.stage = inp.value;
+        });
+
+        // ── CONFIRM PAGE ──
+        function renderConfirm() {
+          var rows = document.getElementById("confirmRows");
+          var desc =
+            "我们用" +
+            (S.ml_tech || "—") +
+            "，解决" +
+            (S.ml_scene || "—") +
+            "中" +
+            (S.ml_customer || "—") +
+            "面临的" +
+            (S.ml_problem || "—") +
+            "。";
+          var diffs =
+            S.difficulties
+              .map(function (v) {
+                return DIFF_LABELS[v] || v;
+              })
+              .join("；") || "未选择";
+          var data = [
+            ["项目描述", desc],
+            ["技术成熟度", TRL_LABELS[S.trl] || "未选"],
+            ["IP 归属", IP_LABELS[S.ip] || "未选"],
+            [
+              "团队角色",
+              S.team.length
+                ? S.team
+                    .map(function (v) {
+                      return TEAM_LABELS[v] || v;
+                    })
+                    .join("、")
+                : "未选",
+            ],
+            ["目标客户", S.customer || "未填"],
+            ["商业路径", PATH_LABELS[S.path] || "未选"],
+            ["当前阶段", STAGE_LABELS[S.stage] || "未选"],
+            ["主要困难", diffs],
+          ];
+          rows.innerHTML = data
+            .map(function (item) {
+              return (
+                '<div class="confirm-row"><span class="confirm-label">' +
+                item[0] +
+                '</span><span class="confirm-value">' +
+                esc(item[1]) +
+                "</span></div>"
+              );
+            })
+            .join("");
+        }
+
+        // ── AI PROXY ──
+        function normalizeAIError(err) {
+          var msg = (err && err.message) || String(err) || "未知错误";
+          if (/Failed to fetch/i.test(msg))
+            return "AI 服务连接失败，请检查网络或代理配置。";
+          if (/AbortError/i.test(msg)) return "AI 服务响应超时，请稍后重试。";
+          return msg;
+        }
+        function rememberWorkingProxy(url) {
+          try {
+            localStorage.setItem(AI_PROXY_HINT_KEY, url);
+          } catch (e) {
+            /* localStorage may be unavailable */
+          }
+        }
+
+        async function readAIResponse(res, bodyEl) {
+          var wantsStream =
+            typeof ReadableStream !== "undefined" &&
+            typeof TextDecoder !== "undefined";
+          if (
+            !wantsStream ||
+            !res.body ||
+            typeof res.body.getReader !== "function"
+          ) {
+            var json = await res.json();
+            var text = json?.choices?.[0]?.message?.content || "";
+            bodyEl.innerHTML = renderMd(text);
+            return text;
+          }
+          var reader = res.body.getReader();
+          var decoder = new TextDecoder();
+          var full = "",
+            pending = "";
+          while (true) {
+            var chunk = await reader.read();
+            if (chunk.done) break;
+            pending += decoder.decode(chunk.value, { stream: true });
+            var lines = pending.split("\n");
+            pending = lines.pop() || "";
+            for (var li = 0; li < lines.length; li++) {
+              var line = lines[li].trim();
+              if (
+                !line ||
+                !line.startsWith("data: ") ||
+                line === "data: [DONE]"
+              )
+                continue;
+              try {
+                var delta =
+                  JSON.parse(line.slice(6)).choices?.[0]?.delta?.content || "";
+                if (!delta) continue;
+                full += delta;
+                bodyEl.innerHTML = renderMd(full);
+              } catch (e) {
+                /* ignore malformed SSE chunks */
+              }
+            }
+          }
+          return full;
+        }
+
+        async function fetchAIResult(prompt, bodyEl) {
+          var wantsStream = typeof ReadableStream !== "undefined";
+          var lastErr = null;
+          for (var ei = 0; ei < AI_PROXY_CANDIDATES.length; ei++) {
+            var endpoint = AI_PROXY_CANDIDATES[ei];
+            var ctrl =
+              typeof AbortController !== "undefined"
+                ? new AbortController()
+                : null;
+            var timer = ctrl
+              ? setTimeout(function () {
+                  ctrl.abort();
+                }, 30000)
+              : null;
+            try {
+              var res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  model: "glm-4-flash",
+                  messages: [{ role: "user", content: prompt }],
+                  stream: wantsStream,
+                }),
+                signal: ctrl ? ctrl.signal : undefined,
+              });
+              if (timer) clearTimeout(timer);
+              if (!res.ok) throw new Error("API 错误 " + res.status);
+              var text = await readAIResponse(res, bodyEl);
+              rememberWorkingProxy(endpoint);
+              return text;
+            } catch (err) {
+              if (timer) clearTimeout(timer);
+              lastErr = err;
+            }
+          }
+          throw lastErr || new Error("没有可用的 AI 代理");
+        }
+
+        // ── PROMPT BUILDER ──
+        function buildPrompt() {
+          var desc =
+            "我们用" +
+            (S.ml_tech || "（未填）") +
+            "，解决" +
+            (S.ml_scene || "（未填）") +
+            "中" +
+            (S.ml_customer || "（未填）") +
+            "面临的" +
+            (S.ml_problem || "（未填）") +
+            "。";
+          var teamStr =
+            S.team
+              .map(function (v) {
+                return TEAM_LABELS[v] || v;
+              })
+              .join("、") || "未填写";
+          var diffStr =
+            S.difficulties
+              .map(function (v) {
+                return DIFF_LABELS[v] || v;
+              })
+              .join("；") || "未选择";
+          var stageLabel = STAGE_LABELS[S.stage] || "未选";
+
+          return (
+            '你是一位硬科技创业导师，精通"共创验证式创业法"——将清华师生共创模式与MIT有序创业24步法整合为三层九阶段模型：\n' +
+            "【第一层：共创生成层】阶段1成果识别→阶段2共创组队→阶段3权责建模\n" +
+            "【第二层：验证转译层】阶段4切入点市场界定→阶段5用户画像与价值主张转译→阶段6双十验证\n" +
+            "【第三层：放大闭环层】阶段7最小可行转化产品（MVTP）→阶段8三重闭环建构→阶段9平台化复制\n" +
+            "\n" +
+            "严格要求：只使用上述三层九阶段框架进行分析，禁止使用精益画布、OKR、MVP等通用框架替代。语气如清华经管教授：直接、有判断、不鼓励不切实际的乐观，指出真实断点。\n" +
+            "\n" +
+            "以下是学生项目信息：\n" +
+            "【项目描述】" +
+            desc +
+            "\n" +
+            "【技术成熟度】" +
+            (TRL_LABELS[S.trl] || "未选") +
+            "\n" +
+            "【IP归属】" +
+            (IP_LABELS[S.ip] || "未选") +
+            "\n" +
+            "【团队构成】" +
+            teamStr +
+            "\n" +
+            "【目标客户/商业路径】" +
+            (S.customer || "未填") +
+            " · " +
+            (PATH_LABELS[S.path] || "未选") +
+            "\n" +
+            "【当前阶段（自报）】" +
+            stageLabel +
+            "\n" +
+            "【主要困难】" +
+            diffStr +
+            "\n" +
+            (S.diff_note ? "【补充说明】" + S.diff_note + "\n" : "") +
+            "\n" +
+            "请按以下结构输出诊断报告（每部分之间空一行，使用 ### 标题）：\n" +
+            "\n" +
+            "### 阶段定位\n" +
+            '说明该项目实际处于三层九阶段中的哪个阶段（如果自报阶段与实际情况有偏差，请指出），并用"▓▓▓░░░░░░"文字进度条标注当前位置（9格，已完成填▓，未完成填░，当前填▶）。\n' +
+            "\n" +
+            "### 最大断点\n" +
+            "用1-2句话直接指出当前阻碍项目推进的核心卡点。不需要解释背景，直接说问题。\n" +
+            "\n" +
+            "### Top 3 立即行动\n" +
+            "① [第一个具体可操作的行动，明确谁去做、做什么、验证标准是什么]\n" +
+            "② [第二个行动]\n" +
+            "③ [第三个行动]\n" +
+            "\n" +
+            "### 解锁下一阶段的里程碑\n" +
+            "描述一个具体的、可验证的标志性事件——当这件事发生时，项目就正式进入下一阶段。\n" +
+            "\n" +
+            "---\n" +
+            "方法论来源：共创验证式创业法 · Roma@地球行走 · 清华经管学院"
+          );
+        }
+
+        // ── MARKDOWN RENDERER (minimal) ──
+        function renderMd(text) {
+          return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(
+              /### (.+)/g,
+              '<h3 style="font-size:15px;font-weight:700;color:#C2410C;margin:16px 0 8px;padding-bottom:6px;border-bottom:2px solid #FFF7ED">$1</h3>',
+            )
+            .replace(
+              /## (.+)/g,
+              '<h2 style="font-size:16px;font-weight:700;margin:12px 0 6px">$1</h2>',
+            )
+            .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+            .replace(/①|②|③/g, function (s) {
+              return '<strong style="color:var(--orange)">' + s + "</strong>";
+            })
+            .replace(/▓/g, '<span style="color:var(--orange)">▓</span>')
+            .replace(
+              /▶/g,
+              '<span style="color:var(--orange);font-weight:700">▶</span>',
+            )
+            .replace(/\n/g, "<br>");
+        }
+
+        // ── GENERATE REPORT ──
+        window.generateReport = function () {
+          S.step = 8;
+          save();
+          showStep(8);
+          document.getElementById("reportSubtitle").textContent =
+            (S.ml_tech || "硬科技项目") + " · " + (STAGE_LABELS[S.stage] || "");
+          var loading = document.getElementById("reportLoading");
+          var content = document.getElementById("reportContent");
+          var body = document.getElementById("aiBody");
+          var copyBtn = document.getElementById("copyBtn");
+          loading.style.display = "flex";
+          content.style.display = "none";
+          copyBtn.disabled = true;
+          fetchAIResult(buildPrompt(), body)
+            .then(function (text) {
+              S.report = text;
+              save();
+              loading.style.display = "none";
+              content.style.display = "block";
+              copyBtn.disabled = false;
+            })
+            .catch(function (err) {
+              loading.style.display = "none";
+              content.style.display = "block";
+              body.innerHTML =
+                '<p style="color:#ef4444">⚠️ 出错了：' +
+                esc(normalizeAIError(err)) +
+                '</p><p style="color:var(--gray);font-size:13px;margin-top:8px">请检查网络后重试，或联系校园VC。</p>';
+              copyBtn.disabled = false;
+            });
+        };
+
+        function showSavedReport() {
+          document.getElementById("reportSubtitle").textContent =
+            (S.ml_tech || "硬科技项目") + " · " + (STAGE_LABELS[S.stage] || "");
+          document.getElementById("reportLoading").style.display = "none";
+          var content = document.getElementById("reportContent");
+          content.style.display = "block";
+          document.getElementById("aiBody").innerHTML = renderMd(S.report);
+          document.getElementById("copyBtn").disabled = false;
+        }
+
+        // ── COPY REPORT ──
+        window.copyReport = function () {
+          var btn = document.getElementById("copyBtn");
+          var text =
+            S.report +
+            "\n\n方法论来源：共创验证式创业法 · Roma@地球行走 · 清华经管学院";
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function () {
+              btn.textContent = "✅ 已复制";
+              setTimeout(function () {
+                btn.textContent = "📋 复制报告";
+              }, 2000);
+            });
+          } else {
+            var el = document.createElement("textarea");
+            el.value = text;
+            el.style.position = "fixed";
+            el.style.opacity = "0";
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand("copy");
+            document.body.removeChild(el);
+            btn.textContent = "✅ 已复制";
+            setTimeout(function () {
+              btn.textContent = "📋 复制报告";
+            }, 2000);
+          }
+        };
+
+        // ── BOOT ──
+        load();
+        if (S.step > 0 && S.step <= 8) {
+          showStep(S.step);
+          if (S.step <= 6) render(S.step);
+          else if (S.step === 7) renderConfirm();
+          else if (S.step === 8 && S.report) showSavedReport();
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1693 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>学生创业自检 | 校园VC</title>
+    <meta
+      name="description"
+      content="AI 从可行性、市场潜力、护城河、校园执行力、AI赋能潜力 5 个维度评估你的创业想法，给出专业评估和改进建议。"
+    />
+    <link rel="icon" href="../assets/favicon.ico" />
+    <link
+      rel="canonical"
+      href="https://xiaoyuanvc.com/resources/rate-your-idea.html"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="学生创业自检 | 校园VC" />
+    <meta
+      property="og:description"
+      content="AI 从 5 个维度评估你的创业想法，给出专业评估和改进建议。"
+    />
+    <meta
+      property="og:url"
+      content="https://xiaoyuanvc.com/resources/rate-your-idea.html"
+    />
+    <meta property="og:site_name" content="校园VC" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="学生创业自检 | 校园VC" />
+    <meta
+      name="twitter:description"
+      content="AI 从 5 个维度评估你的创业想法，给出专业评估和改进建议。"
+    />
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "学生创业自检",
+          "description": "AI 从可行性、市场潜力、护城河、校园执行力、AI赋能潜力 5 个维度评估你的创业想法，给出专业评估和改进建议。",
+          "url": "https://xiaoyuanvc.com/resources/rate-your-idea.html",
+          "applicationCategory": "EducationalApplication",
+          "inLanguage": "zh-CN",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "校园VC",
+            "url": "https://xiaoyuanvc.com"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "如何评估一个创业想法是否靠谱？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "可以从五个维度评估：可行性（技术和资源是否可达）、市场潜力（市场规模和增长空间）、护城河（竞争壁垒）、校园执行力（大学生团队是否能落地）、AI赋能潜力（能否借助AI提效）。综合评分越高，想法越值得投入。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "大学生创业想法怎么打分？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "校园VC学生创业自检从5个维度各打1-10分，满分50分。40分以上是独角兽预备，30-39分是潜力股，20-29分是拉面盈利级，20分以下建议回炉重造。AI会同时给出详细分析和改进建议。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "学生创业自检的五个维度是什么？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "五个自检维度分别是：可行性（能不能做出来）、市场潜力（市场有多大）、护城河（别人抄得动吗）、校园执行力（大学生团队能否落地）、AI赋能潜力（AI能帮多少忙）。每个维度1-10分，总分50分。"
+              }
+            }
+          ]
+        }
+      ]
+    </script>
+    <!-- GA4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LP5EB2HW33");
+    </script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --gold: #f59e0b;
+        --gold-dark: #d97706;
+        --gold-light: #fef3c7;
+        --gold-medium: #fcd34d;
+        --navy: #1a1a2e;
+        --gray: #6b7280;
+        --beige: #faf8f4;
+        --white: #ffffff;
+        --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.07);
+        --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        --radius: 12px;
+        --radius-sm: 8px;
+        --blue: #2563eb;
+        --blue-dark: #1d4ed8;
+        --red: #ef4444;
+        --green: #10b981;
+      }
+
+      body {
+        font-family:
+          -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: #fdf8ed;
+        color: var(--navy);
+        min-height: 100vh;
+      }
+
+      /* ── Header ── */
+      .header {
+        background: var(--gold);
+        color: white;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+      .header-left {
+        flex: 1;
+      }
+      .header h1 {
+        font-size: 17px;
+        font-weight: 700;
+      }
+      .header p {
+        font-size: 12px;
+        opacity: 0.85;
+        margin-top: 2px;
+      }
+      .header-logo {
+        height: 32px;
+        background: white;
+        border-radius: 6px;
+        padding: 3px 8px;
+        display: block;
+      }
+
+      /* ── Container ── */
+      .container {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: 20px 16px 40px;
+      }
+      .screen {
+        display: none;
+      }
+      .screen.on {
+        display: block;
+      }
+
+      /* ── Welcome ── */
+      .intro-wrap {
+        padding: 0 16px 20px;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+      .intro-card {
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .intro-head {
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: white;
+        padding: 32px 24px 28px;
+        text-align: center;
+      }
+      .intro-head h2 {
+        font-size: 22px;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      .intro-head p {
+        font-size: 14px;
+        opacity: 0.9;
+        line-height: 1.6;
+      }
+      .intro-body {
+        padding: 20px 24px 28px;
+      }
+      .steps-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .s-preview {
+        background: var(--gold-light);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+      }
+      .sn {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--gold-dark);
+        text-transform: uppercase;
+      }
+      .st {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--navy);
+        margin-top: 2px;
+      }
+      .intro-framework {
+        background: var(--gold-light);
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        font-size: 13px;
+        color: var(--gold-dark);
+        line-height: 1.6;
+        margin-bottom: 14px;
+      }
+      .intro-meta {
+        font-size: 13px;
+        color: var(--gray);
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .btn-start {
+        width: 100%;
+        padding: 13px;
+        background: var(--gold);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: inherit;
+        justify-content: center;
+      }
+      .btn-start:hover {
+        background: var(--gold-dark);
+      }
+
+      /* ── Card ── */
+      .card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 14px;
+        overflow: hidden;
+      }
+      .card-body {
+        padding: 18px 20px;
+      }
+
+      /* ── Form ── */
+      .form-group {
+        margin-bottom: 18px;
+      }
+      .form-group label {
+        font-size: 14px;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+        color: var(--navy);
+      }
+      .form-group .q-num {
+        display: inline-block;
+        background: var(--gold);
+        color: white;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 22px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-right: 6px;
+      }
+      .form-group textarea,
+      .form-group input[type="text"] {
+        width: 100%;
+        border: 1.5px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        padding: 10px 13px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--navy);
+        background: var(--beige);
+        transition: border-color 0.2s;
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 88px;
+      }
+      .form-group textarea:focus,
+      .form-group input[type="text"]:focus {
+        outline: none;
+        border-color: var(--gold);
+        background: white;
+      }
+      .form-group select {
+        width: 100%;
+        border: 1.5px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        padding: 10px 13px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--navy);
+        background: var(--beige);
+        transition: border-color 0.2s;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+      }
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--gold);
+        background-color: white;
+      }
+      .char-hint {
+        font-size: 12px;
+        color: var(--gray);
+        text-align: right;
+        margin-top: 4px;
+      }
+      .char-hint.ok {
+        color: var(--green);
+      }
+      .btn-hint {
+        font-size: 12px;
+        color: var(--gold-dark);
+        text-align: center;
+        margin: 8px 0 0;
+        transition: opacity 0.3s;
+      }
+      .btn-hint.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* ── Mode Toggle ── */
+      .mode-toggle {
+        display: flex;
+        gap: 0;
+        margin-top: 8px;
+        border: 1.5px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+      .mode-btn {
+        flex: 1;
+        padding: 10px 12px;
+        background: var(--beige);
+        border: none;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        color: var(--gray);
+        transition: all 0.2s;
+      }
+      .mode-btn + .mode-btn {
+        border-left: 1.5px solid #e5e7eb;
+      }
+      .mode-btn.active {
+        background: var(--gold);
+        color: white;
+      }
+      .mode-btn:hover:not(.active) {
+        background: var(--gold-light);
+        color: var(--gold-dark);
+      }
+
+      /* ── Buttons ── */
+      .btn-primary {
+        width: 100%;
+        padding: 14px;
+        background: var(--blue);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 16px;
+        transition: background 0.2s;
+        font-family: inherit;
+      }
+      .btn-primary:hover {
+        background: var(--blue-dark);
+      }
+      .btn-primary:disabled {
+        background: #94a3b8;
+        cursor: not-allowed;
+      }
+      .btn-outline {
+        width: 100%;
+        padding: 12px;
+        background: white;
+        color: var(--blue);
+        border: 2px solid var(--blue);
+        border-radius: var(--radius);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-outline:hover {
+        background: #eff6ff;
+      }
+      .btn-gold {
+        width: 100%;
+        padding: 12px;
+        background: var(--gold);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background 0.2s;
+        font-family: inherit;
+      }
+      .btn-gold:hover {
+        background: var(--gold-dark);
+      }
+      .btn-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .btn-row .btn-outline,
+      .btn-row .btn-gold,
+      .btn-row .btn-primary {
+        margin-top: 0;
+      }
+
+      /* ── Results ── */
+      .score-badge {
+        text-align: center;
+        margin: 20px 0 16px;
+      }
+      .score-circle {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: white;
+        box-shadow: 0 6px 24px rgba(245, 158, 11, 0.35);
+      }
+      .score-number {
+        font-size: 36px;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .score-total {
+        font-size: 14px;
+        opacity: 0.85;
+        margin-top: 2px;
+      }
+      .tier-label {
+        font-size: 20px;
+        font-weight: 700;
+        margin-top: 12px;
+        color: var(--gold-dark);
+      }
+
+      /* ── Progress Bars ── */
+      .dim-bars {
+        margin: 16px 0;
+      }
+      .dim-bar-item {
+        margin-bottom: 14px;
+      }
+      .dim-bar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      .dim-bar-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--navy);
+      }
+      .dim-bar-score {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .dim-bar-track {
+        height: 10px;
+        background: #f1f5f9;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .dim-bar-fill {
+        height: 100%;
+        border-radius: 5px;
+        width: 0;
+        transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .dim-bar-fill.c-red {
+        background: linear-gradient(90deg, #fca5a5, var(--red));
+      }
+      .dim-bar-fill.c-yellow {
+        background: linear-gradient(90deg, var(--gold-medium), var(--gold));
+      }
+      .dim-bar-fill.c-green {
+        background: linear-gradient(90deg, #6ee7b7, var(--green));
+      }
+      .dim-bar-rationale {
+        font-size: 12px;
+        color: var(--gray);
+        margin-top: 4px;
+        line-height: 1.5;
+      }
+
+      /* ── AI Card ── */
+      .ai-card {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: var(--radius);
+        padding: 16px;
+        margin: 16px 0;
+      }
+      .ai-card .ai-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--gold-dark);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .ai-card .ai-body {
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--navy);
+      }
+
+      /* ── Loading ── */
+      .pulse {
+        display: inline-flex;
+        gap: 4px;
+        align-items: center;
+      }
+      .pulse span {
+        width: 6px;
+        height: 6px;
+        background: var(--gold);
+        border-radius: 50%;
+        animation: pulse 1.2s infinite;
+      }
+      .pulse span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .pulse span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes pulse {
+        0%,
+        80%,
+        100% {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+      .loading-full {
+        text-align: center;
+        padding: 40px 20px;
+      }
+      .loading-full .pulse span {
+        width: 10px;
+        height: 10px;
+      }
+      .loading-full p {
+        font-size: 15px;
+        color: var(--gray);
+        margin-top: 16px;
+      }
+
+      /* ── Animations ── */
+      @keyframes fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-in {
+        animation: fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      @keyframes score-pop {
+        0% {
+          transform: scale(0.6);
+          opacity: 0;
+        }
+        60% {
+          transform: scale(1.08);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .score-pop {
+        animation: score-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      /* ── Back Link ── */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--gray);
+        font-size: 13px;
+        text-decoration: none;
+        margin-bottom: 16px;
+      }
+      .back-link:hover {
+        color: var(--gold-dark);
+      }
+
+      /* ── Copy Toast ── */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(80px);
+        background: var(--navy);
+        color: white;
+        padding: 10px 24px;
+        border-radius: 99px;
+        font-size: 14px;
+        font-weight: 600;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 999;
+        pointer-events: none;
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+
+      /* ── Reduced Motion ── */
+      @media (prefers-reduced-motion: reduce) {
+        .dim-bar-fill {
+          transition: none;
+        }
+        .pulse span {
+          animation: none;
+        }
+        .animate-in,
+        .score-pop {
+          animation: none;
+        }
+        .btn-start,
+        .btn-primary,
+        .btn-outline,
+        .btn-gold,
+        .mode-btn,
+        .toast {
+          transition: none;
+        }
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 375px) {
+        .container {
+          padding: 16px 12px 32px;
+        }
+        .intro-head h2 {
+          font-size: 20px;
+        }
+        .score-circle {
+          width: 100px;
+          height: 100px;
+        }
+        .score-number {
+          font-size: 30px;
+        }
+        .btn-row {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <h1>学生创业自检</h1>
+        <p>AI 从 5 个维度评估你的创业想法</p>
+      </div>
+      <a href="https://xiaoyuanvc.com">
+        <img src="../assets/logo-color.png" alt="校园VC" class="header-logo" />
+      </a>
+    </div>
+
+    <div class="container">
+      <!-- Screen 0: Welcome -->
+      <div id="s0" class="screen on">
+        <div class="intro-wrap">
+          <div class="intro-card">
+            <div class="intro-head">
+              <img
+                src="../assets/jason-cover.webp"
+                alt="学生创业自检 封面"
+                style="
+                  width: 100%;
+                  max-width: 400px;
+                  border-radius: 12px;
+                  margin-bottom: 16px;
+                "
+              />
+              <h2>学生创业自检</h2>
+              <p>AI 从 5 个维度评估你的创业想法，给出专业评价和改进建议</p>
+            </div>
+            <div class="intro-body">
+              <div class="steps-grid">
+                <div class="s-preview">
+                  <div class="sn">维度 1</div>
+                  <div class="st">可行性</div>
+                </div>
+                <div class="s-preview">
+                  <div class="sn">维度 2</div>
+                  <div class="st">市场潜力</div>
+                </div>
+                <div class="s-preview">
+                  <div class="sn">维度 3</div>
+                  <div class="st">护城河</div>
+                </div>
+                <div class="s-preview">
+                  <div class="sn">维度 4</div>
+                  <div class="st">校园执行力</div>
+                </div>
+                <div class="s-preview">
+                  <div class="sn">维度 5</div>
+                  <div class="st">AI 赋能潜力</div>
+                </div>
+                <div class="s-preview">
+                  <div class="sn">综合</div>
+                  <div class="st">总评分 + 建议</div>
+                </div>
+              </div>
+              <div class="intro-framework">
+                <strong>两种自检风格：</strong>「温柔导师」鼓励式点评 ×「毒舌
+                VC」犀利直言，每个维度 1–10 分，满分 50 分
+              </div>
+              <div class="intro-meta">
+                ⏱ 填写约 2 分钟 &nbsp;|&nbsp; 🤖 AI 即时自检 &nbsp;|&nbsp; 🎯
+                专为校园创业设计
+              </div>
+              <button class="btn-start" onclick="window.goInput()">
+                开始自检
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 1: Input -->
+      <div id="s1" class="screen">
+        <a
+          href="javascript:void(0)"
+          class="back-link"
+          onclick="window.goWelcome()"
+          >← 返回首页</a
+        >
+
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label>
+                <span class="q-num">1</span>
+                你的产品或服务是什么？
+              </label>
+              <textarea
+                id="fProduct"
+                placeholder="例如：一个帮大学生找兼职的 AI 匹配平台，根据学生的课表、技能和偏好智能推荐最合适的兼职岗位..."
+                oninput="window.onProductInput()"
+              ></textarea>
+              <div class="char-hint" id="charHint">至少 20 字</div>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <span class="q-num">2</span>
+                目标用户是谁？
+              </label>
+              <input
+                type="text"
+                id="fAudience"
+                placeholder="例如：大一到大三、想找实习和兼职的在校生"
+                oninput="window.saveState()"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>
+                <span class="q-num">3</span>
+                怎么赚钱或获取用户？
+              </label>
+              <input
+                type="text"
+                id="fModel"
+                placeholder="例如：向企业收招聘费，免费给学生用"
+                oninput="window.saveState()"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>
+                <span class="q-num">4</span>
+                你现在在哪个阶段？
+              </label>
+              <select id="fStage" onchange="window.saveState()">
+                <option value="只有想法">只有想法</option>
+                <option value="已做用户访谈">已做用户访谈</option>
+                <option value="已做 MVP">已做 MVP</option>
+                <option value="已有用户">已有用户</option>
+                <option value="已有收入">已有收入</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>自检风格</label>
+              <div class="mode-toggle">
+                <button
+                  class="mode-btn active"
+                  id="modeGentle"
+                  onclick="window.setMode('gentle')"
+                >
+                  🤝 温柔导师
+                </button>
+                <button
+                  class="mode-btn"
+                  id="modeRoast"
+                  onclick="window.setMode('roast')"
+                >
+                  🔥 毒舌 VC
+                </button>
+              </div>
+            </div>
+
+            <button
+              class="btn-primary"
+              id="btnScore"
+              disabled
+              onclick="window.doScore()"
+            >
+              AI 自检
+            </button>
+            <p class="btn-hint" id="btnHint">
+              请先在上方「产品/服务描述」中输入至少 20 字
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 2: Results -->
+      <div id="s2" class="screen">
+        <!-- Loading -->
+        <div id="loadingWrap" class="loading-full" style="display: none">
+          <div class="pulse"><span></span><span></span><span></span></div>
+          <p id="loadingText">AI 正在分析你的创业想法...</p>
+        </div>
+
+        <!-- Score badge -->
+        <div id="scoreSection" style="display: none">
+          <div class="score-badge">
+            <div class="score-circle score-pop" id="scoreCircle">
+              <div class="score-number" id="scoreNum">0</div>
+              <div class="score-total">/ 50</div>
+            </div>
+            <div class="tier-label" id="tierLabel"></div>
+          </div>
+
+          <!-- Dimension bars -->
+          <div class="card">
+            <div class="card-body">
+              <div class="dim-bars" id="dimBars"></div>
+            </div>
+          </div>
+
+          <!-- AI Analysis -->
+          <div class="ai-card">
+            <div class="ai-label">
+              <span class="pulse"><span></span><span></span><span></span></span>
+              <span id="aiStatusLabel">AI 分析中</span>
+            </div>
+            <div class="ai-body" id="aiBody"></div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="btn-row">
+            <button class="btn-outline" onclick="window.tryAnother()">
+              换个想法再评
+            </button>
+            <button class="btn-gold" onclick="window.copyReport()">
+              复制自检单
+            </button>
+          </div>
+          <button
+            class="btn-outline"
+            onclick="window.resetAll()"
+            style="
+              margin-top: 10px;
+              border-color: var(--gray);
+              color: var(--gray);
+            "
+          >
+            重新开始
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* ── AI Proxy ── */
+        const AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
+        const AI_PROXY_CANDIDATES = [
+          window.__XYVC_AI_PROXY__,
+          new URLSearchParams(window.location.search).get("ai_proxy"),
+          (function () {
+            try {
+              return localStorage.getItem(AI_PROXY_HINT_KEY);
+            } catch (e) {
+              return "";
+            }
+          })(),
+          /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
+            ? window.location.origin.replace(/\/$/, "") + "/api/glm-proxy"
+            : "",
+          "https://api.xiaoyuanvc.com/api/glm-proxy",
+        ].filter(Boolean);
+
+        /* ── Storage ── */
+        const STORAGE_KEY = "xyvc-rater-v1";
+
+        let S = {
+          screen: 0,
+          product: "",
+          audience: "",
+          model: "",
+          stage: "只有想法",
+          mode: "gentle",
+          scores: null,
+          analysis: "",
+        };
+
+        function saveState() {
+          syncFieldsToState();
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+          } catch (e) {
+            /* storage unavailable, non-critical */
+          }
+        }
+        window.saveState = saveState;
+
+        function loadState() {
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              if (parsed && typeof parsed === "object") {
+                for (const k in parsed) {
+                  if (Object.prototype.hasOwnProperty.call(parsed, k)) {
+                    S[k] = parsed[k];
+                  }
+                }
+              }
+            }
+          } catch (e) {
+            /* corrupted data, ignore */
+          }
+        }
+
+        function syncFieldsToState() {
+          const p = document.getElementById("fProduct");
+          const a = document.getElementById("fAudience");
+          const m = document.getElementById("fModel");
+          const st = document.getElementById("fStage");
+          if (p) S.product = p.value;
+          if (a) S.audience = a.value;
+          if (m) S.model = m.value;
+          if (st) S.stage = st.value;
+        }
+
+        function syncStateToFields() {
+          const p = document.getElementById("fProduct");
+          const a = document.getElementById("fAudience");
+          const m = document.getElementById("fModel");
+          const st = document.getElementById("fStage");
+          if (p) p.value = S.product || "";
+          if (a) a.value = S.audience || "";
+          if (m) m.value = S.model || "";
+          if (st) st.value = S.stage || "只有想法";
+          updateModeUI();
+          updateCharHint();
+          updateScoreBtn();
+        }
+
+        /* ── AI Functions (exact pattern) ── */
+        function normalizeAIError(err) {
+          const msg = (err && err.message) || String(err) || "未知错误";
+          if (/Failed to fetch/i.test(msg))
+            return "AI 服务连接失败，通常是代理不可达、跨域拦截或网络异常。";
+          if (/AbortError/i.test(msg)) return "AI 服务响应超时，请稍后重试。";
+          return msg;
+        }
+
+        function rememberWorkingProxy(url) {
+          try {
+            localStorage.setItem(AI_PROXY_HINT_KEY, url);
+          } catch (e) {
+            /* storage unavailable, non-critical */
+          }
+        }
+
+        async function fetchAIResult(prompt) {
+          let lastErr = null;
+          for (let idx = 0; idx < AI_PROXY_CANDIDATES.length; idx++) {
+            const endpoint = AI_PROXY_CANDIDATES[idx];
+            const ctrl =
+              typeof AbortController !== "undefined"
+                ? new AbortController()
+                : null;
+            const timer = ctrl
+              ? setTimeout(function () {
+                  ctrl.abort();
+                }, 60000)
+              : null;
+            try {
+              const res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  model: "glm-4-flash",
+                  messages: [{ role: "user", content: prompt }],
+                  stream: false,
+                }),
+                signal: ctrl ? ctrl.signal : undefined,
+              });
+              if (timer) clearTimeout(timer);
+              if (!res.ok) throw new Error("API 错误 " + res.status);
+              const json = await res.json();
+              const text =
+                (json &&
+                  json.choices &&
+                  json.choices[0] &&
+                  json.choices[0].message &&
+                  json.choices[0].message.content) ||
+                "";
+              rememberWorkingProxy(endpoint);
+              return text;
+            } catch (err) {
+              if (timer) clearTimeout(timer);
+              lastErr = err;
+            }
+          }
+          throw lastErr || new Error("没有可用的 AI 代理");
+        }
+
+        function renderMd(text) {
+          if (!text) return "";
+          let t = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+          t = t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+          t = t.replace(
+            /^### (.+)$/gm,
+            '<h4 style="font-size:14px;font-weight:600;margin:12px 0 4px;color:#1e293b">$1</h4>',
+          );
+          t = t.replace(
+            /^## (.+)$/gm,
+            '<h3 style="font-size:15px;font-weight:700;margin:14px 0 5px;color:#1e293b">$1</h3>',
+          );
+          t = t.replace(
+            /^# (.+)$/gm,
+            '<h3 style="font-size:15px;font-weight:700;margin:14px 0 5px;color:#1e293b">$1</h3>',
+          );
+          t = t.replace(
+            /^---+$/gm,
+            '<hr style="border:none;border-top:1px solid #e5e7eb;margin:10px 0">',
+          );
+          t = t.replace(/^[*-] (.+)$/gm, '<li style="margin:3px 0">$1</li>');
+          t = t.replace(
+            /((?:<li[^>]*>[^\n]*<\/li>\n?)+)/g,
+            '<ul style="padding-left:18px;margin:6px 0">$1</ul>',
+          );
+          return t
+            .split(/\n\n+/)
+            .map(function (block) {
+              block = block.trim();
+              if (!block) return "";
+              if (/^<(h[1-6]|ul|ol|hr)/.test(block)) return block;
+              return (
+                '<p style="margin:0 0 10px">' +
+                block.replace(/\n/g, "<br>") +
+                "</p>"
+              );
+            })
+            .filter(Boolean)
+            .join("");
+        }
+
+        /* ── Score Parsing ── */
+        function parseScores(text) {
+          const defaults = {
+            feasibility: 5,
+            market: 5,
+            moat: 5,
+            execution: 5,
+            ai: 5,
+          };
+          const map = [
+            [/可行性[:：]\s*(\d+)/, "feasibility"],
+            [/市场潜力[:：]\s*(\d+)/, "market"],
+            [/护城河[:：]\s*(\d+)/, "moat"],
+            [/校园执行力[:：]\s*(\d+)/, "execution"],
+            [/AI赋能潜力[:：]\s*(\d+)/, "ai"],
+          ];
+          const scores = {};
+          for (const k in defaults) {
+            if (Object.prototype.hasOwnProperty.call(defaults, k)) {
+              scores[k] = defaults[k];
+            }
+          }
+          let foundCount = 0;
+          for (let i = 0; i < map.length; i++) {
+            const m = text.match(map[i][0]);
+            if (m) {
+              scores[map[i][1]] = Math.max(1, Math.min(10, parseInt(m[1], 10)));
+              foundCount++;
+            }
+          }
+          scores._parsed = foundCount >= 3;
+          return scores;
+        }
+
+        function extractAnalysis(text) {
+          const idx1 = text.indexOf("[/SCORES]");
+          if (idx1 !== -1) {
+            return text
+              .substring(idx1 + 9)
+              .replace(/\[ANALYSIS\]/g, "")
+              .replace(/\[\/ANALYSIS\]/g, "")
+              .trim();
+          }
+          const idx2 = text.indexOf("[ANALYSIS]");
+          if (idx2 !== -1) {
+            const result = text.substring(idx2 + 10).trim();
+            return result.replace(/\[\/ANALYSIS\]/g, "").trim();
+          }
+          // Fallback: try to find analysis after the scores block
+          const lastScoreLine = text.lastIndexOf("/10");
+          if (lastScoreLine !== -1) {
+            const afterScores = text.substring(lastScoreLine + 3).trim();
+            if (afterScores.length > 50) return afterScores;
+          }
+          return text;
+        }
+
+        function getTier(total) {
+          if (total >= 40) return "\u{1F984} 独角兽预备！";
+          if (total >= 30) return "\u{1F680} 潜力股";
+          if (total >= 20) return "\u{1F35C} 拉面盈利级";
+          if (total >= 10) return "\u{1F4DD} 回炉重造";
+          return "\u{1F4A1} 先从想法打磨开始";
+        }
+
+        function getBarColor(score) {
+          if (score <= 3) return "c-red";
+          if (score <= 6) return "c-yellow";
+          return "c-green";
+        }
+
+        /* ── Prompt Builder ── */
+        function buildPrompt() {
+          const sysInstruction =
+            S.mode === "roast"
+              ? "你是一位以犀利著称的风险投资人。你看过上千个项目，对平庸的想法毫不留情，但对真正有潜力的想法也会给出中肯的认可。请用直接、辛辣但专业的语气评估。可以适当用比喻和反问来刺激学生思考。"
+              : "你是一位资深创业导师，温和但诚实地评估学生的创业想法。请用鼓励但务实的语气。";
+
+          return (
+            sysInstruction +
+            "\n\n学生的创业想法：\n- 产品/服务：" +
+            S.product +
+            "\n- 目标用户：" +
+            (S.audience || "未指定") +
+            "\n- 商业模式：" +
+            (S.model || "未指定") +
+            "\n- 当前阶段：" +
+            S.stage +
+            "\n\n请严格按以下格式回复，先给出评分，再给出分析：\n\n" +
+            "[SCORES]\n" +
+            "可行性: X\n" +
+            "市场潜力: X\n" +
+            "护城河: X\n" +
+            "校园执行力: X\n" +
+            "AI赋能潜力: X\n" +
+            "[/SCORES]\n\n" +
+            "[ANALYSIS]\n" +
+            "## 总体评价\n" +
+            "（2-3 句总结）\n\n" +
+            "## 各维度详解\n" +
+            "### 可行性（X/10）\n" +
+            "（为什么给这个分，1-2 句）\n\n" +
+            "### 市场潜力（X/10）\n" +
+            "（为什么给这个分，1-2 句）\n\n" +
+            "### 护城河（X/10）\n" +
+            "（为什么给这个分，1-2 句）\n\n" +
+            "### 校园执行力（X/10）\n" +
+            "（为什么给这个分，1-2 句）\n\n" +
+            "### AI赋能潜力（X/10）\n" +
+            "（为什么给这个分，1-2 句）\n\n" +
+            "## 三条改进建议\n" +
+            "1. ...\n" +
+            "2. ...\n" +
+            "3. ...\n\n" +
+            "## 本周行动清单\n" +
+            "- ...\n" +
+            "- ...\n" +
+            "- ...\n" +
+            "[/ANALYSIS]"
+          );
+        }
+
+        /* ── Render Score Bars ── */
+        const DIM_LABELS = [
+          { key: "feasibility", label: "可行性" },
+          { key: "market", label: "市场潜力" },
+          { key: "moat", label: "护城河" },
+          { key: "execution", label: "校园执行力" },
+          { key: "ai", label: "AI赋能潜力" },
+        ];
+
+        function renderScoreBars(scores, rationales) {
+          const container = document.getElementById("dimBars");
+          if (!container) return;
+          container.innerHTML = "";
+          let total = 0;
+          for (let i = 0; i < DIM_LABELS.length; i++) {
+            const dim = DIM_LABELS[i];
+            const val = scores[dim.key] || 5;
+            total += val;
+
+            const item = document.createElement("div");
+            item.className = "dim-bar-item";
+
+            const header = document.createElement("div");
+            header.className = "dim-bar-header";
+            header.innerHTML =
+              '<span class="dim-bar-name">' +
+              dim.label +
+              '</span><span class="dim-bar-score">' +
+              val +
+              "/10</span>";
+
+            const track = document.createElement("div");
+            track.className = "dim-bar-track";
+
+            const fill = document.createElement("div");
+            fill.className = "dim-bar-fill " + getBarColor(val);
+            fill.setAttribute("data-width", val * 10 + "%");
+
+            track.appendChild(fill);
+            item.appendChild(header);
+            item.appendChild(track);
+
+            if (rationales && rationales[dim.key]) {
+              const rat = document.createElement("div");
+              rat.className = "dim-bar-rationale";
+              rat.textContent = rationales[dim.key];
+              item.appendChild(rat);
+            }
+
+            container.appendChild(item);
+          }
+
+          // Animate bars after a brief delay
+          requestAnimationFrame(function () {
+            setTimeout(function () {
+              const fills = container.querySelectorAll(".dim-bar-fill");
+              for (let j = 0; j < fills.length; j++) {
+                fills[j].style.width = fills[j].getAttribute("data-width");
+              }
+            }, 100);
+          });
+
+          // Update total score
+          const numEl = document.getElementById("scoreNum");
+          const tierEl = document.getElementById("tierLabel");
+          if (numEl) numEl.textContent = total;
+          if (tierEl) tierEl.textContent = getTier(total);
+
+          return total;
+        }
+
+        function extractRationales(text) {
+          const rationales = {};
+          const dimPatterns = [
+            { key: "feasibility", re: /### 可行性[^]*?(?=###|## |$)/i },
+            { key: "market", re: /### 市场潜力[^]*?(?=###|## |$)/i },
+            { key: "moat", re: /### 护城河[^]*?(?=###|## |$)/i },
+            { key: "execution", re: /### 校园执行力[^]*?(?=###|## |$)/i },
+            { key: "ai", re: /### AI赋能潜力[^]*?(?=###|## |$)/i },
+          ];
+          for (let i = 0; i < dimPatterns.length; i++) {
+            const m = text.match(dimPatterns[i].re);
+            if (m) {
+              const content = m[0]
+                .replace(/^###[^\n]*\n/, "")
+                .trim()
+                .split("\n")[0]
+                .trim();
+              if (content.length > 5) {
+                rationales[dimPatterns[i].key] = content;
+              }
+            }
+          }
+          return rationales;
+        }
+
+        /* ── Screen Navigation ── */
+        function showScreen(n) {
+          const screens = document.querySelectorAll(".screen");
+          for (let i = 0; i < screens.length; i++) {
+            screens[i].classList.remove("on");
+          }
+          const target = document.getElementById("s" + n);
+          if (target) target.classList.add("on");
+          S.screen = n;
+          saveState();
+          window.scrollTo(0, 0);
+        }
+
+        window.goWelcome = function () {
+          showScreen(0);
+        };
+
+        window.goInput = function () {
+          showScreen(1);
+          syncStateToFields();
+        };
+
+        /* ── Mode Toggle ── */
+        function updateModeUI() {
+          const gentle = document.getElementById("modeGentle");
+          const roast = document.getElementById("modeRoast");
+          if (!gentle || !roast) return;
+          if (S.mode === "roast") {
+            gentle.classList.remove("active");
+            roast.classList.add("active");
+          } else {
+            gentle.classList.add("active");
+            roast.classList.remove("active");
+          }
+        }
+
+        window.setMode = function (mode) {
+          S.mode = mode;
+          updateModeUI();
+          saveState();
+        };
+
+        /* ── Char Hint & Button ── */
+        function updateCharHint() {
+          const el = document.getElementById("fProduct");
+          const hint = document.getElementById("charHint");
+          if (!el || !hint) return;
+          const len = el.value.trim().length;
+          if (len === 0) {
+            hint.textContent = "至少 20 字";
+            hint.className = "char-hint";
+          } else if (len < 20) {
+            hint.textContent = "还需 " + (20 - len) + " 字";
+            hint.className = "char-hint";
+          } else {
+            hint.textContent = "已输入 " + len + " 字 ✓";
+            hint.className = "char-hint ok";
+          }
+        }
+
+        function updateScoreBtn() {
+          const el = document.getElementById("fProduct");
+          const btn = document.getElementById("btnScore");
+          const btnHint = document.getElementById("btnHint");
+          if (!el || !btn) return;
+          const tooShort = el.value.trim().length < 20;
+          btn.disabled = tooShort;
+          if (btnHint) {
+            if (tooShort) {
+              btnHint.classList.remove("hidden");
+            } else {
+              btnHint.classList.add("hidden");
+            }
+          }
+        }
+
+        window.onProductInput = function () {
+          updateCharHint();
+          updateScoreBtn();
+          saveState();
+        };
+
+        /* ── Main Score Action ── */
+        window.doScore = async function () {
+          syncFieldsToState();
+          saveState();
+
+          showScreen(2);
+
+          // Show loading, hide results
+          const loadingWrap = document.getElementById("loadingWrap");
+          const scoreSection = document.getElementById("scoreSection");
+          const aiBody = document.getElementById("aiBody");
+          const aiStatusLabel = document.getElementById("aiStatusLabel");
+          if (loadingWrap) loadingWrap.style.display = "block";
+          if (scoreSection) scoreSection.style.display = "none";
+
+          const prompt = buildPrompt();
+          let fullText = "";
+
+          try {
+            fullText = await fetchAIResult(prompt, null);
+          } catch (err) {
+            if (loadingWrap) loadingWrap.style.display = "none";
+            if (scoreSection) scoreSection.style.display = "block";
+            if (aiBody) {
+              aiBody.innerHTML =
+                '<p style="color: var(--red);">评估失败：' +
+                renderMd(normalizeAIError(err)) +
+                "</p>";
+            }
+            if (aiStatusLabel) aiStatusLabel.textContent = "自检失败";
+            renderScoreBars(
+              { feasibility: 5, market: 5, moat: 5, execution: 5, ai: 5 },
+              null,
+            );
+            return;
+          }
+
+          // Parse scores
+          const scores = parseScores(fullText);
+          S.scores = scores;
+
+          // Extract rationales and analysis
+          const rationales = extractRationales(fullText);
+          const analysis = extractAnalysis(fullText);
+          S.analysis = fullText;
+          saveState();
+
+          // Hide loading, show results
+          if (loadingWrap) loadingWrap.style.display = "none";
+          if (scoreSection) scoreSection.style.display = "block";
+
+          // Render score bars
+          if (scores._parsed) {
+            renderScoreBars(scores, rationales);
+          } else {
+            renderScoreBars(scores, null);
+          }
+
+          // Render analysis
+          if (aiBody) {
+            if (scores._parsed) {
+              aiBody.innerHTML = renderMd(analysis);
+            } else {
+              aiBody.innerHTML =
+                '<p style="color: var(--gold-dark); font-size: 13px; margin-bottom: 10px;">⚠️ 自检解析不完整，以下为默认分值，请参考 AI 分析内容。</p>' +
+                renderMd(analysis);
+            }
+          }
+
+          // Update status
+          if (aiStatusLabel) aiStatusLabel.textContent = "AI 分析完成";
+          const pulseDot = aiStatusLabel
+            ? aiStatusLabel.parentElement.querySelector(".pulse")
+            : null;
+          if (pulseDot) pulseDot.style.display = "none";
+
+          // GA4 event
+          try {
+            if (typeof gtag === "function") {
+              let total = 0;
+              for (let i = 0; i < DIM_LABELS.length; i++) {
+                total += scores[DIM_LABELS[i].key] || 5;
+              }
+              gtag("event", "idea_scored", {
+                event_category: "rate_your_idea",
+                event_label: S.mode,
+                value: total,
+              });
+            }
+          } catch (e) {
+            /* GA4 unavailable, non-critical */
+          }
+        };
+
+        /* ── Copy Report ── */
+        window.copyReport = function () {
+          if (!S.scores) return;
+          const scores = S.scores;
+          let total = 0;
+          const lines = [];
+          for (let i = 0; i < DIM_LABELS.length; i++) {
+            const val = scores[DIM_LABELS[i].key] || 5;
+            total += val;
+            let bar = "";
+            for (let j = 0; j < val; j++) bar += "\u2588";
+            lines.push(DIM_LABELS[i].label + "：" + val + "/10 " + bar);
+          }
+
+          const report =
+            "\u{1F3AF} 学生创业自检 — 校园VC\n" +
+            "想法：" +
+            S.product.substring(0, 60) +
+            (S.product.length > 60 ? "..." : "") +
+            "\n" +
+            "总分：" +
+            total +
+            "/50（" +
+            getTier(total) +
+            "）\n" +
+            "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n" +
+            lines.join("\n") +
+            "\n" +
+            "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n" +
+            "\u{1F517} 来给你的想法打分：xiaoyuanvc.com/resources/rate-your-idea.html";
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard
+              .writeText(report)
+              .then(function () {
+                showToast("已复制到剪贴板");
+              })
+              .catch(function () {
+                fallbackCopy(report);
+              });
+          } else {
+            fallbackCopy(report);
+          }
+        };
+
+        function fallbackCopy(text) {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+            showToast("已复制到剪贴板");
+          } catch (e) {
+            showToast("复制失败，请手动复制");
+          }
+          document.body.removeChild(ta);
+        }
+
+        function showToast(msg) {
+          const toast = document.getElementById("toast");
+          if (!toast) return;
+          toast.textContent = msg;
+          toast.classList.add("show");
+          setTimeout(function () {
+            toast.classList.remove("show");
+          }, 2000);
+        }
+
+        /* ── Navigation Actions ── */
+        window.tryAnother = function () {
+          S.scores = null;
+          S.analysis = "";
+          S.product = "";
+          S.audience = "";
+          S.model = "";
+          S.stage = "只有想法";
+          saveState();
+          showScreen(1);
+          syncStateToFields();
+        };
+
+        window.resetAll = function () {
+          S = {
+            screen: 0,
+            product: "",
+            audience: "",
+            model: "",
+            stage: "只有想法",
+            mode: "gentle",
+            scores: null,
+            analysis: "",
+          };
+          try {
+            localStorage.removeItem(STORAGE_KEY);
+          } catch (e) {
+            /* storage unavailable, non-critical */
+          }
+          showScreen(0);
+        };
+
+        /* ── Boot ── */
+        function boot() {
+          try {
+            loadState();
+            if (S.screen === 2 && S.scores) {
+              // Restore results screen
+              showScreen(2);
+              const loadingWrap = document.getElementById("loadingWrap");
+              const scoreSection = document.getElementById("scoreSection");
+              const aiBody = document.getElementById("aiBody");
+              const aiStatusLabel = document.getElementById("aiStatusLabel");
+              if (loadingWrap) loadingWrap.style.display = "none";
+              if (scoreSection) scoreSection.style.display = "block";
+              renderScoreBars(S.scores, extractRationales(S.analysis || ""));
+              if (aiBody && S.analysis) {
+                aiBody.innerHTML = renderMd(extractAnalysis(S.analysis));
+              }
+              if (aiStatusLabel) aiStatusLabel.textContent = "AI 分析完成";
+              const pulseEl = aiStatusLabel
+                ? aiStatusLabel.parentElement.querySelector(".pulse")
+                : null;
+              if (pulseEl) pulseEl.style.display = "none";
+            } else if (S.screen === 1) {
+              showScreen(1);
+              syncStateToFields();
+            } else {
+              showScreen(0);
+            }
+          } catch (e) {
+            showScreen(0);
+          }
+        }
+
+        // Wait for DOM
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", boot);
+        } else {
+          boot();
+        }
+      })();
+    </script>
+  </body>
+</html>
