@@ -1051,7 +1051,8 @@
           const msg = (err && err.message) || String(err) || "未知错误";
           if (/Failed to fetch/i.test(msg))
             return "AI 服务连接失败，通常是代理不可达、跨域拦截或网络异常。";
-          if (/AbortError/i.test(msg)) return "AI 服务响应超时，请稍后重试。";
+          if (/AbortError|aborted|timeout|timed out/i.test(msg))
+            return "AI 服务响应超时，请稍后重试。";
           return msg;
         }
 
@@ -1088,7 +1089,17 @@
                 signal: ctrl ? ctrl.signal : undefined,
               });
               if (timer) clearTimeout(timer);
-              if (!res.ok) throw new Error("API 错误 " + res.status);
+              if (!res.ok) {
+                let detail = "";
+                try {
+                  const payload = await res.json();
+                  detail =
+                    (payload && (payload.error || payload.message)) || "";
+                } catch (parseErr) {
+                  /* ignore non-json error body */
+                }
+                throw new Error(detail || "API 错误 " + res.status);
+              }
               const json = await res.json();
               const text =
                 (json &&
@@ -1463,8 +1474,12 @@
           const scoreSection = document.getElementById("scoreSection");
           const aiBody = document.getElementById("aiBody");
           const aiStatusLabel = document.getElementById("aiStatusLabel");
+          const scoreNum = document.getElementById("scoreNum");
+          const tierLabel = document.getElementById("tierLabel");
           if (loadingWrap) loadingWrap.style.display = "block";
           if (scoreSection) scoreSection.style.display = "none";
+          if (scoreNum) scoreNum.textContent = "-";
+          if (tierLabel) tierLabel.textContent = "";
 
           const prompt = buildPrompt();
           let fullText = "";
@@ -1481,10 +1496,10 @@
                 "</p>";
             }
             if (aiStatusLabel) aiStatusLabel.textContent = "自检失败";
-            renderScoreBars(
-              { feasibility: 5, market: 5, moat: 5, execution: 5, ai: 5 },
-              null,
-            );
+            if (scoreNum) scoreNum.textContent = "-";
+            if (tierLabel) tierLabel.textContent = "暂未完成";
+            const dimBars = document.getElementById("dimBars");
+            if (dimBars) dimBars.innerHTML = "";
             return;
           }
 

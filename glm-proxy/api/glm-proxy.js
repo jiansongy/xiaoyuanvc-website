@@ -19,6 +19,7 @@ const ALLOWED_ORIGINS = (
   .filter(Boolean);
 
 const GLM_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions";
+const UPSTREAM_TIMEOUT_MS = 55000;
 
 module.exports = async function handler(req, res) {
   const origin = req.headers["origin"] || "";
@@ -82,6 +83,10 @@ module.exports = async function handler(req, res) {
   body.model = "glm-4-flash";
 
   let upstream;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => {
+    ctrl.abort(new Error("Upstream timeout"));
+  }, UPSTREAM_TIMEOUT_MS);
   try {
     upstream = await fetch(GLM_URL, {
       method: "POST",
@@ -90,10 +95,17 @@ module.exports = async function handler(req, res) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
+      signal: ctrl.signal,
     });
   } catch (err) {
-    res.status(502).json({ error: "无法连接 GLM API：" + err.message });
+    const isTimeout =
+      err && (err.name === "AbortError" || /timeout/i.test(err.message || ""));
+    res
+      .status(isTimeout ? 504 : 502)
+      .json({ error: isTimeout ? "GLM 响应超时，请重试" : "无法连接 GLM API：" + err.message });
     return;
+  } finally {
+    clearTimeout(timer);
   }
 
   res.status(upstream.status);
@@ -107,7 +119,11 @@ module.exports = async function handler(req, res) {
   const { Readable } = require("stream");
   try {
     await new Promise((resolve, reject) => {
-      const readable = Readable.fromWeb(upstream.body);
+      const readable = upstream.body ? Readable.fromWeb(upstream.body) : null;
+      if (!readable) {
+        reject(new Error("Upstream body is empty"));
+        return;
+      }
       readable.on("error", reject);
       res.on("error", reject);
       res.on("finish", resolve);
