@@ -848,6 +848,42 @@
           </button>
         </div>
       </div>
+      <div class="card" style="margin-top: 0">
+        <p class="step-title">师生共创状态</p>
+        <p class="step-desc">
+          导师与学生团队的实际协作深度（影响共创强度评分）
+        </p>
+        <div class="radio-grid" id="coCreateGrid">
+          <label class="radio-card" data-v="high">
+            <input type="radio" name="coCreate" value="high" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">高频共创，已明确分工与利益分配</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="mid">
+            <input type="radio" name="coCreate" value="mid" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">有合作，但分工与边界仍模糊</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="low">
+            <input type="radio" name="coCreate" value="low" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">主要学生推进，导师较少参与</div>
+            </div>
+          </label>
+          <label class="radio-card" data-v="none">
+            <input type="radio" name="coCreate" value="none" />
+            <div class="radio-dot"></div>
+            <div>
+              <div class="radio-label">尚未形成稳定的师生共创关系</div>
+            </div>
+          </label>
+        </div>
+      </div>
     </div>
 
     <!-- ── Screen 4: 目标客户 + 商业路径 ── -->
@@ -862,7 +898,7 @@
           <input
             type="text"
             id="customer_input"
-            placeholder="例：汽车零部件制造厂的设备管理部门"
+            placeholder="例：汽车零部件厂设备管理部负责人（具体到职位/部门）"
           />
         </div>
         <div>
@@ -1032,6 +1068,41 @@
           >
             不确定该卖产品、做项目还是做技术转让
           </button>
+          <button
+            class="chip"
+            style="text-align: left"
+            data-v="no_customer_interview"
+            onclick="toggleDiff(this)"
+          >
+            从未访谈过真实客户
+          </button>
+          <button
+            class="chip"
+            style="text-align: left"
+            data-v="low_willingness"
+            onclick="toggleDiff(this)"
+          >
+            客户表示不愿付费或没有明确预算
+          </button>
+        </div>
+        <div style="margin-top: 14px">
+          <div style="font-size: 13px; color: var(--gray); margin-bottom: 6px">
+            已具备的外部支持（可选，多选）
+          </div>
+          <div class="chip-grid" id="ecoChips">
+            <button class="chip" data-v="course" onclick="toggleEco(this)">
+              课程/学分支持
+            </button>
+            <button class="chip" data-v="incubator" onclick="toggleEco(this)">
+              校内孵化器
+            </button>
+            <button class="chip" data-v="poc" onclick="toggleEco(this)">
+              产业 PoC 机会
+            </button>
+            <button class="chip" data-v="alumni" onclick="toggleEco(this)">
+              校友/投资资源
+            </button>
+          </div>
         </div>
         <div style="margin-top: 14px">
           <div style="font-size: 13px; color: var(--gray); margin-bottom: 6px">
@@ -1231,6 +1302,20 @@
           no_prototype: "缺可验证原型",
           no_pilot: "缺试点或首个客户",
           no_path: "商业路径不清",
+          no_customer_interview: "从未访谈过真实客户",
+          low_willingness: "客户不愿付费/无预算",
+        };
+        var CO_CREATE_LABELS = {
+          high: "高频共创，已明确分工与利益",
+          mid: "有合作，但分工边界模糊",
+          low: "主要学生推进，导师较少参与",
+          none: "尚未形成稳定共创关系",
+        };
+        var ECO_LABELS = {
+          course: "课程/学分支持",
+          incubator: "校内孵化器",
+          poc: "产业PoC机会",
+          alumni: "校友/投资资源",
         };
         var TEAM_LABELS = {
           pi: "导师/PI",
@@ -1252,11 +1337,13 @@
           trl: "",
           ip: "",
           team: [],
+          coCreate: "",
           customer: "",
           path: "",
           stage: "",
           difficulties: [],
           diff_note: "",
+          eco: [],
           report: "",
         };
         // expose S for inline oninput handlers
@@ -1311,6 +1398,7 @@
           } else if (step === 3) {
             if (!S.ip) return "请先选择 IP 归属。";
             if (!S.team.length) return "请至少选择 1 个团队角色。";
+            if (!S.coCreate) return "请选择师生共创状态。";
           } else if (step === 4) {
             if (!S.customer.trim()) return "请先填写目标客户。";
             if (!S.path) return "请先选择商业路径。";
@@ -1475,6 +1563,7 @@
           document.querySelectorAll("#teamChips .chip").forEach(function (c) {
             c.classList.toggle("active", S.team.includes(c.dataset.v));
           });
+          restoreRadio("coCreateGrid", S.coCreate);
           updateNextButtonState();
         }
         window.toggleTeam = function (el) {
@@ -1499,15 +1588,25 @@
           updateNextButtonState();
         }
 
-        // ── STEP 6: difficulties ──
+        // ── STEP 6: difficulties + eco ──
         function renderS6() {
           document.querySelectorAll("#diffChips .chip").forEach(function (c) {
             c.classList.toggle("active", S.difficulties.includes(c.dataset.v));
+          });
+          document.querySelectorAll("#ecoChips .chip").forEach(function (c) {
+            c.classList.toggle("active", S.eco.includes(c.dataset.v));
           });
           document.getElementById("diffNote").value = S.diff_note;
           updateDiffLimit();
           updateNextButtonState();
         }
+        window.toggleEco = function (el) {
+          var v = el.dataset.v;
+          var idx = S.eco.indexOf(v);
+          if (idx === -1) S.eco.push(v);
+          else S.eco.splice(idx, 1);
+          el.classList.toggle("active", S.eco.includes(v));
+        };
         window.toggleDiff = function (el) {
           var v = el.dataset.v;
           var idx = S.difficulties.indexOf(v);
@@ -1568,6 +1667,7 @@
           if (name === "ip") S.ip = inp.value;
           if (name === "path") S.path = inp.value;
           if (name === "stage") S.stage = inp.value;
+          if (name === "coCreate") S.coCreate = inp.value;
           updateNextButtonState();
         });
 
@@ -1590,6 +1690,13 @@
                 return DIFF_LABELS[v] || v;
               })
               .join("；") || "未选择";
+          var ecoStr = S.eco.length
+            ? S.eco
+                .map(function (v) {
+                  return ECO_LABELS[v] || v;
+                })
+                .join("、")
+            : "无";
           var data = [
             ["项目描述", desc],
             ["技术成熟度", TRL_LABELS[S.trl] || "未选"],
@@ -1604,10 +1711,12 @@
                     .join("、")
                 : "未选",
             ],
+            ["共创状态", CO_CREATE_LABELS[S.coCreate] || "未选"],
             ["目标客户", S.customer || "未填"],
             ["商业路径", PATH_LABELS[S.path] || "未选"],
             ["当前阶段", STAGE_LABELS[S.stage] || "未选"],
             ["主要困难", diffs],
+            ["生态支持", ecoStr],
           ];
           rows.innerHTML = data
             .map(function (item) {
@@ -1746,7 +1855,15 @@
                 return DIFF_LABELS[v] || v;
               })
               .join("；") || "未选择";
+          var ecoStr = S.eco.length
+            ? S.eco
+                .map(function (v) {
+                  return ECO_LABELS[v] || v;
+                })
+                .join("、")
+            : "无";
           var stageLabel = STAGE_LABELS[S.stage] || "未选";
+          var coCreateLabel = CO_CREATE_LABELS[S.coCreate] || "未选";
 
           return (
             '你是一位硬科技创业导师，精通"共创验证式创业法"——将清华师生共创模式与MIT有序创业24步法整合为三层九阶段模型：\n' +
@@ -1754,13 +1871,16 @@
             "【第二层：验证转译层】阶段4切入点市场界定→阶段5用户画像与价值主张转译→阶段6双十验证\n" +
             "【第三层：放大闭环层】阶段7最小可行转化产品（MVTP）→阶段8三重闭环建构→阶段9平台化复制\n" +
             "\n" +
-            "严格要求：只使用上述三层九阶段框架进行分析，禁止使用精益画布、OKR、MVP等通用框架替代。语气如清华经管教授：直接、有判断、不鼓励不切实际的乐观，指出真实断点。\n" +
+            "严格要求：\n" +
+            "1. 只使用上述三层九阶段框架，禁止使用精益画布、OKR、MVP等通用框架替代。\n" +
+            '2. 保守推断原则：所有判断必须有输入证据支撑，信息不足时必须标注"证据不足"并降低置信度，禁止臆造未提供的事实。\n' +
+            "3. 语气如清华经管教授：直接、有判断、不鼓励不切实际的乐观，指出真实断点。\n" +
             "\n" +
             "以下是学生项目信息：\n" +
             "【项目描述】" +
             desc +
             "\n" +
-            "【技术成熟度】" +
+            "【技术成熟度（TRL）】" +
             (TRL_LABELS[S.trl] || "未选") +
             "\n" +
             "【IP归属】" +
@@ -1768,6 +1888,9 @@
             "\n" +
             "【团队构成】" +
             teamStr +
+            "\n" +
+            "【师生共创状态】" +
+            coCreateLabel +
             "\n" +
             "【目标客户/商业路径】" +
             (S.customer || "未填") +
@@ -1780,23 +1903,52 @@
             "【主要困难】" +
             diffStr +
             "\n" +
+            "【已具备生态支持】" +
+            ecoStr +
+            "\n" +
             (S.diff_note ? "【补充说明】" + S.diff_note + "\n" : "") +
             "\n" +
-            "请按以下结构输出诊断报告（每部分之间空一行，使用 ### 标题）：\n" +
+            "=== 诊断推理步骤（必须在输出中体现）===\n" +
+            "\n" +
+            "步骤A：先推断四个底层变量（仅基于上方输入，不得臆造）：\n" +
+            "- 共创强度：依据 IP归属 + 师生共创状态 + 团队角色是否含商业/全职推断\n" +
+            "- 转译能力：依据技术描述是否对应具体客户+具体痛点+商业路径是否匹配推断\n" +
+            '- 验证质量：依据当前阶段 + 困难是否含"未访谈客户"/"不愿付费"/"无试点"推断\n' +
+            "- 生态支持：依据已具备支持项 + 团队中是否有产业导师推断\n" +
+            "\n" +
+            "步骤B：五维诊断评分约束（必须遵守，违反则无效）：\n" +
+            '- IP=unclear 或困难含"产权不清" → 共创组织成熟度不得高于 2/5\n' +
+            "- 团队无商业/销售且无产业导师 → 价值转译清晰度不得高于 2/5\n" +
+            "- 客户描述是泛行业词非具体岗位 → 市场验证充分度不得高于 2/5\n" +
+            '- TRL=concept/lab 且困难含"无原型" → 技术可转化性不得高于 2/5\n' +
+            '- 困难含"从未访谈客户"或"不愿付费" → 市场验证充分度不得高于 2/5\n' +
+            "- 自报阶段高于证据支持 → 必须下调并说明前一阶段未完成项\n" +
+            "\n" +
+            "=== 输出格式（使用 ### 标题，各部分间空一行）===\n" +
             "\n" +
             "### 阶段定位\n" +
-            '说明该项目实际处于三层九阶段中的哪个阶段（如果自报阶段与实际情况有偏差，请指出），并用"▓▓▓░░░░░░"文字进度条标注当前位置（9格，已完成填▓，未完成填░，当前填▶）。\n' +
+            "- 当前层与阶段：（若自报阶段有偏差请指出，并说明前一阶段哪项未完成）\n" +
+            "- 下一阶段门槛：（进入下一阶段需要完成的最关键条件）\n" +
+            "- 最大断点：（用1-2句话直接指出核心卡点，不解释背景）\n" +
+            '- 进度条：用"▓▓▓░░░░░░"标注（9格，已完成填▓，当前填▶，未开始填░）\n' +
             "\n" +
-            "### 最大断点\n" +
-            "用1-2句话直接指出当前阻碍项目推进的核心卡点。不需要解释背景，直接说问题。\n" +
+            "### 五维诊断\n" +
+            "每维格式：维度名：x/5 — 证据（仅引用用户输入原文）\n" +
+            "1. 技术可转化性：x/5 — ...\n" +
+            "2. 共创组织成熟度：x/5 — ...\n" +
+            "3. 价值转译清晰度：x/5 — ...\n" +
+            "4. 市场验证充分度：x/5 — ...\n" +
+            "5. 生态与制度支撑度：x/5 — ...\n" +
+            "**核心症结**：上述五维中分数最低项对创业进程的具体影响（一句话）\n" +
             "\n" +
             "### Top 3 立即行动\n" +
-            "① [第一个具体可操作的行动，明确谁去做、做什么、验证标准是什么]\n" +
-            "② [第二个行动]\n" +
-            "③ [第三个行动]\n" +
+            "每条包含：负责人 / 具体动作 / 完成标准\n" +
+            "① ...\n" +
+            "② ...\n" +
+            "③ ...\n" +
             "\n" +
             "### 解锁下一阶段的里程碑\n" +
-            "描述一个具体的、可验证的标志性事件——当这件事发生时，项目就正式进入下一阶段。\n" +
+            "一个具体可验证的标志性事件，当它发生时项目正式进入下一阶段。不要空话。\n" +
             "\n" +
             "---\n" +
             "方法论来源：共创验证式创业法 · Roma@地球行走 · 清华经管学院"
