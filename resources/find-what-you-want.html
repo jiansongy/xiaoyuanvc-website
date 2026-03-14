@@ -440,11 +440,16 @@
         color: var(--navy);
       }
 
-
       /* ── Animations ── */
       @keyframes ai-reveal {
-        from { opacity: 0; transform: translateY(10px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
       .ai-card.revealed {
         animation: ai-reveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -453,14 +458,20 @@
         animation: ai-reveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
       @keyframes final-entrance {
-        from { opacity: 0; transform: scale(0.96) translateY(12px); }
-        to   { opacity: 1; transform: scale(1) translateY(0); }
+        from {
+          opacity: 0;
+          transform: scale(0.96) translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
       }
       .final-box.entering {
         animation: final-entrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
 
-            /* 追问输入 */
+      /* 追问输入 */
       .followup-box {
         background: white;
         border-radius: var(--radius);
@@ -818,6 +829,50 @@
         color: var(--green);
       }
 
+      /* 情境快捷按钮 */
+      .scenario-btn {
+        padding: 7px 14px;
+        border-radius: 99px;
+        border: 1.5px solid var(--purple-medium);
+        background: white;
+        color: var(--purple-dark);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+        font-family: inherit;
+      }
+      .scenario-btn:hover {
+        background: var(--purple-light);
+        border-color: var(--purple);
+      }
+
+      /* 价值主张候选按钮 */
+      .value-stmt-btn {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 10px 14px;
+        background: white;
+        border: 1.5px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        line-height: 1.6;
+        cursor: pointer;
+        color: var(--navy);
+        font-family: inherit;
+        transition: all 0.15s;
+      }
+      .value-stmt-btn:hover {
+        border-color: var(--purple-medium);
+        background: var(--purple-light);
+      }
+      .value-stmt-btn.selected {
+        border-color: var(--purple);
+        background: var(--purple-light);
+        font-weight: 600;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .swipe-card,
         .swipe-card.swipe-left,
@@ -834,7 +889,9 @@
         .keyword-chip,
         .result-card,
         .btn-nope,
-        .btn-like {
+        .btn-like,
+        .scenario-btn,
+        .value-stmt-btn {
           transition: none;
         }
       }
@@ -864,7 +921,9 @@
         cursor: pointer;
         font-family: inherit;
         font-weight: 600;
-        transition: border-color 0.18s, color 0.18s;
+        transition:
+          border-color 0.18s,
+          color 0.18s;
       }
       .nav-btn-prev:hover {
         border-color: var(--purple);
@@ -880,7 +939,9 @@
         cursor: pointer;
         font-family: inherit;
         font-weight: 600;
-        transition: background 0.18s, transform 0.15s;
+        transition:
+          background 0.18s,
+          transform 0.15s;
       }
       .nav-btn-next:hover {
         background: #1d4ed8;
@@ -1041,6 +1102,48 @@
         <button class="btn-start" onclick="window.startApp()">
           开始探索 →
         </button>
+        <!-- 存档恢复区块 -->
+        <div
+          id="resumeSection"
+          style="
+            display: none;
+            margin-top: 12px;
+            background: #f0f7ff;
+            border: 1px solid #dbeafe;
+            border-radius: 8px;
+            padding: 12px 16px;
+            text-align: center;
+          "
+        >
+          <p style="font-size: 13px; color: #1d4ed8; margin-bottom: 10px">
+            💾 检测到上次的探索记录（进行到第
+            <strong id="resumePhaseLabel">？</strong> 步）
+          </p>
+          <div style="display: flex; gap: 10px; justify-content: center">
+            <button
+              class="btn-secondary"
+              style="width: auto; margin: 0; padding: 8px 20px"
+              onclick="window.resumeProgress()"
+            >
+              继续探索 →
+            </button>
+            <button
+              style="
+                width: auto;
+                padding: 8px 16px;
+                background: none;
+                border: none;
+                color: var(--gray);
+                font-size: 13px;
+                cursor: pointer;
+                font-family: inherit;
+              "
+              onclick="window.clearAndStart()"
+            >
+              重新开始
+            </button>
+          </div>
+        </div>
         <a
           href="index.html"
           class="back-link"
@@ -1155,15 +1258,67 @@
             >描述你人生中最充实、最有成就感的一次经历</label
           >
           <p style="font-size: 12px; color: var(--gray); margin-bottom: 8px">
-            工作、学习、生活均可。尽量具体，100字以上。
+            工作、学习、生活均可。尽量具体，60字以上。
           </p>
+          <div
+            style="
+              display: flex;
+              gap: 8px;
+              margin-bottom: 10px;
+              flex-wrap: wrap;
+            "
+          >
+            <button
+              class="scenario-btn"
+              onclick="window.fillScenario('course')"
+            >
+              📚 课程/项目
+            </button>
+            <button class="scenario-btn" onclick="window.fillScenario('club')">
+              🏘️ 社团/兼职
+            </button>
+            <button class="scenario-btn" onclick="window.fillScenario('help')">
+              🤝 帮助别人
+            </button>
+          </div>
+          <details style="margin-bottom: 10px">
+            <summary
+              style="
+                font-size: 13px;
+                cursor: pointer;
+                color: var(--purple);
+                font-weight: 600;
+                list-style: none;
+              "
+            >
+              💡 看看大学生的例子
+            </summary>
+            <div
+              style="
+                margin-top: 8px;
+                padding: 10px 12px;
+                background: var(--purple-light);
+                border-radius: 8px;
+                font-size: 13px;
+                line-height: 1.7;
+                color: var(--navy);
+              "
+            >
+              <p>
+                「帮班级设计了年度活动方案，从确定主题到最后100多人报名，全程一个人统筹，压力很大但成就感更大。」
+              </p>
+              <p style="margin-top: 8px">
+                「室友失恋很痛苦，我花了两个多小时跟他聊，帮他理清楚自己真正在意的是什么，他说那次对话改变了他很多想法。」
+              </p>
+            </div>
+          </details>
           <textarea
             id="experienceInput"
             rows="6"
-            placeholder="例如：大二时我负责组织学院的创业大赛，从零开始联系赞助商、设计赛制、拉来100多名同学参与，最后活动比预期成功很多…"
+            placeholder="例如：大二时帮社团设计了一套年度活动方案，从零开始确定主题、联系场地、拉人报名，最后远超预期……"
             oninput="window.onExperienceInput()"
           ></textarea>
-          <div class="char-hint" id="expCharHint">0 / 100字</div>
+          <div class="char-hint" id="expCharHint">0 / 60字</div>
         </div>
 
         <div class="angles-section">
@@ -1298,12 +1453,12 @@
         <div class="question-card">
           <label
             ><span class="q-num">5</span
-            >如果你能教会年轻人一件事，那是什么？</label
+            >你想给刚入高中的自己写一封信，会说什么？</label
           >
           <textarea
             id="v5"
             rows="3"
-            placeholder="例如：我会教他们如何识别真正属于自己的欲望，而不是别人强加给你的…"
+            placeholder="例如：我会告诉自己别那么在意别人的眼光，提前多探索、多试错，比等到想清楚再行动要好得多……"
             oninput="window.onValueInput()"
           ></textarea>
         </div>
@@ -1346,18 +1501,37 @@
             <div class="ai-label">🤖 价值观确认</div>
             <div class="ai-body" id="aiBody3confirm"></div>
           </div>
-          <!-- 向外翻转问题：选完5个关键词后显示 -->
-          <div class="followup-box" id="outwardBox">
-            <label>🔄 把价值观翻转成对外的影响：</label>
-            <p style="font-size: 12px; color: var(--gray); margin-bottom: 8px">
-              市场只为「你帮别人解决了什么」买单。把你的价值观朝外看一眼。
+          <!-- 价值主张候选：选完5个关键词后，AI生成候选句供选择 -->
+          <div id="outwardBox" style="display: none">
+            <div
+              class="ai-card"
+              id="aiValueStmtCard"
+              style="display: none; margin-bottom: 12px"
+            >
+              <div class="ai-label">🤖 AI 为你生成了 3 个价值主张</div>
+              <div class="ai-body" id="aiValueStmtBody"></div>
+            </div>
+            <p style="font-size: 13px; color: var(--gray); margin-bottom: 8px">
+              选一个最接近你的，然后可以修改：
             </p>
-            <textarea
-              id="outwardInput"
-              rows="3"
-              placeholder="例如：我想帮对Web3感兴趣却不知从何入手的大学生，系统地建立加密领域的认知框架，让他们少走弯路…"
-              oninput="window.onOutwardInput()"
-            ></textarea>
+            <div
+              id="valueStmtCandidates"
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 12px;
+              "
+            ></div>
+            <div class="followup-box" style="display: block; margin-top: 8px">
+              <label>✏️ 你的价值主张（可修改）：</label>
+              <textarea
+                id="outwardInput"
+                rows="3"
+                placeholder="点击上方选项自动填入，也可以直接输入…"
+                oninput="window.onOutwardInput()"
+              ></textarea>
+            </div>
           </div>
           <button
             class="btn-primary"
@@ -1419,21 +1593,21 @@
             <div class="ai-body" id="finalStep"></div>
           </div>
 
-          <!-- 变现路径区块 -->
+          <!-- 验证行动区块 -->
           <div style="margin-top: 20px">
             <p style="font-size: 14px; font-weight: 700; margin-bottom: 12px">
-              💰 三种变现路径（手段可变，核心不散）
+              🔬 三个验证方向（本周就能开始）
             </p>
             <div class="monetize-card" id="monoLow">
-              <div class="mono-label">🎯 低杠杆 / 高单价</div>
+              <div class="mono-label">✅ 今天就能做</div>
               <div class="mono-body" id="monoLowBody"></div>
             </div>
             <div class="monetize-card" id="monoMid">
-              <div class="mono-label">🏘️ 中杠杆 / 社群型</div>
+              <div class="mono-label">📅 本周可以尝试</div>
               <div class="mono-body" id="monoMidBody"></div>
             </div>
             <div class="monetize-card" id="monoHigh">
-              <div class="mono-label">🚀 高杠杆 / 产品型</div>
+              <div class="mono-label">🌱 这个月可以探索</div>
               <div class="mono-body" id="monoHighBody"></div>
             </div>
           </div>
@@ -1465,15 +1639,20 @@
 
     <!-- ══════════════ NAV BAR ══════════════ -->
     <div class="nav-bar" id="navBar">
-      <button class="nav-btn-prev" id="prevBtn" onclick="window.nav(-1)">← 上一步</button>
+      <button class="nav-btn-prev" id="prevBtn" onclick="window.nav(-1)">
+        ← 上一步
+      </button>
       <span style="font-size: 12px; color: var(--gray)" id="navHint"></span>
-      <button class="nav-btn-next" id="nextBtn" onclick="window.nav(1)">下一步 →</button>
+      <button class="nav-btn-next" id="nextBtn" onclick="window.nav(1)">
+        下一步 →
+      </button>
     </div>
 
     <script>
       (function () {
         "use strict";
         const AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
+        const SAVE_KEY = "xyvc-fwyw-v1";
         const AI_PROXY_CANDIDATES = [
           window.__XYVC_AI_PROXY__,
           new URLSearchParams(window.location.search).get("ai_proxy"),
@@ -1559,6 +1738,7 @@
             allKeywords: [],
             selectedKeywords: [],
             phase3AI: "",
+            valueStatements: [],
             outwardValue: "",
             finalCandidates: [],
             monetization: null,
@@ -1566,7 +1746,174 @@
           };
         }
 
+        // ══════════════════════════════════════════════
+        // Progress save / restore (localStorage)
+        // ══════════════════════════════════════════════
+        function saveProgress() {
+          try {
+            var snap = {
+              v: 1,
+              phase: S.phase,
+              likes: S.likes,
+              followupAnswer: S.followupAnswer,
+              phase1AI: S.phase1AI,
+              experience: S.experience,
+              angles: S.angles,
+              phase2AI: S.phase2AI,
+              valueAnswers: S.valueAnswers,
+              allKeywords: S.allKeywords,
+              selectedKeywords: S.selectedKeywords,
+              phase3AI: S.phase3AI,
+              valueStatements: S.valueStatements,
+              outwardValue: S.outwardValue,
+            };
+            localStorage.setItem(SAVE_KEY, JSON.stringify(snap));
+          } catch (e) {
+            /* ignore */
+          }
+        }
+
+        function clearSavedProgress() {
+          try {
+            localStorage.removeItem(SAVE_KEY);
+          } catch (e) {}
+        }
+
+        function loadSavedProgress() {
+          try {
+            var raw = localStorage.getItem(SAVE_KEY);
+            if (!raw) return null;
+            var data = JSON.parse(raw);
+            if (!data || data.v !== 1 || !data.phase || data.phase < 2)
+              return null;
+            return data;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function restorePhase3UI() {
+          for (var i = 1; i <= 5; i++) {
+            var el = document.getElementById("v" + i);
+            if (el) el.value = S.valueAnswers[i - 1] || "";
+          }
+          checkPhase3Ready();
+          if (S.allKeywords.length > 0) {
+            document.getElementById("p3SubmitBtn").style.display = "none";
+            var p3Hint = document.getElementById("p3Hint");
+            if (p3Hint) p3Hint.style.display = "none";
+            var ks = document.getElementById("keywordsSection");
+            ks.style.display = "block";
+            var grid = document.getElementById("keywordsGrid");
+            grid.innerHTML = S.allKeywords
+              .map(function (kw) {
+                var sel = S.selectedKeywords.indexOf(kw) >= 0;
+                return (
+                  '<button class="keyword-chip' +
+                  (sel ? " selected" : "") +
+                  '" onclick="window.selectKeyword(this,\'' +
+                  kw +
+                  "')\">" +
+                  kw +
+                  "</button>"
+                );
+              })
+              .join("");
+            document.getElementById("aiBody3").textContent =
+              "请从下方选择最能代表你的 5 个关键词：";
+            document.getElementById("kwCount").textContent =
+              S.selectedKeywords.length;
+            if (S.phase3AI) {
+              document.getElementById("aiCard3confirm").style.display = "block";
+              document.getElementById("aiBody3confirm").textContent =
+                S.phase3AI;
+            }
+            if (S.valueStatements.length > 0) {
+              document.getElementById("aiValueStmtCard").style.display =
+                "block";
+              document.getElementById("aiValueStmtBody").textContent =
+                "点击下方最接近你想法的一句话：";
+              var sc = document.getElementById("valueStmtCandidates");
+              sc.innerHTML = S.valueStatements
+                .map(function (stmt, i) {
+                  var sel = S.outwardValue === stmt;
+                  return (
+                    '<button class="value-stmt-btn' +
+                    (sel ? " selected" : "") +
+                    '" onclick="window.selectValueStmt(' +
+                    i +
+                    ')">' +
+                    stmt +
+                    "</button>"
+                  );
+                })
+                .join("");
+              document.getElementById("outwardBox").style.display = "block";
+              var oi = document.getElementById("outwardInput");
+              if (oi) oi.value = S.outwardValue || "";
+              if (S.selectedKeywords.length >= 5) {
+                document.getElementById("p3NextBtn").style.display = "block";
+              }
+            }
+          }
+        }
+
+        window.resumeProgress = function () {
+          var saved = loadSavedProgress();
+          if (!saved) {
+            window.startApp();
+            return;
+          }
+          Object.assign(S, createInitialState());
+          S.phase = saved.phase;
+          S.likes = saved.likes || [];
+          S.followupAnswer = saved.followupAnswer || "";
+          S.phase1AI = saved.phase1AI || "";
+          S.experience = saved.experience || "";
+          S.angles = saved.angles || S.angles;
+          S.phase2AI = saved.phase2AI || "";
+          S.valueAnswers = saved.valueAnswers || ["", "", "", "", ""];
+          S.allKeywords = saved.allKeywords || [];
+          S.selectedKeywords = saved.selectedKeywords || [];
+          S.phase3AI = saved.phase3AI || "";
+          S.valueStatements = saved.valueStatements || [];
+          S.outwardValue = saved.outwardValue || "";
+          S.cardIndex = CARDS.length; // cards already done
+          if (S.phase >= 3 && S.allKeywords.length > 0) {
+            showPhase(3);
+            restorePhase3UI();
+          } else {
+            showPhase(2);
+            renderPhase2();
+          }
+        };
+
+        window.clearAndStart = function () {
+          clearSavedProgress();
+          window.startApp();
+        };
+
+        // Show resume section on welcome page if save exists
+        (function () {
+          var saved = loadSavedProgress();
+          if (!saved) return;
+          var section = document.getElementById("resumeSection");
+          var label = document.getElementById("resumePhaseLabel");
+          if (section && label) {
+            var names = ["一", "二", "三", "四"];
+            label.textContent =
+              names[Math.min(saved.phase - 1, 3)] || saved.phase;
+            section.style.display = "block";
+          }
+        })();
+
         const S = createInitialState();
+        var _saveTimer = null;
+
+        function debouncedSave() {
+          if (_saveTimer) clearTimeout(_saveTimer);
+          _saveTimer = setTimeout(saveProgress, 1500);
+        }
 
         var PHASE_NAMES = ["喜欢的事", "擅长的事", "价值观", "综合分析"];
 
@@ -1856,9 +2203,18 @@
           } catch (e) {}
         }
 
-        async function readAIResponse(res, bodyEl, wantsStream, shouldContinue) {
+        async function readAIResponse(
+          res,
+          bodyEl,
+          wantsStream,
+          shouldContinue,
+        ) {
           var canContinue =
-            typeof shouldContinue === "function" ? shouldContinue : function () { return true; };
+            typeof shouldContinue === "function"
+              ? shouldContinue
+              : function () {
+                  return true;
+                };
           if (!wantsStream) {
             var json = await res.json();
             if (!canContinue()) return "";
@@ -1955,7 +2311,11 @@
 
         async function streamAI(prompt, bodyEl, shouldContinue) {
           var canContinue =
-            typeof shouldContinue === "function" ? shouldContinue : function () { return true; };
+            typeof shouldContinue === "function"
+              ? shouldContinue
+              : function () {
+                  return true;
+                };
           if (canContinue()) {
             bodyEl.innerHTML =
               '<div style="display:flex;align-items:center;gap:8px;color:var(--gray)">' +
@@ -1989,7 +2349,9 @@
             var card = document.getElementById("aiCard1");
             var body = document.getElementById("aiBody1");
             card.style.display = "block";
-            card.classList.remove("revealed"); void card.offsetWidth; card.classList.add("revealed");
+            card.classList.remove("revealed");
+            void card.offsetWidth;
+            card.classList.add("revealed");
             S.phase1AI = await streamAI(prompt, body, isCurrentPhase1Request);
             if (!isCurrentPhase1Request()) return;
             document.getElementById("followupBox").style.display = "block";
@@ -2008,7 +2370,9 @@
             var card2 = document.getElementById("aiCard2");
             var body2 = document.getElementById("aiBody2");
             card2.style.display = "block";
-            card2.classList.remove("revealed"); void card2.offsetWidth; card2.classList.add("revealed");
+            card2.classList.remove("revealed");
+            void card2.offsetWidth;
+            card2.classList.add("revealed");
             S.phase2AI = await streamAI(prompt2, body2);
           } else if (phase === 3) {
             var valText = S.valueAnswers
@@ -2032,7 +2396,9 @@
             if (p3Hint) p3Hint.style.display = "none";
             var ks = document.getElementById("keywordsSection");
             ks.style.display = "block";
-            ks.classList.remove("revealed"); void ks.offsetWidth; ks.classList.add("revealed");
+            ks.classList.remove("revealed");
+            void ks.offsetWidth;
+            ks.classList.add("revealed");
             var body3 = document.getElementById("aiBody3");
             var raw = await streamAI(prompt3, body3);
             S.allKeywords = raw
@@ -2072,9 +2438,9 @@
               S.selectedKeywords.join("、") +
               "\n价值观确认（AI分析）：" +
               S.phase3AI +
-              "\n向外价值观（用户自述）：" +
+              "\n价值主张（用户自述）：" +
               S.outwardValue +
-              "\n\n请严格按以下格式输出，共两部分：\n\n第一部分：3个「想做的事」候选\n\n【候选一】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选二】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选三】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n第二部分：变现路径（基于用户的「想做的事」核心，给出3种灵活载体）\n\n【变现路径】\n低杠杆/高单价：[具体形式，15字以内]\n中杠杆/社群型：[具体形式，15字以内]\n高杠杆/产品型：[具体形式，15字以内]\n\n语气真诚，像一个了解用户的朋友。";
+              "\n\n请严格按以下格式输出，共两部分：\n\n第一部分：3个「想做的事」候选\n\n【候选一】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选二】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选三】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n第二部分：验证行动（给出3个具体可执行的探索行动，帮用户这周就开始验证方向）\n\n【验证行动】\n今天就能做：[一个具体行动，不超过20字，如「搜索5个相关内容，记录让你最感兴趣的」]\n本周可以尝试：[一个具体行动，不超过20字，如「找1-2个同方向的人简单聊聊」]\n这个月可以探索：[一个具体行动，不超过20字，如「做一个最小原型或输出，观察反馈」]\n\n语气真诚，像一个了解用户的朋友。";
 
             var tempDiv = document.createElement("div");
             tempDiv.style.position = "absolute";
@@ -2098,6 +2464,7 @@
           S.followupAnswer = document
             .getElementById("followupInput")
             .value.trim();
+          saveProgress();
           showPhase(2);
           renderPhase2();
         };
@@ -2114,15 +2481,33 @@
           S.experience = document.getElementById("experienceInput").value;
           updateExpChar();
           document.getElementById("p2SubmitBtn").disabled =
-            S.experience.trim().length < 100;
+            S.experience.trim().length < 60;
+          debouncedSave();
         };
 
         function updateExpChar() {
           var len = (S.experience || "").trim().length;
           var hint = document.getElementById("expCharHint");
-          hint.textContent = len + " / 100字";
-          hint.className = "char-hint" + (len >= 100 ? " ok" : "");
+          hint.textContent = len + " / 60字";
+          hint.className = "char-hint" + (len >= 60 ? " ok" : "");
         }
+
+        window.fillScenario = function (type) {
+          var starters = {
+            course:
+              "在一门课（或一个项目）里，我做了一件让自己觉得很有成就感的事：\n",
+            club: "在社团（或兼职）里，有一次经历让我感到特别充实：\n",
+            help: "有一次，我帮助了某人（或某个团队），那件事让我觉得自己很有价值：\n",
+          };
+          var ta = document.getElementById("experienceInput");
+          if (!ta) return;
+          if (!ta.value.trim()) {
+            ta.value = starters[type];
+            ta.dispatchEvent(new Event("input"));
+            ta.focus();
+            ta.setSelectionRange(ta.value.length, ta.value.length);
+          }
+        };
 
         window.toggleAngles = function () {
           var grid = document.getElementById("anglesGrid");
@@ -2182,6 +2567,7 @@
               .value.trim();
           }
           checkPhase3Ready();
+          debouncedSave();
         };
 
         function checkPhase3Ready() {
@@ -2236,8 +2622,10 @@
           var card = document.getElementById("aiCard3confirm");
           var body = document.getElementById("aiBody3confirm");
           card.style.display = "block";
-          card.classList.remove("revealed"); void card.offsetWidth; card.classList.add("revealed");
-          var prompt =
+          card.classList.remove("revealed");
+          void card.offsetWidth;
+          card.classList.add("revealed");
+          var confirmPrompt =
             "用户从价值观关键词中选择了：" +
             S.selectedKeywords.join("、") +
             "\n结合前两轮分析：\n- 喜欢的事：" +
@@ -2245,10 +2633,70 @@
             "\n- 擅长的才能：" +
             S.phase2AI +
             "\n\n请用1-2句话确认用户的价值观底座，让用户感到「被看见」。不超过60字。";
-          S.phase3AI = await streamAI(prompt, body);
+          S.phase3AI = await streamAI(confirmPrompt, body);
+
+          // Generate 3 value statement candidates for user to choose from
+          var stmtCard = document.getElementById("aiValueStmtCard");
+          var stmtBody = document.getElementById("aiValueStmtBody");
+          stmtCard.style.display = "block";
+          stmtCard.classList.remove("revealed");
+          void stmtCard.offsetWidth;
+          stmtCard.classList.add("revealed");
+          var stmtPrompt =
+            "根据以下用户信息，生成3个「价值主张」候选句，帮用户表达自己想通过什么、帮助谁、实现什么：\n" +
+            "- 喜欢的事：" +
+            S.phase1AI +
+            "\n" +
+            "- 擅长的才能：" +
+            S.phase2AI +
+            "\n" +
+            "- 价值观关键词：" +
+            S.selectedKeywords.join("、") +
+            "\n\n" +
+            "要求：只输出3句话，每句单独一行，不加序号和其他文字，每句20-40字。\n" +
+            "示例：我想帮迷茫的大学生，通过系统化的自我探索，找到真正属于自己的方向。";
+          var stmtRaw = await streamAI(stmtPrompt, stmtBody);
+          S.valueStatements = stmtRaw
+            .split("\n")
+            .map(function (s) {
+              return s.trim();
+            })
+            .filter(function (s) {
+              return s.length > 5;
+            })
+            .slice(0, 3);
+          var container = document.getElementById("valueStmtCandidates");
+          container.innerHTML = S.valueStatements
+            .map(function (stmt, i) {
+              return (
+                '<button class="value-stmt-btn" onclick="window.selectValueStmt(' +
+                i +
+                ')">' +
+                stmt +
+                "</button>"
+              );
+            })
+            .join("");
+          stmtBody.textContent = "点击下方最接近你想法的一句话：";
+
           document.getElementById("outwardBox").style.display = "block";
           document.getElementById("p3NextBtn").style.display = "block";
+          saveProgress();
         }
+
+        window.selectValueStmt = function (i) {
+          var ta = document.getElementById("outwardInput");
+          if (ta && S.valueStatements[i] !== undefined) {
+            ta.value = S.valueStatements[i];
+            S.outwardValue = ta.value;
+            ta.dispatchEvent(new Event("input"));
+          }
+          document
+            .querySelectorAll(".value-stmt-btn")
+            .forEach(function (b, idx) {
+              b.classList.toggle("selected", idx === i);
+            });
+        };
 
         window.onOutwardInput = function () {
           var val = document.getElementById("outwardInput").value.trim();
@@ -2257,6 +2705,7 @@
 
         window.goPhase4 = function () {
           S.outwardValue = document.getElementById("outwardInput").value.trim();
+          clearSavedProgress(); // completed the full flow — clear stale save
           showPhase(4);
           callAI(4);
         };
@@ -2266,7 +2715,7 @@
         // ══════════════════════════════════════════════
         function parseCandidates(raw) {
           var results = [];
-          var candidateSection = raw.split("【变现路径】")[0];
+          var candidateSection = raw.split("【验证行动】")[0];
           var blocks = candidateSection
             .split(/【候选[一二三]】/)
             .filter(function (b) {
@@ -2285,10 +2734,10 @@
               });
             }
           }
-          var monoSection = raw.split("【变现路径】")[1] || "";
-          var lowMatch = monoSection.match(/低杠杆[^：]*：(.+)/);
-          var midMatch = monoSection.match(/中杠杆[^：]*：(.+)/);
-          var highMatch = monoSection.match(/高杠杆[^：]*：(.+)/);
+          var monoSection = raw.split("【验证行动】")[1] || "";
+          var lowMatch = monoSection.match(/今天就能做[^：]*：(.+)/);
+          var midMatch = monoSection.match(/本周可以尝试[^：]*：(.+)/);
+          var highMatch = monoSection.match(/这个月可以探索[^：]*：(.+)/);
           S.monetization = {
             low: lowMatch ? lowMatch[1].trim() : "",
             mid: midMatch ? midMatch[1].trim() : "",
@@ -2345,7 +2794,11 @@
           document.getElementById("p4Results").style.display = "none";
           document.getElementById("p4Final").style.display = "block";
           var fb = document.querySelector("#p4Final .final-box");
-          if (fb) { fb.classList.remove("entering"); void fb.offsetWidth; fb.classList.add("entering"); }
+          if (fb) {
+            fb.classList.remove("entering");
+            void fb.offsetWidth;
+            fb.classList.add("entering");
+          }
           renderMonetization();
         };
 
