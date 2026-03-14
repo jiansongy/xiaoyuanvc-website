@@ -6,7 +6,7 @@
     <title>学生创业自检 | 校园VC</title>
     <meta
       name="description"
-      content="AI 从可行性、市场潜力、护城河、校园执行力、AI赋能潜力 5 个维度评估你的创业想法，给出专业评估和改进建议。"
+      content="AI 从痛点真实度、初始突破口、快速验证力、团队-赛道匹配、演进空间 5 个维度评估你的创业想法，给出专业评估和改进建议。"
     />
     <link rel="icon" href="../assets/favicon.ico" />
     <link
@@ -17,7 +17,7 @@
     <meta property="og:title" content="学生创业自检 | 校园VC" />
     <meta
       property="og:description"
-      content="AI 从 5 个维度评估你的创业想法，给出专业评估和改进建议。"
+      content="AI 从 5 个维度评估你的创业想法，给出专业评估和改进建议。基于殷建松《从零到英雄》方法论。"
     />
     <meta
       property="og:url"
@@ -36,7 +36,7 @@
           "@context": "https://schema.org",
           "@type": "WebApplication",
           "name": "学生创业自检",
-          "description": "AI 从可行性、市场潜力、护城河、校园执行力、AI赋能潜力 5 个维度评估你的创业想法，给出专业评估和改进建议。",
+          "description": "AI 从痛点真实度、初始突破口、快速验证力、团队-赛道匹配、演进空间 5 个维度评估你的创业想法，给出专业评估和改进建议。基于殷建松《从零到英雄》方法论。",
           "url": "https://xiaoyuanvc.com/resources/rate-your-idea.html",
           "applicationCategory": "EducationalApplication",
           "inLanguage": "zh-CN",
@@ -55,7 +55,7 @@
               "name": "如何评估一个创业想法是否靠谱？",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "可以从五个维度评估：可行性（技术和资源是否可达）、市场潜力（市场规模和增长空间）、护城河（竞争壁垒）、校园执行力（大学生团队是否能落地）、AI赋能潜力（能否借助AI提效）。综合评分越高，想法越值得投入。"
+                "text": "可以从五个维度评估：痛点真实度（用户痛点是否经过真实验证）、初始突破口（能否快速触达第一批用户）、快速验证力（能否低成本跑出验证闭环）、团队-赛道匹配（团队背景是否适合做这件事）、演进空间（能否从校园走向更大市场）。基于殷建松《从零到英雄》方法论。综合评分越高，想法越值得投入。"
               }
             },
             {
@@ -71,7 +71,7 @@
               "name": "学生创业自检的五个维度是什么？",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "五个自检维度分别是：可行性（能不能做出来）、市场潜力（市场有多大）、护城河（别人抄得动吗）、校园执行力（大学生团队能否落地）、AI赋能潜力（AI能帮多少忙）。每个维度1-10分，总分50分。"
+                "text": "五个自检维度分别是：痛点真实度（用户有没有真实证据）、初始突破口（第一批种子用户在哪）、快速验证力（本学期能否低成本验证）、团队-赛道匹配（团队为什么适合做这件事）、演进空间（项目能否从校园走向更大市场）。每个维度1-10分，总分50分。"
               }
             }
           ]
@@ -753,28 +753,33 @@
               />
               <h2>学生创业自检</h2>
               <p>AI 从 5 个维度评估你的创业想法，给出专业评价和改进建议</p>
+              <p
+                style="font-size: 0.78rem; color: var(--gray); margin-top: 4px"
+              >
+                方法论基于殷建松《从零到英雄》
+              </p>
             </div>
             <div class="intro-body">
               <div class="steps-grid">
                 <div class="s-preview">
                   <div class="sn">维度 1</div>
-                  <div class="st">可行性</div>
+                  <div class="st">痛点真实度</div>
                 </div>
                 <div class="s-preview">
                   <div class="sn">维度 2</div>
-                  <div class="st">市场潜力</div>
+                  <div class="st">初始突破口</div>
                 </div>
                 <div class="s-preview">
                   <div class="sn">维度 3</div>
-                  <div class="st">护城河</div>
+                  <div class="st">快速验证力</div>
                 </div>
                 <div class="s-preview">
                   <div class="sn">维度 4</div>
-                  <div class="st">校园执行力</div>
+                  <div class="st">团队-赛道匹配</div>
                 </div>
                 <div class="s-preview">
                   <div class="sn">维度 5</div>
-                  <div class="st">AI 赋能潜力</div>
+                  <div class="st">演进空间</div>
                 </div>
                 <div class="s-preview">
                   <div class="sn">综合</div>
@@ -859,6 +864,19 @@
                 <option value="已有用户">已有用户</option>
                 <option value="已有收入">已有收入</option>
               </select>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <span class="q-num">5</span>
+                你和团队的背景或特长是什么？（选填）
+              </label>
+              <input
+                type="text"
+                id="fTeam"
+                placeholder="例如：计算机专业 + 有运营经验，或 独立创始人、设计背景"
+                oninput="window.saveState()"
+              />
             </div>
 
             <div class="form-group">
@@ -1026,10 +1044,12 @@
           const a = document.getElementById("fAudience");
           const m = document.getElementById("fModel");
           const st = document.getElementById("fStage");
+          const tm = document.getElementById("fTeam");
           if (p) S.product = p.value;
           if (a) S.audience = a.value;
           if (m) S.model = m.value;
           if (st) S.stage = st.value;
+          if (tm) S.team = tm.value;
         }
 
         function syncStateToFields() {
@@ -1037,10 +1057,12 @@
           const a = document.getElementById("fAudience");
           const m = document.getElementById("fModel");
           const st = document.getElementById("fStage");
+          const tm = document.getElementById("fTeam");
           if (p) p.value = S.product || "";
           if (a) a.value = S.audience || "";
           if (m) m.value = S.model || "";
           if (st) st.value = S.stage || "只有想法";
+          if (tm) tm.value = S.team || "";
           updateModeUI();
           updateCharHint();
           updateScoreBtn();
@@ -1172,11 +1194,11 @@
             ai: 5,
           };
           const map = [
-            [/可行性[:：]\s*(\d+)/, "feasibility"],
-            [/市场潜力[:：]\s*(\d+)/, "market"],
-            [/护城河[:：]\s*(\d+)/, "moat"],
-            [/校园执行力[:：]\s*(\d+)/, "execution"],
-            [/AI赋能潜力[:：]\s*(\d+)/, "ai"],
+            [/痛点真实度[:：]\s*(\d+)/, "problem"],
+            [/初始突破口[:：]\s*(\d+)/, "wedge"],
+            [/快速验证力[:：]\s*(\d+)/, "mvp"],
+            [/团队[—\-]?赛道匹配[:：]\s*(\d+)/, "team"],
+            [/演进空间[:：]\s*(\d+)/, "growth"],
           ];
           const scores = {};
           for (const k in defaults) {
@@ -1250,47 +1272,34 @@
             (S.model || "未指定") +
             "\n- 当前阶段：" +
             S.stage +
+            "\n- 团队背景：" +
+            (S.team || "未填写，请根据赛道特性合理推断") +
             "\n\n请严格按以下格式回复，先给出评分，再给出分析：\n\n" +
             "[SCORES]\n" +
-            "可行性: X\n" +
-            "市场潜力: X\n" +
-            "护城河: X\n" +
-            "校园执行力: X\n" +
-            "AI赋能潜力: X\n" +
+            "痛点真实度: X\n" +
+            "初始突破口: X\n" +
+            "快速验证力: X\n" +
+            "团队-赛道匹配: X\n" +
+            "演进空间: X\n" +
             "[/SCORES]\n\n" +
             "[ANALYSIS]\n" +
-            "## 总体评价\n" +
-            "（2-3 句总结）\n\n" +
-            "## 各维度详解\n" +
-            "### 可行性（X/10）\n" +
-            "（为什么给这个分，1-2 句）\n\n" +
-            "### 市场潜力（X/10）\n" +
-            "（为什么给这个分，1-2 句）\n\n" +
-            "### 护城河（X/10）\n" +
-            "（为什么给这个分，1-2 句）\n\n" +
-            "### 校园执行力（X/10）\n" +
-            "（为什么给这个分，1-2 句）\n\n" +
-            "### AI赋能潜力（X/10）\n" +
-            "（为什么给这个分，1-2 句）\n\n" +
-            "## 三条改进建议\n" +
+            "## 整体评价\n" +
+            "（3-4 句综合判断，直接说清这个想法最大的机会和最大的风险）\n\n" +
+            "## 下一步建议\n" +
             "1. ...\n" +
             "2. ...\n" +
-            "3. ...\n\n" +
-            "## 本周行动清单\n" +
-            "- ...\n" +
-            "- ...\n" +
-            "- ...\n" +
+            "3. ...\n" +
             "[/ANALYSIS]"
           );
         }
 
         /* ── Render Score Bars ── */
         const DIM_LABELS = [
-          { key: "feasibility", label: "可行性" },
-          { key: "market", label: "市场潜力" },
-          { key: "moat", label: "护城河" },
-          { key: "execution", label: "校园执行力" },
-          { key: "ai", label: "AI赋能潜力" },
+          { key: "problem", label: "痛点真实度" },
+          { key: "wedge", label: "初始突破口" },
+          { key: "mvp", label: "快速验证力" },
+          { key: "team", label: "团队-赛道匹配" },
+          { key: "growth", label: "演进空间" },
         ];
 
         function renderScoreBars(scores, rationales) {
@@ -1358,11 +1367,11 @@
         function extractRationales(text) {
           const rationales = {};
           const dimPatterns = [
-            { key: "feasibility", re: /### 可行性[^]*?(?=###|## |$)/i },
-            { key: "market", re: /### 市场潜力[^]*?(?=###|## |$)/i },
-            { key: "moat", re: /### 护城河[^]*?(?=###|## |$)/i },
-            { key: "execution", re: /### 校园执行力[^]*?(?=###|## |$)/i },
-            { key: "ai", re: /### AI赋能潜力[^]*?(?=###|## |$)/i },
+            { key: "problem", re: /### 痛点真实度[^]*?(?=###|## |$)/i },
+            { key: "wedge", re: /### 初始突破口[^]*?(?=###|## |$)/i },
+            { key: "mvp", re: /### 快速验证力[^]*?(?=###|## |$)/i },
+            { key: "team", re: /### 团队[—\-]?赛道匹配[^]*?(?=###|## |$)/i },
+            { key: "growth", re: /### 演进空间[^]*?(?=###|## |$)/i },
           ];
           for (let i = 0; i < dimPatterns.length; i++) {
             const m = text.match(dimPatterns[i].re);
