@@ -963,11 +963,27 @@
             <p>定位 = 一群特定的人 + 你能帮他们解决的特定问题</p>
           </div>
           <div class="card-body">
-            <div class="formula">公式：人 + 问题 = 定位（Niche）</div>
+            <div class="formula">公式：人 + 烦恼/需求 = 定位（Niche）</div>
             <p class="step-title">Step 1：初始灵感</p>
             <p class="step-desc">
-              在进入任何框架之前，先写下你脑中已有的想法——哪怕只是一种直觉。格式：我能帮
-              [谁] 解决 [什么问题]
+              先写下你观察到的需求，不用先证明自己能解决。<br />
+              格式：<strong>我想关注 [哪类人] 的 [什么烦恼/需求]</strong>
+            </p>
+            <p
+              style="
+                font-size: 12px;
+                color: var(--gray);
+                margin-top: 6px;
+                line-height: 1.7;
+              "
+            >
+              💡 参考思路（写你自己的，不要照抄）：<br />
+              · 我想关注<em>备考考研的同学</em>的<em>复习计划总混乱</em><br />
+              · 我想关注<em>想接私活的设计系同学</em>的<em>不知道如何定价</em
+              ><br />
+              · 我想关注<em>刚入学的大一新生</em>的<em
+                >不知道怎么做社团竞选PPT</em
+              >
             </p>
             <div id="ideasBox"></div>
             <button class="add-btn" onclick="addIdea()">
@@ -987,8 +1003,19 @@
           <div class="card-body">
             <p class="step-title">Step 2：发现你的技能</p>
             <p class="step-desc">
-              技能是你能做到、对别人可能有价值的任何事情。列出 10-15
-              个，不要过滤——即使你觉得「人人都会」，也写下来。
+              技能是你能做到、对别人可能有价值的任何事情。先列 5-8
+              个，不要过滤——即使你觉得「人人都会」，也写下来。想到了随时补充。
+            </p>
+            <p
+              style="
+                font-size: 12px;
+                color: var(--gray);
+                margin-top: 6px;
+                line-height: 1.7;
+              "
+            >
+              💡
+              参考：写作、做PPT、英语翻译、剪视频、Excel整理数据、摄影、烘焙、健身规划、代码调试、帮人做笔记……只要你会、别人觉得有用就算
             </p>
             <div
               class="tags-wrap"
@@ -1002,7 +1029,7 @@
               />
             </div>
             <p style="font-size: 12px; color: var(--gray); margin-top: 8px">
-              已添加 <strong id="sCount">0</strong> 个 · 目标 10-15 个
+              已添加 <strong id="sCount">0</strong> 个 · 目标 5-8 个（想到再补）
             </p>
           </div>
         </div>
@@ -1076,7 +1103,7 @@
             <button class="add-btn" onclick="addScore()">＋ 添加一行</button>
             <div class="mt-14">
               <button class="btn btn-ai" id="aiBtn4" onclick="callAI(4)">
-                🤖 获取 AI 教练点评
+                🤖 获取 AI 教练点评（可选）
               </button>
             </div>
             <div class="ai-card" id="aiCard4">
@@ -1099,10 +1126,14 @@
             <p class="step-desc">
               对每个提示，先从上面步骤的定位中选出<strong>最符合的一个</strong>，再写下你的理由（可选）。
             </p>
+            <p style="font-size: 12px; color: var(--gray); margin-top: 6px">
+              💡
+              做到一半想补定位想法？随时点左下角「上一步」退回添加，再回来继续。
+            </p>
             <div id="s5Body"></div>
             <div class="mt-14">
               <button class="btn btn-ai" id="aiBtn5" onclick="callAI(5)">
-                🤖 AI 帮我综合分析，找出最适合的定位
+                🤖 AI 帮我综合分析，找出最适合的定位（可选）
               </button>
             </div>
             <div class="ai-card" id="aiCard5">
@@ -1128,7 +1159,7 @@
             <div class="medal-grid" id="medalGrid"></div>
             <div class="mt-14">
               <button class="btn btn-ai" id="aiBtn6" onclick="callAI(6)">
-                🔬 AI 为我的 Top 3 生成验证方案
+                🔬 AI 为我的 Top 3 生成验证方案（可选）
               </button>
             </div>
             <div class="ai-card" id="aiCard6">
@@ -1417,7 +1448,7 @@
             const row = document.createElement("div");
             row.className = "idea-row";
             row.innerHTML = `
-        <input type="text" value="${esc(v)}" placeholder="我能帮 [谁] 解决 [什么问题]"
+        <input type="text" value="${esc(v)}" placeholder="我想关注 [哪类人] 的 [什么烦恼/需求]…"
           oninput="S.ideas[${i}]=this.value" style="flex:1">
         ${i > 0 ? `<button class="btn btn-ghost" onclick="delIdea(${i})">✕</button>` : ""}
       `;
@@ -1635,14 +1666,14 @@
             {
               id: "r1",
               icon: "🕐",
-              title: "2年测试",
-              desc: "想象你将在某个定位深耕 2-3 年。哪个让你最兴奋？哪个让你觉得「对，我能看见自己做这件事」？",
+              title: "热情测试",
+              desc: "如果连续两年都赚不到什么钱，纯粹当做兴趣爱好，你还愿意坚持做哪个？——这个测试帮你找到真正在乎的方向。",
             },
             {
               id: "r2",
               icon: "🎯",
-              title: "不败测试",
-              desc: "如果你知道自己不会失败——成功是保证的——你会选哪个定位？（排除恐惧，让你看见自己真正想要的。）",
+              title: "大胆假设测试",
+              desc: "大胆假设：如果你选了这个方向，100% 不会失败。你最想做哪个？暂时放下「我行不行」的担心，让你看见内心真正想要的。",
             },
             {
               id: "r3",
@@ -1653,8 +1684,8 @@
             {
               id: "r4",
               icon: "😬",
-              title: "恐惧检查",
-              desc: "哪个定位让你有点害怕——是那种好的害怕？有时候让我们略感紧张的事，恰恰是我们最在乎的。什么在吸引着你？",
+              title: "心虚检查",
+              desc: "面对这个方向的潜在用户或同行，你会不会严重缺乏底气、很担心自己露馅？如果某个定位让你觉得「我根本没资格做这个」，就给它扣分。",
             },
             {
               id: "r5",
@@ -1671,8 +1702,8 @@
             {
               id: "r7",
               icon: "🏆",
-              title: "可信度测试",
-              desc: "在哪个定位，人们会真的相信你能帮到他们？你在哪里有证明、经验或故事给你足够的可信度？",
+              title: "信任度测试",
+              desc: "为什么别人会愿意先找你聊、先让你帮忙？不需要你是专家——你上过的课、做过的作业/比赛/社团、帮过同学朋友的经历，这些都算。哪个方向你最有底气说「你可以先试试找我」？",
             },
           ];
 
@@ -1941,7 +1972,7 @@
             save();
           } catch (err) {
             body.innerHTML = renderMd(
-              `⚠️ 出错了：${esc(normalizeAIError(err))}\n\n请稍后重试；如果持续失败，优先检查代理服务是否可访问。`,
+              `⚠️ AI 暂时连不上，没关系——不用 AI 也能完成练习。\n\n可以稍后再试，或直接跳过继续下一步。\n\n*（技术原因：${esc(normalizeAIError(err))}）*`,
             );
           }
 
@@ -2027,13 +2058,13 @@ ${rows || "（暂无评分数据）"}
 
           // Step 5: 7 tests (pick + reason)
           const testDefs = [
-            { name: "2年测试（是否愿意深耕2年）", id: "r1" },
-            { name: "不败测试（若收入减半是否继续）", id: "r2" },
+            { name: "热情测试（无收入也愿坚持哪个）", id: "r1" },
+            { name: "大胆假设测试（100%不失败会选哪个）", id: "r2" },
             { name: "镜子测试（对这个方向是否真诚）", id: "r3" },
-            { name: "恐惧检查（最担心什么）", id: "r4" },
+            { name: "心虚检查（哪个方向最担心自己不够格）", id: "r4" },
             { name: "生存测试（能否养活自己）", id: "r5" },
             { name: "人脉测试（认识这领域的人吗）", id: "r6" },
-            { name: "可信度测试（凭什么让人信任你）", id: "r7" },
+            { name: "信任度测试（别人为什么先找你）", id: "r7" },
           ];
           const entries = testDefs
             .filter(({ id }) => r[id + "_pick"]?.trim() || r[id]?.trim())
