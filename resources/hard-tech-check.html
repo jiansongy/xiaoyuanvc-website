@@ -863,7 +863,6 @@
             type="text"
             id="customer_input"
             placeholder="例：汽车零部件制造厂的设备管理部门"
-            oninput="S.customer = this.value; updateNextButtonState()"
           />
         </div>
         <div>
@@ -1327,9 +1326,7 @@
           var nextBtn = document.getElementById("nextBtn");
           if (!nextBtn) return;
           nextBtn.disabled =
-            S.step >= 1 &&
-            S.step <= 6 &&
-            !!getStepValidationMessage(S.step);
+            S.step >= 1 && S.step <= 6 && !!getStepValidationMessage(S.step);
         }
 
         // ── NAVIGATION ──
@@ -1544,6 +1541,14 @@
             if (inp) inp.checked = true;
           }
         }
+
+        // ── STEP 4: customer input binding ──
+        document
+          .getElementById("customer_input")
+          .addEventListener("input", function () {
+            S.customer = this.value;
+            updateNextButtonState();
+          });
 
         // radio-card click binding (delegated)
         document.addEventListener("click", function (e) {
