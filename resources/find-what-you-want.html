@@ -1405,6 +1405,13 @@
           <p>价值观是你做选择的底层逻辑，决定你做什么事会持续有动力。</p>
         </div>
 
+        <p
+          id="p3Hint"
+          style="font-size: 12px; color: var(--gray); margin-bottom: 12px"
+        >
+          请至少填写 3 个问题（每个不少于 10 字）
+        </p>
+
         <div class="question-card">
           <label
             ><span class="q-num">1</span
@@ -1416,6 +1423,7 @@
             placeholder="例如：我最尊敬马斯克，因为他愿意用全部资产赌一个几乎不可能实现的愿景…"
             oninput="window.onValueInput()"
           ></textarea>
+          <div class="char-hint" id="v1CharHint">0 / 10字</div>
         </div>
         <div class="question-card">
           <label
@@ -1428,6 +1436,7 @@
             placeholder="例如：小时候家里穷，所以我特别在意财务安全感，同时也很珍视努力能改变命运这件事…"
             oninput="window.onValueInput()"
           ></textarea>
+          <div class="char-hint" id="v2CharHint">0 / 10字</div>
         </div>
         <div class="question-card">
           <label
@@ -1440,6 +1449,7 @@
             placeholder="例如：我很不满教育系统只教学生应试，却从不教他们如何思考和创造…"
             oninput="window.onValueInput()"
           ></textarea>
+          <div class="char-hint" id="v3CharHint">0 / 10字</div>
         </div>
         <div class="question-card">
           <label><span class="q-num">4</span>身边朋友觉得你最看重什么？</label>
@@ -1449,6 +1459,7 @@
             placeholder="例如：朋友说我对「公平」很执着，也很重视说到做到…"
             oninput="window.onValueInput()"
           ></textarea>
+          <div class="char-hint" id="v4CharHint">0 / 10字</div>
         </div>
         <div class="question-card">
           <label
@@ -1461,6 +1472,7 @@
             placeholder="例如：我会告诉自己别那么在意别人的眼光，提前多探索、多试错，比等到想清楚再行动要好得多……"
             oninput="window.onValueInput()"
           ></textarea>
+          <div class="char-hint" id="v5CharHint">0 / 10字</div>
         </div>
 
         <button
@@ -1471,17 +1483,6 @@
         >
           AI 提炼我的价值观关键词 →
         </button>
-        <p
-          id="p3Hint"
-          style="
-            font-size: 12px;
-            color: var(--gray);
-            text-align: center;
-            margin-top: 8px;
-          "
-        >
-          请至少填写 3 个问题（每个不少于 10 字）
-        </p>
 
         <!-- 关键词选择区（AI生成后显示） -->
         <div id="keywordsSection" style="display: none">
@@ -1612,6 +1613,17 @@
             </div>
           </div>
 
+          <button
+            class="btn-secondary"
+            onclick="window.reselectResult()"
+            style="
+              margin-bottom: 8px;
+              background: var(--bg-card);
+              color: var(--purple);
+            "
+          >
+            ← 重新选择其他方向
+          </button>
           <button class="btn-secondary" onclick="window.copyResult()">
             📋 复制结果
           </button>
@@ -2562,9 +2574,14 @@
 
         window.onValueInput = function () {
           for (var i = 1; i <= 5; i++) {
-            S.valueAnswers[i - 1] = document
-              .getElementById("v" + i)
-              .value.trim();
+            var val = document.getElementById("v" + i).value.trim();
+            S.valueAnswers[i - 1] = val;
+            var charHint = document.getElementById("v" + i + "CharHint");
+            if (charHint) {
+              charHint.textContent = val.length + " / 10字";
+              charHint.className =
+                "char-hint" + (val.length >= 10 ? " ok" : "");
+            }
           }
           checkPhase3Ready();
           debouncedSave();
@@ -2800,6 +2817,11 @@
             fb.classList.add("entering");
           }
           renderMonetization();
+        };
+
+        window.reselectResult = function () {
+          document.getElementById("p4Final").style.display = "none";
+          document.getElementById("p4Results").style.display = "block";
         };
 
         window.copyResult = function () {

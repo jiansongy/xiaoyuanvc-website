@@ -325,6 +325,26 @@
         color: white;
       }
 
+      /* Difficulty grouping */
+      .diff-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .diff-group-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--gray);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding-left: 2px;
+      }
+      .diff-group-chips {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
       /* Difficulty multi-select (same chip style, max 2) */
       .difficulty-limit-note {
         font-size: 12px;
@@ -1019,71 +1039,95 @@
         <p class="step-title">Step 6：当前最大困难</p>
         <p class="step-desc">选择你现在最卡的问题（最多选 2 个）</p>
         <p class="difficulty-limit-note" id="diffLimit">已选 0 / 2</p>
-        <div class="chip-grid" id="diffChips" style="flex-direction: column">
-          <button
-            class="chip"
-            style="text-align: left"
-            data-v="no_market"
-            onclick="toggleDiff(this)"
-          >
-            找不到精准落地的应用场景，不知道从哪个市场切入
-          </button>
-          <button
-            class="chip"
-            style="text-align: left"
-            data-v="ip_unclear"
-            onclick="toggleDiff(this)"
-          >
-            科研产权归属或师生股权分配不清晰
-          </button>
-          <button
-            class="chip"
-            style="text-align: left"
-            data-v="no_biz"
-            onclick="toggleDiff(this)"
-          >
-            团队缺少懂商业或懂产业的合伙人
-          </button>
-          <button
-            class="chip"
-            style="text-align: left"
-            data-v="no_prototype"
-            onclick="toggleDiff(this)"
-          >
-            技术可以做出来，但没有可演示或可验证的原型
-          </button>
-          <button
-            class="chip"
-            style="text-align: left"
-            data-v="no_pilot"
-            onclick="toggleDiff(this)"
-          >
-            缺少试点场景、合作单位或第一个付费客户
-          </button>
-          <button
-            class="chip"
-            style="text-align: left"
-            data-v="no_path"
-            onclick="toggleDiff(this)"
-          >
-            不确定该卖产品、做项目还是做技术转让
-          </button>
-          <button
-            class="chip"
-            style="text-align: left"
-            data-v="no_customer_interview"
-            onclick="toggleDiff(this)"
-          >
-            从未访谈过真实客户
-          </button>
-          <button
-            class="chip"
-            style="text-align: left"
-            data-v="low_willingness"
-            onclick="toggleDiff(this)"
-          >
-            客户表示不愿付费或没有明确预算
-          </button>
+        <div
+          class="chip-grid"
+          id="diffChips"
+          style="flex-direction: column; gap: 14px"
+        >
+          <div class="diff-group">
+            <div class="diff-group-label">市场判断</div>
+            <div class="diff-group-chips">
+              <button
+                class="chip"
+                style="text-align: left"
+                data-v="no_market"
+                onclick="toggleDiff(this)"
+              >
+                找不到精准落地的应用场景，不知道从哪个市场切入
+              </button>
+              <button
+                class="chip"
+                style="text-align: left"
+                data-v="no_customer_interview"
+                onclick="toggleDiff(this)"
+              >
+                从未访谈过真实客户
+              </button>
+            </div>
+          </div>
+          <div class="diff-group">
+            <div class="diff-group-label">商业化路径</div>
+            <div class="diff-group-chips">
+              <button
+                class="chip"
+                style="text-align: left"
+                data-v="no_path"
+                onclick="toggleDiff(this)"
+              >
+                不确定该卖产品、做项目还是做技术转让
+              </button>
+              <button
+                class="chip"
+                style="text-align: left"
+                data-v="low_willingness"
+                onclick="toggleDiff(this)"
+              >
+                客户表示不愿付费或没有明确预算
+              </button>
+            </div>
+          </div>
+          <div class="diff-group">
+            <div class="diff-group-label">产品验证</div>
+            <div class="diff-group-chips">
+              <button
+                class="chip"
+                style="text-align: left"
+                data-v="no_prototype"
+                onclick="toggleDiff(this)"
+              >
+                技术可以做出来，但没有可演示或可验证的原型
+              </button>
+              <button
+                class="chip"
+                style="text-align: left"
+                data-v="no_pilot"
+                onclick="toggleDiff(this)"
+              >
+                缺少试点场景、合作单位或第一个付费客户
+              </button>
+            </div>
+          </div>
+          <div class="diff-group">
+            <div class="diff-group-label">组织与产权</div>
+            <div class="diff-group-chips">
+              <button
+                class="chip"
+                style="text-align: left"
+                data-v="ip_unclear"
+                onclick="toggleDiff(this)"
+              >
+                科研产权归属或师生股权分配不清晰
+              </button>
+              <button
+                class="chip"
+                style="text-align: left"
+                data-v="no_biz"
+                onclick="toggleDiff(this)"
+              >
+                团队缺少懂商业或懂产业的合伙人
+              </button>
+            </div>
+          </div>
         </div>
         <div style="margin-top: 14px">
           <div style="font-size: 13px; color: var(--gray); margin-bottom: 6px">

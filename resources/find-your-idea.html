@@ -1188,6 +1188,13 @@
                 flex-wrap: wrap;
               "
             >
+              <button
+                class="btn btn-outline"
+                id="copyAnalysisBtn"
+                onclick="window.copyAnalysis()"
+              >
+                📋 复制分析
+              </button>
               <button class="btn btn-primary" onclick="window.print()">
                 🖨️ 打印保存
               </button>
@@ -2164,6 +2171,42 @@ ${rows || "（暂无填写）"}
           if (!confirm("确认重新开始？所有填写内容将被清空。")) return;
           localStorage.removeItem(SK);
           location.reload();
+        };
+
+        window.copyAnalysis = function () {
+          var parts = [];
+          var summary = document.getElementById("summaryBox");
+          if (summary && summary.textContent.trim()) {
+            parts.push("【你的 Top 3 定位】\n" + summary.textContent.trim());
+          }
+          var aiBody = document.getElementById("aiBody6");
+          if (aiBody && aiBody.textContent.trim()) {
+            parts.push("【AI 验证方案】\n" + aiBody.textContent.trim());
+          }
+          if (!parts.length) return;
+          var text =
+            parts.join("\n\n") +
+            "\n\n—— 通过「发现你的创业方向」互动工具 @ 校园VC";
+          var btn = document.getElementById("copyAnalysisBtn");
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function () {
+              btn.textContent = "✅ 已复制！";
+              setTimeout(function () {
+                btn.textContent = "📋 复制分析";
+              }, 2000);
+            });
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            btn.textContent = "✅ 已复制！";
+            setTimeout(function () {
+              btn.textContent = "📋 复制分析";
+            }, 2000);
+          }
         };
 
         window.goHome = function () {
