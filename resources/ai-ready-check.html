@@ -1545,7 +1545,19 @@
           var next = S.step + dir;
           if (next < 1) return;
           if (next > 3) {
-            // Transition to S4 analysis
+            // If report already exists, go straight to S5
+            if (S.report) {
+              S.step = 5;
+              save();
+              showStep(5);
+              renderS5();
+              window.scrollTo({
+                top: 0,
+                behavior: prefersReducedMotion ? "auto" : "smooth",
+              });
+              return;
+            }
+            // Otherwise run S4 analysis
             S.step = 4;
             save();
             showStep(4);
@@ -2190,7 +2202,7 @@
               2,
             ) +
             "\n\n" +
-            "## 约束\n- top3 必须恰好 3 个\n- hours_saved 用区间\n- method 要具体可执行\n- boundaries 至少 2 条\n- difficulty 如实标注\n- 用中文\n- 只输出 JSON，不要 ```json ``` 包裹"
+            "## 约束\n- top3 必须恰好 3 个\n- hours_saved 用区间\n- method 要具体可执行\n- matrix 的 now/plan/later 必须且仅包含 top3 中的 3 个场景名（scene），按影响和门槛分类\n- boundaries 至少 2 条\n- difficulty 如实标注\n- 用中文\n- 只输出 JSON，不要 ```json ``` 包裹"
           );
         }
 
@@ -2548,6 +2560,7 @@
             '<div class="report-actions">' +
             '<button class="btn btn-primary" id="printBtn">&#x1F5A8;&#xFE0F; 打印 / 导出 PDF</button>' +
             '<button class="btn btn-outline" id="shareBtn">&#x1F4CB; 复制分享文字</button>' +
+            '<button class="btn btn-outline" id="reviewBtn">&#x1F440; 查看我的回答</button>' +
             '<button class="btn btn-ghost" id="restartBtn">&#x1F504; 重新诊断</button>' +
             "</div>"
           );
@@ -2580,6 +2593,16 @@
               } else {
                 window.alert("浏览器不支持自动复制。");
               }
+            });
+          }
+
+          var reviewBtn = $("reviewBtn");
+          if (reviewBtn) {
+            reviewBtn.addEventListener("click", function () {
+              S.step = 3;
+              save();
+              showStep(3);
+              render(3);
             });
           }
 
