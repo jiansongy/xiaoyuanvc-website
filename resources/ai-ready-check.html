@@ -6,15 +6,15 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <title>AI 就绪度诊断 | 校园VC</title>
+    <title>AI 小面试 | 校园VC</title>
     <meta
       name="description"
-      content="6 分钟完成 AI 就绪度诊断，获得专属 AI 提效方案，找到你的业务最该交给 AI 的环节。"
+      content="6 分钟 AI 小面试，找出你的业务最该交给 AI 的环节，获得专属提效方案。"
     />
-    <meta property="og:title" content="AI 就绪度诊断 | 校园VC" />
+    <meta property="og:title" content="AI 小面试 | 校园VC" />
     <meta
       property="og:description"
-      content="6 分钟完成 AI 就绪度诊断，获得专属 AI 提效方案，找到你的业务最该交给 AI 的环节。"
+      content="6 分钟 AI 小面试，找出你的业务最该交给 AI 的环节，获得专属提效方案。"
     />
     <meta property="og:type" content="website" />
     <meta
@@ -47,11 +47,11 @@
         {
           "@context": "https://schema.org",
           "@type": "WebApplication",
-          "name": "AI 就绪度诊断",
+          "name": "AI 小面试",
           "url": "https://xiaoyuanvc.com/resources/ai-ready-check.html",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Web",
-          "description": "6 分钟完成 AI 就绪度诊断，获得专属 AI 提效方案，找到你的业务最该交给 AI 的环节。",
+          "description": "6 分钟 AI 小面试，找出你的业务最该交给 AI 的环节，获得专属提效方案。",
           "offers": {
             "@type": "Offer",
             "price": "0",
@@ -85,10 +85,10 @@
             },
             {
               "@type": "Question",
-              "name": "AI 就绪度诊断是怎么做的？",
+              "name": "AI 小面试怎么做？",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "通过 3 步问答了解你的身份、日常耗时任务和痛点，AI 会分析哪些环节最适合交给 AI，并给出 Top 3 提效机会和 7 天行动计划。"
+                "text": "通过 3 步问答了解你的身份、日常耗时任务和痛点，AI 帮你分析哪些环节最适合交给它，并给出 Top 3 提效机会和 7 天行动计划。"
               }
             },
             {
@@ -276,6 +276,48 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+      }
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .s-preview {
+        background: var(--blue-light);
+        border-radius: var(--radius-sm);
+        padding: 10px 8px;
+        text-align: center;
+      }
+      .s-preview .sn {
+        font-size: 11px;
+        color: var(--blue);
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .s-preview .st {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--navy);
+      }
+      .intro-framework {
+        background: var(--blue-light);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 12px;
+        color: var(--navy);
+      }
+      .intro-framework strong {
+        color: var(--blue-dark);
+      }
+      .intro-meta {
+        font-size: 13px;
+        color: var(--gray);
+        text-align: center;
+        padding: 8px 0 16px;
+        line-height: 1.6;
       }
 
       /* Card */
@@ -996,8 +1038,8 @@
     <header class="header">
       <span style="font-size: 22px">&#x1F916;</span>
       <div style="flex: 1">
-        <h1 style="margin-bottom: 0">AI 就绪度诊断</h1>
-        <p>找到你的业务最该交给 AI 的环节</p>
+        <h1 style="margin-bottom: 0">AI 小面试</h1>
+        <p>找出你的业务最该交给 AI 的环节</p>
       </div>
       <a
         href="https://xiaoyuanvc.com"
@@ -1035,33 +1077,56 @@
       <div class="p-dots" id="pDots"></div>
     </div>
 
-    <!-- S0: Welcome -->
+    <!-- S0: Cover -->
     <div class="screen on" id="s0">
       <div class="intro-wrap">
         <div class="intro-card">
           <div class="intro-head">
             <span class="hero-emoji">&#x1F916;</span>
-            <h2>你的业务，哪些环节最该交给 AI？</h2>
-            <p>6 分钟完成诊断，获得专属 AI 提效方案</p>
+            <h2>AI 小面试</h2>
+            <p>用 6 分钟回答几个问题，AI 帮你找出业务中最该交给它的环节</p>
           </div>
           <div class="intro-body">
-            <ul class="intro-bullets">
-              <li>&#x1F3AF; 适合创业者、小商家、自由职业者</li>
-              <li>&#x1F4CA; 获得 Top 3 AI 提效机会 + 7 天行动计划</li>
-              <li>&#x1F193; 完全免费，无需注册</li>
-            </ul>
-            <div class="intro-buttons">
-              <button class="btn btn-primary btn-full" id="startBtn">
-                开始诊断 &#x2192;
-              </button>
-              <button
-                class="btn btn-ghost btn-full"
-                id="resumeBtn"
-                style="display: none"
-              >
-                继续上次
-              </button>
+            <div class="steps-grid">
+              <div class="s-preview">
+                <div class="sn">Step 1</div>
+                <div class="st">角色校准</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 2</div>
+                <div class="st">时间盘点</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 3</div>
+                <div class="st">痛点深挖</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 4</div>
+                <div class="st">AI 分析</div>
+              </div>
+              <div class="s-preview">
+                <div class="sn">Step 5</div>
+                <div class="st">诊断报告</div>
+              </div>
             </div>
+            <div class="intro-framework">
+              <strong>你将获得：</strong>Top 3 AI 提效机会（"AI 员工"卡片）+
+              优先级矩阵 + 7 天行动计划 + AI 使用边界提醒
+            </div>
+            <div class="intro-meta">
+              &#x23F1; 约 6 分钟 &nbsp;|&nbsp; &#x1F916; 1 次 AI 诊断
+              &nbsp;|&nbsp; &#x1F4CA; 可打印 PDF
+            </div>
+            <button class="btn btn-primary btn-full" id="startBtn">
+              开始面试 &#x2192;
+            </button>
+            <button
+              class="btn btn-ghost btn-full"
+              id="resumeBtn"
+              style="display: none"
+            >
+              继续上次
+            </button>
           </div>
         </div>
       </div>
@@ -1169,7 +1234,7 @@
 
     <!-- S5: Report -->
     <div class="screen" id="s5">
-      <h1 class="print-title">AI 就绪度诊断报告 — 校园VC</h1>
+      <h1 class="print-title">AI 小面试 · 诊断报告 — 校园VC</h1>
       <div id="reportContent"></div>
     </div>
 
@@ -2516,7 +2581,7 @@
           if (!S.report) return S.reportRaw || "暂无报告。";
           var r = S.report;
           var lines = [];
-          lines.push("【AI 就绪度诊断报告】");
+          lines.push("【AI 小面试报告】");
           lines.push(r.summary || "");
           lines.push("");
           if (r.top3 && r.top3.length) {
@@ -2536,7 +2601,7 @@
             });
           }
           lines.push("");
-          lines.push("来自 校园VC AI 就绪度诊断");
+          lines.push("来自 校园VC AI 小面试");
           lines.push("https://xiaoyuanvc.com/resources/ai-ready-check.html");
           return lines.join("\n");
         }
