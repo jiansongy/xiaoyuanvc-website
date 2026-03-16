@@ -601,9 +601,13 @@
 
       /* Validation hint */
       .validation-hint {
-        font-size: 12px;
+        font-size: 13px;
         color: #ef4444;
-        margin-top: 6px;
+        margin-top: 8px;
+        padding: 8px 12px;
+        background: #fef2f2;
+        border-radius: var(--radius-sm);
+        text-align: center;
         display: none;
       }
       .validation-hint.show {
@@ -1197,6 +1201,7 @@
         <p class="step-title">你最希望 AI 先帮你解决什么？</p>
         <div class="pill-grid" id="aiGoalGrid"></div>
       </div>
+      <div class="validation-hint" id="s3Hint"></div>
     </div>
 
     <!-- S4: Analysis -->
@@ -1484,10 +1489,22 @@
         function updateNextButtonState() {
           var nextBtn = $("nextBtn");
           if (!nextBtn) return;
+          var msg = "";
           if (S.step >= 1 && S.step <= 3) {
-            nextBtn.disabled = !!getStepValidationMessage(S.step);
+            msg = getStepValidationMessage(S.step);
+            nextBtn.disabled = !!msg;
           } else {
             nextBtn.disabled = false;
+          }
+          // Show validation hint on S3
+          var s3Hint = $("s3Hint");
+          if (s3Hint) {
+            if (S.step === 3 && msg) {
+              s3Hint.textContent = msg;
+              s3Hint.classList.add("show");
+            } else {
+              s3Hint.classList.remove("show");
+            }
           }
         }
 
