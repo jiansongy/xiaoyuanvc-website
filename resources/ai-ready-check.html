@@ -2,7 +2,10 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>AI 就绪度诊断 | 校园VC</title>
     <meta
       name="description"
@@ -540,7 +543,7 @@
         right: 0;
         background: white;
         border-top: 1px solid #e5e7eb;
-        padding: 12px 20px;
+        padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px));
         justify-content: space-between;
         align-items: center;
         z-index: 20;
@@ -920,6 +923,19 @@
         }
       }
 
+      .report-warning {
+        padding: 12px 16px;
+        background: #fef9c3;
+        color: #854d0e;
+        border-radius: 8px;
+        font-size: 13px;
+        margin: 12px 0;
+      }
+
+      .print-title {
+        display: none;
+      }
+
       /* Print styles */
       @media print {
         .header,
@@ -936,6 +952,13 @@
         }
         #s5 {
           display: block !important;
+        }
+        .print-title {
+          display: block;
+          font-size: 20px;
+          font-weight: 700;
+          text-align: center;
+          margin: 20px 0;
         }
         .ba-content {
           display: block !important;
@@ -1146,6 +1169,7 @@
 
     <!-- S5: Report -->
     <div class="screen" id="s5">
+      <h1 class="print-title">AI 就绪度诊断报告 — 校园VC</h1>
       <div id="reportContent"></div>
     </div>
 
@@ -1161,6 +1185,10 @@
       (function () {
         "use strict";
 
+        var prefersReducedMotion =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
         // ── CONSTANTS ──
         var SK = "xyvc-ai-ready-v1";
         var TOTAL_STEPS = 5;
@@ -1168,7 +1196,7 @@
           "身份校准",
           "时间盘点",
           "痛点深挖",
-          "确认信息",
+          "AI 分析",
           "诊断报告",
         ];
 
@@ -1312,6 +1340,15 @@
                 p.step = 0;
               }
               S = Object.assign(S, p);
+              if (Array.isArray(S.tasks)) {
+                S.tasks = S.tasks.filter(function (t) {
+                  return t && typeof t.name === "string";
+                });
+              } else {
+                S.tasks = [];
+              }
+              if (!Array.isArray(S.top3)) S.top3 = [];
+              if (!Array.isArray(S.checkboxes)) S.checkboxes = [];
             }
           } catch (e) {
             try {
@@ -1431,14 +1468,14 @@
             save();
             showStep(4);
             runAnalysis();
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
             return;
           }
           S.step = next;
           save();
           showStep(next);
           render(next);
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
         }
 
         function showStep(n) {
@@ -1493,7 +1530,7 @@
             }
             updateNextButtonState();
           }
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
         }
 
         // ── RENDER DISPATCH ──
@@ -1691,6 +1728,21 @@
           if (!wrap || !list) return;
 
           var sorted = getSortedTasks();
+
+          // Show validation hint (must run before early return)
+          var hint = $("s2Hint");
+          if (hint) {
+            if (sorted.length === 0) {
+              hint.textContent = "请至少选择 3 个任务并标注耗时";
+              hint.classList.add("show");
+            } else if (sorted.length < 3) {
+              hint.textContent = "请至少选择 3 个任务并分配时间";
+              hint.classList.add("show");
+            } else {
+              hint.classList.remove("show");
+            }
+          }
+
           if (sorted.length === 0) {
             wrap.style.display = "none";
             return;
@@ -1711,12 +1763,6 @@
               esc(getTimeLabelByValue(task.time)) +
               "</span>";
             list.appendChild(item);
-          });
-
-          // Show validation hint
-          var hint = $("s2Hint");
-          if (hint) {
-            hint.classList.toggle("show", sorted.length < 3);
           }
         }
 
@@ -1889,7 +1935,14 @@
             typeof res.body.getReader !== "function"
           ) {
             var json = await res.json();
-            return json?.choices?.[0]?.message?.content || "";
+            var content =
+              (json &&
+                json.choices &&
+                json.choices[0] &&
+                json.choices[0].message &&
+                json.choices[0].message.content) ||
+              "";
+            return content;
           }
           var reader = res.body.getReader();
           var decoder = new TextDecoder();
@@ -1910,8 +1963,14 @@
               )
                 continue;
               try {
+                var parsed = JSON.parse(line.slice(6));
                 var delta =
-                  JSON.parse(line.slice(6)).choices?.[0]?.delta?.content || "";
+                  (parsed &&
+                    parsed.choices &&
+                    parsed.choices[0] &&
+                    parsed.choices[0].delta &&
+                    parsed.choices[0].delta.content) ||
+                  "";
                 if (delta) full += delta;
               } catch (e) {
                 /* ignore malformed SSE */
@@ -1982,12 +2041,16 @@
             role: S.role,
             industry: S.industry,
             teamSize: S.teamSize,
-            tasks: S.tasks.map(function (t) {
-              return {
-                name: t.name,
-                daily_time: getTimeLabelByValue(t.time) || "",
-              };
-            }),
+            tasks: S.tasks
+              .filter(function (t) {
+                return t.time > 0;
+              })
+              .map(function (t) {
+                return {
+                  name: t.name,
+                  daily_time: getTimeLabelByValue(t.time) || "",
+                };
+              }),
             top3: S.top3.map(function (t) {
               return {
                 name: t.name,
@@ -2099,7 +2162,7 @@
                     save();
                     showStep(5);
                     renderS5();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
                   } catch (e) {
                     // Store raw text as fallback
                     S.report = null;
@@ -2108,7 +2171,7 @@
                     save();
                     showStep(5);
                     renderS5();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
                   }
                 })
                 .catch(function (err) {
@@ -2213,6 +2276,12 @@
                 esc(item.method || "") +
                 "</div></div>";
             });
+            if (r.top3.length < 3) {
+              html +=
+                '<div class="report-warning">&#x26A0;&#xFE0F; AI 分析结果不完整（仅返回 ' +
+                r.top3.length +
+                ' 条建议），建议点击"重新诊断"获取完整方案。</div>';
+            }
           }
 
           // Section 3: Priority Matrix
