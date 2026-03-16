@@ -620,6 +620,295 @@
         }
       }
 
+      /* S4: Analysis Screen */
+      .analysis-container {
+        text-align: center;
+        padding: 40px 20px;
+      }
+      .analysis-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 32px;
+        color: var(--navy);
+      }
+      .analysis-steps {
+        max-width: 320px;
+        margin: 0 auto;
+        text-align: left;
+      }
+      .analysis-step {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        opacity: 0.25;
+        transition: opacity 0.4s;
+        font-size: 14px;
+        border-radius: var(--radius-sm);
+        margin: 4px 0;
+      }
+      .analysis-step.active {
+        opacity: 1;
+        background: var(--blue-light);
+      }
+      .analysis-step.done {
+        opacity: 0.5;
+      }
+      .analysis-step .analysis-icon {
+        font-size: 22px;
+        flex-shrink: 0;
+      }
+      .analysis-step .analysis-check {
+        display: none;
+        color: var(--blue);
+        font-weight: 700;
+        margin-left: auto;
+      }
+      .analysis-step.done .analysis-check {
+        display: inline;
+      }
+      .analysis-error {
+        margin-top: 24px;
+        padding: 16px;
+        background: #fef2f2;
+        border-radius: var(--radius-sm);
+      }
+      .error-text {
+        color: #991b1b;
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+
+      /* S5: Report Screen */
+      .report-summary {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        border-radius: var(--radius);
+        padding: 20px;
+        text-align: center;
+      }
+      .summary-icon {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+      .summary-text {
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .ai-employee-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin: 16px 0;
+        box-shadow: var(--shadow);
+        border-left: 4px solid var(--blue);
+      }
+      .employee-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .employee-emoji {
+        font-size: 32px;
+        flex-shrink: 0;
+      }
+      .employee-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .employee-name {
+        font-size: 16px;
+        font-weight: 700;
+        word-break: break-word;
+      }
+      .employee-scene {
+        font-size: 13px;
+        color: var(--gray);
+      }
+      .difficulty-badge {
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 10px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .difficulty-badge.green {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-badge.yellow {
+        background: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-badge.red {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .employee-why {
+        font-size: 13px;
+        color: var(--gray);
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+      .employee-hours {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        color: var(--blue-dark);
+        font-weight: 600;
+        margin: 8px 0;
+      }
+      .ba-toggle {
+        display: flex;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+        margin: 10px 0 8px;
+      }
+      .ba-btn {
+        flex: 1;
+        padding: 6px;
+        text-align: center;
+        font-size: 13px;
+        border: none;
+        background: var(--white);
+        cursor: pointer;
+        transition: all 0.15s;
+        font-family: inherit;
+      }
+      .ba-btn.active {
+        background: var(--blue);
+        color: white;
+      }
+      .ba-content {
+        display: none;
+        padding: 10px;
+        background: #f9fafb;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      .ba-content.on {
+        display: block;
+      }
+      .employee-method {
+        font-size: 13px;
+        line-height: 1.6;
+        margin-top: 10px;
+        padding: 10px;
+        background: var(--blue-light);
+        border-radius: var(--radius-sm);
+      }
+
+      .report-section {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin: 16px 0;
+        box-shadow: var(--shadow-sm);
+      }
+      .section-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--navy);
+      }
+      .matrix-row {
+        margin: 12px 0;
+        padding: 12px;
+        border-radius: var(--radius-sm);
+        background: #f9fafb;
+      }
+      .matrix-badge {
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .matrix-hint {
+        font-size: 12px;
+        color: var(--gray);
+        margin-left: 8px;
+      }
+      .matrix-row ul {
+        margin: 8px 0 0 20px;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+
+      .action-phase {
+        margin: 12px 0;
+      }
+      .phase-label {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--blue-dark);
+        margin-bottom: 8px;
+        padding: 6px 12px;
+        background: var(--blue-light);
+        border-radius: var(--radius-sm);
+        display: inline-block;
+      }
+      .phase-items {
+        padding-left: 4px;
+      }
+      .phase-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 6px 0;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      .phase-item input[type="checkbox"] {
+        margin-top: 4px;
+        accent-color: var(--blue);
+        flex-shrink: 0;
+      }
+      .phase-item.checked label {
+        text-decoration: line-through;
+        color: var(--gray);
+      }
+
+      .boundaries {
+        border-left: 4px solid #f59e0b;
+      }
+      .boundary-tip {
+        margin-top: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #92400e;
+        padding: 8px 12px;
+        background: #fef9c3;
+        border-radius: var(--radius-sm);
+      }
+
+      .report-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 24px 0;
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--blue);
+        border: 1.5px solid var(--blue);
+      }
+      .btn-outline:hover {
+        background: var(--blue-light);
+      }
+
+      .report-fallback {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin: 16px 0;
+        box-shadow: var(--shadow-sm);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
       /* Responsive */
       @media (max-width: 375px) {
         .intro-head h2 {
@@ -628,6 +917,53 @@
         .task-time-item {
           flex-direction: column;
           align-items: flex-start;
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        .header,
+        .progress-wrap,
+        .nav-bar,
+        .report-actions,
+        .ba-toggle {
+          display: none !important;
+        }
+        .screen {
+          display: none !important;
+          max-width: 100%;
+          padding: 0 !important;
+        }
+        #s5 {
+          display: block !important;
+        }
+        .ba-content {
+          display: block !important;
+        }
+        .ba-content.ba-before::before {
+          content: "改造前：";
+          font-weight: 700;
+        }
+        .ba-content.ba-after::before {
+          content: "改造后：";
+          font-weight: 700;
+        }
+        .ai-employee-card {
+          break-inside: avoid;
+          box-shadow: none;
+          border: 1px solid #e5e7eb;
+        }
+        .report-section {
+          break-inside: avoid;
+          box-shadow: none;
+        }
+        body {
+          background: white;
+        }
+        .report-summary {
+          background: #2563eb !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
         }
       }
     </style>
@@ -775,11 +1111,43 @@
       </div>
     </div>
 
-    <!-- S4: placeholder for future -->
-    <div class="screen" id="s4"></div>
+    <!-- S4: Analysis -->
+    <div class="screen" id="s4">
+      <div class="analysis-container">
+        <h2 class="analysis-title">正在为你生成 AI 诊断方案</h2>
+        <div class="analysis-steps" id="analysisSteps">
+          <div class="analysis-step" data-step="0">
+            <span class="analysis-icon">&#x1F4CB;</span>
+            <span class="analysis-text">正在梳理你的工作流...</span>
+            <span class="analysis-check">&#x2713;</span>
+          </div>
+          <div class="analysis-step" data-step="1">
+            <span class="analysis-icon">&#x1F50D;</span>
+            <span class="analysis-text">正在识别高频重复环节...</span>
+            <span class="analysis-check">&#x2713;</span>
+          </div>
+          <div class="analysis-step" data-step="2">
+            <span class="analysis-icon">&#x1F916;</span>
+            <span class="analysis-text">正在匹配适合的 AI 用法...</span>
+            <span class="analysis-check">&#x2713;</span>
+          </div>
+          <div class="analysis-step" data-step="3">
+            <span class="analysis-icon">&#x2728;</span>
+            <span class="analysis-text">正在生成你的专属方案...</span>
+            <span class="analysis-check">&#x2713;</span>
+          </div>
+        </div>
+        <div class="analysis-error" id="analysisError" style="display: none">
+          <p class="error-text" id="errorText"></p>
+          <button class="btn btn-primary" id="retryBtn">重新分析</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- S5: placeholder for future -->
-    <div class="screen" id="s5"></div>
+    <!-- S5: Report -->
+    <div class="screen" id="s5">
+      <div id="reportContent"></div>
+    </div>
 
     <!-- Nav bar -->
     <div class="nav-bar" id="navBar">
@@ -1031,6 +1399,11 @@
 
         function resumeApp() {
           var step = S.step;
+          if (step === 5 && S.report) {
+            showStep(5);
+            renderS5();
+            return;
+          }
           if (step < 1 || step > 3) step = 1;
           showStep(step);
           render(step);
@@ -1053,7 +1426,12 @@
           var next = S.step + dir;
           if (next < 1) return;
           if (next > 3) {
-            /* S4/S5 not yet implemented */
+            // Transition to S4 analysis
+            S.step = 4;
+            save();
+            showStep(4);
+            runAnalysis();
+            window.scrollTo({ top: 0, behavior: "smooth" });
             return;
           }
           S.step = next;
@@ -1123,6 +1501,7 @@
           if (n === 1) renderS1();
           else if (n === 2) renderS2();
           else if (n === 3) renderS3();
+          else if (n === 5) renderS5();
         }
 
         // ── S1: Role Calibration ──
@@ -1466,6 +1845,618 @@
           updateNextButtonState();
         }
 
+        // ── AI PROXY ──
+        var AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
+        var AI_PROXY_CANDIDATES = [
+          window.__XYVC_AI_PROXY__,
+          new URLSearchParams(window.location.search).get("ai_proxy"),
+          (function () {
+            try {
+              return localStorage.getItem(AI_PROXY_HINT_KEY);
+            } catch (e) {
+              return "";
+            }
+          })(),
+          "https://api.xiaoyuanvc.com/api/glm-proxy",
+          /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
+            ? window.location.origin.replace(/\/$/, "") + "/api/glm-proxy"
+            : "",
+        ].filter(Boolean);
+
+        function normalizeAIError(err) {
+          var msg = (err && err.message) || String(err) || "未知错误";
+          if (/Failed to fetch/i.test(msg))
+            return "AI 服务连接失败，请检查网络或代理配置。";
+          if (/AbortError/i.test(msg)) return "AI 服务响应超时，请稍后重试。";
+          return msg;
+        }
+
+        function rememberWorkingProxy(url) {
+          try {
+            localStorage.setItem(AI_PROXY_HINT_KEY, url);
+          } catch (e) {
+            /* localStorage may be unavailable */
+          }
+        }
+
+        async function readAIResponse(res) {
+          var wantsStream =
+            typeof ReadableStream !== "undefined" &&
+            typeof TextDecoder !== "undefined";
+          if (
+            !wantsStream ||
+            !res.body ||
+            typeof res.body.getReader !== "function"
+          ) {
+            var json = await res.json();
+            return json?.choices?.[0]?.message?.content || "";
+          }
+          var reader = res.body.getReader();
+          var decoder = new TextDecoder();
+          var full = "",
+            pending = "";
+          while (true) {
+            var chunk = await reader.read();
+            if (chunk.done) break;
+            pending += decoder.decode(chunk.value, { stream: true });
+            var lines = pending.split("\n");
+            pending = lines.pop() || "";
+            for (var li = 0; li < lines.length; li++) {
+              var line = lines[li].trim();
+              if (
+                !line ||
+                !line.startsWith("data: ") ||
+                line === "data: [DONE]"
+              )
+                continue;
+              try {
+                var delta =
+                  JSON.parse(line.slice(6)).choices?.[0]?.delta?.content || "";
+                if (delta) full += delta;
+              } catch (e) {
+                /* ignore malformed SSE */
+              }
+            }
+          }
+          return full;
+        }
+
+        async function fetchAIRaw(prompt) {
+          var wantsStream = typeof ReadableStream !== "undefined";
+          var lastErr = null;
+          for (var ei = 0; ei < AI_PROXY_CANDIDATES.length; ei++) {
+            var endpoint = AI_PROXY_CANDIDATES[ei];
+            var ctrl =
+              typeof AbortController !== "undefined"
+                ? new AbortController()
+                : null;
+            var timer = ctrl
+              ? setTimeout(function () {
+                  ctrl.abort();
+                }, 30000)
+              : null;
+            try {
+              var res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  model: "glm-4-flash",
+                  messages: [{ role: "user", content: prompt }],
+                  stream: wantsStream,
+                }),
+                signal: ctrl ? ctrl.signal : undefined,
+              });
+              if (timer) clearTimeout(timer);
+              if (!res.ok) throw new Error("API 错误 " + res.status);
+              var text = await readAIResponse(res);
+              rememberWorkingProxy(endpoint);
+              return text;
+            } catch (err) {
+              if (timer) clearTimeout(timer);
+              lastErr = err;
+            }
+          }
+          throw lastErr || new Error("没有可用的 AI 代理");
+        }
+
+        function renderMd(text) {
+          return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(
+              /### (.+)/g,
+              '<h3 style="font-size:15px;font-weight:700;color:#1d4ed8;margin:16px 0 8px;padding-bottom:6px;border-bottom:2px solid #eff6ff">$1</h3>',
+            )
+            .replace(
+              /## (.+)/g,
+              '<h2 style="font-size:16px;font-weight:700;margin:12px 0 6px">$1</h2>',
+            )
+            .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+            .replace(/\n/g, "<br>");
+        }
+
+        // ── BUILD PROMPT ──
+        function buildPrompt() {
+          var context = {
+            role: S.role,
+            industry: S.industry,
+            teamSize: S.teamSize,
+            tasks: S.tasks.map(function (t) {
+              return {
+                name: t.name,
+                daily_time: getTimeLabelByValue(t.time) || "",
+              };
+            }),
+            top3: S.top3.map(function (t) {
+              return {
+                name: t.name,
+                frequency: t.freq,
+                pain_point: t.pain,
+                risk: t.risk,
+              };
+            }),
+            ai_goal: S.aiGoal,
+          };
+          return (
+            "你是一位 AI 提效顾问。根据以下创业者信息，给出 AI 提效诊断。\n\n" +
+            "## 用户信息\n" +
+            JSON.stringify(context, null, 2) +
+            "\n\n" +
+            "## 输出要求\n请严格按以下 JSON 格式输出，不要添加任何其他文字或 markdown 代码块标记：\n" +
+            JSON.stringify(
+              {
+                summary: "一句话总结（含预计每周节省X-Y小时）",
+                top3: [
+                  {
+                    name: "AI员工人设名（如：AI文案助手小蓝）",
+                    emoji: "一个emoji",
+                    scene: "应用场景",
+                    why: "为什么适合AI（1-2句）",
+                    hours_saved: "每周约X-Y小时",
+                    before: "改造前做法（1-2句）",
+                    after: "改造后做法（1-2句）",
+                    method: "推荐做法（2-3句，可执行步骤）",
+                    difficulty: "低/中/高",
+                  },
+                ],
+                matrix: {
+                  now: ["高影响+低门槛任务"],
+                  plan: ["高影响+高门槛任务"],
+                  later: ["低影响任务"],
+                },
+                action_plan: {
+                  day1_2: "第1-2天行动（2-3步）",
+                  day3_4: "第3-4天行动（2-3步）",
+                  day5_7: "第5-7天行动（2-3步）",
+                },
+                boundaries: ["仍需人工判断的事项1", "事项2"],
+              },
+              null,
+              2,
+            ) +
+            "\n\n" +
+            "## 约束\n- top3 必须恰好 3 个\n- hours_saved 用区间\n- method 要具体可执行\n- boundaries 至少 2 条\n- difficulty 如实标注\n- 用中文\n- 只输出 JSON，不要 ```json ``` 包裹"
+          );
+        }
+
+        // ── S4: ANALYSIS ──
+        function runAnalysis() {
+          var steps = document.querySelectorAll(
+            "#analysisSteps .analysis-step",
+          );
+          var errorDiv = $("analysisError");
+          var errorText = $("errorText");
+          if (errorDiv) errorDiv.style.display = "none";
+
+          // Reset all steps
+          steps.forEach(function (s) {
+            s.classList.remove("active", "done");
+          });
+
+          var apiPromise = null;
+          var currentPhase = 0;
+
+          function activateStep(idx) {
+            steps.forEach(function (s, i) {
+              s.classList.remove("active");
+              if (i < idx) s.classList.add("done");
+            });
+            if (steps[idx]) steps[idx].classList.add("active");
+          }
+
+          function advancePhase() {
+            if (currentPhase < 3) {
+              activateStep(currentPhase);
+              currentPhase++;
+              // At step 2 (index 1 done, starting index 2), fire API call in parallel
+              if (currentPhase === 2) {
+                apiPromise = fetchAIRaw(buildPrompt());
+              }
+              setTimeout(advancePhase, 1500);
+            } else {
+              // Step 3 active, wait for API
+              activateStep(3);
+              apiPromise
+                .then(function (text) {
+                  // Mark step 3 done
+                  if (steps[3]) {
+                    steps[3].classList.remove("active");
+                    steps[3].classList.add("done");
+                  }
+                  // Parse JSON
+                  var cleaned = text.trim();
+                  // Strip markdown code fences if present
+                  cleaned = cleaned
+                    .replace(/^```(?:json)?\s*\n?/i, "")
+                    .replace(/\n?```\s*$/, "");
+                  cleaned = cleaned.trim();
+                  try {
+                    var report = JSON.parse(cleaned);
+                    S.report = report;
+                    S.reportRaw = text;
+                    S.step = 5;
+                    save();
+                    showStep(5);
+                    renderS5();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  } catch (e) {
+                    // Store raw text as fallback
+                    S.report = null;
+                    S.reportRaw = text;
+                    S.step = 5;
+                    save();
+                    showStep(5);
+                    renderS5();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                })
+                .catch(function (err) {
+                  if (errorDiv && errorText) {
+                    errorText.textContent = normalizeAIError(err);
+                    errorDiv.style.display = "block";
+                  }
+                });
+            }
+          }
+
+          // Start the animation sequence
+          activateStep(0);
+          currentPhase = 1;
+          // Fire API early at phase 2, but start timer for phase transitions
+          setTimeout(advancePhase, 1500);
+        }
+
+        // ── S5: REPORT ──
+        function renderS5() {
+          var container = $("reportContent");
+          if (!container) return;
+
+          // Fallback rendering if no structured report
+          if (!S.report && S.reportRaw) {
+            container.innerHTML =
+              '<div class="report-fallback">' +
+              renderMd(S.reportRaw) +
+              "</div>" +
+              buildActionBar();
+            bindReportActions();
+            return;
+          }
+          if (!S.report) {
+            container.innerHTML =
+              '<div class="report-fallback"><p>暂无报告数据。</p></div>' +
+              buildActionBar();
+            bindReportActions();
+            return;
+          }
+
+          var r = S.report;
+          var html = "";
+
+          // Section 1: Summary banner
+          html +=
+            '<div class="report-summary">' +
+            '<div class="summary-icon">&#x1F3AF;</div>' +
+            '<p class="summary-text">' +
+            esc(r.summary || "") +
+            "</p></div>";
+
+          // Section 2: Top 3 AI Employee Cards
+          if (r.top3 && r.top3.length) {
+            r.top3.forEach(function (item, idx) {
+              var diffClass = "green";
+              var diffLabel = "低门槛";
+              if (item.difficulty === "中") {
+                diffClass = "yellow";
+                diffLabel = "中等门槛";
+              } else if (item.difficulty === "高") {
+                diffClass = "red";
+                diffLabel = "高门槛";
+              }
+
+              html +=
+                '<div class="ai-employee-card">' +
+                '<div class="employee-header">' +
+                '<span class="employee-emoji">' +
+                esc(item.emoji || "") +
+                "</span>" +
+                '<div class="employee-info">' +
+                '<h3 class="employee-name">' +
+                esc(item.name || "") +
+                "</h3>" +
+                '<span class="employee-scene">场景：' +
+                esc(item.scene || "") +
+                "</span></div>" +
+                '<span class="difficulty-badge ' +
+                diffClass +
+                '">' +
+                diffLabel +
+                "</span></div>" +
+                '<p class="employee-why">' +
+                esc(item.why || "") +
+                "</p>" +
+                '<div class="employee-hours"><span>&#x23F1;&#xFE0F;</span><span>' +
+                esc(item.hours_saved || "") +
+                "</span></div>" +
+                '<div class="before-after">' +
+                '<div class="ba-toggle">' +
+                '<button class="ba-btn active" data-dir="before">改造前</button>' +
+                '<button class="ba-btn" data-dir="after">改造后</button>' +
+                "</div>" +
+                '<div class="ba-content ba-before on">' +
+                esc(item.before || "") +
+                "</div>" +
+                '<div class="ba-content ba-after">' +
+                esc(item.after || "") +
+                "</div></div>" +
+                '<div class="employee-method"><strong>&#x1F4A1; 推荐做法：</strong>' +
+                esc(item.method || "") +
+                "</div></div>";
+            });
+          }
+
+          // Section 3: Priority Matrix
+          if (r.matrix) {
+            html += '<div class="report-section">';
+            html += '<h3 class="section-title">&#x1F4CA; 优先级矩阵</h3>';
+
+            var matrixData = [
+              {
+                key: "now",
+                badge: "&#x1F680; 现在就做",
+                hint: "高影响 + 低门槛",
+              },
+              {
+                key: "plan",
+                badge: "&#x1F4CB; 排进计划",
+                hint: "高影响 + 高门槛",
+              },
+              {
+                key: "later",
+                badge: "&#x2615; 有空再做",
+                hint: "低影响",
+              },
+            ];
+            matrixData.forEach(function (m) {
+              var items = r.matrix[m.key] || [];
+              html +=
+                '<div class="matrix-row">' +
+                '<span class="matrix-badge">' +
+                m.badge +
+                "</span>" +
+                '<span class="matrix-hint">' +
+                m.hint +
+                "</span><ul>";
+              items.forEach(function (item) {
+                html += "<li>" + esc(item) + "</li>";
+              });
+              html += "</ul></div>";
+            });
+            html += "</div>";
+          }
+
+          // Section 4: 7-Day Action Plan
+          if (r.action_plan) {
+            html += '<div class="report-section">';
+            html += '<h3 class="section-title">&#x1F4C5; 7 天快速启动</h3>';
+
+            var phases = [
+              { key: "day1_2", label: "Day 1-2" },
+              { key: "day3_4", label: "Day 3-4" },
+              { key: "day5_7", label: "Day 5-7" },
+            ];
+            var cbIdx = 0;
+            phases.forEach(function (phase) {
+              var text = r.action_plan[phase.key] || "";
+              var items = splitActionItems(text);
+              html +=
+                '<div class="action-phase">' +
+                '<div class="phase-label">' +
+                phase.label +
+                '</div><div class="phase-items">';
+              items.forEach(function (item) {
+                var checked =
+                  S.checkboxes && S.checkboxes[cbIdx] ? true : false;
+                html +=
+                  '<div class="phase-item' +
+                  (checked ? " checked" : "") +
+                  '">' +
+                  '<input type="checkbox" data-cb="' +
+                  cbIdx +
+                  '"' +
+                  (checked ? " checked" : "") +
+                  " />" +
+                  "<label>" +
+                  esc(item) +
+                  "</label></div>";
+                cbIdx++;
+              });
+              html += "</div></div>";
+            });
+            html += "</div>";
+          }
+
+          // Section 5: AI Boundaries
+          if (r.boundaries && r.boundaries.length) {
+            html += '<div class="report-section boundaries">';
+            html +=
+              '<h3 class="section-title">&#x26A0;&#xFE0F; AI 使用边界</h3>';
+            html +=
+              '<p style="font-size:13px;color:var(--gray);margin-bottom:10px">以下事项仍需你亲自判断：</p><ul>';
+            r.boundaries.forEach(function (b) {
+              html +=
+                '<li style="font-size:13px;line-height:1.8;margin-left:20px">' +
+                esc(b) +
+                "</li>";
+            });
+            html += "</ul>";
+            html += '<p class="boundary-tip">原则：AI 做初稿，你把关质量。</p>';
+            html += "</div>";
+          }
+
+          // Section 6: Action Bar
+          html += buildActionBar();
+
+          // Attribution
+          html +=
+            '<div class="attribution"><strong>校园VC</strong> · 让每个创业者用好 AI</div>';
+
+          container.innerHTML = html;
+
+          // Bind before/after toggles
+          container.querySelectorAll(".ba-toggle").forEach(function (toggle) {
+            var card = toggle.closest(".before-after");
+            if (!card) return;
+            toggle.querySelectorAll(".ba-btn").forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                toggle.querySelectorAll(".ba-btn").forEach(function (b) {
+                  b.classList.remove("active");
+                });
+                btn.classList.add("active");
+                var dir = btn.getAttribute("data-dir");
+                card.querySelectorAll(".ba-content").forEach(function (c) {
+                  c.classList.remove("on");
+                });
+                var target = card.querySelector(".ba-" + dir);
+                if (target) target.classList.add("on");
+              });
+            });
+          });
+
+          // Bind checkboxes
+          container
+            .querySelectorAll('input[type="checkbox"][data-cb]')
+            .forEach(function (cb) {
+              cb.addEventListener("change", function () {
+                var idx = parseInt(cb.getAttribute("data-cb"), 10);
+                if (!S.checkboxes) S.checkboxes = [];
+                S.checkboxes[idx] = cb.checked;
+                var item = cb.closest(".phase-item");
+                if (item) {
+                  item.classList.toggle("checked", cb.checked);
+                }
+                save();
+              });
+            });
+
+          // Bind action buttons
+          bindReportActions();
+        }
+
+        function splitActionItems(text) {
+          if (!text) return [];
+          // Split by numbered patterns (1. 2. 3.), semicolons, or Chinese periods
+          var items = text
+            .split(/(?:\d+[.、]|；|。)/)
+            .map(function (s) {
+              return s.trim();
+            })
+            .filter(function (s) {
+              return s.length > 0;
+            });
+          return items.length > 0 ? items : [text];
+        }
+
+        function buildActionBar() {
+          return (
+            '<div class="report-actions">' +
+            '<button class="btn btn-primary" id="printBtn">&#x1F5A8;&#xFE0F; 打印 / 导出 PDF</button>' +
+            '<button class="btn btn-outline" id="shareBtn">&#x1F4CB; 复制分享文字</button>' +
+            '<button class="btn btn-ghost" id="restartBtn">&#x1F504; 重新诊断</button>' +
+            "</div>"
+          );
+        }
+
+        function bindReportActions() {
+          var printBtn = $("printBtn");
+          if (printBtn) {
+            printBtn.addEventListener("click", function () {
+              window.print();
+            });
+          }
+
+          var shareBtn = $("shareBtn");
+          if (shareBtn) {
+            shareBtn.addEventListener("click", function () {
+              var text = buildShareText();
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard
+                  .writeText(text)
+                  .then(function () {
+                    shareBtn.textContent = "已复制 \u2713";
+                    setTimeout(function () {
+                      shareBtn.innerHTML = "&#x1F4CB; 复制分享文字";
+                    }, 2000);
+                  })
+                  .catch(function () {
+                    window.alert("复制失败，请手动复制。");
+                  });
+              } else {
+                window.alert("浏览器不支持自动复制。");
+              }
+            });
+          }
+
+          var restartBtn = $("restartBtn");
+          if (restartBtn) {
+            restartBtn.addEventListener("click", function () {
+              if (window.confirm("确定要重新开始诊断吗？")) {
+                localStorage.removeItem(SK);
+                location.reload();
+              }
+            });
+          }
+        }
+
+        function buildShareText() {
+          if (!S.report) return S.reportRaw || "暂无报告。";
+          var r = S.report;
+          var lines = [];
+          lines.push("【AI 就绪度诊断报告】");
+          lines.push(r.summary || "");
+          lines.push("");
+          if (r.top3 && r.top3.length) {
+            lines.push("Top 3 AI 提效机会：");
+            r.top3.forEach(function (item, i) {
+              lines.push(
+                i +
+                  1 +
+                  ". " +
+                  (item.emoji || "") +
+                  " " +
+                  (item.name || "") +
+                  "（" +
+                  (item.hours_saved || "") +
+                  "）",
+              );
+            });
+          }
+          lines.push("");
+          lines.push("来自 校园VC AI 就绪度诊断");
+          lines.push("https://xiaoyuanvc.com/resources/ai-ready-check.html");
+          return lines.join("\n");
+        }
+
         // ── EVENT BINDINGS ──
         function bindEvents() {
           var startBtn = $("startBtn");
@@ -1510,6 +2501,13 @@
                 e.preventDefault();
                 addCustomTag();
               }
+            });
+          }
+
+          var retryBtn = $("retryBtn");
+          if (retryBtn) {
+            retryBtn.addEventListener("click", function () {
+              runAnalysis();
             });
           }
         }
