@@ -2026,40 +2026,91 @@
               "";
             return content;
           }
-          var reader = res.body.getReader();
-          var decoder = new TextDecoder();
-          var full = "",
-            pending = "";
-          while (true) {
-            var chunk = await reader.read();
-            if (chunk.done) break;
-            pending += decoder.decode(chunk.value, { stream: true });
-            var lines = pending.split("\n");
-            pending = lines.pop() || "";
-            for (var li = 0; li < lines.length; li++) {
-              var line = lines[li].trim();
-              if (
-                !line ||
-                !line.startsWith("data: ") ||
-                line === "data: [DONE]"
-              )
-                continue;
-              try {
-                var parsed = JSON.parse(line.slice(6));
-                var delta =
-                  (parsed &&
-                    parsed.choices &&
-                    parsed.choices[0] &&
-                    parsed.choices[0].delta &&
-                    parsed.choices[0].delta.content) ||
-                  "";
-                if (delta) full += delta;
-              } catch (e) {
-                /* ignore malformed SSE */
+          // Clone response before streaming so fallback can re-read body
+          var resClone;
+          try {
+            resClone = res.clone();
+          } catch (e) {
+            /* clone not supported, proceed without fallback */
+          }
+          try {
+            var reader = res.body.getReader();
+            var decoder = new TextDecoder();
+            var full = "",
+              pending = "";
+            while (true) {
+              var chunk = await reader.read();
+              if (chunk.done) break;
+              pending += decoder.decode(chunk.value, { stream: true });
+              var lines = pending.split("\n");
+              pending = lines.pop() || "";
+              for (var li = 0; li < lines.length; li++) {
+                var line = lines[li].trim();
+                if (
+                  !line ||
+                  !line.startsWith("data: ") ||
+                  line === "data: [DONE]"
+                )
+                  continue;
+                try {
+                  var parsed = JSON.parse(line.slice(6));
+                  var delta =
+                    (parsed &&
+                      parsed.choices &&
+                      parsed.choices[0] &&
+                      parsed.choices[0].delta &&
+                      parsed.choices[0].delta.content) ||
+                    "";
+                  if (delta) full += delta;
+                } catch (e) {
+                  /* ignore malformed SSE */
+                }
               }
             }
+            // Process any remaining data in pending buffer
+            if (pending.trim()) {
+              var lastLine = pending.trim();
+              if (
+                lastLine.startsWith("data: ") &&
+                lastLine !== "data: [DONE]"
+              ) {
+                try {
+                  var lastParsed = JSON.parse(lastLine.slice(6));
+                  var lastDelta =
+                    (lastParsed &&
+                      lastParsed.choices &&
+                      lastParsed.choices[0] &&
+                      lastParsed.choices[0].delta &&
+                      lastParsed.choices[0].delta.content) ||
+                    "";
+                  if (lastDelta) full += lastDelta;
+                } catch (e) {
+                  /* ignore */
+                }
+              }
+            }
+            if (full) return full;
+          } catch (streamErr) {
+            /* streaming failed, fall through to text fallback */
           }
-          return full;
+          // Fallback: re-read from cloned response (body locked after getReader)
+          if (resClone) {
+            var fallbackText = await resClone.text();
+            try {
+              var fallbackJson = JSON.parse(fallbackText);
+              return (
+                (fallbackJson &&
+                  fallbackJson.choices &&
+                  fallbackJson.choices[0] &&
+                  fallbackJson.choices[0].message &&
+                  fallbackJson.choices[0].message.content) ||
+                fallbackText
+              );
+            } catch (e) {
+              return fallbackText;
+            }
+          }
+          return "";
         }
 
         async function fetchAIRaw(prompt) {
@@ -2231,6 +2282,12 @@
                     .replace(/^```(?:json)?\s*\n?/i, "")
                     .replace(/\n?```\s*$/, "");
                   cleaned = cleaned.trim();
+                  // Extract JSON object if surrounded by extra text
+                  var jStart = cleaned.indexOf("{");
+                  var jEnd = cleaned.lastIndexOf("}");
+                  if (jStart >= 0 && jEnd > jStart) {
+                    cleaned = cleaned.slice(jStart, jEnd + 1);
+                  }
                   try {
                     var report = JSON.parse(cleaned);
                     S.report = report;
@@ -2512,20 +2569,39 @@
           if (shareBtn) {
             shareBtn.addEventListener("click", function () {
               var text = buildShareText();
+              function onCopyOk() {
+                shareBtn.textContent = "已复制 \u2713";
+                setTimeout(function () {
+                  shareBtn.innerHTML = "&#x1F4CB; 复制分享文字";
+                }, 2000);
+              }
+              function fallbackCopy() {
+                var ta = document.createElement("textarea");
+                ta.value = text;
+                ta.style.cssText =
+                  "position:fixed;left:-9999px;top:0;opacity:0";
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                try {
+                  var ok = document.execCommand("copy");
+                  if (ok) {
+                    onCopyOk();
+                  } else {
+                    window.alert("复制失败，请长按上方文字手动复制。");
+                  }
+                } catch (e) {
+                  window.alert("复制失败，请长按上方文字手动复制。");
+                }
+                document.body.removeChild(ta);
+              }
               if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard
                   .writeText(text)
-                  .then(function () {
-                    shareBtn.textContent = "已复制 \u2713";
-                    setTimeout(function () {
-                      shareBtn.innerHTML = "&#x1F4CB; 复制分享文字";
-                    }, 2000);
-                  })
-                  .catch(function () {
-                    window.alert("复制失败，请手动复制。");
-                  });
+                  .then(onCopyOk)
+                  .catch(fallbackCopy);
               } else {
-                window.alert("浏览器不支持自动复制。");
+                fallbackCopy();
               }
             });
           }
