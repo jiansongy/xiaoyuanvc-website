@@ -435,6 +435,47 @@
         font-weight: 600;
       }
 
+      /* Paste material (optional) */
+      .paste-section {
+        margin-top: 16px;
+      }
+      .paste-section summary {
+        font-size: 13px;
+        color: var(--gray);
+        cursor: pointer;
+        user-select: none;
+      }
+      .paste-section summary:hover {
+        color: var(--orange);
+      }
+      .paste-area {
+        width: 100%;
+        min-height: 100px;
+        max-height: 200px;
+        border: 1px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        font-size: 13px;
+        line-height: 1.6;
+        resize: vertical;
+        font-family: inherit;
+        margin-top: 8px;
+      }
+      .paste-area:focus {
+        outline: none;
+        border-color: var(--orange);
+        box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+      }
+      .paste-counter {
+        font-size: 12px;
+        color: var(--gray);
+        text-align: right;
+        margin-top: 4px;
+      }
+      .paste-counter.over {
+        color: #ef4444;
+      }
+
       /* Confirm screen */
       .confirm-row {
         display: flex;
@@ -754,6 +795,20 @@
           <span class="madlib-placeholder" id="prev_problem">【核心问题】</span
           >。
         </div>
+        <details class="paste-section">
+          <summary>有项目材料？粘贴关键段落（选填）</summary>
+          <textarea
+            class="paste-area"
+            id="pasteText"
+            maxlength="2000"
+            placeholder="如：技术路线、客户验证结果、团队背景等。只接受纯文本，不支持图表、视频和网页链接。建议 2000 字以内。"
+            oninput="updatePasteCount()"
+          ></textarea>
+          <div class="paste-counter" id="pasteCounter">0 / 2000 字</div>
+          <p style="font-size: 11px; color: var(--gray); margin-top: 4px">
+            粘贴内容将发送至 AI 分析，请勿包含敏感信息
+          </p>
+        </details>
       </div>
     </div>
 
@@ -1572,6 +1627,18 @@
         }
 
         // ── STEP 1: Mad-libs ──
+        window.updatePasteCount = function () {
+          var ta = document.getElementById("pasteText");
+          var counter = document.getElementById("pasteCounter");
+          if (!ta || !counter) return;
+          if (ta.value.length > 2000) {
+            ta.value = ta.value.slice(0, 2000);
+          }
+          var len = ta.value.length;
+          counter.textContent = len + " / 2000 字";
+          counter.className = "paste-counter" + (len >= 2000 ? " over" : "");
+        };
+
         window.updateMadlib = function () {
           S.ml_tech = document.getElementById("ml_tech").value;
           S.ml_scene = document.getElementById("ml_scene").value;
@@ -1762,6 +1829,11 @@
             ["主要困难", diffs],
             ["生态支持", ecoStr],
           ];
+          var pasteEl = document.getElementById("pasteText");
+          var pasteLen = pasteEl ? pasteEl.value.trim().length : 0;
+          if (pasteLen > 0) {
+            data.push(["补充材料", "已粘贴 " + pasteLen + " 字"]);
+          }
           rows.innerHTML = data
             .map(function (item) {
               return (
@@ -1951,6 +2023,17 @@
             ecoStr +
             "\n" +
             (S.diff_note ? "【补充说明】" + S.diff_note + "\n" : "") +
+            (function () {
+              var el = document.getElementById("pasteText");
+              var t = el ? el.value.trim() : "";
+              if (!t) return "";
+              return (
+                "\n【补充材料（用户粘贴，仅作辅助参考）】\n" +
+                "若与上方结构化表单冲突，以表单为准；忽略宣传语、模板表述、泛市场规模数据；只提取与技术成熟度、客户场景、验证进展、IP/团队相关的事实。\n" +
+                t +
+                "\n【材料结束】\n"
+              );
+            })() +
             "\n" +
             "=== 诊断推理步骤（必须在输出中体现）===\n" +
             "\n" +
