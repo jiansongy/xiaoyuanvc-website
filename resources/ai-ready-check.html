@@ -1,0 +1,1533 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 就绪度诊断 | 校园VC</title>
+    <meta
+      name="description"
+      content="6 分钟完成 AI 就绪度诊断，获得专属 AI 提效方案，找到你的业务最该交给 AI 的环节。"
+    />
+    <meta property="og:title" content="AI 就绪度诊断 | 校园VC" />
+    <meta
+      property="og:description"
+      content="6 分钟完成 AI 就绪度诊断，获得专属 AI 提效方案，找到你的业务最该交给 AI 的环节。"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://xiaoyuanvc.com/resources/ai-ready-check.html"
+    />
+    <link
+      rel="canonical"
+      href="https://xiaoyuanvc.com/resources/ai-ready-check.html"
+    />
+    <link rel="icon" href="../assets/favicon.ico" />
+
+    <!-- GA4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LP5EB2HW33");
+    </script>
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "AI 就绪度诊断",
+          "url": "https://xiaoyuanvc.com/resources/ai-ready-check.html",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": "6 分钟完成 AI 就绪度诊断，获得专属 AI 提效方案，找到你的业务最该交给 AI 的环节。",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "CNY"
+          },
+          "creator": {
+            "@type": "Organization",
+            "name": "校园VC",
+            "url": "https://xiaoyuanvc.com"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "AI 能帮创业者做什么？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "AI 可以帮创业者自动化重复性工作，如客户回复、数据分析、内容创作、订单处理等，让创业者把时间留给真正需要人判断的核心业务。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "小商家也能用 AI 吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "完全可以。现在很多 AI 工具零代码、免费或低成本，比如用 AI 写文案、自动回复客户咨询、生成商品图片，小商家一个人就能用起来。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "AI 就绪度诊断是怎么做的？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "通过 3 步问答了解你的身份、日常耗时任务和痛点，AI 会分析哪些环节最适合交给 AI，并给出 Top 3 提效机会和 7 天行动计划。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "诊断结果准确吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "诊断基于你填写的真实业务信息，结合 AI 对数百个行业场景的分析经验，给出个性化建议。信息越详细，建议越精准。"
+              }
+            }
+          ]
+        }
+      ]
+    </script>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --blue: #2563eb;
+        --blue-dark: #1d4ed8;
+        --blue-light: #eff6ff;
+        --blue-medium: #93c5fd;
+        --navy: #1a1a2e;
+        --gray: #6b7280;
+        --bg: #f0f4ff;
+        --white: #ffffff;
+        --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.07);
+        --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+      body {
+        font-family:
+          -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: var(--bg);
+        color: var(--navy);
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        background: var(--blue);
+        color: white;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+      }
+      .header h1 {
+        font-size: 17px;
+        font-weight: 700;
+      }
+      .header p {
+        font-size: 12px;
+        opacity: 0.85;
+        margin-top: 2px;
+      }
+
+      /* Progress bar */
+      .progress-wrap {
+        background: white;
+        padding: 12px 20px;
+        border-bottom: 1px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: none;
+      }
+      .progress-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .progress-info span {
+        font-size: 13px;
+      }
+      .progress-info .count {
+        color: var(--blue);
+        font-weight: 600;
+      }
+      .progress-bar {
+        height: 4px;
+        background: #e5e7eb;
+        border-radius: 2px;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--blue);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+      .p-dots {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+      }
+      .p-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        transition: all 0.2s;
+      }
+      .p-dot.done {
+        background: var(--blue-dark);
+      }
+      .p-dot.active {
+        background: var(--blue);
+        transform: scale(1.3);
+      }
+
+      /* Screen */
+      .screen {
+        display: none;
+        max-width: 560px;
+        margin: 0 auto;
+        padding: 20px 16px 100px;
+      }
+      .screen.on {
+        display: block;
+      }
+
+      /* Cover screen override */
+      #s0.screen {
+        padding: 20px 0 40px;
+        max-width: none;
+      }
+
+      /* Intro / Cover */
+      .intro-wrap {
+        padding: 0 16px 20px;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+      .intro-card {
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .intro-head {
+        background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+        color: white;
+        padding: 32px 24px 28px;
+        text-align: center;
+      }
+      .intro-head .hero-emoji {
+        font-size: 48px;
+        margin-bottom: 12px;
+        display: block;
+      }
+      .intro-head h2 {
+        font-size: 22px;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      .intro-head p {
+        font-size: 14px;
+        opacity: 0.9;
+        line-height: 1.6;
+      }
+      .intro-body {
+        padding: 20px 24px 28px;
+      }
+      .intro-bullets {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 24px;
+      }
+      .intro-bullets li {
+        font-size: 14px;
+        line-height: 1.8;
+        color: var(--navy);
+        padding: 6px 0;
+      }
+      .intro-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* Card */
+      .card {
+        background: white;
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 16px;
+      }
+      .step-title {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .step-desc {
+        font-size: 14px;
+        color: var(--gray);
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+
+      /* Inputs */
+      input[type="text"],
+      textarea {
+        width: 100%;
+        border: 1.5px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        padding: 10px 13px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--navy);
+        background: white;
+        transition: border-color 0.2s;
+      }
+      input[type="text"]:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--blue);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 72px;
+      }
+
+      /* Pill chips (single/multi select) */
+      .pill-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .pill {
+        padding: 7px 14px;
+        border-radius: 20px;
+        border: 1.5px solid #e5e7eb;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.15s;
+        background: white;
+        color: var(--navy);
+        user-select: none;
+      }
+      .pill:hover {
+        border-color: var(--blue);
+      }
+      .pill.on {
+        border-color: var(--blue);
+        background: var(--blue);
+        color: white;
+      }
+
+      /* Task tag cloud */
+      .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tag-pill {
+        padding: 7px 14px;
+        border-radius: 20px;
+        border: 1.5px solid #e5e7eb;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.15s;
+        background: white;
+        color: var(--navy);
+        user-select: none;
+      }
+      .tag-pill:hover {
+        border-color: var(--blue);
+      }
+      .tag-pill.on {
+        border-color: var(--blue);
+        background: var(--blue-light);
+        color: var(--blue-dark);
+        font-weight: 600;
+      }
+
+      /* Custom tag input row */
+      .custom-tag-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .custom-tag-row input {
+        flex: 1;
+      }
+
+      /* Time selector for selected tasks */
+      .task-time-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      .task-time-item:last-child {
+        border-bottom: none;
+      }
+      .task-time-name {
+        font-size: 14px;
+        font-weight: 600;
+        min-width: 100px;
+        flex-shrink: 0;
+      }
+      .time-pills {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .time-pill {
+        padding: 4px 10px;
+        border-radius: 14px;
+        border: 1.5px solid #e5e7eb;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.15s;
+        background: white;
+        color: var(--navy);
+        user-select: none;
+      }
+      .time-pill:hover {
+        border-color: var(--blue);
+      }
+      .time-pill.on {
+        border-color: var(--blue);
+        background: var(--blue);
+        color: white;
+      }
+
+      /* Time ranking */
+      .time-ranking {
+        background: var(--blue-light);
+        border-radius: var(--radius-sm);
+        padding: 14px 16px;
+        margin-top: 16px;
+      }
+      .time-ranking h4 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--blue-dark);
+      }
+      .rank-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        font-size: 13px;
+      }
+      .rank-item .rank-name {
+        color: var(--navy);
+      }
+      .rank-item .rank-time {
+        color: var(--blue);
+        font-weight: 600;
+      }
+
+      /* S3 top3 card */
+      .top3-card {
+        background: white;
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 16px;
+        position: relative;
+      }
+      .rank-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--blue);
+        color: white;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .top3-task-name {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 14px;
+        color: var(--navy);
+      }
+      .top3-q-label {
+        font-size: 13px;
+        color: var(--gray);
+        margin-bottom: 6px;
+        margin-top: 12px;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 11px 22px;
+        border-radius: var(--radius-sm);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.15s;
+        font-family: inherit;
+      }
+      .btn-primary {
+        background: var(--blue);
+        color: white;
+      }
+      .btn-primary:hover {
+        background: var(--blue-dark);
+      }
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--gray);
+        border: 1.5px solid #e5e7eb;
+      }
+      .btn-ghost:hover {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+      .btn-full {
+        width: 100%;
+      }
+      .btn-sm {
+        padding: 8px 16px;
+        font-size: 13px;
+      }
+
+      /* Nav bar */
+      .nav-bar {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-top: 1px solid #e5e7eb;
+        padding: 12px 20px;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 20;
+      }
+      .nav-bar-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 560px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      /* Validation hint */
+      .validation-hint {
+        font-size: 12px;
+        color: #ef4444;
+        margin-top: 6px;
+        display: none;
+      }
+      .validation-hint.show {
+        display: block;
+      }
+
+      /* Footer attribution */
+      .attribution {
+        text-align: center;
+        font-size: 12px;
+        color: var(--gray);
+        padding: 16px;
+        margin-top: 8px;
+      }
+      .attribution strong {
+        color: var(--blue-dark);
+      }
+
+      /* Pulse animation (for future AI loading) */
+      .pulse {
+        display: inline-flex;
+        gap: 4px;
+      }
+      .pulse span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--blue);
+        animation: pulse 1.2s infinite;
+      }
+      .pulse span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .pulse span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes pulse {
+        0%,
+        80%,
+        100% {
+          transform: scale(0);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .pulse span {
+          animation: none;
+        }
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 375px) {
+        .intro-head h2 {
+          font-size: 20px;
+        }
+        .task-time-item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <span style="font-size: 22px">&#x1F916;</span>
+      <div style="flex: 1">
+        <h1 style="margin-bottom: 0">AI 就绪度诊断</h1>
+        <p>找到你的业务最该交给 AI 的环节</p>
+      </div>
+      <a
+        href="https://xiaoyuanvc.com"
+        target="_blank"
+        style="
+          display: flex;
+          align-items: center;
+          margin-left: 10px;
+          flex-shrink: 0;
+        "
+      >
+        <img
+          src="../assets/logo-color.png"
+          alt="校园VC"
+          style="
+            height: 32px;
+            background: white;
+            border-radius: 6px;
+            padding: 3px 8px;
+            display: block;
+          "
+        />
+      </a>
+    </header>
+
+    <!-- Progress -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-info">
+        <span id="pLabel" style="color: var(--gray)">第 1 步</span>
+        <span class="count" id="pCount">1 / 5</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+      </div>
+      <div class="p-dots" id="pDots"></div>
+    </div>
+
+    <!-- S0: Welcome -->
+    <div class="screen on" id="s0">
+      <div class="intro-wrap">
+        <div class="intro-card">
+          <div class="intro-head">
+            <span class="hero-emoji">&#x1F916;</span>
+            <h2>你的业务，哪些环节最该交给 AI？</h2>
+            <p>6 分钟完成诊断，获得专属 AI 提效方案</p>
+          </div>
+          <div class="intro-body">
+            <ul class="intro-bullets">
+              <li>&#x1F3AF; 适合创业者、小商家、自由职业者</li>
+              <li>&#x1F4CA; 获得 Top 3 AI 提效机会 + 7 天行动计划</li>
+              <li>&#x1F193; 完全免费，无需注册</li>
+            </ul>
+            <div class="intro-buttons">
+              <button class="btn btn-primary btn-full" id="startBtn">
+                开始诊断 &#x2192;
+              </button>
+              <button
+                class="btn btn-ghost btn-full"
+                id="resumeBtn"
+                style="display: none"
+              >
+                继续上次
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="attribution">
+        <strong>校园VC</strong> · 让每个创业者用好 AI
+      </div>
+    </div>
+
+    <!-- S1: Role Calibration -->
+    <div class="screen" id="s1">
+      <div class="card">
+        <p class="step-title">你是？</p>
+        <p class="step-desc">选择最符合你的身份</p>
+        <div class="pill-grid" id="roleGrid"></div>
+      </div>
+      <div class="card">
+        <p class="step-title">你的行业？</p>
+        <p class="step-desc">选择你所在的行业</p>
+        <div class="pill-grid" id="industryGrid"></div>
+      </div>
+      <div class="card">
+        <p class="step-title">团队规模？</p>
+        <p class="step-desc">目前团队有多少人</p>
+        <div class="pill-grid" id="teamSizeGrid"></div>
+      </div>
+    </div>
+
+    <!-- S2: Time Inventory -->
+    <div class="screen" id="s2">
+      <div class="card">
+        <p class="step-title">想想你典型的一天，时间都花在哪了？</p>
+        <p class="step-desc">选出你经常要做的事，并标注大概花多少时间</p>
+        <div class="tag-cloud" id="taskTagCloud"></div>
+        <div class="custom-tag-row">
+          <input
+            type="text"
+            id="customTagInput"
+            placeholder="添加其他任务..."
+            maxlength="20"
+          />
+          <button class="btn btn-ghost btn-sm" id="addTagBtn">添加</button>
+        </div>
+      </div>
+      <div class="card" id="timeAssignCard" style="display: none">
+        <p class="step-title">为选中的任务分配时间</p>
+        <p class="step-desc">每天大概花多久在这件事上？</p>
+        <div id="timeAssignList"></div>
+      </div>
+      <div id="timeRanking" style="display: none">
+        <div class="time-ranking">
+          <h4>&#x23F3; 时间黑洞排行</h4>
+          <div id="rankingList"></div>
+        </div>
+      </div>
+      <div class="validation-hint" id="s2Hint">
+        请至少选择 3 个任务并分配时间
+      </div>
+    </div>
+
+    <!-- S3: Pain Point Deep Dive -->
+    <div class="screen" id="s3">
+      <div class="card">
+        <p class="step-title">看看你的时间黑洞 Top 3</p>
+        <p class="step-desc">针对最耗时的 3 件事，帮你深入分析</p>
+      </div>
+      <div id="top3Cards"></div>
+      <div class="card">
+        <p class="step-title">你最希望 AI 先帮你解决什么？</p>
+        <div class="pill-grid" id="aiGoalGrid"></div>
+      </div>
+    </div>
+
+    <!-- S4: placeholder for future -->
+    <div class="screen" id="s4"></div>
+
+    <!-- S5: placeholder for future -->
+    <div class="screen" id="s5"></div>
+
+    <!-- Nav bar -->
+    <div class="nav-bar" id="navBar">
+      <div class="nav-bar-inner">
+        <button class="btn btn-ghost" id="prevBtn">&#x2190; 上一步</button>
+        <button class="btn btn-primary" id="nextBtn">下一步 &#x2192;</button>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        // ── CONSTANTS ──
+        var SK = "xyvc-ai-ready-v1";
+        var TOTAL_STEPS = 5;
+        var STEP_NAMES = [
+          "身份校准",
+          "时间盘点",
+          "痛点深挖",
+          "确认信息",
+          "诊断报告",
+        ];
+
+        var ROLES = ["个体创业者", "小商家", "自由职业者", "团队负责人"];
+        var INDUSTRIES = [
+          "电商零售",
+          "内容创作",
+          "教育培训",
+          "本地服务",
+          "B2B服务",
+          "餐饮",
+          "制造业",
+          "其他",
+        ];
+        var TEAM_SIZES = ["就我一人", "2-5人", "6-20人", "20人以上"];
+
+        var INDUSTRY_TAGS = {
+          电商零售: [
+            "回复客户咨询",
+            "处理订单",
+            "写商品文案",
+            "拍摄修图",
+            "管理库存",
+            "做促销活动",
+            "看数据报表",
+            "采购对接",
+          ],
+          内容创作: [
+            "写文章/脚本",
+            "剪视频",
+            "做图/排版",
+            "运营社群",
+            "回复私信",
+            "找选题",
+            "数据分析",
+            "商务对接",
+          ],
+          教育培训: [
+            "备课做课件",
+            "上课/直播",
+            "批改作业",
+            "回复家长/学员",
+            "招生推广",
+            "写教案",
+            "整理资料",
+            "排课管理",
+          ],
+          本地服务: [
+            "接单排班",
+            "客户沟通",
+            "上门服务",
+            "记账对账",
+            "采购备货",
+            "宣传获客",
+            "处理投诉",
+            "写报价方案",
+          ],
+          B2B服务: [
+            "写方案/提案",
+            "客户跟进",
+            "做合同报价",
+            "项目管理",
+            "开会沟通",
+            "做报表",
+            "招投标",
+            "售后支持",
+          ],
+          餐饮: [
+            "点单收银",
+            "备料采购",
+            "外卖管理",
+            "员工排班",
+            "菜单更新",
+            "客户评价回复",
+            "记账",
+            "营销活动",
+          ],
+          制造业: [
+            "订单管理",
+            "生产排期",
+            "质检记录",
+            "供应商沟通",
+            "报价核算",
+            "库存盘点",
+            "物流跟踪",
+            "文档整理",
+          ],
+          其他: [
+            "回复消息",
+            "写内容",
+            "做表格",
+            "录入数据",
+            "做报价",
+            "写方案",
+            "跟客户",
+            "整理资料",
+          ],
+        };
+
+        var TIME_LABELS = ["<30分钟", "30-60分钟", "1-2小时", "2小时以上"];
+        var TIME_VALUES = [0.25, 0.75, 1.5, 3];
+        var FREQ_OPTIONS = ["每天", "每周几次", "每周一次", "偶尔"];
+        var RISK_OPTIONS = ["耽误交付", "客户不满", "错过机会", "影响不大"];
+        var AI_GOALS = [
+          "提效省时间",
+          "减少出错",
+          "降低成本",
+          "带来增长",
+          "都行，帮我判断",
+        ];
+
+        // ── STATE ──
+        var S = {
+          step: 0,
+          role: "",
+          industry: "",
+          teamSize: "",
+          tasks: [],
+          top3: [],
+          aiGoal: "",
+          report: null,
+          reportRaw: "",
+          checkboxes: [],
+        };
+
+        // ── PERSISTENCE ──
+        function save() {
+          try {
+            localStorage.setItem(SK, JSON.stringify(S));
+          } catch (e) {
+            /* localStorage may be unavailable in incognito */
+          }
+        }
+
+        function load() {
+          try {
+            var raw = localStorage.getItem(SK);
+            if (raw) {
+              var p = JSON.parse(raw);
+              if (typeof p.step !== "number" || p.step < 0 || p.step > 5) {
+                p.step = 0;
+              }
+              S = Object.assign(S, p);
+            }
+          } catch (e) {
+            try {
+              localStorage.removeItem(SK);
+            } catch (e2) {
+              /* storage not available */
+            }
+          }
+        }
+
+        // ── HELPERS ──
+        function esc(s) {
+          return String(s || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+        }
+
+        function $(id) {
+          return document.getElementById(id);
+        }
+
+        function getTasksWithTime() {
+          return S.tasks.filter(function (t) {
+            return typeof t.time === "number" && t.time > 0;
+          });
+        }
+
+        function getSortedTasks() {
+          return getTasksWithTime()
+            .slice()
+            .sort(function (a, b) {
+              return b.time - a.time;
+            });
+        }
+
+        function getTimeLabelByValue(v) {
+          var idx = TIME_VALUES.indexOf(v);
+          return idx >= 0 ? TIME_LABELS[idx] : "";
+        }
+
+        // ── VALIDATION ──
+        function getStepValidationMessage(step) {
+          if (step === 1) {
+            if (!S.role) return "请先选择你的身份。";
+            if (!S.industry) return "请先选择你的行业。";
+            if (!S.teamSize) return "请先选择团队规模。";
+          } else if (step === 2) {
+            var withTime = getTasksWithTime();
+            if (withTime.length < 3) {
+              return "请至少选择 3 个任务并分配时间。";
+            }
+          } else if (step === 3) {
+            for (var i = 0; i < S.top3.length; i++) {
+              if (!S.top3[i].freq) {
+                return "请为第 " + (i + 1) + " 个任务选择频率。";
+              }
+              if (!S.top3[i].risk) {
+                return "请为第 " + (i + 1) + " 个任务选择后果。";
+              }
+            }
+            if (!S.aiGoal) return "请选择你最希望 AI 帮你解决什么。";
+          }
+          return "";
+        }
+
+        function updateNextButtonState() {
+          var nextBtn = $("nextBtn");
+          if (!nextBtn) return;
+          if (S.step >= 1 && S.step <= 3) {
+            nextBtn.disabled = !!getStepValidationMessage(S.step);
+          } else {
+            nextBtn.disabled = false;
+          }
+        }
+
+        // ── NAVIGATION ──
+        function startApp() {
+          S.step = 1;
+          save();
+          showStep(1);
+          render(1);
+        }
+
+        function resumeApp() {
+          var step = S.step;
+          if (step < 1 || step > 3) step = 1;
+          showStep(step);
+          render(step);
+        }
+
+        function nav(dir) {
+          save();
+          if (dir === 1 && S.step >= 1 && S.step <= 3) {
+            var msg = getStepValidationMessage(S.step);
+            if (msg) {
+              window.alert(msg);
+              updateNextButtonState();
+              return;
+            }
+          }
+          // Transition from S2 to S3: auto-populate top3
+          if (S.step === 2 && dir === 1) {
+            populateTop3();
+          }
+          var next = S.step + dir;
+          if (next < 1) return;
+          if (next > 3) {
+            /* S4/S5 not yet implemented */
+            return;
+          }
+          S.step = next;
+          save();
+          showStep(next);
+          render(next);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function showStep(n) {
+          var screens = document.querySelectorAll(".screen");
+          if (!screens.length) return;
+          screens.forEach(function (el) {
+            el.classList.remove("on");
+          });
+          var target = $("s" + n);
+          if (target) target.classList.add("on");
+
+          var pw = $("progressWrap");
+          var nb = $("navBar");
+          var isForm = n >= 1 && n <= 3;
+
+          if (pw) pw.style.display = isForm ? "block" : "none";
+          if (nb) nb.style.display = isForm ? "flex" : "none";
+
+          if (isForm) {
+            var pct = Math.round((n / TOTAL_STEPS) * 100);
+            var fill = $("progressFill");
+            if (fill) fill.style.width = pct + "%";
+
+            var dots = $("pDots");
+            if (dots) {
+              dots.innerHTML = "";
+              for (var i = 1; i <= TOTAL_STEPS; i++) {
+                var d = document.createElement("div");
+                d.className =
+                  "p-dot" + (i < n ? " done" : i === n ? " active" : "");
+                dots.appendChild(d);
+              }
+            }
+
+            var pLabel = $("pLabel");
+            if (pLabel) {
+              pLabel.textContent = "第 " + n + " 步：" + STEP_NAMES[n - 1];
+            }
+            var pCount = $("pCount");
+            if (pCount) {
+              pCount.textContent = n + " / " + TOTAL_STEPS;
+            }
+
+            var prevBtn = $("prevBtn");
+            if (prevBtn) {
+              prevBtn.style.visibility = n === 1 ? "hidden" : "visible";
+            }
+            var nextBtn = $("nextBtn");
+            if (nextBtn) {
+              nextBtn.textContent =
+                n === 3 ? "生成报告 \u2192" : "下一步 \u2192";
+            }
+            updateNextButtonState();
+          }
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // ── RENDER DISPATCH ──
+        function render(n) {
+          if (n === 1) renderS1();
+          else if (n === 2) renderS2();
+          else if (n === 3) renderS3();
+        }
+
+        // ── S1: Role Calibration ──
+        function renderS1() {
+          renderPillGroup("roleGrid", ROLES, S.role, function (val) {
+            S.role = val;
+            save();
+            updateNextButtonState();
+          });
+          renderPillGroup(
+            "industryGrid",
+            INDUSTRIES,
+            S.industry,
+            function (val) {
+              S.industry = val;
+              save();
+              updateNextButtonState();
+            },
+          );
+          renderPillGroup(
+            "teamSizeGrid",
+            TEAM_SIZES,
+            S.teamSize,
+            function (val) {
+              S.teamSize = val;
+              save();
+              updateNextButtonState();
+            },
+          );
+        }
+
+        function renderPillGroup(containerId, options, currentValue, onSelect) {
+          var container = $(containerId);
+          if (!container) return;
+          container.innerHTML = "";
+          options.forEach(function (opt) {
+            var pill = document.createElement("div");
+            pill.className = "pill" + (opt === currentValue ? " on" : "");
+            pill.textContent = opt;
+            pill.setAttribute("role", "button");
+            pill.setAttribute("tabindex", "0");
+            pill.addEventListener("click", function () {
+              onSelect(opt);
+              // Update visual state
+              container.querySelectorAll(".pill").forEach(function (p) {
+                p.classList.remove("on");
+              });
+              pill.classList.add("on");
+            });
+            container.appendChild(pill);
+          });
+        }
+
+        // ── S2: Time Inventory ──
+        function renderS2() {
+          renderTagCloud();
+          renderTimeAssignments();
+          renderTimeRanking();
+          updateNextButtonState();
+        }
+
+        function renderTagCloud() {
+          var cloud = $("taskTagCloud");
+          if (!cloud) return;
+          cloud.innerHTML = "";
+
+          var tags = INDUSTRY_TAGS[S.industry] || INDUSTRY_TAGS["其他"];
+          // Merge custom tasks that are not in the industry list
+          var allNames = tags.slice();
+          S.tasks.forEach(function (t) {
+            if (t.custom && allNames.indexOf(t.name) === -1) {
+              allNames.push(t.name);
+            }
+          });
+
+          var selectedNames = S.tasks.map(function (t) {
+            return t.name;
+          });
+
+          allNames.forEach(function (name) {
+            var pill = document.createElement("div");
+            pill.className =
+              "tag-pill" + (selectedNames.indexOf(name) >= 0 ? " on" : "");
+            pill.textContent = name;
+            pill.setAttribute("role", "button");
+            pill.setAttribute("tabindex", "0");
+            pill.addEventListener("click", function () {
+              toggleTask(name, false);
+            });
+            cloud.appendChild(pill);
+          });
+        }
+
+        function toggleTask(name, isCustom) {
+          var idx = -1;
+          for (var i = 0; i < S.tasks.length; i++) {
+            if (S.tasks[i].name === name) {
+              idx = i;
+              break;
+            }
+          }
+          if (idx >= 0) {
+            S.tasks.splice(idx, 1);
+          } else {
+            S.tasks.push({
+              name: name,
+              time: 0,
+              custom: !!isCustom,
+            });
+          }
+          save();
+          renderTagCloud();
+          renderTimeAssignments();
+          renderTimeRanking();
+          updateNextButtonState();
+        }
+
+        function addCustomTag() {
+          var input = $("customTagInput");
+          if (!input) return;
+          var val = input.value.trim();
+          if (!val) return;
+          // Check if already exists
+          var exists = S.tasks.some(function (t) {
+            return t.name === val;
+          });
+          if (!exists) {
+            S.tasks.push({ name: val, time: 0, custom: true });
+          }
+          input.value = "";
+          save();
+          renderTagCloud();
+          renderTimeAssignments();
+          renderTimeRanking();
+          updateNextButtonState();
+        }
+
+        function renderTimeAssignments() {
+          var card = $("timeAssignCard");
+          var list = $("timeAssignList");
+          if (!card || !list) return;
+
+          if (S.tasks.length === 0) {
+            card.style.display = "none";
+            return;
+          }
+          card.style.display = "block";
+          list.innerHTML = "";
+
+          S.tasks.forEach(function (task, tIdx) {
+            var row = document.createElement("div");
+            row.className = "task-time-item";
+
+            var nameEl = document.createElement("div");
+            nameEl.className = "task-time-name";
+            nameEl.textContent = task.name;
+            row.appendChild(nameEl);
+
+            var pillsWrap = document.createElement("div");
+            pillsWrap.className = "time-pills";
+
+            TIME_LABELS.forEach(function (label, lIdx) {
+              var tp = document.createElement("div");
+              tp.className =
+                "time-pill" + (task.time === TIME_VALUES[lIdx] ? " on" : "");
+              tp.textContent = label;
+              tp.setAttribute("role", "button");
+              tp.setAttribute("tabindex", "0");
+              tp.addEventListener("click", function () {
+                S.tasks[tIdx].time = TIME_VALUES[lIdx];
+                save();
+                renderTimeAssignments();
+                renderTimeRanking();
+                updateNextButtonState();
+              });
+              pillsWrap.appendChild(tp);
+            });
+
+            row.appendChild(pillsWrap);
+            list.appendChild(row);
+          });
+        }
+
+        function renderTimeRanking() {
+          var wrap = $("timeRanking");
+          var list = $("rankingList");
+          if (!wrap || !list) return;
+
+          var sorted = getSortedTasks();
+          if (sorted.length === 0) {
+            wrap.style.display = "none";
+            return;
+          }
+          wrap.style.display = "block";
+          list.innerHTML = "";
+
+          sorted.forEach(function (task, i) {
+            var item = document.createElement("div");
+            item.className = "rank-item";
+            item.innerHTML =
+              '<span class="rank-name">' +
+              (i + 1) +
+              ". " +
+              esc(task.name) +
+              "</span>" +
+              '<span class="rank-time">' +
+              esc(getTimeLabelByValue(task.time)) +
+              "</span>";
+            list.appendChild(item);
+          });
+
+          // Show validation hint
+          var hint = $("s2Hint");
+          if (hint) {
+            hint.classList.toggle("show", sorted.length < 3);
+          }
+        }
+
+        // ── S3: Pain Point Deep Dive ──
+        function populateTop3() {
+          var sorted = getSortedTasks();
+          var top = sorted.slice(0, 3);
+          // Preserve existing top3 data if names match
+          var newTop3 = top.map(function (t) {
+            var existing = null;
+            for (var i = 0; i < S.top3.length; i++) {
+              if (S.top3[i].name === t.name) {
+                existing = S.top3[i];
+                break;
+              }
+            }
+            if (existing) return existing;
+            return { name: t.name, freq: "", pain: "", risk: "" };
+          });
+          S.top3 = newTop3;
+          save();
+        }
+
+        function renderS3() {
+          var container = $("top3Cards");
+          if (!container) return;
+          container.innerHTML = "";
+
+          S.top3.forEach(function (item, idx) {
+            var card = document.createElement("div");
+            card.className = "top3-card";
+
+            // Rank badge
+            var badge = document.createElement("div");
+            badge.className = "rank-badge";
+            badge.textContent = "#" + (idx + 1);
+            card.appendChild(badge);
+
+            // Task name
+            var nameEl = document.createElement("div");
+            nameEl.className = "top3-task-name";
+            nameEl.textContent = item.name;
+            card.appendChild(nameEl);
+
+            // Q1: Frequency
+            var q1Label = document.createElement("div");
+            q1Label.className = "top3-q-label";
+            q1Label.textContent = "频率";
+            card.appendChild(q1Label);
+
+            var freqGrid = document.createElement("div");
+            freqGrid.className = "pill-grid";
+            FREQ_OPTIONS.forEach(function (opt) {
+              var pill = document.createElement("div");
+              pill.className = "pill" + (item.freq === opt ? " on" : "");
+              pill.textContent = opt;
+              pill.setAttribute("role", "button");
+              pill.setAttribute("tabindex", "0");
+              pill.addEventListener("click", function () {
+                S.top3[idx].freq = opt;
+                save();
+                freqGrid.querySelectorAll(".pill").forEach(function (p) {
+                  p.classList.remove("on");
+                });
+                pill.classList.add("on");
+                updateNextButtonState();
+              });
+              freqGrid.appendChild(pill);
+            });
+            card.appendChild(freqGrid);
+
+            // Q2: Pain point textarea
+            var q2Label = document.createElement("div");
+            q2Label.className = "top3-q-label";
+            q2Label.textContent = "最烦的环节";
+            card.appendChild(q2Label);
+
+            var textarea = document.createElement("textarea");
+            textarea.placeholder = "比如：每次写完还要反复改格式";
+            textarea.maxLength = 200;
+            textarea.value = item.pain || "";
+            textarea.style.minHeight = "60px";
+            textarea.addEventListener("input", function () {
+              S.top3[idx].pain = textarea.value;
+              save();
+            });
+            card.appendChild(textarea);
+
+            // Q3: Risk
+            var q3Label = document.createElement("div");
+            q3Label.className = "top3-q-label";
+            q3Label.textContent = "做不好的后果";
+            card.appendChild(q3Label);
+
+            var riskGrid = document.createElement("div");
+            riskGrid.className = "pill-grid";
+            RISK_OPTIONS.forEach(function (opt) {
+              var pill = document.createElement("div");
+              pill.className = "pill" + (item.risk === opt ? " on" : "");
+              pill.textContent = opt;
+              pill.setAttribute("role", "button");
+              pill.setAttribute("tabindex", "0");
+              pill.addEventListener("click", function () {
+                S.top3[idx].risk = opt;
+                save();
+                riskGrid.querySelectorAll(".pill").forEach(function (p) {
+                  p.classList.remove("on");
+                });
+                pill.classList.add("on");
+                updateNextButtonState();
+              });
+              riskGrid.appendChild(pill);
+            });
+            card.appendChild(riskGrid);
+
+            container.appendChild(card);
+          });
+
+          // AI Goal
+          renderPillGroup("aiGoalGrid", AI_GOALS, S.aiGoal, function (val) {
+            S.aiGoal = val;
+            save();
+            updateNextButtonState();
+          });
+
+          updateNextButtonState();
+        }
+
+        // ── EVENT BINDINGS ──
+        function bindEvents() {
+          var startBtn = $("startBtn");
+          if (startBtn) {
+            startBtn.addEventListener("click", function () {
+              startApp();
+            });
+          }
+
+          var resumeBtn = $("resumeBtn");
+          if (resumeBtn) {
+            resumeBtn.addEventListener("click", function () {
+              resumeApp();
+            });
+          }
+
+          var prevBtn = $("prevBtn");
+          if (prevBtn) {
+            prevBtn.addEventListener("click", function () {
+              nav(-1);
+            });
+          }
+
+          var nextBtn = $("nextBtn");
+          if (nextBtn) {
+            nextBtn.addEventListener("click", function () {
+              nav(1);
+            });
+          }
+
+          var addTagBtn = $("addTagBtn");
+          if (addTagBtn) {
+            addTagBtn.addEventListener("click", function () {
+              addCustomTag();
+            });
+          }
+
+          var customTagInput = $("customTagInput");
+          if (customTagInput) {
+            customTagInput.addEventListener("keydown", function (e) {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                addCustomTag();
+              }
+            });
+          }
+        }
+
+        // ── INIT ──
+        function init() {
+          load();
+          bindEvents();
+
+          // Show resume button if user has progress
+          if (S.step > 0) {
+            var resumeBtn = $("resumeBtn");
+            if (resumeBtn) resumeBtn.style.display = "block";
+          }
+        }
+
+        init();
+      })();
+    </script>
+  </body>
+</html>
