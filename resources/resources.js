@@ -52,9 +52,9 @@
 
   function renderPodcastCards() {
     var container = document.getElementById("podcastCards");
-    if (!container) return;
+    if (!container) return Promise.resolve();
 
-    fetch("data/episodes.json")
+    return fetch("data/episodes.json")
       .then(function (res) {
         return res.json();
       })
@@ -318,12 +318,9 @@
   // Initialization
   // ============================================
   document.addEventListener("DOMContentLoaded", function () {
-    renderPodcastCards();
     initFilters();
-
-    // Initial count after podcast cards load
-    setTimeout(function () {
+    renderPodcastCards().then(function () {
       applyFilters(activeFilters);
-    }, 500);
+    });
   });
 })();
