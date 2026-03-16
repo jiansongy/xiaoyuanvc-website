@@ -865,27 +865,6 @@
         margin-bottom: 16px;
         color: var(--navy);
       }
-      .matrix-row {
-        margin: 12px 0;
-        padding: 12px;
-        border-radius: var(--radius-sm);
-        background: #f9fafb;
-      }
-      .matrix-badge {
-        font-weight: 600;
-        font-size: 14px;
-      }
-      .matrix-hint {
-        font-size: 12px;
-        color: var(--gray);
-        margin-left: 8px;
-      }
-      .matrix-row ul {
-        margin: 8px 0 0 20px;
-        font-size: 13px;
-        line-height: 1.8;
-      }
-
       .action-phase {
         margin: 12px 0;
       }
@@ -2186,11 +2165,6 @@
                     difficulty: "低/中/高",
                   },
                 ],
-                matrix: {
-                  now: ["高影响+低门槛任务"],
-                  plan: ["高影响+高门槛任务"],
-                  later: ["低影响任务"],
-                },
                 action_plan: {
                   day1_2: "第1-2天行动（2-3步）",
                   day3_4: "第3-4天行动（2-3步）",
@@ -2202,7 +2176,7 @@
               2,
             ) +
             "\n\n" +
-            "## 约束\n- top3 必须恰好 3 个\n- hours_saved 用区间\n- method 要具体可执行\n- matrix 的 now/plan/later 必须且仅包含 top3 中的 3 个场景名（scene），按影响和门槛分类\n- boundaries 至少 2 条\n- difficulty 如实标注\n- 用中文\n- 只输出 JSON，不要 ```json ``` 包裹"
+            "## 约束\n- top3 必须恰好 3 个\n- hours_saved 用区间\n- method 要具体可执行\n- boundaries 至少 2 条\n- difficulty 如实标注\n- 用中文\n- 只输出 JSON，不要 ```json ``` 包裹"
           );
         }
 
@@ -2393,47 +2367,7 @@
             }
           }
 
-          // Section 3: Priority Matrix
-          if (r.matrix) {
-            html += '<div class="report-section">';
-            html += '<h3 class="section-title">&#x1F4CA; 优先级矩阵</h3>';
-
-            var matrixData = [
-              {
-                key: "now",
-                badge: "&#x1F680; 现在就做",
-                hint: "高影响 + 低门槛",
-              },
-              {
-                key: "plan",
-                badge: "&#x1F4CB; 排进计划",
-                hint: "高影响 + 高门槛",
-              },
-              {
-                key: "later",
-                badge: "&#x2615; 有空再做",
-                hint: "低影响",
-              },
-            ];
-            matrixData.forEach(function (m) {
-              var items = r.matrix[m.key] || [];
-              html +=
-                '<div class="matrix-row">' +
-                '<span class="matrix-badge">' +
-                m.badge +
-                "</span>" +
-                '<span class="matrix-hint">' +
-                m.hint +
-                "</span><ul>";
-              items.forEach(function (item) {
-                html += "<li>" + esc(item) + "</li>";
-              });
-              html += "</ul></div>";
-            });
-            html += "</div>";
-          }
-
-          // Section 4: 7-Day Action Plan
+          // Section 3: 7-Day Action Plan
           if (r.action_plan) {
             html += '<div class="report-section">';
             html += '<h3 class="section-title">&#x1F4C5; 7 天快速启动</h3>';
