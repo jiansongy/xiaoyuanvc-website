@@ -2561,7 +2561,20 @@
           var printBtn = $("printBtn");
           if (printBtn) {
             printBtn.addEventListener("click", function () {
-              window.print();
+              var printed = false;
+              if (typeof window.print === "function") {
+                try {
+                  window.print();
+                  printed = true;
+                } catch (e) {
+                  /* some mobile browsers throw on window.print() */
+                }
+              }
+              if (!printed) {
+                window.alert(
+                  "当前浏览器不支持直接打印，请使用浏览器菜单中的「分享 → 打印」或「更多 → 打印」功能来导出 PDF。",
+                );
+              }
             });
           }
 
@@ -2575,23 +2588,57 @@
                   shareBtn.innerHTML = "&#x1F4CB; 复制分享文字";
                 }, 2000);
               }
+              function showCopyModal() {
+                var overlay = document.createElement("div");
+                overlay.style.cssText =
+                  "position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px";
+                var box = document.createElement("div");
+                box.style.cssText =
+                  "background:#fff;border-radius:12px;padding:20px;max-width:420px;width:100%;max-height:70vh;display:flex;flex-direction:column;gap:12px";
+                var title = document.createElement("div");
+                title.style.cssText = "font-weight:600;font-size:16px";
+                title.textContent = "长按下方文字全选后复制";
+                var ta = document.createElement("textarea");
+                ta.value = text;
+                ta.readOnly = true;
+                ta.style.cssText =
+                  "width:100%;min-height:200px;border:1px solid #d1d5db;border-radius:8px;padding:12px;font-size:14px;line-height:1.6;resize:none;-webkit-user-select:text;user-select:text";
+                var closeBtn = document.createElement("button");
+                closeBtn.textContent = "关闭";
+                closeBtn.style.cssText =
+                  "padding:10px;border-radius:8px;border:1px solid #d1d5db;background:#fff;font-size:15px;cursor:pointer";
+                closeBtn.addEventListener("click", function () {
+                  document.body.removeChild(overlay);
+                });
+                overlay.addEventListener("click", function (e) {
+                  if (e.target === overlay) document.body.removeChild(overlay);
+                });
+                box.appendChild(title);
+                box.appendChild(ta);
+                box.appendChild(closeBtn);
+                overlay.appendChild(box);
+                document.body.appendChild(overlay);
+                ta.focus();
+                ta.setSelectionRange(0, ta.value.length);
+              }
               function fallbackCopy() {
                 var ta = document.createElement("textarea");
                 ta.value = text;
+                /* 移动端必须可见才能 execCommand('copy') */
                 ta.style.cssText =
-                  "position:fixed;left:-9999px;top:0;opacity:0";
+                  "position:fixed;left:0;top:0;width:1px;height:1px;padding:0;border:none;outline:none;box-shadow:none;background:transparent;font-size:16px";
                 document.body.appendChild(ta);
                 ta.focus();
-                ta.select();
+                ta.setSelectionRange(0, ta.value.length);
                 try {
                   var ok = document.execCommand("copy");
                   if (ok) {
                     onCopyOk();
                   } else {
-                    window.alert("复制失败，请长按上方文字手动复制。");
+                    showCopyModal();
                   }
                 } catch (e) {
-                  window.alert("复制失败，请长按上方文字手动复制。");
+                  showCopyModal();
                 }
                 document.body.removeChild(ta);
               }
@@ -2632,25 +2679,62 @@
           var r = S.report;
           var lines = [];
           lines.push("【AI 员工面试报告】");
-          lines.push(r.summary || "");
+          if (r.summary) lines.push(r.summary);
           lines.push("");
-          if (r.top3 && r.top3.length) {
+          var employees = r.top3 || r.aiEmployees || r.employees || [];
+          if (employees.length) {
             lines.push("Top 3 AI 提效机会：");
-            r.top3.forEach(function (item, i) {
+            employees.forEach(function (item, i) {
+              var name = item.name || item.title || "";
+              var emoji = item.emoji || "";
+              var hours = item.hours_saved || item.hours || item.benefit || "";
               lines.push(
                 i +
                   1 +
                   ". " +
-                  (item.emoji || "") +
+                  emoji +
                   " " +
-                  (item.name || "") +
-                  "（" +
-                  (item.hours_saved || "") +
-                  "）",
+                  name +
+                  (hours ? "（" + hours + "）" : ""),
               );
+              if (item.scene) lines.push("   场景：" + item.scene);
+              if (item.method) lines.push("   做法：" + item.method);
             });
+            lines.push("");
           }
-          lines.push("");
+          var plan = r.action_plan || r.weekPlan || r.actionPlan || null;
+          if (plan) {
+            lines.push("7 天快速启动：");
+            if (Array.isArray(plan)) {
+              plan.forEach(function (p) {
+                lines.push("- " + (p.day || "") + "：" + (p.action || ""));
+              });
+            } else {
+              if (plan.day1_2) lines.push("- Day 1-2：" + plan.day1_2);
+              if (plan.day3_4) lines.push("- Day 3-4：" + plan.day3_4);
+              if (plan.day5_7) lines.push("- Day 5-7：" + plan.day5_7);
+            }
+            lines.push("");
+          }
+          if (r.boundaries && r.boundaries.length) {
+            lines.push("AI 使用边界：");
+            r.boundaries.forEach(function (b) {
+              lines.push("- " + b);
+            });
+            lines.push("");
+          }
+          /* 如果结构化读取几乎为空，回退到原始文本 */
+          if (lines.length <= 4 && S.reportRaw) {
+            return (
+              "【AI 员工面试报告】\n\n" +
+              S.reportRaw
+                .replace(/^```(?:json)?\s*\n?/gi, "")
+                .replace(/\n?```\s*$/g, "")
+                .replace(/[#*]/g, "")
+                .trim() +
+              "\n\n来自 校园VC AI 员工面试\nhttps://xiaoyuanvc.com/resources/ai-ready-check.html"
+            );
+          }
           lines.push("来自 校园VC AI 员工面试");
           lines.push("https://xiaoyuanvc.com/resources/ai-ready-check.html");
           return lines.join("\n");
