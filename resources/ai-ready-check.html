@@ -1468,14 +1468,20 @@
             save();
             showStep(4);
             runAnalysis();
-            window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+            window.scrollTo({
+              top: 0,
+              behavior: prefersReducedMotion ? "auto" : "smooth",
+            });
             return;
           }
           S.step = next;
           save();
           showStep(next);
           render(next);
-          window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+          window.scrollTo({
+            top: 0,
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+          });
         }
 
         function showStep(n) {
@@ -1530,7 +1536,10 @@
             }
             updateNextButtonState();
           }
-          window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+          window.scrollTo({
+            top: 0,
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+          });
         }
 
         // ── RENDER DISPATCH ──
@@ -1763,7 +1772,7 @@
               esc(getTimeLabelByValue(task.time)) +
               "</span>";
             list.appendChild(item);
-          }
+          });
         }
 
         // ── S3: Pain Point Deep Dive ──
@@ -2162,7 +2171,10 @@
                     save();
                     showStep(5);
                     renderS5();
-                    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+                    window.scrollTo({
+                      top: 0,
+                      behavior: prefersReducedMotion ? "auto" : "smooth",
+                    });
                   } catch (e) {
                     // Store raw text as fallback
                     S.report = null;
@@ -2171,7 +2183,10 @@
                     save();
                     showStep(5);
                     renderS5();
-                    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+                    window.scrollTo({
+                      top: 0,
+                      behavior: prefersReducedMotion ? "auto" : "smooth",
+                    });
                   }
                 })
                 .catch(function (err) {
