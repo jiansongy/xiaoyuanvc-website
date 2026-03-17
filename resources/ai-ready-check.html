@@ -2642,11 +2642,34 @@
                 }
                 document.body.removeChild(ta);
               }
-              if (navigator.clipboard && navigator.clipboard.writeText) {
+              if (
+                navigator.clipboard &&
+                navigator.clipboard.writeText &&
+                window.isSecureContext
+              ) {
+                var settled = false;
+                var timer = setTimeout(function () {
+                  if (!settled) {
+                    settled = true;
+                    fallbackCopy();
+                  }
+                }, 1500);
                 navigator.clipboard
                   .writeText(text)
-                  .then(onCopyOk)
-                  .catch(fallbackCopy);
+                  .then(function () {
+                    if (!settled) {
+                      settled = true;
+                      clearTimeout(timer);
+                      onCopyOk();
+                    }
+                  })
+                  .catch(function () {
+                    if (!settled) {
+                      settled = true;
+                      clearTimeout(timer);
+                      fallbackCopy();
+                    }
+                  });
               } else {
                 fallbackCopy();
               }
