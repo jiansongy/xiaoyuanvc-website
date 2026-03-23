@@ -1044,8 +1044,9 @@
             margin-bottom: 20px;
           "
         >
-          很多人不知道自己想做什么，不是因为选择太少，而是从未系统地认识过自己。这个工具会带你从三个维度深度探索，最后由
-          AI 帮你整合出最适合你的方向。
+          你是否正感到迷茫，不知道自己想做什么？别慌——不是你没有方向，是你还没系统认识过自己。给我
+          25 分钟，带你从喜欢、擅长、价值观三个维度深度探索，最后由 AI
+          帮你整合出真正属于你的方向。
         </p>
         <details
           style="
@@ -1969,6 +1970,11 @@
         window.showPhase = showPhase;
 
         window.nav = function (dir) {
+          if (dir === 1 && S.phase === 4) {
+            // User clicked "完成" on the last phase — return to welcome screen
+            window.goWelcome();
+            return;
+          }
           if (dir === 1 && S.phase === 1 && S.likes.length < 1) {
             window.alert("请至少选择 1 个你喜欢的方向，再进入下一步。");
             return;
@@ -2452,7 +2458,7 @@
               S.phase3AI +
               "\n价值主张（用户自述）：" +
               S.outwardValue +
-              "\n\n请严格按以下格式输出，共两部分：\n\n第一部分：3个「想做的事」候选\n\n【候选一】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选二】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选三】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2句话，结合用户价值观和向外目的]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n第二部分：验证行动（给出3个具体可执行的探索行动，帮用户这周就开始验证方向）\n\n【验证行动】\n今天就能做：[一个具体行动，不超过20字，如「搜索5个相关内容，记录让你最感兴趣的」]\n本周可以尝试：[一个具体行动，不超过20字，如「找1-2个同方向的人简单聊聊」]\n这个月可以探索：[一个具体行动，不超过20字，如「做一个最小原型或输出，观察反馈」]\n\n语气真诚，像一个了解用户的朋友。";
+              "\n\n【重要原则】给出方向时，不要停留在最显而易见的选项（如「喜欢教别人→老师」）。要挖掘这个组合更大的可能性——比如在线课程创始人、知识付费博主、教育科技创业者、顾问、导师、课程设计师。让用户看到自己从未想过但充满吸引力的路径，产生「这个我怎么没想到！」的惊喜感。每个候选都要有让大学生眼前一亮的憧憬感，不是保守建议，是真正值得为之努力的方向。\n\n请严格按以下格式输出，共两部分：\n\n第一部分：3个「想做的事」候选\n\n【候选一】\n标题：[喜欢的X] × [擅长的Y]（用具体有吸引力的职业/方向表达，非泛化标签）\n为什么适合你：[2-3句话，结合用户具体特质说清楚为什么这条路专属于他，让人心动]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选二】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2-3句话]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n【候选三】\n标题：[喜欢的X] × [擅长的Y]\n为什么适合你：[2-3句话]\n第一步可以做：[具体可执行的最小行动，不超过20字]\n\n第二部分：验证行动（给出3个具体可执行的探索行动，帮用户这周就开始验证方向）\n\n【验证行动】\n今天就能做：[一个具体行动，不超过20字，如「搜索5个相关内容，记录让你最感兴趣的」]\n本周可以尝试：[一个具体行动，不超过20字，如「找1-2个同方向的人简单聊聊」]\n这个月可以探索：[一个具体行动，不超过20字，如「做一个最小原型或输出，观察反馈」]\n\n语气真诚有力，像一个真正了解用户、并相信他能走得很远的朋友。";
 
             var tempDiv = document.createElement("div");
             tempDiv.style.position = "absolute";
@@ -2848,6 +2854,32 @@
           if (S.chosenIndex < 0) return;
           var el = document.getElementById("p4Final");
           if (!el) return;
+          // In-app browsers (抖音/微信) block window.open() — fall back to copy
+          var ua = navigator.userAgent;
+          var isInApp =
+            /MicroMessenger|BytedanceWebview|Douyin|ToutiaoMicroApp/i.test(ua);
+          if (isInApp) {
+            var c = S.finalCandidates[S.chosenIndex];
+            var copyText =
+              "我的「想做的事」探索结果\n\n" +
+              c.title +
+              "\n\n" +
+              c.why +
+              "\n\n第一步：" +
+              c.step +
+              "\n\n—— 通过「如何找到想做的事」互动工具 @ 校园VC\nxiaoyuanvc.com/resources/find-what-you-want.html";
+            navigator.clipboard
+              .writeText(copyText)
+              .then(function () {
+                window.alert(
+                  "已复制结果到剪贴板！\n请打开备忘录粘贴保存，或直接截图保存本页。",
+                );
+              })
+              .catch(function () {
+                window.alert("请截图保存本页结果。");
+              });
+            return;
+          }
           var printWin = window.open("", "_blank");
           printWin.document.write(
             '<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8">' +

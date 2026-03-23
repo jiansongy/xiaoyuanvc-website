@@ -2561,6 +2561,19 @@
           var printBtn = $("printBtn");
           if (printBtn) {
             printBtn.addEventListener("click", function () {
+              // In-app browsers (抖音/微信) have window.print defined but silently do nothing
+              // Detect them by UA and show guidance immediately
+              var ua = navigator.userAgent;
+              var isInApp =
+                /MicroMessenger|BytedanceWebview|Douyin|ToutiaoMicroApp/i.test(
+                  ua,
+                );
+              if (isInApp) {
+                window.alert(
+                  "当前浏览器不支持打印功能。\n\n请点击下方「复制分享文字」保存结果，或截图保存本页内容。",
+                );
+                return;
+              }
               var printed = false;
               if (typeof window.print === "function") {
                 try {
