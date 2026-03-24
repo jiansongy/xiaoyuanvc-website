@@ -873,6 +873,75 @@
         font-weight: 600;
       }
 
+      /* FIX 6: focus-visible styles for keyboard navigation */
+      .btn-start:focus-visible {
+        background: var(--purple-dark);
+        outline: 3px solid var(--purple-medium);
+        outline-offset: 2px;
+      }
+      .btn-primary:focus-visible {
+        background: var(--purple-dark);
+        outline: 3px solid var(--purple-medium);
+        outline-offset: 2px;
+      }
+      .btn-secondary:focus-visible {
+        background: var(--purple-light);
+        outline: 3px solid var(--purple);
+        outline-offset: 2px;
+      }
+      .btn-nope:focus-visible {
+        background: #fef2f2;
+        outline: 3px solid #fca5a5;
+        outline-offset: 2px;
+      }
+      .btn-like:focus-visible {
+        background: var(--purple-light);
+        outline: 3px solid var(--purple-medium);
+        outline-offset: 2px;
+      }
+      .btn-undo:focus-visible {
+        background: #eef2ff;
+        border-color: #a5b4fc;
+        outline: 3px solid #a5b4fc;
+        outline-offset: 2px;
+      }
+      .keyword-chip:focus-visible {
+        border-color: var(--purple-medium);
+        outline: 3px solid var(--purple-medium);
+        outline-offset: 2px;
+      }
+      .keyword-chip.selected:focus-visible {
+        outline: 3px solid var(--purple-dark);
+        outline-offset: 2px;
+      }
+      .result-card:focus-visible {
+        border-color: var(--purple-medium);
+        outline: 3px solid var(--purple-medium);
+        outline-offset: 2px;
+      }
+      .scenario-btn:focus-visible {
+        background: var(--purple-light);
+        border-color: var(--purple);
+        outline: 3px solid var(--purple-medium);
+        outline-offset: 2px;
+      }
+      .value-stmt-btn:focus-visible {
+        border-color: var(--purple-medium);
+        background: var(--purple-light);
+        outline: 3px solid var(--purple-medium);
+        outline-offset: 2px;
+      }
+      .nav-btn-prev:focus-visible {
+        border-color: var(--purple);
+        outline: 3px solid var(--purple-medium);
+        outline-offset: 2px;
+      }
+      .nav-btn-next:focus-visible {
+        background: #1d4ed8;
+        outline: 3px solid #93c5fd;
+        outline-offset: 2px;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .swipe-card,
         .swipe-card.swipe-left,
@@ -964,6 +1033,7 @@
           <button
             id="homeBtn"
             onclick="window.goWelcome()"
+            aria-label="返回首页"
             style="
               background: rgba(124, 58, 237, 0.1);
               border: none;
@@ -975,7 +1045,7 @@
               font-family: inherit;
             "
           >
-            🏠 首页
+            <span aria-hidden="true">🏠</span> 首页
           </button>
         </span>
       </div>
@@ -1032,8 +1102,13 @@
           <div class="formula">想做的事 = 喜欢的事 × 擅长的事</div>
           <div class="formula-sub">价值观是底座，让答案真正属于你</div>
         </div>
-        <div class="meta-box">
-          ⏱ 预计 25-30 分钟 &nbsp;|&nbsp; 🤖 4 次 AI 分析 &nbsp;|&nbsp; 💜
+        <div
+          class="meta-box"
+          aria-label="预计25到30分钟，4次AI分析，专为大学生设计"
+        >
+          <span aria-hidden="true">⏱</span> 预计 25-30 分钟 &nbsp;|&nbsp;
+          <span aria-hidden="true">🤖</span> 4 次 AI 分析 &nbsp;|&nbsp;
+          <span aria-hidden="true">💜</span>
           专为大学生设计
         </div>
         <p
@@ -1100,7 +1175,12 @@
             </p>
           </div>
         </details>
-        <button class="btn-start" onclick="window.startApp()">
+        <button
+          class="btn-start"
+          onclick="window.startApp()"
+          data-ai-action="start"
+          aria-label="开始探索"
+        >
           开始探索 →
         </button>
         <!-- 存档恢复区块 -->
@@ -1125,6 +1205,7 @@
               class="btn-secondary"
               style="width: auto; margin: 0; padding: 8px 20px"
               onclick="window.resumeProgress()"
+              data-ai-action="resume"
             >
               继续探索 →
             </button>
@@ -1140,6 +1221,7 @@
                 font-family: inherit;
               "
               onclick="window.clearAndStart()"
+              data-ai-action="start"
             >
               重新开始
             </button>
@@ -1186,6 +1268,8 @@
             id="undoSwipeBtn"
             onclick="window.undoSwipe()"
             title="撤回上一步"
+            aria-label="撤回上一步"
+            data-ai-action="undo-swipe"
             disabled
           >
             ↶ 撤回上一步
@@ -1195,16 +1279,20 @@
             id="swipeLeftBtn"
             onclick="window.swipeCard('left')"
             title="无感 (←)"
+            aria-label="无感，向左滑"
+            data-ai-action="swipe-left"
           >
-            ✗
+            <span aria-hidden="true">✗</span>
           </button>
           <button
             class="btn-like"
             id="swipeRightBtn"
             onclick="window.swipeCard('right')"
             title="喜欢 (→)"
+            aria-label="喜欢，向右滑"
+            data-ai-action="swipe-right"
           >
-            ♥
+            <span aria-hidden="true">♥</span>
           </button>
         </div>
         <div class="likes-result" id="likesResult">
@@ -1222,6 +1310,7 @@
             rows="3"
             placeholder="写下你的想法…"
             oninput="window.onFollowupInput()"
+            data-testid="phase1-followup-input"
           ></textarea>
         </div>
         <button
@@ -1229,6 +1318,7 @@
           id="p1NextBtn"
           style="display: none"
           onclick="window.submitPhase1Followup()"
+          data-ai-action="next-phase"
         >
           下一步：发现你的才能 →
         </button>
@@ -1272,14 +1362,26 @@
             <button
               class="scenario-btn"
               onclick="window.fillScenario('course')"
+              data-ai-action="fill-scenario"
+              aria-label="填入课程/项目情境"
             >
-              📚 课程/项目
+              <span aria-hidden="true">📚</span> 课程/项目
             </button>
-            <button class="scenario-btn" onclick="window.fillScenario('club')">
-              🏘️ 社团/兼职
+            <button
+              class="scenario-btn"
+              onclick="window.fillScenario('club')"
+              data-ai-action="fill-scenario"
+              aria-label="填入社团/兼职情境"
+            >
+              <span aria-hidden="true">🏘️</span> 社团/兼职
             </button>
-            <button class="scenario-btn" onclick="window.fillScenario('help')">
-              🤝 帮助别人
+            <button
+              class="scenario-btn"
+              onclick="window.fillScenario('help')"
+              data-ai-action="fill-scenario"
+              aria-label="填入帮助别人情境"
+            >
+              <span aria-hidden="true">🤝</span> 帮助别人
             </button>
           </div>
           <details style="margin-bottom: 10px">
@@ -1318,6 +1420,7 @@
             rows="6"
             placeholder="例如：大二时帮社团设计了一套年度活动方案，从零开始确定主题、联系场地、拉人报名，最后远超预期……"
             oninput="window.onExperienceInput()"
+            data-testid="phase2-experience-input"
           ></textarea>
           <div class="char-hint" id="expCharHint">0 / 60字</div>
         </div>
@@ -1368,6 +1471,7 @@
           id="p2SubmitBtn"
           disabled
           onclick="window.submitPhase2()"
+          data-ai-action="ai-generate"
         >
           让 AI 分析我的才能 →
         </button>
@@ -1382,6 +1486,7 @@
           id="p2NextBtn"
           style="display: none"
           onclick="window.goPhase3()"
+          data-ai-action="next-phase"
         >
           下一步：探索你的价值观 →
         </button>
@@ -1423,6 +1528,7 @@
             rows="3"
             placeholder="例如：我最尊敬马斯克，因为他愿意用全部资产赌一个几乎不可能实现的愿景…"
             oninput="window.onValueInput()"
+            data-testid="phase3-v1-input"
           ></textarea>
           <div class="char-hint" id="v1CharHint">0 / 10字</div>
         </div>
@@ -1436,6 +1542,7 @@
             rows="3"
             placeholder="例如：小时候家里穷，所以我特别在意财务安全感，同时也很珍视努力能改变命运这件事…"
             oninput="window.onValueInput()"
+            data-testid="phase3-v2-input"
           ></textarea>
           <div class="char-hint" id="v2CharHint">0 / 10字</div>
         </div>
@@ -1449,6 +1556,7 @@
             rows="3"
             placeholder="例如：我很不满教育系统只教学生应试，却从不教他们如何思考和创造…"
             oninput="window.onValueInput()"
+            data-testid="phase3-v3-input"
           ></textarea>
           <div class="char-hint" id="v3CharHint">0 / 10字</div>
         </div>
@@ -1459,6 +1567,7 @@
             rows="3"
             placeholder="例如：朋友说我对「公平」很执着，也很重视说到做到…"
             oninput="window.onValueInput()"
+            data-testid="phase3-v4-input"
           ></textarea>
           <div class="char-hint" id="v4CharHint">0 / 10字</div>
         </div>
@@ -1472,6 +1581,7 @@
             rows="3"
             placeholder="例如：我会告诉自己别那么在意别人的眼光，提前多探索、多试错，比等到想清楚再行动要好得多……"
             oninput="window.onValueInput()"
+            data-testid="phase3-v5-input"
           ></textarea>
           <div class="char-hint" id="v5CharHint">0 / 10字</div>
         </div>
@@ -1481,6 +1591,7 @@
           id="p3SubmitBtn"
           disabled
           onclick="window.submitPhase3()"
+          data-ai-action="ai-generate"
         >
           AI 提炼我的价值观关键词 →
         </button>
@@ -1532,6 +1643,7 @@
                 rows="3"
                 placeholder="点击上方选项自动填入，也可以直接输入…"
                 oninput="window.onOutwardInput()"
+                data-testid="phase3-outward-input"
               ></textarea>
             </div>
           </div>
@@ -1540,6 +1652,7 @@
             id="p3NextBtn"
             style="display: none"
             onclick="window.goPhase4()"
+            data-ai-action="next-phase"
           >
             最后一步：发现你想做的事 →
           </button>
@@ -1565,8 +1678,15 @@
           <p>喜欢的事 × 擅长的事，价值观为底座</p>
         </div>
 
-        <div id="p4Loading" class="loading-full">
-          <div class="pulse"><span></span><span></span><span></span></div>
+        <div
+          id="p4Loading"
+          class="loading-full"
+          aria-live="polite"
+          aria-label="AI 正在生成结果，请稍候"
+        >
+          <div class="pulse" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
           <p>正在为你生成专属的「想做的事」候选…</p>
         </div>
 
@@ -1622,18 +1742,26 @@
               background: var(--bg-card);
               color: var(--purple);
             "
+            data-ai-action="reselect-result"
           >
             ← 重新选择其他方向
           </button>
-          <button class="btn-secondary" onclick="window.copyResult()">
-            📋 复制结果
+          <button
+            class="btn-secondary"
+            onclick="window.copyResult()"
+            data-ai-action="copy-result"
+            aria-label="复制结果到剪贴板"
+          >
+            <span aria-hidden="true">📋</span> 复制结果
           </button>
           <button
             class="btn-secondary"
             onclick="window.printResult()"
             style="margin-top: 8px"
+            data-ai-action="print-result"
+            aria-label="打印或保存结果"
           >
-            🖨️ 打印结果
+            <span aria-hidden="true">🖨️</span> 打印结果
           </button>
           <a
             href="index.html"
@@ -1652,11 +1780,23 @@
 
     <!-- ══════════════ NAV BAR ══════════════ -->
     <div class="nav-bar" id="navBar">
-      <button class="nav-btn-prev" id="prevBtn" onclick="window.nav(-1)">
+      <button
+        class="nav-btn-prev"
+        id="prevBtn"
+        onclick="window.nav(-1)"
+        data-ai-action="prev-phase"
+        aria-label="上一步"
+      >
         ← 上一步
       </button>
       <span style="font-size: 12px; color: var(--gray)" id="navHint"></span>
-      <button class="nav-btn-next" id="nextBtn" onclick="window.nav(1)">
+      <button
+        class="nav-btn-next"
+        id="nextBtn"
+        onclick="window.nav(1)"
+        data-ai-action="next-phase"
+        aria-label="下一步"
+      >
         下一步 →
       </button>
     </div>
@@ -1824,7 +1964,7 @@
                 return (
                   '<button class="keyword-chip' +
                   (sel ? " selected" : "") +
-                  '" onclick="window.selectKeyword(this,\'' +
+                  '" data-ai-action="select-option" onclick="window.selectKeyword(this,\'' +
                   kw +
                   "')\">" +
                   kw +
@@ -1853,7 +1993,7 @@
                   return (
                     '<button class="value-stmt-btn' +
                     (sel ? " selected" : "") +
-                    '" onclick="window.selectValueStmt(' +
+                    '" data-ai-action="select-value-prop" onclick="window.selectValueStmt(' +
                     i +
                     ')">' +
                     stmt +
@@ -1928,6 +2068,21 @@
           _saveTimer = setTimeout(saveProgress, 1500);
         }
 
+        // FIX 5: restore phase from URL hash on page load
+        (function () {
+          var hashMatch = window.location.hash.match(/[#&]phase=([1-4])/);
+          if (hashMatch) {
+            var hashPhase = parseInt(hashMatch[1], 10);
+            if (hashPhase >= 1 && hashPhase <= 4) {
+              var saved = loadSavedProgress();
+              if (saved && saved.phase >= hashPhase) {
+                // Defer to after S is initialised — use a flag
+                window.__FWYW_RESTORE_PHASE__ = hashPhase;
+              }
+            }
+          }
+        })();
+
         var PHASE_NAMES = ["喜欢的事", "擅长的事", "价值观", "综合分析"];
 
         function showPhase(n) {
@@ -1965,6 +2120,16 @@
               n === 4 ? "✅ 完成" : "下一步 →";
           }
           window.scrollTo({ top: 0, behavior: "smooth" });
+          // FIX 5: sync phase to URL hash
+          if (n > 0) {
+            history.replaceState(null, "", "#phase=" + n);
+          } else {
+            history.replaceState(
+              null,
+              "",
+              window.location.pathname + window.location.search,
+            );
+          }
         }
         // Expose showPhase to window for inline onclick handlers
         window.showPhase = showPhase;
@@ -2431,7 +2596,7 @@
             grid.innerHTML = S.allKeywords
               .map(function (kw) {
                 return (
-                  '<button class="keyword-chip" onclick="window.selectKeyword(this,\'' +
+                  '<button class="keyword-chip" data-ai-action="select-option" onclick="window.selectKeyword(this,\'' +
                   kw +
                   "')\">" +
                   kw +
@@ -2692,7 +2857,7 @@
           container.innerHTML = S.valueStatements
             .map(function (stmt, i) {
               return (
-                '<button class="value-stmt-btn" onclick="window.selectValueStmt(' +
+                '<button class="value-stmt-btn" data-ai-action="select-value-prop" onclick="window.selectValueStmt(' +
                 i +
                 ')">' +
                 stmt +
@@ -2785,7 +2950,9 @@
           container.innerHTML = S.finalCandidates
             .map(function (c, i) {
               return (
-                '<div class="result-card" onclick="window.selectResult(' +
+                '<div class="result-card" role="button" tabindex="0" data-ai-action="select-value-prop" onclick="window.selectResult(' +
+                i +
+                ")\" onkeydown=\"if(event.key==='Enter'||event.key===' ')window.selectResult(" +
                 i +
                 ')">' +
                 '<div class="rc-title">' +
@@ -2880,35 +3047,65 @@
               });
             return;
           }
-          var printWin = window.open("", "_blank");
-          printWin.document.write(
-            '<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8">' +
-              "<title>我的探索结果 - 校园VC</title>" +
-              "<style>" +
-              "body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;max-width:600px;margin:40px auto;padding:0 20px;color:#1e1b4b;}" +
-              "h1{font-size:20px;text-align:center;margin-bottom:24px;}" +
-              ".final-box{background:#7c3aed;color:white;border-radius:12px;padding:24px;text-align:center;margin:16px 0;}" +
-              ".final-box h3{font-size:18px;font-weight:700;margin-bottom:8px;}" +
-              ".final-title{font-size:22px;font-weight:800;margin:12px 0;}" +
-              ".final-meta{font-size:13px;opacity:.85;}" +
-              ".ai-card{background:#f0f7ff;border:1px solid #dbeafe;border-radius:8px;padding:14px;margin-top:12px;}" +
-              ".ai-label{font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:6px;}" +
-              ".ai-body{font-size:14px;line-height:1.6;}" +
-              ".monetize-card{background:#fafafa;border-radius:8px;padding:12px 14px;margin-bottom:8px;}" +
-              ".mono-label{font-size:13px;font-weight:700;color:#5b21b6;margin-bottom:4px;}" +
-              ".mono-body{font-size:14px;line-height:1.5;}" +
-              ".footer{text-align:center;margin-top:32px;font-size:12px;color:#6b7280;}" +
-              ".btn-secondary{display:none;}" +
-              "</style></head><body>" +
-              "<h1>🔮 我的「想做的事」探索结果</h1>" +
-              el.innerHTML +
-              '<div class="footer">—— 通过「如何找到想做的事」互动工具 @ 校园VC<br>xiaoyuanvc.com/resources/find-what-you-want.html</div>' +
-              "</body></html>",
-          );
-          printWin.document.close();
-          printWin.focus();
-          printWin.print();
+          try {
+            var printWin = window.open("", "_blank");
+            if (!printWin) throw new Error("blocked");
+            printWin.document.write(
+              '<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8">' +
+                "<title>我的探索结果 - 校园VC</title>" +
+                "<style>" +
+                "body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;max-width:600px;margin:40px auto;padding:0 20px;color:#1e1b4b;}" +
+                "h1{font-size:20px;text-align:center;margin-bottom:24px;}" +
+                ".final-box{background:#7c3aed;color:white;border-radius:12px;padding:24px;text-align:center;margin:16px 0;}" +
+                ".final-box h3{font-size:18px;font-weight:700;margin-bottom:8px;}" +
+                ".final-title{font-size:22px;font-weight:800;margin:12px 0;}" +
+                ".final-meta{font-size:13px;opacity:.85;}" +
+                ".ai-card{background:#f0f7ff;border:1px solid #dbeafe;border-radius:8px;padding:14px;margin-top:12px;}" +
+                ".ai-label{font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:6px;}" +
+                ".ai-body{font-size:14px;line-height:1.6;}" +
+                ".monetize-card{background:#fafafa;border-radius:8px;padding:12px 14px;margin-bottom:8px;}" +
+                ".mono-label{font-size:13px;font-weight:700;color:#5b21b6;margin-bottom:4px;}" +
+                ".mono-body{font-size:14px;line-height:1.5;}" +
+                ".footer{text-align:center;margin-top:32px;font-size:12px;color:#6b7280;}" +
+                ".btn-secondary{display:none;}" +
+                "</style></head><body>" +
+                "<h1>🔮 我的「想做的事」探索结果</h1>" +
+                el.innerHTML +
+                '<div class="footer">—— 通过「如何找到想做的事」互动工具 @ 校园VC<br>xiaoyuanvc.com/resources/find-what-you-want.html</div>' +
+                "</body></html>",
+            );
+            printWin.document.close();
+            printWin.focus();
+            printWin.print();
+          } catch (e) {
+            // Fallback: copy to clipboard when window.open is blocked
+            var c2 = S.finalCandidates[S.chosenIndex];
+            var fallbackText =
+              "我的「想做的事」探索结果\n\n" +
+              c2.title +
+              "\n\n" +
+              c2.why +
+              "\n\n第一步：" +
+              c2.step +
+              "\n\n—— 通过「如何找到想做的事」互动工具 @ 校园VC\nxiaoyuanvc.com/resources/find-what-you-want.html";
+            navigator.clipboard
+              .writeText(fallbackText)
+              .then(function () {
+                window.alert("已复制到剪贴板（浏览器阻止了新窗口）");
+              })
+              .catch(function () {
+                window.alert("请截图保存结果");
+              });
+          }
         };
+
+        // FIX 5: apply hash-based phase restore after all functions are defined
+        (function () {
+          var targetPhase = window.__FWYW_RESTORE_PHASE__;
+          if (!targetPhase) return;
+          delete window.__FWYW_RESTORE_PHASE__;
+          window.resumeProgress();
+        })();
       })();
     </script>
   </body>

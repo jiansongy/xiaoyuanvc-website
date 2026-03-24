@@ -794,7 +794,12 @@
                 ⏱ 填写约 2 分钟 &nbsp;|&nbsp; 🤖 AI 即时自检 &nbsp;|&nbsp; 🎯
                 专为校园创业设计
               </div>
-              <button class="btn-start" onclick="window.goInput()">
+              <button
+                class="btn-start"
+                onclick="window.goInput()"
+                data-ai-action="start"
+                aria-label="开始自检评估"
+              >
                 开始自检
               </button>
             </div>
@@ -820,6 +825,7 @@
               </label>
               <textarea
                 id="fProduct"
+                data-testid="product-input"
                 placeholder="例如：一个帮大学生找兼职的 AI 匹配平台，根据学生的课表、技能和偏好智能推荐最合适的兼职岗位..."
                 oninput="window.onProductInput()"
               ></textarea>
@@ -834,6 +840,7 @@
               <input
                 type="text"
                 id="fAudience"
+                data-testid="audience-input"
                 placeholder="例如：大一到大三、想找实习和兼职的在校生"
                 oninput="window.saveState()"
               />
@@ -847,6 +854,7 @@
               <input
                 type="text"
                 id="fModel"
+                data-testid="model-input"
                 placeholder="例如：向企业收招聘费，免费给学生用"
                 oninput="window.saveState()"
               />
@@ -857,7 +865,11 @@
                 <span class="q-num">4</span>
                 你现在在哪个阶段？
               </label>
-              <select id="fStage" onchange="window.saveState()">
+              <select
+                id="fStage"
+                data-testid="stage-select"
+                onchange="window.saveState()"
+              >
                 <option value="只有想法">只有想法</option>
                 <option value="已做用户访谈">已做用户访谈</option>
                 <option value="已做 MVP">已做 MVP</option>
@@ -874,6 +886,7 @@
               <input
                 type="text"
                 id="fTeam"
+                data-testid="team-input"
                 placeholder="例如：计算机专业 + 有运营经验，或 独立创始人、设计背景"
                 oninput="window.saveState()"
               />
@@ -904,6 +917,8 @@
               id="btnScore"
               disabled
               onclick="window.doScore()"
+              data-ai-action="submit-score"
+              aria-label="提交获取AI评分"
             >
               AI 自检
             </button>
@@ -918,7 +933,9 @@
       <div id="s2" class="screen">
         <!-- Loading -->
         <div id="loadingWrap" class="loading-full" style="display: none">
-          <div class="pulse"><span></span><span></span><span></span></div>
+          <div class="pulse" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
           <p id="loadingText">AI 正在分析你的创业想法...</p>
         </div>
 
@@ -942,7 +959,9 @@
           <!-- AI Analysis -->
           <div class="ai-card">
             <div class="ai-label">
-              <span class="pulse"><span></span><span></span><span></span></span>
+              <span class="pulse" aria-hidden="true"
+                ><span></span><span></span><span></span
+              ></span>
               <span id="aiStatusLabel">AI 分析中</span>
             </div>
             <div class="ai-body" id="aiBody"></div>
@@ -950,16 +969,27 @@
 
           <!-- Action buttons -->
           <div class="btn-row">
-            <button class="btn-outline" onclick="window.tryAnother()">
+            <button
+              class="btn-outline"
+              onclick="window.tryAnother()"
+              data-ai-action="retry"
+              aria-label="重新评估"
+            >
               换个想法再评
             </button>
-            <button class="btn-gold" onclick="window.copyReport()">
+            <button
+              class="btn-gold"
+              onclick="window.copyReport()"
+              data-ai-action="copy-result"
+              aria-label="复制报告到剪贴板"
+            >
               复制自检单
             </button>
           </div>
           <button
             class="btn-outline"
             onclick="window.resetAll()"
+            aria-label="重新开始评估"
             style="
               margin-top: 10px;
               border-color: var(--gray);
@@ -1399,6 +1429,17 @@
           if (target) target.classList.add("on");
           S.screen = n;
           saveState();
+          if (n === 2) {
+            history.replaceState(null, "", "#result");
+          } else if (n === 1) {
+            history.replaceState(null, "", "#input");
+          } else {
+            history.replaceState(
+              null,
+              "",
+              window.location.pathname + window.location.search,
+            );
+          }
           window.scrollTo(0, 0);
         }
 
@@ -1476,6 +1517,11 @@
           syncFieldsToState();
           saveState();
 
+          const btnScore = document.querySelector(
+            '[data-ai-action="submit-score"]',
+          );
+          if (btnScore) btnScore.disabled = true;
+
           showScreen(2);
 
           // Show loading, hide results
@@ -1509,6 +1555,7 @@
             if (tierLabel) tierLabel.textContent = "暂未完成";
             const dimBars = document.getElementById("dimBars");
             if (dimBars) dimBars.innerHTML = "";
+            if (btnScore) btnScore.disabled = false;
             return;
           }
 
@@ -1567,6 +1614,8 @@
           } catch (e) {
             /* GA4 unavailable, non-critical */
           }
+
+          if (btnScore) btnScore.disabled = false;
         };
 
         /* ── Copy Report ── */
@@ -1676,6 +1725,13 @@
         function boot() {
           try {
             loadState();
+            // URL hash can override saved screen state
+            const hash = window.location.hash;
+            if (hash === "#result" && S.scores) {
+              S.screen = 2;
+            } else if (hash === "#input") {
+              S.screen = 1;
+            }
             if (S.screen === 2 && S.scores) {
               // Restore results screen
               showScreen(2);

@@ -384,6 +384,11 @@
       .pill:hover {
         border-color: var(--blue);
       }
+      .pill:focus-visible {
+        border-color: var(--blue);
+        outline: 2px solid var(--blue, #2563eb);
+        outline-offset: 2px;
+      }
       .pill.on {
         border-color: var(--blue);
         background: var(--blue);
@@ -409,6 +414,11 @@
       }
       .tag-pill:hover {
         border-color: var(--blue);
+      }
+      .tag-pill:focus-visible {
+        border-color: var(--blue);
+        outline: 2px solid var(--blue, #2563eb);
+        outline-offset: 2px;
       }
       .tag-pill.on {
         border-color: var(--blue);
@@ -463,6 +473,11 @@
       }
       .time-pill:hover {
         border-color: var(--blue);
+      }
+      .time-pill:focus-visible {
+        border-color: var(--blue);
+        outline: 2px solid var(--blue, #2563eb);
+        outline-offset: 2px;
       }
       .time-pill.on {
         border-color: var(--blue);
@@ -1019,7 +1034,7 @@
   <body>
     <!-- Header -->
     <header class="header">
-      <span style="font-size: 22px">&#x1F916;</span>
+      <span style="font-size: 22px" aria-hidden="true">&#x1F916;</span>
       <div style="flex: 1">
         <h1 style="margin-bottom: 0">AI 员工面试</h1>
         <p>找到最能帮你的 AI 员工</p>
@@ -1027,6 +1042,7 @@
       <a
         href="https://xiaoyuanvc.com"
         target="_blank"
+        rel="noopener noreferrer"
         style="
           display: flex;
           align-items: center;
@@ -1065,7 +1081,7 @@
       <div class="intro-wrap">
         <div class="intro-card">
           <div class="intro-head">
-            <span class="hero-emoji">&#x1F916;</span>
+            <span class="hero-emoji" aria-hidden="true">&#x1F916;</span>
             <h2>AI 员工面试</h2>
             <p>面试你的 AI 员工候选人，找到最能帮到你日常工作的那几位</p>
           </div>
@@ -1096,11 +1112,19 @@
               <strong>面试结果：</strong>为你匹配 3 位 AI
               员工，附带上岗指南、优先级排序、7 天试用计划
             </div>
-            <div class="intro-meta">
-              &#x23F1; 约 6 分钟 &nbsp;|&nbsp; &#x1F916; 1 次 AI 诊断
-              &nbsp;|&nbsp; &#x1F4CA; 可打印 PDF
+            <div
+              class="intro-meta"
+              aria-label="约 6 分钟 | 1 次 AI 诊断 | 可打印 PDF"
+            >
+              <span aria-hidden="true">&#x23F1;</span> 约 6 分钟 &nbsp;|&nbsp;
+              <span aria-hidden="true">&#x1F916;</span> 1 次 AI 诊断
+              &nbsp;|&nbsp; <span aria-hidden="true">&#x1F4CA;</span> 可打印 PDF
             </div>
-            <button class="btn btn-primary btn-full" id="startBtn">
+            <button
+              class="btn btn-primary btn-full"
+              id="startBtn"
+              data-ai-action="start"
+            >
               开始面试 &#x2192;
             </button>
             <button
@@ -1123,17 +1147,23 @@
       <div class="card">
         <p class="step-title">你是？</p>
         <p class="step-desc">选择最符合你的身份</p>
-        <div class="pill-grid" id="roleGrid"></div>
+        <div role="group" aria-label="选择你的身份">
+          <div class="pill-grid" id="roleGrid"></div>
+        </div>
       </div>
       <div class="card">
         <p class="step-title">你的行业？</p>
         <p class="step-desc">选择你所在的行业</p>
-        <div class="pill-grid" id="industryGrid"></div>
+        <div role="group" aria-label="选择你的行业">
+          <div class="pill-grid" id="industryGrid"></div>
+        </div>
       </div>
       <div class="card">
         <p class="step-title">团队规模？</p>
         <p class="step-desc">目前团队有多少人</p>
-        <div class="pill-grid" id="teamSizeGrid"></div>
+        <div role="group" aria-label="选择团队规模">
+          <div class="pill-grid" id="teamSizeGrid"></div>
+        </div>
       </div>
     </div>
 
@@ -1142,7 +1172,9 @@
       <div class="card">
         <p class="step-title">想想你典型的一天，时间都花在哪了？</p>
         <p class="step-desc">选出你经常要做的事，并标注大概花多少时间</p>
-        <div class="tag-cloud" id="taskTagCloud"></div>
+        <div role="group" aria-label="选择日常任务">
+          <div class="tag-cloud" id="taskTagCloud"></div>
+        </div>
         <div class="custom-tag-row">
           <input
             type="text"
@@ -1160,7 +1192,7 @@
       </div>
       <div id="timeRanking" style="display: none">
         <div class="time-ranking">
-          <h4>&#x23F3; 时间黑洞排行</h4>
+          <h4><span aria-hidden="true">&#x23F3;</span> 时间黑洞排行</h4>
           <div id="rankingList"></div>
         </div>
       </div>
@@ -1178,7 +1210,9 @@
       <div id="top3Cards"></div>
       <div class="card">
         <p class="step-title">你最希望 AI 先帮你解决什么？</p>
-        <div class="pill-grid" id="aiGoalGrid"></div>
+        <div role="group" aria-label="选择 AI 目标">
+          <div class="pill-grid" id="aiGoalGrid"></div>
+        </div>
       </div>
       <div class="validation-hint" id="s3Hint"></div>
     </div>
@@ -1189,29 +1223,35 @@
         <h2 class="analysis-title">正在为你生成 AI 诊断方案</h2>
         <div class="analysis-steps" id="analysisSteps">
           <div class="analysis-step" data-step="0">
-            <span class="analysis-icon">&#x1F4CB;</span>
+            <span class="analysis-icon" aria-hidden="true">&#x1F4CB;</span>
             <span class="analysis-text">正在梳理你的工作流...</span>
-            <span class="analysis-check">&#x2713;</span>
+            <span class="analysis-check" aria-hidden="true">&#x2713;</span>
           </div>
           <div class="analysis-step" data-step="1">
-            <span class="analysis-icon">&#x1F50D;</span>
+            <span class="analysis-icon" aria-hidden="true">&#x1F50D;</span>
             <span class="analysis-text">正在识别高频重复环节...</span>
-            <span class="analysis-check">&#x2713;</span>
+            <span class="analysis-check" aria-hidden="true">&#x2713;</span>
           </div>
           <div class="analysis-step" data-step="2">
-            <span class="analysis-icon">&#x1F916;</span>
+            <span class="analysis-icon" aria-hidden="true">&#x1F916;</span>
             <span class="analysis-text">正在匹配适合的 AI 用法...</span>
-            <span class="analysis-check">&#x2713;</span>
+            <span class="analysis-check" aria-hidden="true">&#x2713;</span>
           </div>
           <div class="analysis-step" data-step="3">
-            <span class="analysis-icon">&#x2728;</span>
+            <span class="analysis-icon" aria-hidden="true">&#x2728;</span>
             <span class="analysis-text">正在生成你的专属方案...</span>
-            <span class="analysis-check">&#x2713;</span>
+            <span class="analysis-check" aria-hidden="true">&#x2713;</span>
           </div>
         </div>
         <div class="analysis-error" id="analysisError" style="display: none">
           <p class="error-text" id="errorText"></p>
-          <button class="btn btn-primary" id="retryBtn">重新分析</button>
+          <button
+            class="btn btn-primary"
+            id="retryBtn"
+            data-ai-action="start-analysis"
+          >
+            重新分析
+          </button>
         </div>
       </div>
     </div>
@@ -1225,8 +1265,12 @@
     <!-- Nav bar -->
     <div class="nav-bar" id="navBar">
       <div class="nav-bar-inner">
-        <button class="btn btn-ghost" id="prevBtn">&#x2190; 上一步</button>
-        <button class="btn btn-primary" id="nextBtn">下一步 &#x2192;</button>
+        <button class="btn btn-ghost" id="prevBtn" data-ai-action="prev-step">
+          &#x2190; 上一步
+        </button>
+        <button class="btn btn-primary" id="nextBtn" data-ai-action="next-step">
+          下一步 &#x2192;
+        </button>
       </div>
     </div>
 
@@ -1565,6 +1609,12 @@
           });
           var target = $("s" + n);
           if (target) target.classList.add("on");
+          // Sync URL hash
+          try {
+            history.replaceState(null, "", "#step=" + n);
+          } catch (e) {
+            /* may be blocked in some contexts */
+          }
 
           var pw = $("progressWrap");
           var nb = $("navBar");
@@ -1662,13 +1712,20 @@
             pill.textContent = opt;
             pill.setAttribute("role", "button");
             pill.setAttribute("tabindex", "0");
+            pill.setAttribute("aria-label", opt);
+            pill.setAttribute(
+              "aria-pressed",
+              opt === currentValue ? "true" : "false",
+            );
             pill.addEventListener("click", function () {
               onSelect(opt);
-              // Update visual state
+              // Update visual state and aria-pressed
               container.querySelectorAll(".pill").forEach(function (p) {
                 p.classList.remove("on");
+                p.setAttribute("aria-pressed", "false");
               });
               pill.classList.add("on");
+              pill.setAttribute("aria-pressed", "true");
             });
             container.appendChild(pill);
           });
@@ -1701,12 +1758,14 @@
           });
 
           allNames.forEach(function (name) {
+            var isSelected = selectedNames.indexOf(name) >= 0;
             var pill = document.createElement("div");
-            pill.className =
-              "tag-pill" + (selectedNames.indexOf(name) >= 0 ? " on" : "");
+            pill.className = "tag-pill" + (isSelected ? " on" : "");
             pill.textContent = name;
             pill.setAttribute("role", "button");
             pill.setAttribute("tabindex", "0");
+            pill.setAttribute("aria-label", name);
+            pill.setAttribute("aria-pressed", isSelected ? "true" : "false");
             pill.addEventListener("click", function () {
               toggleTask(name, false);
             });
@@ -1783,12 +1842,14 @@
             pillsWrap.className = "time-pills";
 
             TIME_LABELS.forEach(function (label, lIdx) {
+              var isActive = task.time === TIME_VALUES[lIdx];
               var tp = document.createElement("div");
-              tp.className =
-                "time-pill" + (task.time === TIME_VALUES[lIdx] ? " on" : "");
+              tp.className = "time-pill" + (isActive ? " on" : "");
               tp.textContent = label;
               tp.setAttribute("role", "button");
               tp.setAttribute("tabindex", "0");
+              tp.setAttribute("aria-label", label);
+              tp.setAttribute("aria-pressed", isActive ? "true" : "false");
               tp.addEventListener("click", function () {
                 S.tasks[tIdx].time = TIME_VALUES[lIdx];
                 save();
@@ -1895,6 +1956,9 @@
             q1Label.textContent = "频率";
             card.appendChild(q1Label);
 
+            var freqGroupWrap = document.createElement("div");
+            freqGroupWrap.setAttribute("role", "group");
+            freqGroupWrap.setAttribute("aria-label", "频率选择");
             var freqGrid = document.createElement("div");
             freqGrid.className = "pill-grid";
             FREQ_OPTIONS.forEach(function (opt) {
@@ -1903,18 +1967,26 @@
               pill.textContent = opt;
               pill.setAttribute("role", "button");
               pill.setAttribute("tabindex", "0");
+              pill.setAttribute("aria-label", opt);
+              pill.setAttribute(
+                "aria-pressed",
+                item.freq === opt ? "true" : "false",
+              );
               pill.addEventListener("click", function () {
                 S.top3[idx].freq = opt;
                 save();
                 freqGrid.querySelectorAll(".pill").forEach(function (p) {
                   p.classList.remove("on");
+                  p.setAttribute("aria-pressed", "false");
                 });
                 pill.classList.add("on");
+                pill.setAttribute("aria-pressed", "true");
                 updateNextButtonState();
               });
               freqGrid.appendChild(pill);
             });
-            card.appendChild(freqGrid);
+            freqGroupWrap.appendChild(freqGrid);
+            card.appendChild(freqGroupWrap);
 
             // Q2: Pain point textarea
             var q2Label = document.createElement("div");
@@ -1927,6 +1999,7 @@
             textarea.maxLength = 200;
             textarea.value = item.pain || "";
             textarea.style.minHeight = "60px";
+            textarea.setAttribute("data-testid", "context-input-" + idx);
             textarea.addEventListener("input", function () {
               S.top3[idx].pain = textarea.value;
               save();
@@ -1939,6 +2012,9 @@
             q3Label.textContent = "做不好的后果";
             card.appendChild(q3Label);
 
+            var riskGroupWrap = document.createElement("div");
+            riskGroupWrap.setAttribute("role", "group");
+            riskGroupWrap.setAttribute("aria-label", "后果选择");
             var riskGrid = document.createElement("div");
             riskGrid.className = "pill-grid";
             RISK_OPTIONS.forEach(function (opt) {
@@ -1947,18 +2023,26 @@
               pill.textContent = opt;
               pill.setAttribute("role", "button");
               pill.setAttribute("tabindex", "0");
+              pill.setAttribute("aria-label", opt);
+              pill.setAttribute(
+                "aria-pressed",
+                item.risk === opt ? "true" : "false",
+              );
               pill.addEventListener("click", function () {
                 S.top3[idx].risk = opt;
                 save();
                 riskGrid.querySelectorAll(".pill").forEach(function (p) {
                   p.classList.remove("on");
+                  p.setAttribute("aria-pressed", "false");
                 });
                 pill.classList.add("on");
+                pill.setAttribute("aria-pressed", "true");
                 updateNextButtonState();
               });
               riskGrid.appendChild(pill);
             });
-            card.appendChild(riskGrid);
+            riskGroupWrap.appendChild(riskGrid);
+            card.appendChild(riskGroupWrap);
 
             container.appendChild(card);
           });
@@ -2452,6 +2536,8 @@
                   '">' +
                   '<input type="checkbox" data-cb="' +
                   cbIdx +
+                  '" data-testid="action-item-' +
+                  cbIdx +
                   '"' +
                   (checked ? " checked" : "") +
                   " />" +
@@ -2549,9 +2635,9 @@
         function buildActionBar() {
           return (
             '<div class="report-actions">' +
-            '<button class="btn btn-primary" id="printBtn">&#x1F5A8;&#xFE0F; 打印 / 导出 PDF</button>' +
-            '<button class="btn btn-outline" id="shareBtn">&#x1F4CB; 复制分享文字</button>' +
-            '<button class="btn btn-outline" id="reviewBtn">&#x1F440; 查看我的回答</button>' +
+            '<button class="btn btn-primary" id="printBtn" data-ai-action="print-report"><span aria-hidden="true">&#x1F5A8;&#xFE0F;</span> 打印 / 导出 PDF</button>' +
+            '<button class="btn btn-outline" id="shareBtn" data-ai-action="share-report"><span aria-hidden="true">&#x1F4CB;</span> 复制分享文字</button>' +
+            '<button class="btn btn-outline" id="reviewBtn"><span aria-hidden="true">&#x1F440;</span> 查看我的回答</button>' +
             '<button class="btn btn-ghost" id="restartBtn">&#x1F504; 重新诊断</button>' +
             "</div>"
           );
@@ -2835,6 +2921,32 @@
         function init() {
           load();
           bindEvents();
+
+          // Restore step from URL hash if present and valid
+          try {
+            var hashMatch = window.location.hash.match(/[#&]?step=(\d+)/);
+            if (hashMatch) {
+              var hashStep = parseInt(hashMatch[1], 10);
+              if (hashStep >= 1 && hashStep <= 5) {
+                // Only restore if it matches or precedes saved state
+                if (hashStep === 5 && S.report) {
+                  showStep(5);
+                  renderS5();
+                  return;
+                } else if (
+                  hashStep >= 1 &&
+                  hashStep <= 3 &&
+                  S.step >= hashStep
+                ) {
+                  showStep(hashStep);
+                  render(hashStep);
+                  return;
+                }
+              }
+            }
+          } catch (e) {
+            /* hash restore failed, proceed normally */
+          }
 
           // Show resume button if user has progress
           if (S.step > 0) {

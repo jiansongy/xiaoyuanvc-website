@@ -1026,6 +1026,7 @@
                 class="tag-input"
                 id="sInput"
                 placeholder="输入技能，按回车添加…"
+                data-testid="skills-input"
               />
             </div>
             <p style="font-size: 12px; color: var(--gray); margin-top: 8px">
@@ -1102,7 +1103,12 @@
             </div>
             <button class="add-btn" onclick="addScore()">＋ 添加一行</button>
             <div class="mt-14">
-              <button class="btn btn-ai" id="aiBtn4" onclick="callAI(4)">
+              <button
+                class="btn btn-ai"
+                id="aiBtn4"
+                onclick="callAI(4)"
+                data-ai-action="ai-generate-step4"
+              >
                 🤖 获取 AI 教练点评（可选）
               </button>
             </div>
@@ -1132,7 +1138,12 @@
             </p>
             <div id="s5Body"></div>
             <div class="mt-14">
-              <button class="btn btn-ai" id="aiBtn5" onclick="callAI(5)">
+              <button
+                class="btn btn-ai"
+                id="aiBtn5"
+                onclick="callAI(5)"
+                data-ai-action="ai-generate-step5"
+              >
                 🤖 AI 帮我综合分析，找出最适合的定位（可选）
               </button>
             </div>
@@ -1158,7 +1169,12 @@
             </p>
             <div class="medal-grid" id="medalGrid"></div>
             <div class="mt-14">
-              <button class="btn btn-ai" id="aiBtn6" onclick="callAI(6)">
+              <button
+                class="btn btn-ai"
+                id="aiBtn6"
+                onclick="callAI(6)"
+                data-ai-action="ai-generate-step6"
+              >
                 🔬 AI 为我的 Top 3 生成验证方案（可选）
               </button>
             </div>
@@ -1195,7 +1211,11 @@
               >
                 📋 复制分析
               </button>
-              <button class="btn btn-primary" onclick="window.print()">
+              <button
+                class="btn btn-primary"
+                onclick="window.print()"
+                data-ai-action="print"
+              >
                 🖨️ 打印保存
               </button>
               <button class="btn btn-outline" onclick="resetApp()">
@@ -1209,11 +1229,21 @@
 
     <!-- ══════════════ NAV BAR ══════════════ -->
     <div class="nav-bar" id="navBar">
-      <button class="btn btn-outline" id="prevBtn" onclick="nav(-1)">
+      <button
+        class="btn btn-outline"
+        id="prevBtn"
+        onclick="nav(-1)"
+        data-ai-action="prev-step"
+      >
         ← 上一步
       </button>
       <span style="font-size: 12px; color: var(--gray)" id="navHint"></span>
-      <button class="btn btn-primary" id="nextBtn" onclick="nav(1)">
+      <button
+        class="btn btn-primary"
+        id="nextBtn"
+        onclick="nav(1)"
+        data-ai-action="next-step"
+      >
         下一步 →
       </button>
     </div>
@@ -1352,6 +1382,7 @@
         window.startApp = function () {
           S.step = 1;
           save();
+          history.replaceState(null, "", "#step=1");
           showStep(1);
           render(1);
         };
@@ -1364,6 +1395,7 @@
           const next = S.step + dir;
           if (next < 1 || next > 6) return;
           S.step = next;
+          history.replaceState(null, "", "#step=" + next);
           showStep(next);
           render(next);
           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1456,8 +1488,8 @@
             row.className = "idea-row";
             row.innerHTML = `
         <input type="text" value="${esc(v)}" placeholder="我想关注 [哪类人] 的 [什么烦恼/需求]…"
-          oninput="S.ideas[${i}]=this.value" style="flex:1">
-        ${i > 0 ? `<button class="btn btn-ghost" onclick="delIdea(${i})">✕</button>` : ""}
+          oninput="S.ideas[${i}]=this.value" style="flex:1" data-testid="idea-${i}-input">
+        ${i > 0 ? `<button class="btn btn-ghost" onclick="delIdea(${i})" aria-label="删除第${i + 1}条想法">✕</button>` : ""}
       `;
             box.appendChild(row);
           });
@@ -1503,7 +1535,7 @@
           S.skills.forEach((sk, i) => {
             const t = document.createElement("span");
             t.className = "tag";
-            t.innerHTML = `${esc(sk)} <span class="tag-x" onclick="delSkill(${i})">×</span>`;
+            t.innerHTML = `${esc(sk)} <span class="tag-x" onclick="delSkill(${i})" role="button" tabindex="0" aria-label="删除技能：${esc(sk)}" onkeydown="if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}">×</span>`;
             container.appendChild(t);
           });
           document.getElementById("sCount").textContent = S.skills.length;
@@ -1587,10 +1619,11 @@
 
         function tlCell(row, field) {
           const v = S.scores[row][field];
-          return `<div class="tl">
-      <div class="tl-dot g ${v === "g" ? "on" : ""}" title="绿：强烈肯定" onclick="setTL(${row},'${field}','g')"></div>
-      <div class="tl-dot y ${v === "y" ? "on" : ""}" title="黄：有些疑虑" onclick="setTL(${row},'${field}','y')"></div>
-      <div class="tl-dot r ${v === "r" ? "on" : ""}" title="红：重大顾虑" onclick="setTL(${row},'${field}','r')"></div>
+          const kd = `if(event.key==='Enter'||event.key===' '){this.click();event.preventDefault();}`;
+          return `<div class="tl" role="group" aria-label="${field === "like" ? "喜欢吗" : field === "help" ? "能帮吗" : "愿付费"}评分">
+      <div class="tl-dot g ${v === "g" ? "on" : ""}" title="绿：强烈肯定" role="button" tabindex="0" aria-label="绿：强烈肯定" aria-pressed="${v === "g"}" onclick="setTL(${row},'${field}','g')" onkeydown="${kd}"></div>
+      <div class="tl-dot y ${v === "y" ? "on" : ""}" title="黄：有些疑虑" role="button" tabindex="0" aria-label="黄：有些疑虑" aria-pressed="${v === "y"}" onclick="setTL(${row},'${field}','y')" onkeydown="${kd}"></div>
+      <div class="tl-dot r ${v === "r" ? "on" : ""}" title="红：重大顾虑" role="button" tabindex="0" aria-label="红：重大顾虑" aria-pressed="${v === "r"}" onclick="setTL(${row},'${field}','r')" onkeydown="${kd}"></div>
     </div>`;
         }
 
@@ -1959,13 +1992,13 @@
           const body = document.getElementById(bodyId);
 
           btn.disabled = true;
-          btn.innerHTML = `<div class="pulse"><span></span><span></span><span></span></div> AI 思考中…`;
+          btn.innerHTML = `<div class="pulse" aria-hidden="true"><span></span><span></span><span></span></div> AI 思考中…`;
           card.style.display = "block";
           card.classList.remove("revealed");
           void card.offsetWidth;
           card.classList.add("revealed");
-          body.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--gray)">
-      <div class="pulse"><span></span><span></span><span></span></div> 正在分析你的创业想法…</div>`;
+          body.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--gray)" aria-live="polite">
+      <div class="pulse" aria-hidden="true"><span></span><span></span><span></span></div> 正在分析你的创业想法…</div>`;
 
           const prompt =
             step === 4 ? buildP4() : step === 5 ? buildP5() : buildP6();
@@ -2211,6 +2244,11 @@ ${rows || "（暂无填写）"}
 
         window.goHome = function () {
           save();
+          history.replaceState(
+            null,
+            "",
+            window.location.pathname + window.location.search,
+          );
           document
             .querySelectorAll(".screen")
             .forEach((el) => el.classList.remove("on"));
@@ -2291,7 +2329,16 @@ ${rows || "（暂无填写）"}
         // ══════════════════════════════════════════════
         try {
           load();
+          // Restore step from URL hash if present (overrides localStorage step)
+          const hashStep = parseInt(
+            (window.location.hash.match(/[#&]step=(\d+)/) || [])[1],
+            10,
+          );
+          if (hashStep >= 1 && hashStep <= 6) {
+            S.step = hashStep;
+          }
           if (S.step >= 1) {
+            history.replaceState(null, "", "#step=" + S.step);
             showStep(S.step);
             render(S.step);
           }
