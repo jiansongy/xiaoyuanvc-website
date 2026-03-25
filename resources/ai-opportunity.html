@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 创业机会探索器 | 校园VC</title>
+    <meta
+      name="description"
+      content="探索 12 个中国行业的 AI 创业机会。选行业、看痛点、找 AI 解法、获取验证路径。适合大学生创业者和高校创业课教师。"
+    />
+    <link
+      rel="canonical"
+      href="https://xiaoyuanvc.com/resources/ai-opportunity.html"
+    />
+    <link rel="icon" href="../assets/favicon.ico" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="校园VC" />
+    <meta property="og:title" content="AI 创业机会探索器 | 校园VC" />
+    <meta
+      property="og:description"
+      content="12 个中国行业 × AI 创业机会。选行业→看痛点→找解法→验证路径，大学生创业者和教师的实用工具。"
+    />
+    <meta
+      property="og:url"
+      content="https://xiaoyuanvc.com/resources/ai-opportunity.html"
+    />
+    <meta
+      property="og:image"
+      content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AI 创业机会探索器 | 校园VC" />
+
+    <link rel="stylesheet" href="ai-opportunity.css" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AI 创业机会探索器",
+        "description": "探索 12 个中国行业的 AI 创业机会，获取验证路径和中国可用工具栈",
+        "url": "https://xiaoyuanvc.com/resources/ai-opportunity.html",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+        "author": {
+          "@type": "EducationalOrganization",
+          "name": "校园VC",
+          "url": "https://xiaoyuanvc.com"
+        }
+      }
+    </script>
+
+    <!-- GA4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LP5EB2HW33");
+    </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="app-header">
+      <div class="app-header__left">
+        <a href="/resources/" class="app-header__back" aria-label="返回资源中心"
+          >&larr;</a
+        >
+        <div>
+          <div class="app-header__title">AI 创业机会探索器</div>
+          <div class="app-header__subtitle">
+            12 个行业 &middot; 找痛点 &middot; 验证路径
+          </div>
+        </div>
+      </div>
+      <div class="mode-toggle" role="radiogroup" aria-label="模式切换">
+        <button
+          class="mode-toggle__btn is-active"
+          data-action="set-mode"
+          data-mode="student"
+          role="radio"
+          aria-checked="true"
+        >
+          学生
+        </button>
+        <button
+          class="mode-toggle__btn"
+          data-action="set-mode"
+          data-mode="teacher"
+          role="radio"
+          aria-checked="false"
+        >
+          教师
+        </button>
+      </div>
+    </header>
+
+    <!-- Stepper -->
+    <nav class="stepper" aria-label="探索步骤">
+      <div class="stepper__dot is-active" data-step="1">1</div>
+      <div class="stepper__line"></div>
+      <div class="stepper__dot" data-step="2">2</div>
+      <div class="stepper__line"></div>
+      <div class="stepper__dot" data-step="3">3</div>
+      <div class="stepper__line"></div>
+      <div class="stepper__dot" data-step="4">4</div>
+      <div class="stepper__line"></div>
+      <div class="stepper__dot" data-step="5">5</div>
+      <span class="stepper__label" id="stepLabel">选择方向</span>
+    </nav>
+
+    <!-- Main -->
+    <main class="app-main">
+      <!-- Step 1: Categories -->
+      <section
+        class="step-section is-active"
+        id="step1"
+        aria-labelledby="step1Title"
+      >
+        <h2 class="step-title" id="step1Title">选择你感兴趣的方向</h2>
+        <p class="step-desc">每个方向包含 2-4 个细分行业，选一个最想探索的</p>
+        <div class="category-grid" id="categoryGrid"></div>
+      </section>
+
+      <!-- Step 2: Industries -->
+      <section class="step-section" id="step2" aria-labelledby="step2Title">
+        <h2 class="step-title" id="step2Title">选择具体行业</h2>
+        <p class="step-desc" id="step2Desc">选一个你最想了解的行业</p>
+        <div class="industry-list" id="industryList"></div>
+      </section>
+
+      <!-- Step 3: Pain Points -->
+      <section class="step-section" id="step3" aria-labelledby="step3Title">
+        <h2 class="step-title" id="step3Title">核心痛点</h2>
+        <p class="step-desc" id="step3Desc">
+          这个行业最真实的痛点，选一个你最想解决的
+        </p>
+        <div class="pain-list" id="painList"></div>
+      </section>
+
+      <!-- Step 4: AI Solutions -->
+      <section class="step-section" id="step4" aria-labelledby="step4Title">
+        <h2 class="step-title" id="step4Title">AI 解法</h2>
+        <p class="step-desc" id="step4Desc">针对这个痛点的 AI 解决方案</p>
+        <div class="solution-list" id="solutionList"></div>
+      </section>
+
+      <!-- Step 5: Validation -->
+      <section class="step-section" id="step5" aria-labelledby="step5Title">
+        <h2 class="step-title" id="step5Title">验证行动计划</h2>
+        <p class="step-desc">7 天内验证这个方向是否值得做</p>
+        <div id="validationContent"></div>
+      </section>
+
+      <!-- Bookmarks -->
+      <div class="bookmark-bar" id="bookmarkBar" style="display: none">
+        <div class="bookmark-bar__title">我的收藏方向</div>
+        <div class="bookmark-bar__list" id="bookmarkList"></div>
+      </div>
+    </main>
+
+    <!-- Sticky Footer -->
+    <footer class="footer-actions">
+      <button class="btn btn-prev" data-action="prev" style="display: none">
+        上一步
+      </button>
+      <button
+        class="btn btn-bookmark"
+        data-action="bookmark"
+        title="收藏当前方向"
+      >
+        &#9734;
+      </button>
+      <button class="btn btn-share" data-action="share" title="分享">
+        &#8599;
+      </button>
+      <button class="btn btn-next" data-action="next" disabled>下一步</button>
+    </footer>
+
+    <!-- SEO Static Content (always visible to crawlers) -->
+    <section class="seo-section">
+      <h2>关于 AI 创业机会探索器</h2>
+      <p>
+        这是一个帮助大学生和创业课教师发现 AI 创业机会的互动工具。 基于对 12
+        个中国行业的深度调研，覆盖内容创作、电商贸易、
+        本地生活和校园服务四大方向，每个行业都提供了真实痛点分析、 AI
+        解法、中国可用工具栈和 7 天验证路径。
+      </p>
+      <p>
+        核心方法论：先理解行业工作流，找到时间和金钱的漏损点， 然后用 AI
+        工具构建最小可行方案，在 7 天内验证是否值得继续。
+      </p>
+
+      <h2>常见问题</h2>
+      <details>
+        <summary>这个工具适合什么人？</summary>
+        <p>
+          大学生创业者（想找 AI
+          创业方向）和高校创业课教师（需要课堂案例和教学材料）。工具提供学生/教师双模式。
+        </p>
+      </details>
+      <details>
+        <summary>需要编程基础吗？</summary>
+        <p>
+          不需要。推荐的 AI 工具（如 Coze、Dify）都是零代码或低代码平台，1
+          周内可以搭建 MVP。
+        </p>
+      </details>
+      <details>
+        <summary>数据来源是什么？</summary>
+        <p>
+          行业痛点基于公开调研报告、行业白皮书和真实企业访谈，经过三模型交叉验证。
+        </p>
+      </details>
+      <details>
+        <summary>覆盖哪些行业？</summary>
+        <p>
+          4 大方向 12 个行业：垂直创作者、直播电商MCN、小红书知识卖家、
+          跨境微型卖家、电商代运营、本地消费商家、家政上门服务、
+          学生住房短租、教培机构、校园周边服务、招聘HR、留学签证咨询。
+        </p>
+      </details>
+    </section>
+
+    <script defer src="ai-opportunity-data.js"></script>
+    <script defer src="ai-opportunity.js"></script>
+  </body>
+</html>
