@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-14",
+  "display_date": "2026.03.14",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "美团 CEO 王兴倡导企业减少\"登味\"，推行内部直呼其名文化",
+          "summary": "美团 CEO 王兴倡导企业减少\"登味\"，推行内部直呼其名文化",
+          "highlight": "登味",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "苹果降低中国区 App Store 佣金，标准率 30%→25%、小企业率 15%→12%，释放平台红利",
+          "summary": "苹果降低中国区 App Store 佣金，标准率 30%→25%、小企业率 15%→12%，释放平台红利",
+          "highlight": "30%→25%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "苹果 MacBook Neo 支持独立键盘更换，打破硬件捆绑维修惯例",
+          "summary": "苹果 MacBook Neo 支持独立键盘更换，打破硬件捆绑维修惯例",
+          "highlight": "独立键盘更换",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "胖东来郑州高铁东站 4 万平米门店计划 2026 年 10 月开业",
+          "summary": "胖东来郑州高铁东站 4 万平米门店计划 2026 年 10 月开业",
+          "highlight": "4万平米",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "奔驰与吉利探讨下一代电动汽车深化合作，目前处于早期阶段",
+          "summary": "奔驰与吉利探讨下一代电动汽车深化合作，目前处于早期阶段",
+          "highlight": "",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "平台红利",
+        "App Store",
+        "登味",
+        "MacBook Neo"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC 一度触及近一个月高点 7.38 万美元，随后因伊朗局势升级急跌 3.5% 至 7.1 万美元",
+          "summary": "BTC 一度触及近一个月高点 7.38 万美元，随后因伊朗局势升级急跌 3.5% 至 7.1 万美元",
+          "highlight": "急跌 3.5%",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "美国制裁 6 人 2 家公司，涉协助朝鲜洗钱加密资产逾 8 亿美元",
+          "summary": "美国制裁 6 人 2 家公司，涉协助朝鲜洗钱加密资产逾 8 亿美元",
+          "highlight": "8 亿美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "贝莱德以太坊 ETF（ETHB）正式上线，首日交易量逾 1500 万美元、资产规模超 1 亿美元",
+          "summary": "贝莱德以太坊 ETF（ETHB）正式上线，首日交易量逾 1500 万美元、资产规模超 1 亿美元",
+          "highlight": "1500 万美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "加密鲸鱼押注 700 万美元 Trump Memecoin，数小时内获利 250 万美元",
+          "summary": "加密鲸鱼押注 700 万美元 Trump Memecoin，数小时内获利 250 万美元",
+          "highlight": "250 万美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "MoonPay 推出由 Ledger 硬件签名的 AI 加密代理，解决 AI 自主钱包安全风险",
+          "summary": "MoonPay 推出由 Ledger 硬件签名的 AI 加密代理，解决 AI 自主钱包安全风险",
+          "highlight": "AI 加密代理",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC急跌",
+        "朝鲜洗钱",
+        "贝莱德ETF",
+        "AI加密代理"
+      ]
+    }
+  }
+}

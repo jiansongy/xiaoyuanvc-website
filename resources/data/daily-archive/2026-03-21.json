@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-21",
+  "display_date": "2026.03.21",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "特斯拉向中国供应商洽购29亿美元光伏设备，苏州迈为等为主要候选",
+          "summary": "特斯拉向中国供应商洽购29亿美元光伏设备，苏州迈为等为主要候选",
+          "highlight": "29亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "豆包推出\"一句话购物\"AI电商内测，AI+电商融合新赛道开启",
+          "summary": "豆包推出\"一句话购物\"AI电商内测，AI+电商融合新赛道开启",
+          "highlight": "AI电商",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "OpenAI计划整合ChatGPT、Codex等为桌面超级应用，精简资源迎战竞争",
+          "summary": "OpenAI计划整合ChatGPT、Codex等为桌面超级应用，精简资源迎战竞争",
+          "highlight": "超级应用",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "宇树科技2025年营收17.08亿元，同比增长335.36%，净利增长674.29%",
+          "summary": "宇树科技2025年营收17.08亿元，同比增长335.36%，净利增长674.29%",
+          "highlight": "335.36%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "宇树科技科创板IPO获受理，拟融资42.02亿元，有望成\"人形机器人第一股\"",
+          "summary": "宇树科技科创板IPO获受理，拟融资42.02亿元，有望成\"人形机器人第一股\"",
+          "highlight": "42.02亿元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "人形机器人",
+        "AI电商",
+        "超级应用",
+        "特斯拉供应链"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币涨至70,800美元，石油回落提振情绪，以太坊和XRP表现落后",
+          "summary": "比特币涨至70,800美元，石油回落提振情绪，以太坊和XRP表现落后",
+          "highlight": "70,800美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Coinbase推出股票永续合约，24/7交易、USDC结算，最高20倍杠杆",
+          "summary": "Coinbase推出股票永续合约，24/7交易、USDC结算，最高20倍杠杆",
+          "highlight": "20倍杠杆",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "纳斯达克获SEC批准将股票上链，保留传统中介同时引入区块链机制",
+          "summary": "纳斯达克获SEC批准将股票上链，保留传统中介同时引入区块链机制",
+          "highlight": "股票上链",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "CoinDesk PitchFest迈阿密峰会在即，为初创项目接触行业决策者提供舞台",
+          "summary": "CoinDesk PitchFest迈阿密峰会在即，为初创项目接触行业决策者提供舞台",
+          "highlight": "PitchFest",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "伊朗战争引发地缘政治冲击，Hyperliquid石油交易量激增，吸引传统市场投资者",
+          "summary": "伊朗战争引发地缘政治冲击，Hyperliquid石油交易量激增，吸引传统市场投资者",
+          "highlight": "Hyperliquid",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "比特币",
+        "股票上链",
+        "Hyperliquid",
+        "Coinbase"
+      ]
+    }
+  }
+}

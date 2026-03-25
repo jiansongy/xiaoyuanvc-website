@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-08",
+  "display_date": "2026.03.08",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "Anthropic报告：程序员等职业AI渗透率约70%，越早拥抱AI的行业越先面临深度重构",
+          "summary": "Anthropic报告：程序员等职业AI渗透率约70%，越早拥抱AI的行业越先面临深度重构",
+          "highlight": "70%",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "国家卫健委：3300万家庭已领育儿补贴，每年3600元补至3周岁，托育消费市场加速激活",
+          "summary": "国家卫健委：3300万家庭已领育儿补贴，每年3600元补至3周岁，托育消费市场加速激活",
+          "highlight": "3300万",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "小米\"手机龙虾\"AI交互产品开启封测，雷军不推荐普通用户升级，手机端新交互范式初现",
+          "summary": "小米\"手机龙虾\"AI交互产品开启封测，雷军不推荐普通用户升级，手机端新交互范式初现",
+          "highlight": "手机龙虾",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "高等教育毛入学率突破60%，双一流高校近两年扩招3.8万人，教育科技市场持续扩容",
+          "summary": "高等教育毛入学率突破60%，双一流高校近两年扩招3.8万人，教育科技市场持续扩容",
+          "highlight": "60%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "通义千问技术负责人林俊旸正式离职，顶尖AI人才加速流向创业与投资市场",
+          "summary": "通义千问技术负责人林俊旸正式离职，顶尖AI人才加速流向创业与投资市场",
+          "highlight": "林俊旸",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI重构",
+        "育儿补贴",
+        "手机龙虾",
+        "教育扩招"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "机构预警：比特币已陷深度熊市，2026年或再跌30%",
+          "summary": "机构预警：比特币已陷深度熊市，2026年或再跌30%",
+          "highlight": "30%",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "特朗普网络安全战略将\"保障加密货币安全\"纳入国家科技竞争政策框架",
+          "summary": "特朗普网络安全战略将\"保障加密货币安全\"纳入国家科技竞争政策框架",
+          "highlight": "加密货币安全",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Circle用USDC 30分钟完成6800万美元跨公司内部转账，稳定币支付效率凸显",
+          "summary": "Circle用USDC 30分钟完成6800万美元跨公司内部转账，稳定币支付效率凸显",
+          "highlight": "6800万美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "2025年拉丁美洲加密用户增速是美国3倍，巴西主导交易规模、阿根廷主导用户数",
+          "summary": "2025年拉丁美洲加密用户增速是美国3倍，巴西主导交易规模、阿根廷主导用户数",
+          "highlight": "3倍",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Kalshi、Polymarket预测市场平台各寻200亿美元估值融资，赛道加速资本化",
+          "summary": "Kalshi、Polymarket预测市场平台各寻200亿美元估值融资，赛道加速资本化",
+          "highlight": "200亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "熊市预警",
+        "加密政策",
+        "稳定币支付",
+        "预测市场"
+      ]
+    }
+  }
+}

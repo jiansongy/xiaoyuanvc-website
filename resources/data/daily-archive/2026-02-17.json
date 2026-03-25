@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-17",
+  "display_date": "2026.02.17",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "OpenClaw 创始人加入 OpenAI，专注下一代个人智能体研发",
+          "summary": "OpenClaw 创始人加入 OpenAI，专注下一代个人智能体研发",
+          "highlight": "个人智能体",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "宇树科技推进 A 股 IPO，C 轮估值 120 亿元，春晚表演带动订单激增",
+          "summary": "宇树科技推进 A 股 IPO，C 轮估值 120 亿元，春晚表演带动订单激增",
+          "highlight": "120 亿元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "阿里发布千问 3.5，总参 3970 亿，性能媲美 Gemini 3，API 价格仅为其 1/18",
+          "summary": "阿里发布千问 3.5，总参 3970 亿，性能媲美 Gemini 3，API 价格仅为其 1/18",
+          "highlight": "1/18",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "腾讯元宝除夕追加 100 张万元现金「小马卡」",
+          "summary": "腾讯元宝除夕追加 100 张万元现金「小马卡」",
+          "highlight": "100 张万元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "四家机器人企业合计豪掷约 5 亿元登 2026 春晚，争夺商业化窗口",
+          "summary": "四家机器人企业合计豪掷约 5 亿元登 2026 春晚，争夺商业化窗口",
+          "highlight": "5 亿元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "OpenClaw",
+        "千问3.5",
+        "宇树IPO",
+        "春晚机器人"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC 面临 2018 年以来最长月线连跌，年初至今下跌近 22%，4 小时清算 1.2 亿美元",
+          "summary": "BTC 面临 2018 年以来最长月线连跌，年初至今下跌近 22%，4 小时清算 1.2 亿美元",
+          "highlight": "22%",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Coinbase CEO 称散户正在抄底 BTC：\"他们有钻石手\"",
+          "summary": "Coinbase CEO 称散户正在抄底 BTC：\"他们有钻石手\"",
+          "highlight": "钻石手",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Strategy 称堡垒级资产负债表可承受 BTC 跌至 $8K，维持看涨策略",
+          "summary": "Strategy 称堡垒级资产负债表可承受 BTC 跌至 $8K，维持看涨策略",
+          "highlight": "$8K",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "DOGE 半月暴涨约 47%，引发 Meme 币季节期待",
+          "summary": "DOGE 半月暴涨约 47%，引发 Meme 币季节期待",
+          "highlight": "47%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "联邦监管预测市场已抢占 DraftKings（美国头部体育博彩平台）约 25% 收入",
+          "summary": "联邦监管预测市场已抢占 DraftKings（美国头部体育博彩平台）约 25% 收入",
+          "highlight": "25%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC 连跌",
+        "钻石手",
+        "DOGE 47%",
+        "预测市场"
+      ]
+    }
+  }
+}

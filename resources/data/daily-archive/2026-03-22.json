@@ -1,0 +1,108 @@
+{
+  "date": "2026-03-22",
+  "display_date": "2026.03.22",
+  "status": "image_failed",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "月之暗面回应「Cursor 套壳 Kimi K2.5」事件：属授权商业合作",
+          "summary": "月之暗面回应「Cursor 套壳 Kimi K2.5」事件：属授权商业合作",
+          "highlight": "月之暗面",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "category": "机会",
+          "title": "阿里加码企业级AI平台与AI电商赛道",
+          "summary": "阿里围绕企业级AI平台“悟空”和AI电商、个人智能助理等超级赛道加速布局，释放出平台型Agent商业化和产业重构的大机会。",
+          "highlight": "平台型Agent机会",
+          "highlight_color": "section",
+          "source": "manual",
+          "id": 2
+        },
+        {
+          "category": "产品",
+          "title": "华为发布八大“行业+AI”旗舰解决方案",
+          "summary": "华为发布八大“行业+AI”旗舰解决方案，并推进企业版AgentArts与openJiuwen增强版，继续加速AI产品化落地。",
+          "highlight": "八大解决方案",
+          "highlight_color": "section",
+          "source": "manual",
+          "id": 3
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "OpenAI 计划在年底前将员工人数增加近一倍",
+          "summary": "OpenAI 计划在年底前将员工人数增加近一倍",
+          "highlight": "OpenAI",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "category": "融资",
+          "title": "华为推出2亿元AI生态专项基金",
+          "summary": "华为面向生态伙伴推出2亿元AI生态专项基金，虽非传统股权融资，但体现出产业资源继续向AI生态集中。",
+          "highlight": "2亿元",
+          "highlight_color": "section",
+          "source": "manual",
+          "id": 5
+        }
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "宏观动荡下的黄金暴跌与比特币坚挺",
+          "summary": "宏观动荡下的黄金暴跌与比特币坚挺",
+          "highlight": "比特币",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "SBF借支持特朗普对伊朗空袭表态，试图改善自身政治处境",
+          "summary": "身陷囹圄的FTX创始人Sam Bankman-Fried公开站队特朗普对伊朗空袭的立场，被解读为试图争取政治好感并影响自身后续处境。",
+          "highlight": "SBF政治表态",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "加密公司数周内裁员数百人，归因市场疲弱与AI冲击",
+          "summary": "2026年初多家加密企业在数周内集中裁员数百人，行业将原因归结为市场持续低迷，以及AI对部分岗位的替代和效率重构。",
+          "highlight": "裁员潮与AI冲击",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "从嘴撸到走断腿，RealGo与Meme小游戏的虚实结合",
+          "summary": "从嘴撸到走断腿，RealGo与Meme小游戏的虚实结合",
+          "highlight": "从嘴撸到走断腿，",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI智能体（Agent）彻底杀入Crypto执行层",
+          "summary": "AI智能体（Agent）彻底杀入Crypto执行层",
+          "highlight": "AI智能体（Ag",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ]
+    }
+  },
+  "source": "vps"
+}

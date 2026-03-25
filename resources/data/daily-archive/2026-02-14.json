@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-14",
+  "display_date": "2026.02.14",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "Anthropic安全负责人离职，称与公司价值观不合——AI安全与商业化路线冲突公开化",
+          "summary": "Anthropic安全负责人离职，称与公司价值观不合——AI安全与商业化路线冲突公开化",
+          "highlight": "AI安全与商业化",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "微信电脑版新增语音输入功能",
+          "summary": "微信电脑版新增语音输入功能",
+          "highlight": "语音输入",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "DeepSeek回应语气变冷淡：为平衡效率与情感所做的技术取舍",
+          "summary": "DeepSeek回应语气变冷淡：为平衡效率与情感所做的技术取舍",
+          "highlight": "效率与情感",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "元气森林连续三年两位数增长，维生素水增速128%，冰茶增长56%",
+          "summary": "元气森林连续三年两位数增长，维生素水增速128%，冰茶增长56%",
+          "highlight": "128%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "美团预计2025年净亏损233-243亿元，主因本地商业转亏及海外投入加大",
+          "summary": "美团预计2025年净亏损233-243亿元，主因本地商业转亏及海外投入加大",
+          "highlight": "233-243亿元",
+          "highlight_color": "red",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI安全",
+        "语音输入",
+        "DeepSeek",
+        "128%"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "以太坊基金会联合执行董事Tomasz上任仅一年离职，核心层稳定性再受质疑",
+          "summary": "以太坊基金会联合执行董事Tomasz上任仅一年离职，核心层稳定性再受质疑",
+          "highlight": "一年离职",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "币安何一钱包被扒，重仓BNB外持有$FF，暗示BSC发力RWA稳定币赛道",
+          "summary": "币安何一钱包被扒，重仓BNB外持有$FF，暗示BSC发力RWA稳定币赛道",
+          "highlight": "$FF",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Aave Labs提案拿走全部产品收入+代币，被批\"教科书式掠夺\"，治理权之争再起",
+          "summary": "Aave Labs提案拿走全部产品收入+代币，被批\"教科书式掠夺\"，治理权之争再起",
+          "highlight": "教科书式掠夺",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "预测市场从严肃赛道滑向娱乐化，各路玩家卷成\"赌场+流量收割机\"",
+          "summary": "预测市场从严肃赛道滑向娱乐化，各路玩家卷成\"赌场+流量收割机\"",
+          "highlight": "娱乐化",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI Agent从概念转实操，\"Vibe Coding\"让非技术者也能靠AI开发项目",
+          "summary": "AI Agent从概念转实操，\"Vibe Coding\"让非技术者也能靠AI开发项目",
+          "highlight": "Vibe Coding",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "Vibe Coding",
+        "$FF",
+        "Aave治理",
+        "预测市场"
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-19",
+  "display_date": "2026.03.19",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "阿里云因AI需求爆发和供应链涨价，算力存储产品最高涨价34%",
+          "summary": "阿里云因AI需求爆发和供应链涨价，算力存储产品最高涨价34%",
+          "highlight": "34%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "阿里巴巴2027届全球校招启动，AI相关岗位占比超80%",
+          "summary": "阿里巴巴2027届全球校招启动，AI相关岗位占比超80%",
+          "highlight": "80%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "刘炽平谈微信Agent：有商业潜力但需克服隐私挑战，推进无时间表",
+          "summary": "刘炽平谈微信Agent：有商业潜力但需克服隐私挑战，推进无时间表",
+          "highlight": "微信Agent",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "腾讯2025年Q4营收1943.7亿元，同比增长13%，游戏业务增速21%",
+          "summary": "腾讯2025年Q4营收1943.7亿元，同比增长13%，游戏业务增速21%",
+          "highlight": "1943.7亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "腾讯刘炽平：2026年AI投资至少翻倍，用于模型训练、推理及算力租售",
+          "summary": "腾讯刘炽平：2026年AI投资至少翻倍，用于模型训练、推理及算力租售",
+          "highlight": "至少翻倍",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "算力涨价",
+        "AI岗位",
+        "微信Agent",
+        "腾讯翻倍"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "美联储维持利率不变，比特币跌破7.1万美元，2026年降息预期进一步减弱",
+          "summary": "美联储维持利率不变，比特币跌破7.1万美元，2026年降息预期进一步减弱",
+          "highlight": "7.1万美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "SEC批准纳斯达克测试代币化证券交易，区块链股票可与传统股票相同方式结算",
+          "summary": "SEC批准纳斯达克测试代币化证券交易，区块链股票可与传统股票相同方式结算",
+          "highlight": "SEC批准",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "伊朗战争引发\"永久通胀底线\"，分析师称廉价货币时代终结",
+          "summary": "伊朗战争引发\"永久通胀底线\"，分析师称廉价货币时代终结",
+          "highlight": "通胀底线",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "分析：价格失效时收益率开始重要，比特币向主流抵押品演变的叙事加速",
+          "summary": "分析：价格失效时收益率开始重要，比特币向主流抵押品演变的叙事加速",
+          "highlight": "主流抵押品",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Polymarket收购DeFi协议Brahma，构建跨链与传统金融可靠交易基础设施",
+          "summary": "Polymarket收购DeFi协议Brahma，构建跨链与传统金融可靠交易基础设施",
+          "highlight": "Polymarket",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "比特币下跌",
+        "代币化证券",
+        "通胀底线",
+        "Polymarket"
+      ]
+    }
+  }
+}

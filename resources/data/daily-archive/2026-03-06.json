@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-06",
+  "display_date": "2026.03.06",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "五角大楼正式通知Anthropic构成美国供应链风险，CEO紧急重启政府合作谈判",
+          "summary": "五角大楼正式通知Anthropic构成美国供应链风险，CEO紧急重启政府合作谈判",
+          "highlight": "供应链风险",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "抖音即送（原随心团）押注即时配送，参与品牌超3000家，GMV日均提升211%，本地生活平台红利显现",
+          "summary": "抖音即送（原随心团）押注即时配送，参与品牌超3000家，GMV日均提升211%，本地生活平台红利显现",
+          "highlight": "211%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "OpenAI推出GPT-5.4，tokens更少速度更快，支持指令实时调整",
+          "summary": "OpenAI推出GPT-5.4，tokens更少速度更快，支持指令实时调整",
+          "highlight": "GPT-5.4",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "OpenAI年化收入突破250亿美元，较年底214亿增长17%",
+          "summary": "OpenAI年化收入突破250亿美元，较年底214亿增长17%",
+          "highlight": "250亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "OpenAI聘请Cooley、Wachtell两家律所为IPO做准备，上市进程加速",
+          "summary": "OpenAI聘请Cooley、Wachtell两家律所为IPO做准备，上市进程加速",
+          "highlight": "IPO",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "OpenAI IPO",
+        "抖音即送",
+        "Anthropic供应链",
+        "GPT-5.4"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "做空机构Culper做空以太坊，称ETH已\"受损\"处于\"死亡螺旋\"风险，连带看空矿企BitMine",
+          "summary": "做空机构Culper做空以太坊，称ETH已\"受损\"处于\"死亡螺旋\"风险，连带看空矿企BitMine",
+          "highlight": "死亡螺旋",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Kraken获联邦储备支付系统接入权，或开创加密企业批量进入Fed先例",
+          "summary": "Kraken获联邦储备支付系统接入权，或开创加密企业批量进入Fed先例",
+          "highlight": "Fed",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "NYSE母公司ICE以250亿美元估值战略投资OKX，并计划推出加密衍生品",
+          "summary": "NYSE母公司ICE以250亿美元估值战略投资OKX，并计划推出加密衍生品",
+          "highlight": "250亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "风险投资人Chamath公开质疑比特币作为央行储备资产的隐私性与可替代性",
+          "summary": "风险投资人Chamath公开质疑比特币作为央行储备资产的隐私性与可替代性",
+          "highlight": "储备资产",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "CleanSpark出售97%比特币挖矿产量，资金转投AI与高性能算力扩张",
+          "summary": "CleanSpark出售97%比特币挖矿产量，资金转投AI与高性能算力扩张",
+          "highlight": "97%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "以太坊做空",
+        "Kraken入Fed",
+        "OKX估值",
+        "比特币储备"
+      ]
+    }
+  }
+}

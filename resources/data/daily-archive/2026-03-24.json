@@ -1,0 +1,90 @@
+{
+  "date": "2026-03-24",
+  "display_date": "2026.03.24",
+  "status": "generated",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "大疆起诉影石专利权属纠纷案立案",
+          "summary": "大疆正式起诉影石，围绕专利权属争议进入立案阶段，多名前研发人员被指卷入相关纠纷。",
+          "highlight": "专利纠纷立案",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "苹果宣布 2026 年 WWDC 将于 6 月 8 日至 12 日举行",
+          "summary": "苹果宣布 2026 年全球开发者大会 WWDC 将于 6 月 8 日至 12 日举行，开发者生态与新一代系统更新预期升温。",
+          "highlight": "WWDC 2026",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "腾讯内测“AI 问股”小程序",
+          "summary": "腾讯正在内测“AI 问股”小程序，把大模型能力接入证券咨询场景，推动智能投顾与投教服务进一步产品化。",
+          "highlight": "AI 问股",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币站稳 7 万美元上方，后续走势取决于伊朗与美国谈判进展",
+          "summary": "在特朗普宣布给予五天缓冲期后，加密市场出现反弹，比特币维持在 7 万美元上方，市场正关注伊朗与美国谈判进展对后市方向的影响。",
+          "highlight": "BTC 站上 7 万",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "检方质疑 SBF 狱中重审申请信件寄送记录",
+          "summary": "美国检方指出，一封署名为 FTX 创始人 Sam Bankman-Fried 的狱中来信在邮寄记录上存在异常，成为其重审动议中的争议点。",
+          "highlight": "重审信件争议",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "贝莱德押注代币化基金将重塑华尔街",
+          "summary": "贝莱德 CEO Larry Fink 在年度信中表示，代币化基金有望像互联网改变邮政体系那样，重塑华尔街的资产流通与清算方式。",
+          "highlight": "代币化基金",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "XRP 下跌 3.7%，跌破 1.40 美元释放进一步走弱信号",
+          "summary": "XRP 日内下跌 3.7%，在反复测试后跌破 1.40 美元关键区间，交易者正密切关注 1.38 至 1.40 美元附近的支撑表现。",
+          "highlight": "XRP 跌破 1.40",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Resolv 协议遭黑客攻击，USR 闪崩脱锚",
+          "summary": "Resolv 协议遭遇黑客攻击，导致 USR 出现闪崩并短时脱锚，再次引发市场对协议安全与稳定机制的关注。",
+          "highlight": "USR 脱锚",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ]
+    }
+  },
+  "source": "vps"
+}

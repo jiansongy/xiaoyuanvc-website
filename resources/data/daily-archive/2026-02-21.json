@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-21",
+  "display_date": "2026.02.21",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "OpenAI 与 Anthropic 掌门人在印度 AI 峰会上拒绝握手，折射两大 AI 巨头关系微妙。",
+          "summary": "OpenAI 与 Anthropic 掌门人在印度 AI 峰会上拒绝握手，折射两大 AI 巨头关系微妙。",
+          "highlight": "拒绝握手",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "三星内部上线加密聊天系统，禁止截图/复制/转发，防止 AI 开发信息泄露。",
+          "summary": "三星内部上线加密聊天系统，禁止截图/复制/转发，防止 AI 开发信息泄露。",
+          "highlight": "加密聊天",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "OpenAI 超 200 人团队研发 AI 音箱、智能眼镜、智能灯，首款音箱售价约 200-300 美元。",
+          "summary": "OpenAI 超 200 人团队研发 AI 音箱、智能眼镜、智能灯，首款音箱售价约 200-300 美元。",
+          "highlight": "200人",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "马年春节全国 900+ 商圈客流同比增长 21%，消费市场全面回暖。",
+          "summary": "马年春节全国 900+ 商圈客流同比增长 21%，消费市场全面回暖。",
+          "highlight": "21%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "李飞飞创立的 World Labs 完成 10 亿美元融资，英伟达、AMD 参投，专注「空间智能」。",
+          "summary": "李飞飞创立的 World Labs 完成 10 亿美元融资，英伟达、AMD 参投，专注「空间智能」。",
+          "highlight": "10亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI竞争",
+        "数据安全",
+        "AI硬件",
+        "马年消费"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "Solana 生态 TVL 大幅下滑，meme 热潮退去后向机构化和 RWA 方向转型。",
+          "summary": "Solana 生态 TVL 大幅下滑，meme 热潮退去后向机构化和 RWA 方向转型。",
+          "highlight": "TVL大幅下滑",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "美 SEC 悄然调整政策，允许经纪商将稳定币计入资本金，监管松动信号明显。",
+          "summary": "美 SEC 悄然调整政策，允许经纪商将稳定币计入资本金，监管松动信号明显。",
+          "highlight": "稳定币计入资本金",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "迪拜推进 160 亿美元房产代币化计划，开放二级市场流转，让房产交易即时完成。",
+          "summary": "迪拜推进 160 亿美元房产代币化计划，开放二级市场流转，让房产交易即时完成。",
+          "highlight": "160亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "高盛 CEO、Franklin Templeton 与美国说唱天后 Nicki Minaj 同台出席特朗普海湖庄园加密峰会，币圈与流行文化深度碰撞。",
+          "summary": "高盛 CEO、Franklin Templeton 与美国说唱天后 Nicki Minaj 同台出席特朗普海湖庄园加密峰会，币圈与流行文化深度碰撞。",
+          "highlight": "Nicki Minaj",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Polymarket 跨平台套利策略兴起，「美国袭击伊朗」概率上升，预测市场进化为宏观事件风向标。",
+          "summary": "Polymarket 跨平台套利策略兴起，「美国袭击伊朗」概率上升，预测市场进化为宏观事件风向标。",
+          "highlight": "美国袭击伊朗",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "稳定币监管",
+        "RWA代币化",
+        "AI预测市场",
+        "币圈名流"
+      ]
+    }
+  }
+}

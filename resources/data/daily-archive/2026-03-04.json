@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-04",
+  "display_date": "2026.03.04",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "马云携阿里蚂蚁高管访云谷学校，分享 AI 时代经营洞察与战略思考",
+          "summary": "马云携阿里蚂蚁高管访云谷学校，分享 AI 时代经营洞察与战略思考",
+          "highlight": "",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "OpenAI 与美军合作引众怒，ChatGPT 卸载量激增 295%，AI 产品价值观立场成差异化优势",
+          "summary": "OpenAI 与美军合作引众怒，ChatGPT 卸载量激增 295%，AI 产品价值观立场成差异化优势",
+          "highlight": "295%",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "阿里开源 Qwen3.5 系列（0.8B/2B/4B/9B），马斯克点赞\"惊人智能\"",
+          "summary": "阿里开源 Qwen3.5 系列（0.8B/2B/4B/9B），马斯克点赞\"惊人智能\"",
+          "highlight": "惊人智能",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "Claude 全球需求激增致服务宕机，免费用户增长超 60%，付费用户较去年底倍增",
+          "summary": "Claude 全球需求激增致服务宕机，免费用户增长超 60%，付费用户较去年底倍增",
+          "highlight": "宕机",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "PayPay（软银旗下日本国民级手机支付 App）启动 IPO 路演，拟在纳斯达克上市（代码 PAYP），发行 5498 万美元存托股份",
+          "summary": "PayPay（软银旗下日本国民级手机支付 App）启动 IPO 路演，拟在纳斯达克上市（代码 PAYP），发行 5498 万美元存托股份",
+          "highlight": "5498 万美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI价值观",
+        "Claude爆发",
+        "Qwen3.5",
+        "PayPay上市"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC 跌破 67,000 美元，美股下跌叠加伊朗冲突升级，加密市场风险情绪全面出清",
+          "summary": "BTC 跌破 67,000 美元，美股下跌叠加伊朗冲突升级，加密市场风险情绪全面出清",
+          "highlight": "67,000 美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "特朗普力推 Clarity Act，公开批评银行业阻挠 GENIUS 稳定币立法",
+          "summary": "特朗普力推 Clarity Act，公开批评银行业阻挠 GENIUS 稳定币立法",
+          "highlight": "Clarity Act",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Visa 携手 Bridge 将稳定币支付卡扩展至全球 100+ 国家",
+          "summary": "Visa 携手 Bridge 将稳定币支付卡扩展至全球 100+ 国家",
+          "highlight": "100+ 国家",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "上市矿工集体卖 BTC 押注 AI 算力，比特币 HODL 文化叙事迎来终结",
+          "summary": "上市矿工集体卖 BTC 押注 AI 算力，比特币 HODL 文化叙事迎来终结",
+          "highlight": "HODL",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "NEAR 联创：AI 将成区块链主要用户，智能体是下一个互联网交互层",
+          "summary": "NEAR 联创：AI 将成区块链主要用户，智能体是下一个互联网交互层",
+          "highlight": "AI",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC暴跌",
+        "稳定币立法",
+        "Visa扩张",
+        "AI智能体"
+      ]
+    }
+  }
+}

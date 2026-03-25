@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-28",
+  "display_date": "2026.02.28",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "OpenAI Altman表示将在合适时机考虑上市，亚马逊投资将带来新需求和增量收入",
+          "summary": "OpenAI Altman表示将在合适时机考虑上市，亚马逊投资将带来新需求和增量收入",
+          "highlight": "上市",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "蜜雪冰城主题乐园确定选址郑州东站附近，融合游玩、购物、体验场景",
+          "summary": "蜜雪冰城主题乐园确定选址郑州东站附近，融合游玩、购物、体验场景",
+          "highlight": "主题乐园",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "DeepSeek联合清北发布DualPath框架，在660B模型上推理吞吐量提升1.87-1.96倍",
+          "summary": "DeepSeek联合清北发布DualPath框架，在660B模型上推理吞吐量提升1.87-1.96倍",
+          "highlight": "1.87-1.96倍",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "春节AI大战：豆包日活冲至1.45亿，千问增幅高达940%",
+          "summary": "春节AI大战：豆包日活冲至1.45亿，千问增幅高达940%",
+          "highlight": "1.45亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "OpenAI以7300亿美元估值完成1100亿美元融资，软银/英伟达/亚马逊联合投资",
+          "summary": "OpenAI以7300亿美元估值完成1100亿美元融资，软银/英伟达/亚马逊联合投资",
+          "highlight": "1100亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "OpenAI上市",
+        "豆包1.45亿",
+        "DeepSeek框架",
+        "千问940%"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "宏观风险（PPI通胀+美伊紧张）压制比特币反弹，黄金大涨，但主流币守住周线涨幅",
+          "summary": "宏观风险（PPI通胀+美伊紧张）压制比特币反弹，黄金大涨，但主流币守住周线涨幅",
+          "highlight": "黄金大涨",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "OCC稳定币监管新规提案出台，对加密行业现有稳定币模式构成政策阴影",
+          "summary": "OCC稳定币监管新规提案出台，对加密行业现有稳定币模式构成政策阴影",
+          "highlight": "稳定币",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "美国现货比特币ETF三日净流入11亿美元，创六周最佳单周表现",
+          "summary": "美国现货比特币ETF三日净流入11亿美元，创六周最佳单周表现",
+          "highlight": "11亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Polymarket 12个钱包疑似在专门捕捉内幕交易的预测市场中内幕交易，合计获利逾100万美元",
+          "summary": "Polymarket 12个钱包疑似在专门捕捉内幕交易的预测市场中内幕交易，合计获利逾100万美元",
+          "highlight": "100万美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI股暴跌之际，Grayscale研究认为区块链将成为AI智能体核心基础设施",
+          "summary": "AI股暴跌之际，Grayscale研究认为区块链将成为AI智能体核心基础设施",
+          "highlight": "AI智能体",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "比特币ETF",
+        "OCC监管",
+        "Polymarket",
+        "AI智能体"
+      ]
+    }
+  }
+}

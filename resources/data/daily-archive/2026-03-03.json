@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-03",
+  "display_date": "2026.03.03",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "马斯克身家达8390亿美元，与第二名差距超5000亿美元",
+          "summary": "马斯克身家达8390亿美元，与第二名差距超5000亿美元",
+          "highlight": "8390亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "千问首款AI眼镜国补后最低1997元，AI硬件平价化+补贴红利窗口开启",
+          "summary": "千问首款AI眼镜国补后最低1997元，AI硬件平价化+补贴红利窗口开启",
+          "highlight": "1997元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "苹果发布iPhone 17e，起售价4499元（256GB），3月4日预购",
+          "summary": "苹果发布iPhone 17e，起售价4499元（256GB），3月4日预购",
+          "highlight": "4499元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "MiniMax上市首份财报超预期，2月ARR超1.5亿美元，上市后股价涨356%",
+          "summary": "MiniMax上市首份财报超预期，2月ARR超1.5亿美元，上市后股价涨356%",
+          "highlight": "356%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "银河通用机器人完成25亿元融资，聚焦具身智能大模型",
+          "summary": "银河通用机器人完成25亿元融资，聚焦具身智能大模型",
+          "highlight": "25亿元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI眼镜",
+        "马斯克",
+        "MiniMax",
+        "银河通用"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "伊朗战局推动比特币盘中涨破68,000美元，多空激烈对抗",
+          "summary": "伊朗战局推动比特币盘中涨破68,000美元，多空激烈对抗",
+          "highlight": "68,000美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "韩国税务局宣传照意外泄露助记词，致480万美元加密资产被盗",
+          "summary": "韩国税务局宣传照意外泄露助记词，致480万美元加密资产被盗",
+          "highlight": "480万美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Tom Lee旗下Bitmine增持ETH至447万枚，质押总规模近100亿美元",
+          "summary": "Tom Lee旗下Bitmine增持ETH至447万枚，质押总规模近100亿美元",
+          "highlight": "100亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "BIP-110「比特币清理」提案首个支持区块被挖出，社区叙事分歧公开化",
+          "summary": "BIP-110「比特币清理」提案首个支持区块被挖出，社区叙事分歧公开化",
+          "highlight": "BIP-110",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "纳斯达克提案推出预测市场「二元押注」，华尔街加密化持续深化",
+          "summary": "纳斯达克提案推出预测市场「二元押注」，华尔街加密化持续深化",
+          "highlight": "预测市场",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "比特币",
+        "助记词泄露",
+        "ETH增持",
+        "预测市场"
+      ]
+    }
+  }
+}

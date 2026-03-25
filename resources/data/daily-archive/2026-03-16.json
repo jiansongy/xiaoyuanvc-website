@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-16",
+  "display_date": "2026.03.16",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "HuggingFace CEO称OpenClaw热度撑不过六周，超60%暴露服务存在未修复漏洞",
+          "summary": "HuggingFace CEO称OpenClaw热度撑不过六周，超60%暴露服务存在未修复漏洞",
+          "highlight": "撑不过六周",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "国星宇航太空算力\"养虾\"试验成功，自然语言指令远程调用太空算力操控人形机器人",
+          "summary": "国星宇航太空算力\"养虾\"试验成功，自然语言指令远程调用太空算力操控人形机器人",
+          "highlight": "太空算力",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "腾讯正式成为OpenClaw赞助商，腾讯云与腾讯AI支持\"让AI工具对所有人开放\"",
+          "summary": "腾讯正式成为OpenClaw赞助商，腾讯云与腾讯AI支持\"让AI工具对所有人开放\"",
+          "highlight": "腾讯",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "滴滴2025年核心平台订单量182.4亿单同比增14%，GTV 4508亿元，国际业务覆盖14国超1亿用户",
+          "summary": "滴滴2025年核心平台订单量182.4亿单同比增14%，GTV 4508亿元，国际业务覆盖14国超1亿用户",
+          "highlight": "182.4亿单",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "超七成百亿级私募满仓，科技板块成布局重点，满仓占比超70%",
+          "summary": "超七成百亿级私募满仓，科技板块成布局重点，满仓占比超70%",
+          "highlight": "超70%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "OpenClaw安全",
+        "太空算力",
+        "滴滴182亿单",
+        "私募满仓科技"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC创去年9月以来最佳周表现，与科技股相关性减弱，避险属性增强",
+          "summary": "BTC创去年9月以来最佳周表现，与科技股相关性减弱，避险属性增强",
+          "highlight": "最佳周表现",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "SEC与CFTC签署谅解备忘录，联手协调加密监管",
+          "summary": "SEC与CFTC签署谅解备忘录，联手协调加密监管",
+          "highlight": "SEC与CFTC",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Nasdaq与NYSE母公司将126万亿美元股票市场搬上区块链，代币化竞赛加速",
+          "summary": "Nasdaq与NYSE母公司将126万亿美元股票市场搬上区块链，代币化竞赛加速",
+          "highlight": "126万亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "行业观察称加密炒作时代终结，真正基础设施建设阶段开启",
+          "summary": "行业观察称加密炒作时代终结，真正基础设施建设阶段开启",
+          "highlight": "炒作时代终结",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Visa与Coinbase分别布局AI Agent支付，构建\"机器对机器\"下一代支付网络",
+          "summary": "Visa与Coinbase分别布局AI Agent支付，构建\"机器对机器\"下一代支付网络",
+          "highlight": "AI Agent支付",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC避险",
+        "SEC联合监管",
+        "代币化126万亿",
+        "AI Agent支付"
+      ]
+    }
+  }
+}

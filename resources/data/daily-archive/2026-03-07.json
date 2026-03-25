@@ -1,0 +1,111 @@
+{
+  "date": "2026-03-07",
+  "display_date": "2026.03.07",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "字节跳动拟招超 7000 名实习生，研发岗占比超 60%，整体转正率超 50%",
+          "summary": "字节跳动拟招超 7000 名实习生，研发岗占比超 60%，整体转正率超 50%",
+          "highlight": "7000",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "近千名开发者排队在腾讯大厦免费安装 OpenClaw，Lighthouse 5 分钟完成部署",
+          "summary": "近千名开发者排队在腾讯大厦免费安装 OpenClaw，Lighthouse 5 分钟完成部署",
+          "highlight": "5分钟",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "OpenAI 推出 GPT-5.4 及 Pro 版本，支持 1M token 上下文，专业任务评测胜率超行业专家",
+          "summary": "OpenAI 推出 GPT-5.4 及 Pro 版本，支持 1M token 上下文，专业任务评测胜率超行业专家",
+          "highlight": "1M token",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "Claude 日均新增用户超 100 万，Anthropic 年化收入大幅增长",
+          "summary": "Claude 日均新增用户超 100 万，Anthropic 年化收入大幅增长",
+          "highlight": "100万",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "GPT-5.4",
+        "OpenClaw",
+        "字节实习",
+        "Claude百万用户"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币短暂触及 7.4 万美元后快速获利了结，本周最佳华尔街消息周仍未守住 7 万美元",
+          "summary": "比特币短暂触及 7.4 万美元后快速获利了结，本周最佳华尔街消息周仍未守住 7 万美元",
+          "highlight": "7.4万",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "SEC 与孙宇晨就 Tron 诉讼达成和解",
+          "summary": "SEC 与孙宇晨就 Tron 诉讼达成和解",
+          "highlight": "Tron",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "加拿大银行与各大银行完成首次代币化债券试验",
+          "summary": "加拿大银行与各大银行完成首次代币化债券试验",
+          "highlight": "首次",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "OKX 估值 250 亿美元后，在交易 App 内直接搭建社交网络",
+          "summary": "OKX 估值 250 亿美元后，在交易 App 内直接搭建社交网络",
+          "highlight": "250亿",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "观点：管理金融 AI Agent 将成为 AI 裁员潮中唯一必备的核心技能",
+          "summary": "观点：管理金融 AI Agent 将成为 AI 裁员潮中唯一必备的核心技能",
+          "highlight": "AI Agent",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "比特币回落",
+        "Tron和解",
+        "代币化债券",
+        "AI Agent"
+      ]
+    }
+  }
+}

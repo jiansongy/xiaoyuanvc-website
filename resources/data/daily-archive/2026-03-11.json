@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-11",
+  "display_date": "2026.03.11",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "小红书宣布严打AI托管账号，违规将被限流或封禁",
+          "summary": "小红书宣布严打AI托管账号，违规将被限流或封禁",
+          "highlight": "限流或封禁",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "腾讯秘密启动微信AI智能体项目，可连接百万小程序服务14亿用户",
+          "summary": "腾讯秘密启动微信AI智能体项目，可连接百万小程序服务14亿用户",
+          "highlight": "14亿用户",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "智谱上线AutoClaw：一分钟本地部署「龙虾」，预置50+主流Skills",
+          "summary": "智谱上线AutoClaw：一分钟本地部署「龙虾」，预置50+主流Skills",
+          "highlight": "50+主流Skills",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "腾讯「龙虾」因访问量超预期导致服务故障，已修复并赠送5000 Credits",
+          "summary": "腾讯「龙虾」因访问量超预期导致服务故障，已修复并赠送5000 Credits",
+          "highlight": "5000 Credits",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "MiniMax港股涨超22%，市值达3826亿港元，总收入同比增158.9%",
+          "summary": "MiniMax港股涨超22%，市值达3826亿港元，总收入同比增158.9%",
+          "highlight": "3826亿港元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "微信智能体",
+        "龙虾爆火",
+        "AutoClaw",
+        "MiniMax"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币突破71,000美元，伊朗战争恐慌消退助推反弹",
+          "summary": "比特币突破71,000美元，伊朗战争恐慌消退助推反弹",
+          "highlight": "71,000美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "美司法部申请Tornado Cash开发者Roman Storm于10月重审",
+          "summary": "美司法部申请Tornado Cash开发者Roman Storm于10月重审",
+          "highlight": "重审",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "稳定币市值突破3120亿美元，银行和Visa等卡网络加速拥抱链上美元",
+          "summary": "稳定币市值突破3120亿美元，银行和Visa等卡网络加速拥抱链上美元",
+          "highlight": "3120亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Kraken代币化股票平台启动积分计划，生态代币预期升温",
+          "summary": "Kraken代币化股票平台启动积分计划，生态代币预期升温",
+          "highlight": "生态代币",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Polymarket与Palantir合作监控体育博彩异常交易，预测市场诚信机制受关注",
+          "summary": "Polymarket与Palantir合作监控体育博彩异常交易，预测市场诚信机制受关注",
+          "highlight": "预测市场",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "比特币71K",
+        "稳定币3120亿",
+        "Tornado Cash",
+        "预测市场"
+      ]
+    }
+  }
+}

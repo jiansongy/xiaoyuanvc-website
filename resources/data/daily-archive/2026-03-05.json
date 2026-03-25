@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-05",
+  "display_date": "2026.03.05",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "阿里千问技术负责人林俊旸卸任、后训练负责人郁博文离职，国内大模型团队人才流动加速",
+          "summary": "阿里千问技术负责人林俊旸卸任、后训练负责人郁博文离职，国内大模型团队人才流动加速",
+          "highlight": "千问",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "OpenAI 正在开发 GitHub 替代产品，AI 原生开发者工具新赛道浮现",
+          "summary": "OpenAI 正在开发 GitHub 替代产品，AI 原生开发者工具新赛道浮现",
+          "highlight": "GitHub 替代",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "苹果发布 MacBook Neo，搭载 A18 Pro 芯片，起售价 4,599 元（苹果史上最低价笔记本）",
+          "summary": "苹果发布 MacBook Neo，搭载 A18 Pro 芯片，起售价 4,599 元（苹果史上最低价笔记本）",
+          "highlight": "4,599 元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "OpenAI 因与美军方合作遭用户强烈反对，被迫添加禁止监视美国人条款",
+          "summary": "OpenAI 因与美军方合作遭用户强烈反对，被迫添加禁止监视美国人条款",
+          "highlight": "军方合作",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "瑞幸咖啡实控方大钲资本竞得蓝瓶咖啡，完成与雀巢的交易",
+          "summary": "瑞幸咖啡实控方大钲资本竞得蓝瓶咖啡，完成与雀巢的交易",
+          "highlight": "蓝瓶咖啡",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "千问人事",
+        "GitHub替代",
+        "MacBook Neo",
+        "蓝瓶咖啡"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC 突破 $73,000，Glassnode 显示 $72K-$80K 供应极薄（\"空气口袋\"），可能快速冲击 $80,000",
+          "summary": "BTC 突破 $73,000，Glassnode 显示 $72K-$80K 供应极薄（\"空气口袋\"），可能快速冲击 $80,000",
+          "highlight": "$73,000",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Kraken 成为首家获得美联储主账户准入的加密公司，可加速机构存取款",
+          "summary": "Kraken 成为首家获得美联储主账户准入的加密公司，可加速机构存取款",
+          "highlight": "美联储主账户",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "机构逢低买入，$17 亿美元涌入现货比特币 ETF（尽管 BTC 年内仍跌 16%）",
+          "summary": "机构逢低买入，$17 亿美元涌入现货比特币 ETF（尽管 BTC 年内仍跌 16%）",
+          "highlight": "$17 亿",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "多位加密专家反驳 Ray Dalio 对比特币的质疑（黄金优势论、量子风险等）",
+          "summary": "多位加密专家反驳 Ray Dalio 对比特币的质疑（黄金优势论、量子风险等）",
+          "highlight": "Ray Dalio",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "以太坊基金会提出将 ETH 打造为 AI 世界的信任与协调验证层",
+          "summary": "以太坊基金会提出将 ETH 打造为 AI 世界的信任与协调验证层",
+          "highlight": "AI 信任层",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC $73K",
+        "美联储准入",
+        "ETF $17亿",
+        "ETH×AI"
+      ]
+    }
+  }
+}

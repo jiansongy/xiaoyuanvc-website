@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-20",
+  "display_date": "2026.03.20",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "阿里巴巴第三财季营收2848.4亿元，同比增长2%，净利润167.1亿元、同比下降67%",
+          "summary": "阿里巴巴第三财季营收2848.4亿元，同比增长2%，净利润167.1亿元、同比下降67%",
+          "highlight": "下降67%",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "阿里表示未来五年云和AI商业化收入将突破1000亿美元",
+          "summary": "阿里表示未来五年云和AI商业化收入将突破1000亿美元",
+          "highlight": "1000亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "小米上线三大自研MiMo-V2模型，并宣布今年AI研发投入超160亿元",
+          "summary": "小米上线三大自研MiMo-V2模型，并宣布今年AI研发投入超160亿元",
+          "highlight": "160亿元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "Counterpoint称苹果首款折叠屏手机首年或拿下28%市场份额，2026年折叠屏出货量预计增20%",
+          "summary": "Counterpoint称苹果首款折叠屏手机首年或拿下28%市场份额，2026年折叠屏出货量预计增20%",
+          "highlight": "28%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "OpenAI将收购编程初创公司Astral，继续加码代码赛道",
+          "summary": "OpenAI将收购编程初创公司Astral，继续加码代码赛道",
+          "highlight": "收购Astral",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "净利下滑",
+        "AI商业化",
+        "MiMo-V2",
+        "Astral"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币跌破7万美元，油价飙升与美联储按兵不动压制风险资产",
+          "summary": "比特币跌破7万美元，油价飙升与美联储按兵不动压制风险资产",
+          "highlight": "跌破7万美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Crypto.com在推进企业级AI改造时裁员12%，约180名员工受影响",
+          "summary": "Crypto.com在推进企业级AI改造时裁员12%，约180名员工受影响",
+          "highlight": "裁员12%",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Gauntlet称OKX活动结束后相关策略资金流出3.8亿美元，DeFi存款回到活动前水平",
+          "summary": "Gauntlet称OKX活动结束后相关策略资金流出3.8亿美元，DeFi存款回到活动前水平",
+          "highlight": "3.8亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Jacob & Co推出限量100只的比特币挖矿概念腕表，绑定1000TH/s实体矿机",
+          "summary": "Jacob & Co推出限量100只的比特币挖矿概念腕表，绑定1000TH/s实体矿机",
+          "highlight": "1000TH/s",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Galaxy称比特币面临量子计算威胁但远未到生死时刻，开发者已着手应对",
+          "summary": "Galaxy称比特币面临量子计算威胁但远未到生死时刻，开发者已着手应对",
+          "highlight": "量子计算威胁",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC失守7万",
+        "Crypto.com裁员",
+        "3.8亿美元流出",
+        "量子威胁"
+      ]
+    }
+  }
+}

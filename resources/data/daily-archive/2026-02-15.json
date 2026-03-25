@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-15",
+  "display_date": "2026.02.15",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "市场监管总局约谈阿里、抖音等7大平台，要求杜绝\"内卷式\"竞争",
+          "summary": "市场监管总局约谈阿里、抖音等7大平台，要求杜绝\"内卷式\"竞争",
+          "highlight": "内卷式",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "阿里云通义推出个人AI助理CoPaw，支持本地/云端部署，后续将开源",
+          "summary": "阿里云通义推出个人AI助理CoPaw，支持本地/云端部署，后续将开源",
+          "highlight": "CoPaw",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "字节豆包大模型2.0发布，Pro/Lite/Mini三款Agent模型对标GPT 5.2与Gemini 3 Pro",
+          "summary": "字节豆包大模型2.0发布，Pro/Lite/Mini三款Agent模型对标GPT 5.2与Gemini 3 Pro",
+          "highlight": "豆包2.0",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "蚂蚁阿福冲上App Store免费榜第一，新用户16.8元红包活动延至除夕",
+          "summary": "蚂蚁阿福冲上App Store免费榜第一，新用户16.8元红包活动延至除夕",
+          "highlight": "免费榜第一",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "OpenAI推进1000亿美元融资，微软、英伟达、亚马逊参投，估值约8300亿美元",
+          "summary": "OpenAI推进1000亿美元融资，微软、英伟达、亚马逊参投，估值约8300亿美元",
+          "highlight": "1000亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "豆包2.0",
+        "反内卷监管",
+        "CoPaw开源",
+        "OpenAI千亿融资"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC卡在7万美元关口，山寨币跌回2023年水平，\"牛市中的熊市感\"弥漫",
+          "summary": "BTC卡在7万美元关口，山寨币跌回2023年水平，\"牛市中的熊市感\"弥漫",
+          "highlight": "7万美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "X（推特）即将上线Smart Cashtags，用户可直接在平台交易股票和加密货币",
+          "summary": "X（推特）即将上线Smart Cashtags，用户可直接在平台交易股票和加密货币",
+          "highlight": "Smart Cashtags",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "稳定币补贴大战，WLFI推出USD1在币安高额理财补贴抢流量",
+          "summary": "稳定币补贴大战，WLFI推出USD1在币安高额理财补贴抢流量",
+          "highlight": "USD1",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "情人节+春节链上众生相，交易所发红包搞气氛，交易员们看K线过节",
+          "summary": "情人节+春节链上众生相，交易所发红包搞气氛，交易员们看K线过节",
+          "highlight": "链上众生相",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI Agent爆发，能写代码、买域名、发币，\"一人公司\"时代加速到来",
+          "summary": "AI Agent爆发，能写代码、买域名、发币，\"一人公司\"时代加速到来",
+          "highlight": "一人公司",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC七万关口",
+        "X交易功能",
+        "稳定币大战",
+        "AI Agent一人公司"
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-17",
+  "display_date": "2026.03.17",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "字节暂停豆包AI眼镜项目，因难以形成差异化和使用习惯",
+          "summary": "字节暂停豆包AI眼镜项目，因难以形成差异化和使用习惯",
+          "highlight": "暂停",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "ChatGPT周活达9亿，OpenAI开测广告变现但暂限美国市场",
+          "summary": "ChatGPT周活达9亿，OpenAI开测广告变现但暂限美国市场",
+          "highlight": "9亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "小米新一代SU7定档3月19日发布，预售22.99万-30.99万元",
+          "summary": "小米新一代SU7定档3月19日发布，预售22.99万-30.99万元",
+          "highlight": "22.99万-30.99万",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "京东在欧洲六国上线Joybuy电商平台，10万+商品瞄准亚马逊",
+          "summary": "京东在欧洲六国上线Joybuy电商平台，10万+商品瞄准亚马逊",
+          "highlight": "欧洲六国",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "Meta五年内斥资270亿美元从Nebius购买AI基础设施服务",
+          "summary": "Meta五年内斥资270亿美元从Nebius购买AI基础设施服务",
+          "highlight": "270亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "豆包眼镜暂停",
+        "ChatGPT广告",
+        "小米SU7",
+        "Meta基建270亿"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币短暂突破74,000美元，中东局势缓解和机构信心支撑反弹",
+          "summary": "比特币短暂突破74,000美元，中东局势缓解和机构信心支撑反弹",
+          "highlight": "74,000美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "韩国罚款Bithumb 2,400万美元，涉665万起KYC违规",
+          "summary": "韩国罚款Bithumb 2,400万美元，涉665万起KYC违规",
+          "highlight": "2,400万美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Circle股价暴涨100%，USDC需求增长和代币化资产扩展驱动",
+          "summary": "Circle股价暴涨100%，USDC需求增长和代币化资产扩展驱动",
+          "highlight": "100%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "模因币超越BTC和ETH表现，PEPE涨超10%，投资者采用\"哑铃策略\"",
+          "summary": "模因币超越BTC和ETH表现，PEPE涨超10%，投资者采用\"哑铃策略\"",
+          "highlight": "哑铃策略",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI加密代币飙升，Nvidia CEO预测2027年前芯片需求达1万亿美元",
+          "summary": "AI加密代币飙升，Nvidia CEO预测2027年前芯片需求达1万亿美元",
+          "highlight": "1万亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC破74K",
+        "Bithumb罚款",
+        "Circle暴涨",
+        "AI代币飙升"
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-13",
+  "display_date": "2026.02.13",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "苹果新版 Siri 开发再次遇挫，多项 AI 功能推迟至 iOS 26.5/27",
+          "summary": "苹果新版 Siri 开发再次遇挫，多项 AI 功能推迟至 iOS 26.5/27",
+          "highlight": "推迟",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "阿里千问 AI Agent 6 天完成 1.2 亿笔订单，AI 代理商业化模式获首次大规模验证",
+          "summary": "阿里千问 AI Agent 6 天完成 1.2 亿笔订单，AI 代理商业化模式获首次大规模验证",
+          "highlight": "1.2 亿笔",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "智谱发布 GLM-5 模型并开源，编程能力对标 Claude Opus 4.5，开源排名全球第四",
+          "summary": "智谱发布 GLM-5 模型并开源，编程能力对标 Claude Opus 4.5，开源排名全球第四",
+          "highlight": "GLM-5",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "苹果成 1 月中国手机市场唯一增长品牌，销量增 8%，市占率近 20%",
+          "summary": "苹果成 1 月中国手机市场唯一增长品牌，销量增 8%，市占率近 20%",
+          "highlight": "唯一增长",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "Anthropic 接近完成超 200 亿美元融资，Founders Fund 等领投",
+          "summary": "Anthropic 接近完成超 200 亿美元融资，Founders Fund 等领投",
+          "highlight": "200 亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI Agent 商业化",
+        "Siri 遇挫",
+        "GLM-5 开源",
+        "Anthropic 融资"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "美国非农数据大幅超预期，降息预期降温，加密市场先跌为敬",
+          "summary": "美国非农数据大幅超预期，降息预期降温，加密市场先跌为敬",
+          "highlight": "降息预期降温",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "币安与 OKX 春节红包大战，千万美金级活动争夺存量用户活跃度",
+          "summary": "币安与 OKX 春节红包大战，千万美金级活动争夺存量用户活跃度",
+          "highlight": "千万美金",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "MegaETH 主打毫秒级响应\"实时区块链\"，被视为对标 Solana 的以太坊 L2",
+          "summary": "MegaETH 主打毫秒级响应\"实时区块链\"，被视为对标 Solana 的以太坊 L2",
+          "highlight": "MegaETH",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Hyperliquid ($HYPE) 社区狂热不减，市场低迷中逆势强劲，被比作\"本周期 Solana\"",
+          "summary": "Hyperliquid ($HYPE) 社区狂热不减，市场低迷中逆势强劲，被比作\"本周期 Solana\"",
+          "highlight": "$HYPE",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "隐私赛道遇冷：Zama 币价暴跌，Aztec TGE 在即但市场信心不足",
+          "summary": "隐私赛道遇冷：Zama 币价暴跌，Aztec TGE 在即但市场信心不足",
+          "highlight": "遇冷",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "非农超预期",
+        "MegaETH",
+        "HYPE 社区",
+        "隐私赛道遇冷"
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-01",
+  "display_date": "2026.03.01",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "Anthropic 回应被美政府封杀：未收到通知，将诉诸法院",
+          "summary": "Anthropic 回应被美政府封杀：未收到通知，将诉诸法院",
+          "highlight": "诉诸法院",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "OpenAI 将模型部署到美国防部机密网络，政府 AI 市场加速渗透",
+          "summary": "OpenAI 将模型部署到美国防部机密网络，政府 AI 市场加速渗透",
+          "highlight": "机密网络",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "DeepSeek 多模态 V4 下周发布，支持图片/视频/文本生成，联合华为/寒武纪优化",
+          "summary": "DeepSeek 多模态 V4 下周发布，支持图片/视频/文本生成，联合华为/寒武纪优化",
+          "highlight": "V4",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "ChatGPT 周活用户达 9 亿，订阅用户超 5000 万，18 个月增长 350%",
+          "summary": "ChatGPT 周活用户达 9 亿，订阅用户超 5000 万，18 个月增长 350%",
+          "highlight": "9亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "SpaceX 考虑 3 月递交 IPO 申请，寻求超 1.75 万亿美元估值",
+          "summary": "SpaceX 考虑 3 月递交 IPO 申请，寻求超 1.75 万亿美元估值",
+          "highlight": "1.75万亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "DeepSeek V4",
+        "ChatGPT 9亿",
+        "SpaceX IPO",
+        "Anthropic 诉讼"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC 受美以袭击伊朗影响跌至 6.3 万美元，创 2018 年以来最长月度下跌周期",
+          "summary": "BTC 受美以袭击伊朗影响跌至 6.3 万美元，创 2018 年以来最长月度下跌周期",
+          "highlight": "6.3万美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "美国参议员要求财政部/司法部调查 Binance 非法资金管控问题",
+          "summary": "美国参议员要求财政部/司法部调查 Binance 非法资金管控问题",
+          "highlight": "Binance",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "花旗、摩根士丹利扩展比特币托管与代币化业务，机构采用加速",
+          "summary": "花旗、摩根士丹利扩展比特币托管与代币化业务，机构采用加速",
+          "highlight": "机构采用",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "英国博彩委员会探索加密支付整合，消费者链上赌博需求持续增长",
+          "summary": "英国博彩委员会探索加密支付整合，消费者链上赌博需求持续增长",
+          "highlight": "加密支付",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Hyperliquid 链上石油期货地缘冲击后飙升 5%，链上衍生品响应速度领先传统市场",
+          "summary": "Hyperliquid 链上石油期货地缘冲击后飙升 5%，链上衍生品响应速度领先传统市场",
+          "highlight": "5%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC 下跌",
+        "Binance 调查",
+        "机构托管",
+        "Hyperliquid"
+      ]
+    }
+  }
+}

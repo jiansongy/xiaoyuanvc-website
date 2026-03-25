@@ -1,0 +1,105 @@
+{
+  "date": "2026-02-10",
+  "display_date": "2026.02.10",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [],
+      "keywords": []
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC恐慌指数跌至5创新低，但MicroStrategy买入9000万美元、币安SAFU持有万枚BTC，巨鲸疯狂抄底",
+          "summary": "BTC恐慌指数跌至5创新低，但MicroStrategy买入9000万美元、币安SAFU持有万枚BTC，巨鲸疯狂抄底",
+          "highlight": "恐慌指数跌至5",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "公链",
+          "title": "SOL生态疲软，Meme币PVP互割严重，Jupuary空投推迟至5月，玩家集体躺平",
+          "summary": "SOL生态疲软，Meme币PVP互割严重，Jupuary空投推迟至5月，玩家集体躺平",
+          "highlight": "推迟至5月",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "实务",
+          "title": "币安何一发起\"围攻光明顶\"AI短剧大赛，把FUD谣言娱乐化，负面情绪变社区狂欢",
+          "summary": "币安何一发起\"围攻光明顶\"AI短剧大赛，把FUD谣言娱乐化，负面情绪变社区狂欢",
+          "highlight": "围攻光明顶",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "金融",
+          "title": "MegaETH主网上线但暂不发币，设三大KPI门槛倒逼生态建设，撸毛党心碎",
+          "summary": "MegaETH主网上线但暂不发币，设三大KPI门槛倒逼生态建设，撸毛党心碎",
+          "highlight": "暂不发币",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "金融",
+          "title": "Hyperliquid逆势坚挺，P/E仅6-7倍，拒绝VC走社区路线，DeFi实干派典范",
+          "summary": "Hyperliquid逆势坚挺，P/E仅6-7倍，拒绝VC走社区路线，DeFi实干派典范",
+          "highlight": "P/E仅6-7倍",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 6,
+          "category": "文化",
+          "title": "Coinbase超级碗广告圈内吐槽圈外叫好，揭示加密原生与大众市场的认知鸿沟",
+          "summary": "Coinbase超级碗广告圈内吐槽圈外叫好，揭示加密原生与大众市场的认知鸿沟",
+          "highlight": "认知鸿沟",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 7,
+          "category": "文化",
+          "title": "SpaceX暂缓火星全力冲刺月球基地，10年计划，Moon系叙事升温",
+          "summary": "SpaceX暂缓火星全力冲刺月球基地，10年计划，Moon系叙事升温",
+          "highlight": "",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 8,
+          "category": "创新",
+          "title": "AI Agent爆发：OpenClaw+ERC-8004让AI自主发币交易，但95%项目仍是垃圾",
+          "summary": "AI Agent爆发：OpenClaw+ERC-8004让AI自主发币交易，但95%项目仍是垃圾",
+          "highlight": "95%",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 9,
+          "category": "创新",
+          "title": "超级碗预测市场因Cardi B\"表演\"定义翻车，暴露现实模糊性vs链上确定性矛盾",
+          "summary": "超级碗预测市场因Cardi B\"表演\"定义翻车，暴露现实模糊性vs链上确定性矛盾",
+          "highlight": "",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "巨鲸吸筹",
+        "AI Agent",
+        "恐慌见底",
+        "生态疲劳"
+      ]
+    }
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "date": "2026-03-18",
+  "display_date": "2026.03.18",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "黄仁勋：Blackwell和Rubin芯片到2027年至少创收1万亿美元",
+          "summary": "黄仁勋：Blackwell和Rubin芯片到2027年至少创收1万亿美元",
+          "highlight": "",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "认知",
+          "title": "字节豆包AI眼镜项目延后，大概率不会上市",
+          "summary": "字节豆包AI眼镜项目延后，大概率不会上市",
+          "highlight": "",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "认知",
+          "title": "谷歌与英维克等中国公司洽谈采购数据中心液冷系统",
+          "summary": "谷歌与英维克等中国公司洽谈采购数据中心液冷系统",
+          "highlight": "",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "认知",
+          "title": "宇树科技王兴兴：具身智能ChatGPT时刻至少还要2-3年，预计今年机器人将跑赢博尔特",
+          "summary": "宇树科技王兴兴：具身智能ChatGPT时刻至少还要2-3年，预计今年机器人将跑赢博尔特",
+          "highlight": "1万亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "认知",
+          "title": "OpenAI内部争论激烈，成人内容模式推迟至少一个月",
+          "summary": "OpenAI内部争论激烈，成人内容模式推迟至少一个月",
+          "highlight": "1万亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 6,
+          "category": "机会",
+          "title": "北京今年提供100万㎡创业空间、1万套青年人才公寓",
+          "summary": "北京今年提供100万㎡创业空间、1万套青年人才公寓",
+          "highlight": "100万㎡",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 7,
+          "category": "产品",
+          "title": "阿里发布全球首个企业级Agent平台「悟空」，内置超2000万企业钉钉",
+          "summary": "阿里发布全球首个企业级Agent平台「悟空」，内置超2000万企业钉钉",
+          "highlight": "",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 8,
+          "category": "产品",
+          "title": "腾讯QClaw 3月18日上线新版，微信入口全面升级",
+          "summary": "腾讯QClaw 3月18日上线新版，微信入口全面升级",
+          "highlight": "悟空",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 9,
+          "category": "产品",
+          "title": "千问App新增AI讲教材「小讲堂」，首批覆盖小学语数",
+          "summary": "千问App新增AI讲教材「小讲堂」，首批覆盖小学语数",
+          "highlight": "悟空",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 10,
+          "category": "增长",
+          "title": "蚂蚁阿福接入中华医学会知识库，日均解答超千万次",
+          "summary": "蚂蚁阿福接入中华医学会知识库，日均解答超千万次",
+          "highlight": "超千万次",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "悟空Agent",
+        "1万亿芯片",
+        "具身智能",
+        "创业空间"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "Strategy以11.8亿美元优先股融资购入约16,800枚BTC",
+          "summary": "Strategy以11.8亿美元优先股融资购入约16,800枚BTC",
+          "highlight": "16,800枚",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "美国SEC发布首份加密资产证券定义，与商品监管机构共享非正式指导",
+          "summary": "美国SEC发布首份加密资产证券定义，与商品监管机构共享非正式指导",
+          "highlight": "证券定义",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "万事达卡以最高18亿美元收购稳定币平台BVNK，稳定币转向全球结算基础设施",
+          "summary": "万事达卡以最高18亿美元收购稳定币平台BVNK，稳定币转向全球结算基础设施",
+          "highlight": "18亿",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Tally DAO治理平台关闭，CEO称宽松监管使去中心化成为可选项",
+          "summary": "Tally DAO治理平台关闭，CEO称宽松监管使去中心化成为可选项",
+          "highlight": "关闭",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "奥特曼的World与Coinbase合作验证AI交易真人身份，智能体商务预估2030年达3-5万亿美元",
+          "summary": "奥特曼的World与Coinbase合作验证AI交易真人身份，智能体商务预估2030年达3-5万亿美元",
+          "highlight": "3-5万亿",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "Strategy",
+        "SEC证券定义",
+        "万事达卡BVNK",
+        "智能体商务"
+      ]
+    }
+  }
+}

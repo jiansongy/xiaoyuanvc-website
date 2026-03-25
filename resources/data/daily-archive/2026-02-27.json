@@ -1,0 +1,129 @@
+{
+  "date": "2026-02-27",
+  "display_date": "2026.02.27",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "英伟达坦承中国对手正在进步，H200 在华尚无收入，芯片竞争格局生变",
+          "summary": "英伟达坦承中国对手正在进步，H200 在华尚无收入，芯片竞争格局生变",
+          "highlight": "H200 在华尚无收入",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "德国总理默茨亲赴宇树科技参观，中国机器人进军欧洲市场信号明确",
+          "summary": "德国总理默茨亲赴宇树科技参观，中国机器人进军欧洲市场信号明确",
+          "highlight": "欧洲市场",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "DeepSeek V4 Lite 曝光：100 万 token 上下文 + 原生多模态，性能超越现有模型",
+          "summary": "DeepSeek V4 Lite 曝光：100 万 token 上下文 + 原生多模态，性能超越现有模型",
+          "highlight": "100 万 token",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "前苹果 AI 负责人庞若鸣从 Meta 跳槽 OpenAI，AI 顶尖人才虹吸效应持续",
+          "summary": "前苹果 AI 负责人庞若鸣从 Meta 跳槽 OpenAI，AI 顶尖人才虹吸效应持续",
+          "highlight": "OpenAI",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "AI 独角兽阶跃星辰筹备港 IPO，目标募资 5 亿美元，近期已完成 50 亿元人民币融资",
+          "summary": "AI 独角兽阶跃星辰筹备港 IPO，目标募资 5 亿美元，近期已完成 50 亿元人民币融资",
+          "highlight": "500 亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 6,
+          "category": "融资",
+          "title": "亚马逊拟 500 亿美元投资 OpenAI，条件：IPO 落地 + AGI 达标",
+          "summary": "亚马逊拟 500 亿美元投资 OpenAI，条件：IPO 落地 + AGI 达标",
+          "highlight": "500 亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "H200",
+        "宇树机器人",
+        "DeepSeek V4",
+        "AI 融资"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "Vitalik 发布以太坊量子安全路线图（Strawmap），目标 2029 年实现秒级最终确认",
+          "summary": "Vitalik 发布以太坊量子安全路线图（Strawmap），目标 2029 年实现秒级最终确认",
+          "highlight": "2029 年",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "ZachXBT 指控 Axiom 员工利用内部数据内幕交易，链上侦探再度出手",
+          "summary": "ZachXBT 指控 Axiom 员工利用内部数据内幕交易，链上侦探再度出手",
+          "highlight": "内幕交易",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "MetaMask 借记卡在美全国铺开，自托管钱包正式打通线下支付场景",
+          "summary": "MetaMask 借记卡在美全国铺开，自托管钱包正式打通线下支付场景",
+          "highlight": "全国铺开",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Farcaster/Lens 生态洗牌，加密社交并未消亡，只是换了新主角",
+          "summary": "Farcaster/Lens 生态洗牌，加密社交并未消亡，只是换了新主角",
+          "highlight": "Farcaster",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI 暴跌冲击科技股，Grayscale 称区块链将成智能 Agent 首选基础设施",
+          "summary": "AI 暴跌冲击科技股，Grayscale 称区块链将成智能 Agent 首选基础设施",
+          "highlight": "智能 Agent",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "Strawmap",
+        "MetaMask",
+        "ZachXBT",
+        "AI Agent"
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-02",
+  "display_date": "2026.03.02",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "文远知行迪拜 Robotaxi 暂停运营——地缘政治成自动驾驶出海新变量",
+          "summary": "文远知行迪拜 Robotaxi 暂停运营——地缘政治成自动驾驶出海新变量",
+          "highlight": "地缘政治",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "迪拜最大港暂停+MSC 停止中东订舱，全球供应链再断裂，物流科技替代方案需求激增",
+          "summary": "迪拜最大港暂停+MSC 停止中东订舱，全球供应链再断裂，物流科技替代方案需求激增",
+          "highlight": "物流科技",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "理想确认 MEGA 纯电架构无增程版——物理约束如何决定产品定义",
+          "summary": "理想确认 MEGA 纯电架构无增程版——物理约束如何决定产品定义",
+          "highlight": "纯电架构",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "里程税传言刷屏热议，多地紧急辟谣——政策敏感性倒逼品牌主动危机公关",
+          "summary": "里程税传言刷屏热议，多地紧急辟谣——政策敏感性倒逼品牌主动危机公关",
+          "highlight": "辟谣",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "娃哈哈砍机器人业务、精机公司解散清算——宗馥莉战略聚焦，非核心断腕",
+          "summary": "娃哈哈砍机器人业务、精机公司解散清算——宗馥莉战略聚焦，非核心断腕",
+          "highlight": "非核心断腕",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "地缘政治",
+        "供应链断裂",
+        "纯电",
+        "危机公关"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC 突破 $68,000——伊朗最高领袖确认被击杀后市场反弹，风险偏好回升",
+          "summary": "BTC 突破 $68,000——伊朗最高领袖确认被击杀后市场反弹，风险偏好回升",
+          "highlight": "$68,000",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "OCC 稳定币提案中收益条款措辞模糊，监管边界尚不明朗",
+          "summary": "OCC 稳定币提案中收益条款措辞模糊，监管边界尚不明朗",
+          "highlight": "收益条款",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Strategy 连亏 8 个月，将 STRC 优先股年息提至 11.5% 以吸引投资者",
+          "summary": "Strategy 连亏 8 个月，将 STRC 优先股年息提至 11.5% 以吸引投资者",
+          "highlight": "11.5%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "BTC 跌去数万亿美元市值仍未浇灭传统巨头热情，机构将加密资产列为另类资产核心仓位",
+          "summary": "BTC 跌去数万亿美元市值仍未浇灭传统巨头热情，机构将加密资产列为另类资产核心仓位",
+          "highlight": "传统巨头",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Polymarket 创历史最高交易量，美伊战争押注超 $5.29 亿",
+          "summary": "Polymarket 创历史最高交易量，美伊战争押注超 $5.29 亿",
+          "highlight": "$5.29亿",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC反弹",
+        "OCC监管",
+        "Strategy",
+        "Polymarket"
+      ]
+    }
+  }
+}

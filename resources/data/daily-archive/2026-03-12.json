@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-12",
+  "display_date": "2026.03.12",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "黄仁勋：AI Agent极可能成主流，未来几年传统软件和App形态或将消失",
+          "summary": "黄仁勋：AI Agent极可能成主流，未来几年传统软件和App形态或将消失",
+          "highlight": "AI Agent",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "微信秘密研发AI Agent，拟打通数百万小程序，2026年中开启灰度测试",
+          "summary": "微信秘密研发AI Agent，拟打通数百万小程序，2026年中开启灰度测试",
+          "highlight": "数百万小程序",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "iPhone 18 Pro屏下Face ID或跳票，将首发台积电2nm A20芯片",
+          "summary": "iPhone 18 Pro屏下Face ID或跳票，将首发台积电2nm A20芯片",
+          "highlight": "2nm",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "a16z发布全球AI应用百强榜，中国产品集体崛起，DeepSeek排名最高（第四）",
+          "summary": "a16z发布全球AI应用百强榜，中国产品集体崛起，DeepSeek排名最高（第四）",
+          "highlight": "第四",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "SpaceX拟秘密提交IPO申请，估值超1.75万亿美元，或6月挂牌",
+          "summary": "SpaceX拟秘密提交IPO申请，估值超1.75万亿美元，或6月挂牌",
+          "highlight": "1.75万亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI Agent",
+        "微信小程序",
+        "DeepSeek",
+        "SpaceX IPO"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币站稳7万美元，相对强度超越股票与黄金，分析师指卖方力量已耗尽",
+          "summary": "比特币站稳7万美元，相对强度超越股票与黄金，分析师指卖方力量已耗尽",
+          "highlight": "7万美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "美SEC与CFTC签署联合监管备忘录，结束多年加密市场监管分歧",
+          "summary": "美SEC与CFTC签署联合监管备忘录，结束多年加密市场监管分歧",
+          "highlight": "SEC与CFTC",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Binance、PayPal、Ripple加入Mastercard区块链支付联盟，合作方超85家",
+          "summary": "Binance、PayPal、Ripple加入Mastercard区块链支付联盟，合作方超85家",
+          "highlight": "85家",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "OpenClaw AI智能体引爆\"龙虾\"Meme浪潮，BSC同名Meme币市值飙至2000万美元",
+          "summary": "OpenClaw AI智能体引爆\"龙虾\"Meme浪潮，BSC同名Meme币市值飙至2000万美元",
+          "highlight": "2000万美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "以太坊ERC-8183标准发布，专为AI代理间雇佣与结算打造链上基础设施",
+          "summary": "以太坊ERC-8183标准发布，专为AI代理间雇佣与结算打造链上基础设施",
+          "highlight": "ERC-8183",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "比特币",
+        "SEC监管",
+        "龙虾Meme",
+        "AI代理"
+      ]
+    }
+  }
+}

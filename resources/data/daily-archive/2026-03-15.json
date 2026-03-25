@@ -1,0 +1,111 @@
+{
+  "date": "2026-03-15",
+  "display_date": "2026.03.15",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "浙江省政府与吉利控股签署战略框架，推进汽车产业科技创新与产业创新深度融合",
+          "summary": "浙江省政府与吉利控股签署战略框架，推进汽车产业科技创新与产业创新深度融合",
+          "highlight": "科技创新",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "产品",
+          "title": "DeepSeek V4 和混元新模型预计 4 月发布，主攻长期记忆和国产芯片适配",
+          "summary": "DeepSeek V4 和混元新模型预计 4 月发布，主攻长期记忆和国产芯片适配",
+          "highlight": "4月",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "增长",
+          "title": "Kimi 新一轮 10 亿美元融资进行中，3 个月估值翻 4 倍至 180 亿美元",
+          "summary": "Kimi 新一轮 10 亿美元融资进行中，3 个月估值翻 4 倍至 180 亿美元",
+          "highlight": "180亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "融资",
+          "title": "SpaceX 计划 IPO，分配给摩根士丹利等多家投行，预计筹集数百亿美元",
+          "summary": "SpaceX 计划 IPO，分配给摩根士丹利等多家投行，预计筹集数百亿美元",
+          "highlight": "数百亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "DeepSeek V4",
+        "Kimi 180亿",
+        "SpaceX IPO",
+        "产业融合"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币在伊朗局势升温后从$74K回落至$71K，但周涨幅仍达4.2%",
+          "summary": "比特币在伊朗局势升温后从$74K回落至$71K，但周涨幅仍达4.2%",
+          "highlight": "$74K",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "加密银行Custodia多年与美联储诉讼以败诉告终，而Kraken刚获得美联储主账户权限",
+          "summary": "加密银行Custodia多年与美联储诉讼以败诉告终，而Kraken刚获得美联储主账户权限",
+          "highlight": "败诉",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Circle USYC代币化国债基金增至$22亿，超越贝莱德BUIDL，市场总规模破$110亿",
+          "summary": "Circle USYC代币化国债基金增至$22亿，超越贝莱德BUIDL，市场总规模破$110亿",
+          "highlight": "$110亿",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "神秘鲸鱼在Trump晚宴消息后豪赌$700万TRUMP Meme币，2小时获利$250万，带动涨60%",
+          "summary": "神秘鲸鱼在Trump晚宴消息后豪赌$700万TRUMP Meme币，2小时获利$250万，带动涨60%",
+          "highlight": "60%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "MoonPay推出Ledger硬件签名AI加密代理，每笔AI交易须硬件确认防止私钥泄露",
+          "summary": "MoonPay推出Ledger硬件签名AI加密代理，每笔AI交易须硬件确认防止私钥泄露",
+          "highlight": "AI加密代理",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC $71K",
+        "代币化国债",
+        "TRUMP Meme",
+        "AI加密代理"
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-22",
+  "display_date": "2026.02.22",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "宇树CEO：机器人技术相当于10岁儿童，大规模应用仍需3-10年",
+          "summary": "宇树CEO：机器人技术相当于10岁儿童，大规模应用仍需3-10年",
+          "highlight": "3-10年",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "Anthropic推出AI代码漏洞扫描工具，网络安全板块重挫4.9%，AI替代趋势加速",
+          "summary": "Anthropic推出AI代码漏洞扫描工具，网络安全板块重挫4.9%，AI替代趋势加速",
+          "highlight": "4.9%",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "泡泡玛特新IP\"放学后的Merodi\"发布，单盒69元、整盒828元",
+          "summary": "泡泡玛特新IP\"放学后的Merodi\"发布，单盒69元、整盒828元",
+          "highlight": "69元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "2026春节档总票房破40亿，《飞驰人生3》等三部影片领跑",
+          "summary": "2026春节档总票房破40亿，《飞驰人生3》等三部影片领跑",
+          "highlight": "40亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "前DeepMind首席科学家离职创业，融资10亿美元探索非LLM路线",
+          "summary": "前DeepMind首席科学家离职创业，融资10亿美元探索非LLM路线",
+          "highlight": "10亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "机器人",
+        "AI安全",
+        "泡泡玛特",
+        "春节档"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC在特朗普宣布15%全球关税后短暂下滑，随后反弹至6.8万美元",
+          "summary": "BTC在特朗普宣布15%全球关税后短暂下滑，随后反弹至6.8万美元",
+          "highlight": "6.8万美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "SEC悄然调整经纪商稳定币资本处理政策，Project Crypto持续推进",
+          "summary": "SEC悄然调整经纪商稳定币资本处理政策，Project Crypto持续推进",
+          "highlight": "稳定币",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "迪拜推进160亿美元房产代币化第二阶段，支持房产Token即时转售",
+          "summary": "迪拜推进160亿美元房产代币化第二阶段，支持房产Token即时转售",
+          "highlight": "160亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "\"比特币归零\"谷歌搜索量在美国飙升至历史新高，全球搜索热度反而下降",
+          "summary": "\"比特币归零\"谷歌搜索量在美国飙升至历史新高，全球搜索热度反而下降",
+          "highlight": "历史新高",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Vitalik提议用AI\"托管人\"+ ZK证明重构DAO治理，防止贿赂和强制投票",
+          "summary": "Vitalik提议用AI\"托管人\"+ ZK证明重构DAO治理，防止贿赂和强制投票",
+          "highlight": "ZK证明",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "关税",
+        "稳定币",
+        "代币化",
+        "DAO治理"
+      ]
+    }
+  }
+}

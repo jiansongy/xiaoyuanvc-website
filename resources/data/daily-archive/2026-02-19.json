@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-19",
+  "display_date": "2026.02.19",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "Anthropic预计到2029年向亚马逊、谷歌和微软支付至少800亿美元算力费用",
+          "summary": "Anthropic预计到2029年向亚马逊、谷歌和微软支付至少800亿美元算力费用",
+          "highlight": "800亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "千问「一句话下单」00后用户占40%，覆盖外卖、酒旅、电影等AI消费场景",
+          "summary": "千问「一句话下单」00后用户占40%，覆盖外卖、酒旅、电影等AI消费场景",
+          "highlight": "40%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "特斯拉首辆Cybercab自动驾驶出租车在得州超级工厂正式下线",
+          "summary": "特斯拉首辆Cybercab自动驾驶出租车在得州超级工厂正式下线",
+          "highlight": "Cybercab",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "腾讯元宝DAU超5000万、MAU达1.14亿，春节累计抽奖超36亿次",
+          "summary": "腾讯元宝DAU超5000万、MAU达1.14亿，春节累计抽奖超36亿次",
+          "highlight": "1.14亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "段永平减持苹果，英伟达仓位增加11倍至13.5亿美元，轻仓试水三家AI公司",
+          "summary": "段永平减持苹果，英伟达仓位增加11倍至13.5亿美元，轻仓试水三家AI公司",
+          "highlight": "11倍",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "800亿算力",
+        "00后AI消费",
+        "Cybercab下线",
+        "元宝破亿"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC在6-7万区间横跳，宏观局势（美股回调、地缘紧张）压制反弹",
+          "summary": "BTC在6-7万区间横跳，宏观局势（美股回调、地缘紧张）压制反弹",
+          "highlight": "6-7万",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "以太坊价格疲软汇率新低，Founders Fund清仓ETH",
+          "summary": "以太坊价格疲软汇率新低，Founders Fund清仓ETH",
+          "highlight": "清仓",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Base链传闻脱离OP Stack单飞，L2赛道或面临洗牌",
+          "summary": "Base链传闻脱离OP Stack单飞，L2赛道或面临洗牌",
+          "highlight": "脱离OP Stack",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "币安KOL\"嗯哼\"被CZ取关，引发\"舔狗经济学\"崩盘讨论",
+          "summary": "币安KOL\"嗯哼\"被CZ取关，引发\"舔狗经济学\"崩盘讨论",
+          "highlight": "CZ取关",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI Agent进化为\"链上打工人\"，OpenClaw/Grok具备自主支付和交易能力",
+          "summary": "AI Agent进化为\"链上打工人\"，OpenClaw/Grok具备自主支付和交易能力",
+          "highlight": "自主支付",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC横盘",
+        "ETH清仓",
+        "Base单飞",
+        "AI链上打工"
+      ]
+    }
+  }
+}

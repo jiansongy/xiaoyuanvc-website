@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-12",
+  "display_date": "2026.02.12",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "字节跳动自研AI芯片，与三星洽谈代工，计划年内产至少10万枚AI推理芯片",
+          "summary": "字节跳动自研AI芯片，与三星洽谈代工，计划年内产至少10万枚AI推理芯片",
+          "highlight": "10万枚",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "谷歌将AI购物功能嵌入搜索与Gemini，用户可直接在搜索中购买商品",
+          "summary": "谷歌将AI购物功能嵌入搜索与Gemini，用户可直接在搜索中购买商品",
+          "highlight": "AI购物",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "DeepSeek更新模型，上下文从128K提升至1M Token，处理信息量增近10倍",
+          "summary": "DeepSeek更新模型，上下文从128K提升至1M Token，处理信息量增近10倍",
+          "highlight": "1M Token",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "千问、蚂蚁阿福包揽苹果应用总榜前二，营销活动拉动下载量暴增",
+          "summary": "千问、蚂蚁阿福包揽苹果应用总榜前二，营销活动拉动下载量暴增",
+          "highlight": "总榜前二",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "Netflix收购华纳兄弟或生变，维权投资者Ancora建立2亿美元持股阻止720亿美元交易",
+          "summary": "Netflix收购华纳兄弟或生变，维权投资者Ancora建立2亿美元持股阻止720亿美元交易",
+          "highlight": "720亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI芯片",
+        "1M Token",
+        "AI购物",
+        "720亿美元"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "非农数据大超预期，交易员削减美联储降息押注，比特币短时涨超1%",
+          "summary": "非农数据大超预期，交易员削减美联储降息押注，比特币短时涨超1%",
+          "highlight": "涨超1%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "韩国加密交易平台Bithumb承认存在「严重缺陷」，内部系统易受潜在破坏",
+          "summary": "韩国加密交易平台Bithumb承认存在「严重缺陷」，内部系统易受潜在破坏",
+          "highlight": "严重缺陷",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "BlackRock将22亿美元BUIDL基金上架Uniswap并战略投资，UNI短时突破4.5美元，24小时涨超24%",
+          "summary": "BlackRock将22亿美元BUIDL基金上架Uniswap并战略投资，UNI短时突破4.5美元，24小时涨超24%",
+          "highlight": "涨超24%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "野兽先生（MrBeast）正式进军金融，用Z世代玩法改写银行规则",
+          "summary": "野兽先生（MrBeast）正式进军金融，用Z世代玩法改写银行规则",
+          "highlight": "MrBeast",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI能力非线性跃迁，从辅助工具到独立完成复杂工作，职业边界正在松动",
+          "summary": "AI能力非线性跃迁，从辅助工具到独立完成复杂工作，职业边界正在松动",
+          "highlight": "非线性跃迁",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BlackRock",
+        "UNI涨24%",
+        "非农数据",
+        "MrBeast"
+      ]
+    }
+  }
+}

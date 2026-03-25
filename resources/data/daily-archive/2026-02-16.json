@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-16",
+  "display_date": "2026.02.16",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "迪士尼起诉字节跳动，指控Seedance未授权使用其作品训练AI视频模型，版权争议升温",
+          "summary": "迪士尼起诉字节跳动，指控Seedance未授权使用其作品训练AI视频模型，版权争议升温",
+          "highlight": "版权争议",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "SpaceX获准在越南推出星链卫星互联网服务，东南亚市场再下一城",
+          "summary": "SpaceX获准在越南推出星链卫星互联网服务，东南亚市场再下一城",
+          "highlight": "越南",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "马斯克宣布Grok 4.20下周发布，较4.1版本有显著改进",
+          "summary": "马斯克宣布Grok 4.20下周发布，较4.1版本有显著改进",
+          "highlight": "Grok 4.20",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "千问「超级请客卡」上线首日，县城钟点房帮订量激增约300%",
+          "summary": "千问「超级请客卡」上线首日，县城钟点房帮订量激增约300%",
+          "highlight": "300%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "OpenClaw创始人加入OpenAI，AI Agent从聊天时代正式跨入自动干活时代",
+          "summary": "OpenClaw创始人加入OpenAI，AI Agent从聊天时代正式跨入自动干活时代",
+          "highlight": "AI Agent",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI版权",
+        "星链",
+        "Grok 4.20",
+        "AI Agent"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "Solana链上交易量达ETH两倍，Kamino等机构级借贷协议涌现，公链格局生变",
+          "summary": "Solana链上交易量达ETH两倍，Kamino等机构级借贷协议涌现，公链格局生变",
+          "highlight": "两倍",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "前币安上币经理Chase坦言：决定币价仅靠流动性、注意力和筹码结构",
+          "summary": "前币安上币经理Chase坦言：决定币价仅靠流动性、注意力和筹码结构",
+          "highlight": "筹码结构",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Ray Dalio警告二战后全球秩序崩溃、债务高企，为BTC和黄金长牛提供宏观叙事",
+          "summary": "Ray Dalio警告二战后全球秩序崩溃、债务高企，为BTC和黄金长牛提供宏观叙事",
+          "highlight": "秩序崩溃",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Meme币修罗场：Pippin暴拉让早期玩家赚上亿，Logan Paul利用影响力反复收割",
+          "summary": "Meme币修罗场：Pippin暴拉让早期玩家赚上亿，Logan Paul利用影响力反复收割",
+          "highlight": "收割",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "OpenClaw创始人加入OpenAI，AI Agent从聊天时代跨入自动干活时代",
+          "summary": "OpenClaw创始人加入OpenAI，AI Agent从聊天时代跨入自动干活时代",
+          "highlight": "AI Agent",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "Solana",
+        "筹码结构",
+        "Meme收割",
+        "AI Agent"
+      ]
+    }
+  }
+}

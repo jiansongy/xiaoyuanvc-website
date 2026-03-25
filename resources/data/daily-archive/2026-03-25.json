@@ -1,0 +1,90 @@
+{
+  "date": "2026-03-25",
+  "display_date": "2026.03.25",
+  "status": "confirmed",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "张雪峰因心源性猝死逝世",
+          "summary": "张雪峰因心源性猝死逝世",
+          "highlight": "猝死",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "消息称腾讯挖来多位字节 Seed 骨干 向姚顺雨汇报",
+          "summary": "消息称腾讯挖来多位字节 Seed 骨干 向姚顺雨汇报",
+          "highlight": "腾讯",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "阿里达摩院：新一代旗舰处理器玄铁 C950 正式发布",
+          "summary": "阿里达摩院：新一代旗舰处理器玄铁 C950 正式发布",
+          "highlight": "阿里",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "美团 App 被曝私自删除用户手机相册照片，客服回应为第三方插件冲突",
+          "summary": "美团 App 被曝私自删除用户手机相册照片，客服回应为第三方插件冲突",
+          "highlight": "删除",
+          "highlight_color": "red",
+          "source": "Readhub"
+        }
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "伊朗停火消息推动比特币小幅走高，油价下跌4%",
+          "summary": "中东停火预期带动市场风险偏好回升，比特币随之温和上涨，同时油价明显回落约4%，宏观情绪对加密资产形成短线支撑。",
+          "highlight": "比特币",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "稳定币监管重拳砸塌Circle两成股价",
+          "summary": "稳定币监管重拳砸塌Circle两成股价",
+          "highlight": "砸塌",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "传统金融大鳄带资下场香港RWA变局",
+          "summary": "传统金融大鳄带资下场香港RWA变局",
+          "highlight": "传统金融",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "创新",
+          "title": "张雪峰猝死引发的币圈健康危机大反思",
+          "summary": "张雪峰猝死引发的币圈健康危机大反思",
+          "highlight": "猝死",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        }
+      ]
+    }
+  },
+  "source": "vps"
+}

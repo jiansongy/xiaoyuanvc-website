@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-18",
+  "display_date": "2026.02.18",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "AI智能体预测：未来80%「中间商」App将消失，专业工具和沉浸式应用保留",
+          "summary": "AI智能体预测：未来80%「中间商」App将消失，专业工具和沉浸式应用保留",
+          "highlight": "80%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "苹果播客春季推出高级视频功能，支持观看/收听切换及离线观看，争夺视频播客市场",
+          "summary": "苹果播客春季推出高级视频功能，支持观看/收听切换及离线观看，争夺视频播客市场",
+          "highlight": "视频播客",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "豆包Seedance 2.0为春晚提供AI视频技术支持",
+          "summary": "豆包Seedance 2.0为春晚提供AI视频技术支持",
+          "highlight": "Seedance 2.0",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "阿里千问：1.3亿人春节首次体验AI购物，电影票订单环比增372倍，近400万老人首次AI点单",
+          "summary": "阿里千问：1.3亿人春节首次体验AI购物，电影票订单环比增372倍，近400万老人首次AI点单",
+          "highlight": "1.3亿人",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "月之暗面（Kimi）寻求100亿美元估值融资，阿里腾讯等承诺投入超7亿美元",
+          "summary": "月之暗面（Kimi）寻求100亿美元估值融资，阿里腾讯等承诺投入超7亿美元",
+          "highlight": "100亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI智能体",
+        "视频播客",
+        "1.3亿AI购物",
+        "Kimi百亿估值"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "Zora从Base\"叛逃\"到Solana发新产品，Base因无发币预期和中心化作风流失开发者和资金",
+          "summary": "Zora从Base\"叛逃\"到Solana发新产品，Base因无发币预期和中心化作风流失开发者和资金",
+          "highlight": "Solana",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Pump.fun推出交易者返现机制，社区争议可能鼓励刷量交易",
+          "summary": "Pump.fun推出交易者返现机制，社区争议可能鼓励刷量交易",
+          "highlight": "返现机制",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Hyperliquid TVL持续上涨，去中心化衍生品交易所强势抢占CEX市场",
+          "summary": "Hyperliquid TVL持续上涨，去中心化衍生品交易所强势抢占CEX市场",
+          "highlight": "Hyperliquid",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "网红Logan Paul被扒涉嫌在Polymarket上为自己的宝可梦卡拍卖搞内幕交易",
+          "summary": "网红Logan Paul被扒涉嫌在Polymarket上为自己的宝可梦卡拍卖搞内幕交易",
+          "highlight": "内幕交易",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "美CFTC主席公开力挺预测市场，Polymarket迎来监管利好",
+          "summary": "美CFTC主席公开力挺预测市场，Polymarket迎来监管利好",
+          "highlight": "CFTC",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "Solana虹吸",
+        "Hyperliquid",
+        "预测市场",
+        "Pump.fun返现"
+      ]
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-13",
+  "display_date": "2026.03.13",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "腾讯SkillHub平台大规模抓取OpenClaw数据引\"抄袭\"争议，处理180GB流量但仅发起1GB请求",
+          "summary": "腾讯SkillHub平台大规模抓取OpenClaw数据引\"抄袭\"争议，处理180GB流量但仅发起1GB请求",
+          "highlight": "180GB",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "我国灵活就业人员超2.4亿，养老保险参保率不足40%，政策扶持缺口显著",
+          "summary": "我国灵活就业人员超2.4亿，养老保险参保率不足40%，政策扶持缺口显著",
+          "highlight": "2.4亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "微信独立AI模型完成基础建设，预计2026年接入小程序生态对外落地",
+          "summary": "微信独立AI模型完成基础建设，预计2026年接入小程序生态对外落地",
+          "highlight": "2026年",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "MacBook Neo售价4599元起，分析师预测2026年出货450-500万台",
+          "summary": "MacBook Neo售价4599元起，分析师预测2026年出货450-500万台",
+          "highlight": "450-500万台",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "Anthropic与私募巨头黑石集团磋商成立AI咨询公司，受美国防部合作争议影响进展",
+          "summary": "Anthropic与私募巨头黑石集团磋商成立AI咨询公司，受美国防部合作争议影响进展",
+          "highlight": "黑石集团",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "腾讯抄袭争议",
+        "灵活就业缺口",
+        "微信AI模型",
+        "MacBook Neo"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "Vitalik Buterin提议以太坊回归本质，作为去中心化\"数字公告板\"而非万能平台",
+          "summary": "Vitalik Buterin提议以太坊回归本质，作为去中心化\"数字公告板\"而非万能平台",
+          "highlight": "数字公告板",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "SEC咨询委员会投票支持证券代币化，建议在区块链上规范股票交易监管",
+          "summary": "SEC咨询委员会投票支持证券代币化，建议在区块链上规范股票交易监管",
+          "highlight": "证券代币化",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Lido推出稳定币收益产品，为用户提供无需自选策略的自动化收益工具",
+          "summary": "Lido推出稳定币收益产品，为用户提供无需自选策略的自动化收益工具",
+          "highlight": "稳定币收益",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "特朗普宣布再次在海湖庄园举办午宴，面向$TRUMP代币前297名持有者",
+          "summary": "特朗普宣布再次在海湖庄园举办午宴，面向$TRUMP代币前297名持有者",
+          "highlight": "$TRUMP",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "CFTC向Kalshi/Polymarket等预测市场平台发布专项监管指引并提出永久规则草案",
+          "summary": "CFTC向Kalshi/Polymarket等预测市场平台发布专项监管指引并提出永久规则草案",
+          "highlight": "预测市场",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "以太坊公告板",
+        "证券代币化",
+        "$TRUMP午宴",
+        "预测市场监管"
+      ]
+    }
+  }
+}

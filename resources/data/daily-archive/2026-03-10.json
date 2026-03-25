@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-10",
+  "display_date": "2026.03.10",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "中国传媒大学停办16个本科专业（含翻译、摄影），应对人机分工时代",
+          "summary": "中国传媒大学停办16个本科专业（含翻译、摄影），应对人机分工时代",
+          "highlight": "16个",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "火山引擎正式上线ArkClaw云端SaaS版，打开网页即可使用AI助手",
+          "summary": "火山引擎正式上线ArkClaw云端SaaS版，打开网页即可使用AI助手",
+          "highlight": "ArkClaw",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "腾讯QClaw内测上线，支持微信/QQ双端接入本地AI助手",
+          "summary": "腾讯QClaw内测上线，支持微信/QQ双端接入本地AI助手",
+          "highlight": "QClaw",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "OpenClaw发布2026.3.7版本，支持GPT-5.4和记忆热插拔，GitHub Star破28万",
+          "summary": "OpenClaw发布2026.3.7版本，支持GPT-5.4和记忆热插拔，GitHub Star破28万",
+          "highlight": "28万",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "腾讯拟以数亿美元作为财务投资者加入派拉蒙1100亿美元收购华纳兄弟交易",
+          "summary": "腾讯拟以数亿美元作为财务投资者加入派拉蒙1100亿美元收购华纳兄弟交易",
+          "highlight": "1100亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "OpenClaw",
+        "ArkClaw",
+        "QClaw",
+        "人机分工"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币涨至69,000美元，原油暴涨后回落，加密市场韧性凸显",
+          "summary": "比特币涨至69,000美元，原油暴涨后回落，加密市场韧性凸显",
+          "highlight": "69,000美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "美国财政部软化立场，首次承认混币器存在合法隐私用途",
+          "summary": "美国财政部软化立场，首次承认混币器存在合法隐私用途",
+          "highlight": "混币器",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "Zcash开发实验室完成2500万美元种子轮融资，推进隐私协议扩展",
+          "summary": "Zcash开发实验室完成2500万美元种子轮融资，推进隐私协议扩展",
+          "highlight": "2500万美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "英国Reform UK领袖Farage入股比特币财库公司Stack BTC，持股6%",
+          "summary": "英国Reform UK领袖Farage入股比特币财库公司Stack BTC，持股6%",
+          "highlight": "6%",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Nasdaq联手Kraken推出代币化股票，计划向全球投资者分发",
+          "summary": "Nasdaq联手Kraken推出代币化股票，计划向全球投资者分发",
+          "highlight": "代币化股票",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "比特币",
+        "混币器",
+        "代币化股票",
+        "Zcash"
+      ]
+    }
+  }
+}

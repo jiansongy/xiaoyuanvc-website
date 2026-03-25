@@ -1,0 +1,81 @@
+{
+  "date": "2026-03-23",
+  "display_date": "2026.03.23",
+  "status": "generated",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "微信推出官方龙虾插件",
+          "summary": "微信推出官方龙虾插件",
+          "highlight": "微信推出官方龙虾",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "产品",
+          "title": "国家互联网应急中心等发布 OpenClaw 安全使用实践指南",
+          "summary": "国家互联网应急中心等发布 OpenClaw 安全使用实践指南",
+          "highlight": "国家互联网应急中",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "增长",
+          "title": "中国车企全球销量 20 多年来首次超日本居榜首",
+          "summary": "中国车企全球销量 20 多年来首次超日本居榜首",
+          "highlight": "中国车企全球销量",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "以太坊进入关键平衡期，扩容、量子计算与 AI 压力同时逼近",
+          "summary": "尽管升级已提升效率并压低部分成本，但以太坊正同时面对扩容竞争、量子安全隐忧与 AI 叙事分流，生态走到成败攸关的窗口期。",
+          "highlight": "以太坊关键平衡期",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "SEC 解释加密资产何时会被认定为证券",
+          "summary": "美国 SEC 与 CFTC 发布联合解释性指引，进一步说明监管机构如何界定加密资产是否属于证券，为行业合规与执法预期提供新参照。",
+          "highlight": "加密证券认定指引",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "加密公司数周内裁员数百人，归因市场疲弱与 AI 挤压",
+          "summary": "2026 年初多家加密企业接连裁员，反映弱市环境下业务承压，同时 AI 相关岗位与资源倾斜也在重塑行业的人才分配。",
+          "highlight": "加密行业裁员潮",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 4,
+          "category": "创新",
+          "title": "话题标题：Resolv协议遭黑客攻击导致USR闪崩脱锚",
+          "summary": "话题标题：Resolv协议遭黑客攻击导致USR闪崩脱锚",
+          "highlight": "话题标题：Res",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ]
+    }
+  },
+  "source": "vps"
+}

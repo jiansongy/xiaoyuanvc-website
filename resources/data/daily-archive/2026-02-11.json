@@ -1,0 +1,156 @@
+{
+  "date": "2026-02-11",
+  "display_date": "2026.02.11",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "OpenAI启动ChatGPT广告测试，预计广告收入占比低于总营收50%",
+          "summary": "OpenAI启动ChatGPT广告测试，预计广告收入占比低于总营收50%",
+          "highlight": "广告测试",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "千问已接入天猫超市、盒马及商超便利店，AI助手渗透零售场景",
+          "summary": "千问已接入天猫超市、盒马及商超便利店，AI助手渗透零售场景",
+          "highlight": "渗透零售",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "字节图像生成模型Seedream 5.0上线，对标高端竞品",
+          "summary": "字节图像生成模型Seedream 5.0上线，对标高端竞品",
+          "highlight": "Seedream 5.0",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "产品",
+          "title": "阿里千问推出新一代图像生成基础模型Qwen-Image-2.0",
+          "summary": "阿里千问推出新一代图像生成基础模型Qwen-Image-2.0",
+          "highlight": "Qwen-Image-2.0",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "增长",
+          "title": "红包大战首日：千问App日活增长5100万至5848万，碾压元宝逼近豆包",
+          "summary": "红包大战首日：千问App日活增长5100万至5848万，碾压元宝逼近豆包",
+          "highlight": "5100万",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 6,
+          "category": "增长",
+          "title": "豆包宣布参与总台春晚，除夕送10万份科技礼物和现金红包",
+          "summary": "豆包宣布参与总台春晚，除夕送10万份科技礼物和现金红包",
+          "highlight": "春晚",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 7,
+          "category": "融资",
+          "title": "Alphabet拟发行200亿美元债券，为AI数据中心筹资",
+          "summary": "Alphabet拟发行200亿美元债券，为AI数据中心筹资",
+          "highlight": "200亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "ChatGPT广告",
+        "AI图像大战",
+        "千问5848万日活",
+        "AI数据中心"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "高盛、MicroStrategy持续扫货BTC，散户却在恐慌割肉",
+          "summary": "高盛、MicroStrategy持续扫货BTC，散户却在恐慌割肉",
+          "highlight": "持续扫货",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Backpack交易所以10亿美元估值融资，承诺IPO前团队零抛售",
+          "summary": "Backpack交易所以10亿美元估值融资，承诺IPO前团队零抛售",
+          "highlight": "10亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "MegaETH主网上线后链上近乎空城，TPS过剩却无真实用户",
+          "summary": "MegaETH主网上线后链上近乎空城，TPS过剩却无真实用户",
+          "highlight": "空城",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "金融",
+          "title": "隐私L2 Aztec即将TGE，a16z领投的硬核隐私项目回归视野",
+          "summary": "隐私L2 Aztec即将TGE，a16z领投的硬核隐私项目回归视野",
+          "highlight": "Aztec TGE",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "文化",
+          "title": "字节Seedance 2.0碾压Sora，加密社区涌现AI视频创作热潮",
+          "summary": "字节Seedance 2.0碾压Sora，加密社区涌现AI视频创作热潮",
+          "highlight": "碾压Sora",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 6,
+          "category": "创新",
+          "title": "Kaito联手Polymarket推\"注意力市场\"，把流量变成可交易资产",
+          "summary": "Kaito联手Polymarket推\"注意力市场\"，把流量变成可交易资产",
+          "highlight": "注意力市场",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 7,
+          "category": "创新",
+          "title": "LayerZero宣布做公链\"Zero\"，社区质疑跨链协议\"套娃\"转型",
+          "summary": "LayerZero宣布做公链\"Zero\"，社区质疑跨链协议\"套娃\"转型",
+          "highlight": "套娃",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "机构抄底",
+        "MegaETH空城",
+        "Seedance 2.0",
+        "注意力市场"
+      ]
+    }
+  }
+}

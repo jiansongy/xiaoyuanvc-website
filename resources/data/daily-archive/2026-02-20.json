@@ -1,0 +1,120 @@
+{
+  "date": "2026-02-20",
+  "display_date": "2026.02.20",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "亚马逊2025年营收7170亿美元超越沃尔玛，成为全球年度营收最高公司",
+          "summary": "亚马逊2025年营收7170亿美元超越沃尔玛，成为全球年度营收最高公司",
+          "highlight": "7170亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "上海交大团队孤独症基因治疗研究成果登《自然》，基因编辑治疗取得突破",
+          "summary": "上海交大团队孤独症基因治疗研究成果登《自然》，基因编辑治疗取得突破",
+          "highlight": "《自然》",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "Meta计划今年发布首款AI智能手表\"Malibu 2\"，搭载AI助手+健康追踪",
+          "summary": "Meta计划今年发布首款AI智能手表\"Malibu 2\"，搭载AI助手+健康追踪",
+          "highlight": "Malibu 2",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "印度塔塔集团与OpenAI合作建设AI数据中心，初期100兆瓦、可扩至1吉瓦",
+          "summary": "印度塔塔集团与OpenAI合作建设AI数据中心，初期100兆瓦、可扩至1吉瓦",
+          "highlight": "1吉瓦",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "李飞飞创立的World Labs融资10亿美元，多家科技巨头参投",
+          "summary": "李飞飞创立的World Labs融资10亿美元，多家科技巨头参投",
+          "highlight": "10亿美元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "亚马逊登顶",
+        "基因编辑",
+        "AI数据中心",
+        "World Labs"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC在6.7万美元附近整理，ETF投资者平均浮亏20%，市场担忧抛售踩踏",
+          "summary": "BTC在6.7万美元附近整理，ETF投资者平均浮亏20%，市场担忧抛售踩踏",
+          "highlight": "浮亏20%",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Robinhood自建L2链，中心化交易所开始进军区块链基础设施",
+          "summary": "Robinhood自建L2链，中心化交易所开始进军区块链基础设施",
+          "highlight": "自建L2",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "白宫推进稳定币收益立法，与银行谈判取得\"进展\"，推动市场结构法案落地",
+          "summary": "白宫推进稳定币收益立法，与银行谈判取得\"进展\"，推动市场结构法案落地",
+          "highlight": "稳定币收益立法",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Trump关联World Liberty联手Securitize，代币化马尔代夫酒店贷款收益",
+          "summary": "Trump关联World Liberty联手Securitize，代币化马尔代夫酒店贷款收益",
+          "highlight": "代币化",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "美联储研究员发文肯定预测市场（Kalshi等）对政策制定者和研究者\"具有价值\"",
+          "summary": "美联储研究员发文肯定预测市场（Kalshi等）对政策制定者和研究者\"具有价值\"",
+          "highlight": "预测市场",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "ETF浮亏",
+        "稳定币立法",
+        "Robinhood L2",
+        "预测市场"
+      ]
+    }
+  }
+}

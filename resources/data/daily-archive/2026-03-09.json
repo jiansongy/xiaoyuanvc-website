@@ -1,0 +1,120 @@
+{
+  "date": "2026-03-09",
+  "display_date": "2026.03.09",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "清华2025届毕业生出国深造比例降至8.5%，华为、字节跳动成最大招聘方",
+          "summary": "清华2025届毕业生出国深造比例降至8.5%，华为、字节跳动成最大招聘方",
+          "highlight": "8.5%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "深圳龙岗拟对OpenClaw部署补贴最高200万元，深度应用获奖最高100万元",
+          "summary": "深圳龙岗拟对OpenClaw部署补贴最高200万元，深度应用获奖最高100万元",
+          "highlight": "200万元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "千问AI眼镜G1开售，国补后起价1997元，9小时续航+热插拔换电技术",
+          "summary": "千问AI眼镜G1开售，国补后起价1997元，9小时续航+热插拔换电技术",
+          "highlight": "1997元",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "腾讯免费安装OpenClaw，数小时内数百台设备被装入云服务器，引发现场排队",
+          "summary": "腾讯免费安装OpenClaw，数小时内数百台设备被装入云服务器，引发现场排队",
+          "highlight": "数百台",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "Kimi订单1月暴涨8280%、2月增长123.8%，全球排名升至第9位，20天收入超去年全年",
+          "summary": "Kimi订单1月暴涨8280%、2月增长123.8%，全球排名升至第9位，20天收入超去年全年",
+          "highlight": "8280%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "OpenClaw",
+        "Kimi爆发",
+        "千问眼镜",
+        "清华人才"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "BTC跌破66,000美元，油价飙升近20%引发市场恐慌性抛售",
+          "summary": "BTC跌破66,000美元，油价飙升近20%引发市场恐慌性抛售",
+          "highlight": "66,000美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "特朗普网络安全战略承诺「支持加密货币与区块链安全」，首次列为国家技术竞争优先项",
+          "summary": "特朗普网络安全战略承诺「支持加密货币与区块链安全」，首次列为国家技术竞争优先项",
+          "highlight": "国家技术竞争优先项",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "代币化资产规模突破250亿美元，一年内近翻四倍，国库券与私募信贷为主要驱动力",
+          "summary": "代币化资产规模突破250亿美元，一年内近翻四倍，国库券与私募信贷为主要驱动力",
+          "highlight": "250亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "拉丁美洲加密用户增速是美国的3倍，巴西和阿根廷引领增长",
+          "summary": "拉丁美洲加密用户增速是美国的3倍，巴西和阿根廷引领增长",
+          "highlight": "3倍",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "预测市场从体育/大选博彩转型为专业地缘政治对冲工具，Kalshi/Polymarket各寻求200亿美元估值融资",
+          "summary": "预测市场从体育/大选博彩转型为专业地缘政治对冲工具，Kalshi/Polymarket各寻求200亿美元估值融资",
+          "highlight": "200亿美元",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "BTC暴跌",
+        "代币化资产",
+        "预测市场",
+        "拉美增长"
+      ]
+    }
+  }
+}
