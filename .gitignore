@@ -30,3 +30,4 @@ resources/data/tingwu-tasks.json
 
 # Claude internal
 .claude/
+.gstack/
