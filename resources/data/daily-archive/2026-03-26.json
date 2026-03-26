@@ -1,0 +1,108 @@
+{
+  "date": "2026-03-26",
+  "display_date": "2026.03.26",
+  "status": "generated",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "OpenAI 关停视频生成应用 Sora",
+          "summary": "OpenAI 关停视频生成应用 Sora，反映头部模型公司正从炫技型生成能力转向更清晰的商业化取舍。",
+          "highlight": "OpenAI",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "可灵 AI 与快手继续加码产业化落地",
+          "summary": "快手在业绩沟通中强调 2026 年继续投入可灵 AI 与产业化应用，说明视频生成与内容工具仍有商业落地窗口。",
+          "highlight": "产业化",
+          "highlight_color": "section",
+          "source": "web"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "火山引擎云端大模型日均调用量破百万亿 Tokens，跻身全球前三",
+          "summary": "火山引擎云端大模型日均调用量破百万亿 Tokens，说明国内模型平台在基础设施与企业级调用层面正快速放量。",
+          "highlight": "百万亿 Tokens",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "中国日均 Token 调用量突破 140 万亿",
+          "summary": "国内日均 Token 调用量已超 140 万亿，较两年前大幅增长，侧面验证 AI 正从试验期进入规模化使用阶段。",
+          "highlight": "140 万亿",
+          "highlight_color": "section",
+          "source": "web"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "SpaceX 计划最早于本周提交 IPO 申请",
+          "summary": "SpaceX 计划最早于本周提交 IPO 申请，若落地将再度提升一级市场对硬科技与太空产业的关注度。",
+          "highlight": "IPO",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币价格指数单日上涨 2.21%，回到 70848 美元附近",
+          "summary": "CoinDesk 比特币价格指数单日上涨 2.21% 至 70848 美元附近，显示主流公链资产情绪短线回暖。",
+          "highlight": "2.21%",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "稳定币监管法案与Circle市值暴跌风波",
+          "summary": "稳定币监管法案与Circle市值暴跌风波",
+          "highlight": "暴跌",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "中东地缘战争引发的金融操盘大戏",
+          "summary": "中东地缘战争引发的金融操盘大戏",
+          "highlight": "中东地缘",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "Meme币的零和游戏与价值枯竭",
+          "summary": "Meme币的零和游戏与价值枯竭",
+          "highlight": "币的零和",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "Solana 基金会称其网络正成为 AI Agent 互联网的核心基础设施",
+          "summary": "Solana 基金会押注 AI Agent 赛道，认为其链上网络正在演变为“Agentic Internet”的底层基础设施，相关叙事可能重塑下一代互联网应用与链上协作方式。",
+          "highlight": "AI Agent",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        }
+      ]
+    }
+  },
+  "source": "vps"
+}
