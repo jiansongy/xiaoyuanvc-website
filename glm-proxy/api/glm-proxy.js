@@ -46,7 +46,7 @@ module.exports = async function handler(req, res) {
     res.status(200).json({
       ok: true,
       service: "glm-proxy",
-      model: "glm-4-flash",
+      model: "glm-4.5-air",
       hasApiKey: Boolean(process.env.GLM_API_KEY),
       allowedOrigins: ALLOWED_ORIGINS,
       now: new Date().toISOString(),
@@ -79,8 +79,8 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  // 强制使用 glm-4-flash，防止客户端指定昂贵模型
-  body.model = "glm-4-flash";
+  // 强制使用 glm-4.5-air，防止客户端指定昂贵模型
+  body.model = "glm-4.5-air";
 
   let upstream;
   const ctrl = new AbortController();
@@ -100,9 +100,11 @@ module.exports = async function handler(req, res) {
   } catch (err) {
     const isTimeout =
       err && (err.name === "AbortError" || /timeout/i.test(err.message || ""));
-    res
-      .status(isTimeout ? 504 : 502)
-      .json({ error: isTimeout ? "GLM 响应超时，请重试" : "无法连接 GLM API：" + err.message });
+    res.status(isTimeout ? 504 : 502).json({
+      error: isTimeout
+        ? "GLM 响应超时，请重试"
+        : "无法连接 GLM API：" + err.message,
+    });
     return;
   } finally {
     clearTimeout(timer);
