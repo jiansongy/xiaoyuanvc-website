@@ -1,0 +1,1372 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>校园VC 互动工具介绍</title>
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@500;600;700&f[]=satoshi@400;500;700&display=swap"
+    />
+    <style>
+      /* ===========================================
+           CSS CUSTOM PROPERTIES (BOLD SIGNAL THEME)
+           =========================================== */
+      :root {
+        --bg-primary: #0a0f1c;
+        --bg-card: rgba(255, 255, 255, 0.04);
+        --bg-card-border: rgba(255, 255, 255, 0.08);
+        --text-primary: #ffffff;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+        --accent-blue: #2563eb;
+        --accent-green: #00c896;
+        --accent-blue-glow: rgba(37, 99, 235, 0.3);
+        --accent-green-glow: rgba(0, 200, 150, 0.2);
+
+        --font-display: "Clash Display", sans-serif;
+        --font-body: "Satoshi", sans-serif;
+
+        --title-size: clamp(2rem, 6vw, 4.5rem);
+        --h2-size: clamp(1.5rem, 4vw, 2.8rem);
+        --h3-size: clamp(1rem, 2.5vw, 1.5rem);
+        --body-size: clamp(0.75rem, 1.4vw, 1.05rem);
+        --small-size: clamp(0.65rem, 1vw, 0.85rem);
+        --badge-size: clamp(0.6rem, 1vw, 0.75rem);
+
+        --slide-padding: clamp(1.5rem, 4vw, 4rem);
+        --content-gap: clamp(0.75rem, 2vw, 2rem);
+        --element-gap: clamp(0.25rem, 1vw, 1rem);
+
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --duration: 0.7s;
+      }
+
+      /* ===========================================
+           BASE STYLES
+           =========================================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        height: 100%;
+        overflow-x: hidden;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        height: 100%;
+      }
+
+      /* ===========================================
+           SLIDE CONTAINER
+           =========================================== */
+      .slide {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: var(--slide-padding);
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-height: 100%;
+        overflow: hidden;
+        width: 100%;
+        max-width: min(95vw, 1100px);
+      }
+
+      /* ===========================================
+           BACKGROUNDS & DECORATIONS
+           =========================================== */
+      .grid-bg {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px
+          );
+        background-size: 60px 60px;
+        pointer-events: none;
+      }
+
+      .glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(100px);
+        pointer-events: none;
+        opacity: 0.35;
+      }
+
+      .glow-blue {
+        background: var(--accent-blue);
+        width: clamp(200px, 30vw, 400px);
+        height: clamp(200px, 30vw, 400px);
+      }
+
+      .glow-green {
+        background: var(--accent-green);
+        width: clamp(150px, 25vw, 350px);
+        height: clamp(150px, 25vw, 350px);
+      }
+
+      /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+      h1 {
+        font-family: var(--font-display);
+        font-size: var(--title-size);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+
+      h2 {
+        font-family: var(--font-display);
+        font-size: var(--h2-size);
+        font-weight: 600;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+      }
+
+      h3 {
+        font-family: var(--font-display);
+        font-size: var(--h3-size);
+        font-weight: 600;
+        line-height: 1.3;
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .accent-text {
+        background: linear-gradient(
+          135deg,
+          var(--accent-blue) 0%,
+          var(--accent-green) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* ===========================================
+           COMPONENTS
+           =========================================== */
+      .badge {
+        display: inline-block;
+        background: rgba(37, 99, 235, 0.12);
+        border: 1px solid rgba(37, 99, 235, 0.25);
+        color: #60a5fa;
+        font-size: var(--badge-size);
+        font-weight: 500;
+        padding: 0.35em 1em;
+        border-radius: 100px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: clamp(0.75rem, 2vh, 1.5rem);
+      }
+
+      .glass-card {
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: 16px;
+        backdrop-filter: blur(20px);
+        padding: clamp(1rem, 2.5vw, 2rem);
+      }
+
+      .tool-icon {
+        width: clamp(32px, 4vw, 48px);
+        height: clamp(32px, 4vw, 48px);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        flex-shrink: 0;
+      }
+
+      /* ===========================================
+           SCREENSHOT STYLES
+           =========================================== */
+      .screenshot-container {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(37, 99, 235, 0.15);
+        box-shadow:
+          0 8px 40px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(37, 99, 235, 0.08);
+        max-height: min(55vh, 450px);
+        flex-shrink: 0;
+      }
+
+      .screenshot-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+      }
+
+      /* ===========================================
+           TOOL SLIDE LAYOUT (two-column)
+           =========================================== */
+      .tool-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(1.5rem, 3vw, 3rem);
+        align-items: center;
+        width: 100%;
+      }
+
+      .tool-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--element-gap);
+      }
+
+      .tool-info p {
+        font-size: var(--body-size);
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .tool-features {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.3rem, 0.8vh, 0.6rem);
+        margin-top: clamp(0.5rem, 1vh, 1rem);
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        font-size: var(--small-size);
+        color: var(--text-secondary);
+      }
+
+      .feature-item::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent-blue);
+        flex-shrink: 0;
+      }
+
+      .tool-color-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        font-size: var(--badge-size);
+        padding: 0.3em 0.8em;
+        border-radius: 6px;
+        font-weight: 500;
+        width: fit-content;
+      }
+
+      /* ===========================================
+           OVERVIEW GRID
+           =========================================== */
+      .overview-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(0.6rem, 1.5vw, 1.2rem);
+        width: 100%;
+      }
+
+      .overview-card {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.4rem, 0.8vh, 0.8rem);
+        padding: clamp(0.8rem, 2vw, 1.5rem);
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+      }
+
+      .overview-card:hover {
+        border-color: rgba(37, 99, 235, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .overview-card h3 {
+        font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+      }
+      .overview-card p {
+        font-size: var(--small-size);
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+
+      /* ===========================================
+           ANIMATIONS
+           =========================================== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity var(--duration) var(--ease-out-expo),
+          transform var(--duration) var(--ease-out-expo);
+      }
+
+      .reveal-left {
+        opacity: 0;
+        transform: translateX(-40px);
+        transition:
+          opacity var(--duration) var(--ease-out-expo),
+          transform var(--duration) var(--ease-out-expo);
+      }
+
+      .reveal-right {
+        opacity: 0;
+        transform: translateX(40px);
+        transition:
+          opacity var(--duration) var(--ease-out-expo),
+          transform var(--duration) var(--ease-out-expo);
+      }
+
+      .reveal-scale {
+        opacity: 0;
+        transform: scale(0.92);
+        transition:
+          opacity var(--duration) var(--ease-out-expo),
+          transform var(--duration) var(--ease-out-expo);
+      }
+
+      .slide.visible .reveal,
+      .slide.visible .reveal-left,
+      .slide.visible .reveal-right,
+      .slide.visible .reveal-scale {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+      }
+
+      .slide.visible .reveal:nth-child(1) {
+        transition-delay: 0.05s;
+      }
+      .slide.visible .reveal:nth-child(2) {
+        transition-delay: 0.12s;
+      }
+      .slide.visible .reveal:nth-child(3) {
+        transition-delay: 0.19s;
+      }
+      .slide.visible .reveal:nth-child(4) {
+        transition-delay: 0.26s;
+      }
+      .slide.visible .reveal:nth-child(5) {
+        transition-delay: 0.33s;
+      }
+      .slide.visible .reveal:nth-child(6) {
+        transition-delay: 0.4s;
+      }
+
+      .slide.visible .reveal-left {
+        transition-delay: 0.1s;
+      }
+      .slide.visible .reveal-right {
+        transition-delay: 0.2s;
+      }
+      .slide.visible .reveal-scale {
+        transition-delay: 0.15s;
+      }
+
+      /* ===========================================
+           PROGRESS BAR
+           =========================================== */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--accent-blue),
+          var(--accent-green)
+        );
+        z-index: 1000;
+        transition: width 0.3s ease;
+        width: 0%;
+      }
+
+      /* ===========================================
+           NAV DOTS
+           =========================================== */
+      .nav-dots {
+        position: fixed;
+        right: clamp(0.8rem, 2vw, 1.5rem);
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+      }
+
+      .nav-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        padding: 0;
+      }
+
+      .nav-dot.active {
+        background: var(--accent-blue);
+        box-shadow: 0 0 8px var(--accent-blue-glow);
+        transform: scale(1.3);
+      }
+
+      /* ===========================================
+           SLIDE NUMBER
+           =========================================== */
+      .slide-number {
+        position: absolute;
+        bottom: clamp(1rem, 2vh, 2rem);
+        right: clamp(1.5rem, 3vw, 3rem);
+        font-family: var(--font-display);
+        font-size: var(--small-size);
+        color: var(--text-muted);
+        letter-spacing: 0.1em;
+      }
+
+      /* ===========================================
+           EDIT MODE (inline editing)
+           =========================================== */
+      .edit-hotzone {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80px;
+        height: 80px;
+        z-index: 10000;
+        cursor: pointer;
+      }
+
+      .edit-toggle {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(37, 99, 235, 0.2);
+        border: 1px solid rgba(37, 99, 235, 0.3);
+        color: #60a5fa;
+        font-size: 16px;
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 10001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .edit-toggle.show,
+      .edit-toggle.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .edit-toggle.active {
+        background: var(--accent-blue);
+        color: #fff;
+      }
+
+      .edit-bar {
+        position: fixed;
+        top: 16px;
+        left: 68px;
+        display: none;
+        gap: 8px;
+        z-index: 10001;
+      }
+
+      .edit-bar.visible {
+        display: flex;
+      }
+
+      .edit-bar button {
+        padding: 0.4em 1em;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-secondary);
+        font-size: 12px;
+        font-family: var(--font-body);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .edit-bar button:hover {
+        background: rgba(37, 99, 235, 0.2);
+        color: #fff;
+      }
+
+      [contenteditable="true"] {
+        outline: 1px dashed rgba(37, 99, 235, 0.4);
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
+
+      /* ===========================================
+           CTA SLIDE
+           =========================================== */
+      .cta-links {
+        display: flex;
+        gap: clamp(0.8rem, 2vw, 1.5rem);
+        margin-top: clamp(1rem, 2vh, 2rem);
+        flex-wrap: wrap;
+      }
+
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.7em 1.5em;
+        border-radius: 12px;
+        font-size: var(--body-size);
+        font-weight: 600;
+        font-family: var(--font-body);
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .cta-btn-primary {
+        background: var(--accent-blue);
+        color: #fff;
+        border: none;
+      }
+
+      .cta-btn-primary:hover {
+        box-shadow: 0 0 30px var(--accent-blue-glow);
+        transform: translateY(-2px);
+      }
+
+      .cta-btn-secondary {
+        background: transparent;
+        color: var(--text-secondary);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .cta-btn-secondary:hover {
+        border-color: var(--accent-blue);
+        color: #fff;
+      }
+
+      /* ===========================================
+           RESPONSIVE BREAKPOINTS
+           =========================================== */
+      @media (max-height: 700px) {
+        :root {
+          --slide-padding: clamp(1rem, 3vw, 2rem);
+          --content-gap: clamp(0.5rem, 1.5vw, 1rem);
+          --title-size: clamp(1.5rem, 5vw, 3rem);
+          --h2-size: clamp(1.2rem, 3vw, 2rem);
+        }
+      }
+
+      @media (max-height: 600px) {
+        :root {
+          --slide-padding: clamp(0.75rem, 2.5vw, 1.5rem);
+          --content-gap: clamp(0.4rem, 1vw, 0.75rem);
+          --title-size: clamp(1.2rem, 4.5vw, 2.2rem);
+          --body-size: clamp(0.7rem, 1.2vw, 0.9rem);
+        }
+        .nav-dots {
+          display: none;
+        }
+      }
+
+      @media (max-height: 500px) {
+        :root {
+          --slide-padding: clamp(0.5rem, 2vw, 1rem);
+          --title-size: clamp(1rem, 3.5vw, 1.5rem);
+          --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+          --body-size: clamp(0.65rem, 1vw, 0.85rem);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .tool-layout {
+          grid-template-columns: 1fr;
+          gap: clamp(0.8rem, 2vw, 1.5rem);
+        }
+        .screenshot-container {
+          max-height: min(35vh, 250px);
+          order: -1;
+        }
+        .overview-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .overview-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.2s !important;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Nav Dots -->
+    <nav class="nav-dots" id="navDots"></nav>
+
+    <!-- Edit Mode -->
+    <div class="edit-hotzone" id="editHotzone"></div>
+    <button class="edit-toggle" id="editToggle" title="编辑模式 (E)">
+      &#9998;
+    </button>
+    <div class="edit-bar" id="editBar">
+      <button onclick="editor.saveToStorage()">&#128190; 保存</button>
+      <button onclick="editor.exportFile()">&#128228; 导出文件</button>
+      <button onclick="editor.resetContent()">&#8634; 重置</button>
+    </div>
+
+    <!-- ===========================================
+         SLIDE 1: TITLE
+         =========================================== -->
+    <section class="slide" id="slide-1">
+      <div class="grid-bg"></div>
+      <div class="glow glow-blue" style="top: 15%; left: 5%"></div>
+      <div class="glow glow-green" style="bottom: 20%; right: 8%"></div>
+      <div
+        class="slide-content"
+        style="align-items: center; text-align: center"
+      >
+        <div class="badge reveal">XIAOYUANVC.COM</div>
+        <h1
+          class="gradient-text reveal"
+          style="margin-bottom: clamp(0.5rem, 1.5vh, 1rem)"
+        >
+          校园VC <span class="accent-text">互动工具</span>
+        </h1>
+        <p
+          class="reveal"
+          style="
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            max-width: 560px;
+            line-height: 1.7;
+            text-align: center;
+          "
+        >
+          六大AI驱动的创业教育工具<br />从发现灵感到验证机会，全程智能辅导
+        </p>
+        <div
+          class="reveal"
+          style="
+            display: flex;
+            gap: 8px;
+            margin-top: clamp(1.5rem, 3vh, 2.5rem);
+          "
+        >
+          <span
+            style="
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background: var(--accent-blue);
+            "
+          ></span>
+          <span
+            style="
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.15);
+            "
+          ></span>
+          <span
+            style="
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.15);
+            "
+          ></span>
+          <span
+            style="
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.15);
+            "
+          ></span>
+          <span
+            style="
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.15);
+            "
+          ></span>
+          <span
+            style="
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.15);
+            "
+          ></span>
+        </div>
+      </div>
+      <div class="slide-number">01 / 09</div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 2: OVERVIEW
+         =========================================== -->
+    <section class="slide" id="slide-2">
+      <div class="grid-bg"></div>
+      <div
+        class="glow glow-blue"
+        style="top: 60%; left: 50%; opacity: 0.2"
+      ></div>
+      <div class="slide-content">
+        <div class="badge reveal">TOOL SUITE</div>
+        <h2
+          class="gradient-text reveal"
+          style="margin-bottom: var(--content-gap)"
+        >
+          六大工具一览
+        </h2>
+        <div class="overview-grid">
+          <div class="overview-card glass-card reveal">
+            <div
+              class="tool-icon"
+              style="background: rgba(76, 175, 80, 0.15); color: #4caf50"
+            >
+              &#128161;
+            </div>
+            <h3>发现你的创业想法</h3>
+            <p>Ali Abdaal 6步法，从兴趣到商业想法</p>
+          </div>
+          <div class="overview-card glass-card reveal">
+            <div
+              class="tool-icon"
+              style="background: rgba(124, 58, 237, 0.15); color: #a78bfa"
+            >
+              &#127919;
+            </div>
+            <h3>找到你想做的事</h3>
+            <p>八木仁平方法论，喜欢 × 擅长 × 价值观</p>
+          </div>
+          <div class="overview-card glass-card reveal">
+            <div
+              class="tool-icon"
+              style="background: rgba(249, 115, 22, 0.15); color: #f97316"
+            >
+              &#128300;
+            </div>
+            <h3>硬科技创业自检</h3>
+            <p>五维诊断，适合实验室成果转化</p>
+          </div>
+          <div class="overview-card glass-card reveal">
+            <div
+              class="tool-icon"
+              style="background: rgba(59, 130, 246, 0.15); color: #3b82f6"
+            >
+              &#11088;
+            </div>
+            <h3>学生创业自检</h3>
+            <p>AI五维评估，痛点 × 突破口 × 验证力</p>
+          </div>
+          <div class="overview-card glass-card reveal">
+            <div
+              class="tool-icon"
+              style="background: rgba(14, 165, 233, 0.15); color: #0ea5e9"
+            >
+              &#129302;
+            </div>
+            <h3>AI 员工面试</h3>
+            <p>6分钟匹配最适合你的AI工具</p>
+          </div>
+          <div class="overview-card glass-card reveal">
+            <div
+              class="tool-icon"
+              style="background: rgba(168, 85, 247, 0.15); color: #a855f7"
+            >
+              &#127760;
+            </div>
+            <h3>AI 创业机会探索器</h3>
+            <p>12大行业 × AI解决方案 × 验证路径</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">02 / 09</div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 3: FIND YOUR IDEA
+         =========================================== -->
+    <section class="slide" id="slide-3">
+      <div class="grid-bg"></div>
+      <div class="glow glow-green" style="top: 30%; left: -5%"></div>
+      <div class="slide-content">
+        <div class="tool-layout">
+          <div class="tool-info reveal-left">
+            <div
+              class="tool-color-badge"
+              style="background: rgba(76, 175, 80, 0.12); color: #4caf50"
+            >
+              &#128161; 工具一
+            </div>
+            <h2 class="gradient-text">发现你的创业想法</h2>
+            <p>
+              基于 Ali Abdaal
+              的「6步想法发现法」，通过交互式问答引导学生从日常兴趣中挖掘潜在的创业方向。
+            </p>
+            <div class="tool-features">
+              <div class="feature-item">多步骤引导式表单</div>
+              <div class="feature-item">标签式头脑风暴系统</div>
+              <div class="feature-item">AI教练实时点评与建议</div>
+              <div class="feature-item">进度保存，随时继续</div>
+            </div>
+          </div>
+          <div class="screenshot-container reveal-right">
+            <img
+              src="tools-presentation-assets/find-your-idea.png"
+              alt="发现你的创业想法工具界面"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">03 / 09</div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 4: FIND WHAT YOU WANT
+         =========================================== -->
+    <section class="slide" id="slide-4">
+      <div class="grid-bg"></div>
+      <div class="glow glow-blue" style="bottom: 20%; right: -5%"></div>
+      <div class="slide-content">
+        <div class="tool-layout">
+          <div class="screenshot-container reveal-left">
+            <img
+              src="tools-presentation-assets/find-what-you-want.png"
+              alt="找到你想做的事工具界面"
+            />
+          </div>
+          <div class="tool-info reveal-right">
+            <div
+              class="tool-color-badge"
+              style="background: rgba(124, 58, 237, 0.12); color: #a78bfa"
+            >
+              &#127919; 工具二
+            </div>
+            <h2 class="gradient-text">找到你想做的事</h2>
+            <p>
+              基于八木仁平《如何找到想做的事》方法论，通过卡片滑动 +
+              AI教练提问，发现 喜欢 × 擅长 × 价值观 的交集。
+            </p>
+            <div class="tool-features">
+              <div class="feature-item">情境化问题，非抽象自评</div>
+              <div class="feature-item">AI生成3个价值主张候选</div>
+              <div class="feature-item">验证行动计划（今天/本周/这个月）</div>
+              <div class="feature-item">本地存档，可恢复进度</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">04 / 09</div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 5: HARD TECH CHECK
+         =========================================== -->
+    <section class="slide" id="slide-5">
+      <div class="grid-bg"></div>
+      <div class="glow glow-green" style="top: 10%; right: 20%"></div>
+      <div class="slide-content">
+        <div class="tool-layout">
+          <div class="tool-info reveal-left">
+            <div
+              class="tool-color-badge"
+              style="background: rgba(249, 115, 22, 0.12); color: #f97316"
+            >
+              &#128300; 工具三
+            </div>
+            <h2 class="gradient-text">硬科技创业自检</h2>
+            <p>
+              专为实验室成果转化设计。五维诊断：技术成熟度、市场需求、团队能力、师生共创状态、生态支撑。
+            </p>
+            <div class="tool-features">
+              <div class="feature-item">共创验证式创业法三层九阶段</div>
+              <div class="feature-item">清华共创 + MIT 24步法方法论</div>
+              <div class="feature-item">保守推断 + 硬规则约束</div>
+              <div class="feature-item">输出具体改进路线图</div>
+            </div>
+          </div>
+          <div class="screenshot-container reveal-right">
+            <img
+              src="tools-presentation-assets/hard-tech-check.png"
+              alt="硬科技创业自检工具界面"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">05 / 09</div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 6: RATE YOUR IDEA
+         =========================================== -->
+    <section class="slide" id="slide-6">
+      <div class="grid-bg"></div>
+      <div class="glow glow-blue" style="bottom: 30%; left: 10%"></div>
+      <div class="slide-content">
+        <div class="tool-layout">
+          <div class="screenshot-container reveal-left">
+            <img src="tools-presentation-assets/rate-your-idea.png" alt="学生创业自检工具界面" />
+          </div>
+          <div class="tool-info reveal-right">
+            <div
+              class="tool-color-badge"
+              style="background: rgba(59, 130, 246, 0.12); color: #3b82f6"
+            >
+              &#11088; 工具四
+            </div>
+            <h2 class="gradient-text">学生创业自检</h2>
+            <p>
+              AI从五个维度评估创业想法：痛点真实性、初始突破口、快速验证能力、团队赛道匹配、进化空间。
+            </p>
+            <div class="tool-features">
+              <div class="feature-item">基于《从零到壹》方法论</div>
+              <div class="feature-item">五维雷达图可视化</div>
+              <div class="feature-item">专业评估报告 + 改进建议</div>
+              <div class="feature-item">对标真实创业案例</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">06 / 09</div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 7: AI READY CHECK
+         =========================================== -->
+    <section class="slide" id="slide-7">
+      <div class="grid-bg"></div>
+      <div class="glow glow-green" style="top: 40%; right: -5%"></div>
+      <div class="slide-content">
+        <div class="tool-layout">
+          <div class="tool-info reveal-left">
+            <div
+              class="tool-color-badge"
+              style="background: rgba(14, 165, 233, 0.12); color: #0ea5e9"
+            >
+              &#129302; 工具五
+            </div>
+            <h2 class="gradient-text">AI 员工面试</h2>
+            <p>
+              6分钟AI员工面试，找到最适合你日常工作的AI工具，获得定制化生产力方案和行动计划。
+            </p>
+            <div class="tool-features">
+              <div class="feature-item">多步诊断：类型 × 行业 × AI需求</div>
+              <div class="feature-item">个性化AI工具推荐清单</div>
+              <div class="feature-item">7天AI上手计划</div>
+              <div class="feature-item">适合零基础用户</div>
+            </div>
+          </div>
+          <div class="screenshot-container reveal-right">
+            <img src="tools-presentation-assets/ai-ready-check.png" alt="AI员工面试工具界面" />
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">07 / 09</div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 8: AI OPPORTUNITY EXPLORER
+         =========================================== -->
+    <section class="slide" id="slide-8">
+      <div class="grid-bg"></div>
+      <div class="glow glow-blue" style="top: 20%; left: 30%"></div>
+      <div class="slide-content">
+        <div class="tool-layout">
+          <div class="screenshot-container reveal-left">
+            <img src="tools-presentation-assets/ai-opportunity.png" alt="AI创业机会探索器界面" />
+          </div>
+          <div class="tool-info reveal-right">
+            <div
+              class="tool-color-badge"
+              style="background: rgba(168, 85, 247, 0.12); color: #a855f7"
+            >
+              &#127760; 工具六
+            </div>
+            <h2 class="gradient-text">AI 创业机会探索器</h2>
+            <p>
+              探索12大中国行业的AI创业机会。选择行业 → 识别痛点 → 发现AI解决方案
+              → 获取验证路径。
+            </p>
+            <div class="tool-features">
+              <div class="feature-item">5步交互式探索流程</div>
+              <div class="feature-item">学生/教师双视角切换</div>
+              <div class="feature-item">覆盖12个热门行业</div>
+              <div class="feature-item">含验证路径和下一步行动</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">08 / 09</div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE 9: CTA / CLOSING
+         =========================================== -->
+    <section class="slide" id="slide-9">
+      <div class="grid-bg"></div>
+      <div class="glow glow-blue" style="top: 30%; left: 20%"></div>
+      <div class="glow glow-green" style="bottom: 30%; right: 20%"></div>
+      <div
+        class="slide-content"
+        style="align-items: center; text-align: center"
+      >
+        <div class="badge reveal">GET STARTED</div>
+        <h2
+          class="gradient-text reveal"
+          style="
+            font-size: var(--title-size);
+            margin-bottom: clamp(0.5rem, 1.5vh, 1rem);
+          "
+        >
+          开始探索你的<span class="accent-text">创业之旅</span>
+        </h2>
+        <p
+          class="reveal"
+          style="
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            max-width: 500px;
+            line-height: 1.7;
+          "
+        >
+          所有工具完全免费、无需注册<br />打开浏览器即可开始
+        </p>
+        <div class="cta-links reveal">
+          <a
+            href="https://xiaoyuanvc.com/#interactive-tools"
+            class="cta-btn cta-btn-primary"
+            target="_blank"
+          >
+            &#128640; 立即体验
+          </a>
+          <a
+            href="https://xiaoyuanvc.com"
+            class="cta-btn cta-btn-secondary"
+            target="_blank"
+          >
+            访问 xiaoyuanvc.com &#8599;
+          </a>
+        </div>
+      </div>
+      <div class="slide-number">09 / 09</div>
+    </section>
+
+    <!-- ===========================================
+       JAVASCRIPT: NAVIGATION & ANIMATIONS
+       =========================================== -->
+    <script>
+      (function () {
+        "use strict";
+
+        /* ===========================================
+           SLIDE PRESENTATION CONTROLLER
+           Handles keyboard, touch, wheel navigation,
+           progress bar, nav dots, and scroll animations
+           =========================================== */
+        class SlidePresentation {
+          constructor() {
+            this.slides = document.querySelectorAll(".slide");
+            this.currentIndex = 0;
+            this.isTransitioning = false;
+            this.touchStartY = 0;
+
+            this.initNavDots();
+            this.initObserver();
+            this.bindKeyboard();
+            this.bindTouch();
+            this.bindWheel();
+            this.updateProgress();
+
+            // Mark first slide visible
+            this.slides[0].classList.add("visible");
+          }
+
+          initNavDots() {
+            const nav = document.getElementById("navDots");
+            this.slides.forEach((_, i) => {
+              const dot = document.createElement("button");
+              dot.className = "nav-dot" + (i === 0 ? " active" : "");
+              dot.setAttribute("aria-label", "Go to slide " + (i + 1));
+              dot.addEventListener("click", () => this.goTo(i));
+              nav.appendChild(dot);
+            });
+            this.dots = nav.querySelectorAll(".nav-dot");
+          }
+
+          initObserver() {
+            const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    const index = Array.from(this.slides).indexOf(entry.target);
+                    this.currentIndex = index;
+                    this.updateDots();
+                    this.updateProgress();
+                  }
+                });
+              },
+              { threshold: 0.5 },
+            );
+
+            this.slides.forEach((slide) => observer.observe(slide));
+          }
+
+          bindKeyboard() {
+            document.addEventListener("keydown", (e) => {
+              if (e.target.getAttribute("contenteditable") === "true") return;
+              switch (e.key) {
+                case "ArrowDown":
+                case "ArrowRight":
+                case " ":
+                  e.preventDefault();
+                  this.next();
+                  break;
+                case "ArrowUp":
+                case "ArrowLeft":
+                  e.preventDefault();
+                  this.prev();
+                  break;
+              }
+            });
+          }
+
+          bindTouch() {
+            document.addEventListener(
+              "touchstart",
+              (e) => {
+                this.touchStartY = e.touches[0].clientY;
+              },
+              { passive: true },
+            );
+
+            document.addEventListener(
+              "touchend",
+              (e) => {
+                const diff = this.touchStartY - e.changedTouches[0].clientY;
+                if (Math.abs(diff) > 50) {
+                  diff > 0 ? this.next() : this.prev();
+                }
+              },
+              { passive: true },
+            );
+          }
+
+          bindWheel() {
+            let lastWheel = 0;
+            document.addEventListener(
+              "wheel",
+              (e) => {
+                const now = Date.now();
+                if (now - lastWheel < 800) return;
+                lastWheel = now;
+                if (e.deltaY > 30) this.next();
+                else if (e.deltaY < -30) this.prev();
+              },
+              { passive: true },
+            );
+          }
+
+          goTo(index) {
+            if (index < 0 || index >= this.slides.length) return;
+            this.slides[index].scrollIntoView({ behavior: "smooth" });
+            this.currentIndex = index;
+            this.updateDots();
+            this.updateProgress();
+          }
+
+          next() {
+            this.goTo(this.currentIndex + 1);
+          }
+          prev() {
+            this.goTo(this.currentIndex - 1);
+          }
+
+          updateDots() {
+            this.dots.forEach((dot, i) => {
+              dot.classList.toggle("active", i === this.currentIndex);
+            });
+          }
+
+          updateProgress() {
+            const progress =
+              (this.currentIndex / (this.slides.length - 1)) * 100;
+            document.getElementById("progressBar").style.width = progress + "%";
+          }
+        }
+
+        /* ===========================================
+           INLINE EDITOR
+           Allows editing text directly in the browser,
+           saves to localStorage, and can export as file
+           =========================================== */
+        class InlineEditor {
+          constructor() {
+            this.isActive = false;
+            this.storageKey = "xyvc-tools-presentation";
+            this.editableSelectors =
+              "h1, h2, h3, p, .feature-item, .badge, .tool-color-badge";
+            this.restoreFromStorage();
+          }
+
+          toggleEditMode() {
+            this.isActive = !this.isActive;
+            const toggle = document.getElementById("editToggle");
+            const bar = document.getElementById("editBar");
+
+            toggle.classList.toggle("active", this.isActive);
+            bar.classList.toggle("visible", this.isActive);
+
+            document.querySelectorAll(this.editableSelectors).forEach((el) => {
+              el.setAttribute(
+                "contenteditable",
+                this.isActive ? "true" : "false",
+              );
+            });
+          }
+
+          saveToStorage() {
+            const data = {};
+            document.querySelectorAll(".slide").forEach((slide, i) => {
+              data["slide-" + i] = slide.innerHTML;
+            });
+            localStorage.setItem(this.storageKey, JSON.stringify(data));
+          }
+
+          restoreFromStorage() {
+            const saved = localStorage.getItem(this.storageKey);
+            if (!saved) return;
+            try {
+              const data = JSON.parse(saved);
+              document.querySelectorAll(".slide").forEach((slide, i) => {
+                if (data["slide-" + i]) {
+                  slide.innerHTML = data["slide-" + i];
+                }
+              });
+            } catch (e) {
+              /* ignore parse errors */
+            }
+          }
+
+          resetContent() {
+            localStorage.removeItem(this.storageKey);
+            location.reload();
+          }
+
+          exportFile() {
+            this.saveToStorage();
+            const html = document.documentElement.outerHTML;
+            const blob = new Blob(["<!DOCTYPE html>\n" + html], {
+              type: "text/html",
+            });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "tools-presentation-edited.html";
+            a.click();
+            URL.revokeObjectURL(a.href);
+          }
+        }
+
+        // Initialize
+        const presentation = new SlidePresentation();
+        const editor = new InlineEditor();
+        window.editor = editor;
+
+        // Edit toggle: JS-based hover with delay
+        const hotzone = document.getElementById("editHotzone");
+        const editToggle = document.getElementById("editToggle");
+        let hideTimeout = null;
+
+        hotzone.addEventListener("mouseenter", () => {
+          clearTimeout(hideTimeout);
+          editToggle.classList.add("show");
+        });
+        hotzone.addEventListener("mouseleave", () => {
+          hideTimeout = setTimeout(() => {
+            if (!editor.isActive) editToggle.classList.remove("show");
+          }, 400);
+        });
+        editToggle.addEventListener("mouseenter", () => {
+          clearTimeout(hideTimeout);
+        });
+        editToggle.addEventListener("mouseleave", () => {
+          hideTimeout = setTimeout(() => {
+            if (!editor.isActive) editToggle.classList.remove("show");
+          }, 400);
+        });
+
+        // Click handlers
+        editToggle.addEventListener("click", () => editor.toggleEditMode());
+        hotzone.addEventListener("click", () => editor.toggleEditMode());
+
+        // Keyboard shortcut (E key)
+        document.addEventListener("keydown", (e) => {
+          if (
+            (e.key === "e" || e.key === "E") &&
+            !e.target.getAttribute("contenteditable")
+          ) {
+            editor.toggleEditMode();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
