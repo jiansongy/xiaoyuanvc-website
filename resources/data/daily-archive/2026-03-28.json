@@ -1,0 +1,90 @@
+{
+  "date": "2026-03-28",
+  "display_date": "2026.03.28",
+  "status": "generated",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "苹果或将改变战略：向外部人工智能助手开放 Siri",
+          "summary": "苹果或将改变战略：向外部人工智能助手开放 Siri",
+          "highlight": "苹果或将",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "产品",
+          "title": "Anthropic 新模型意外泄露，网络安全股开盘大跌",
+          "summary": "Anthropic 新模型意外泄露，网络安全股开盘大跌",
+          "highlight": "新模型意",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "融资",
+          "title": "与 OpenAI 赛跑：Anthropic 被曝最快 10 月 IPO 上市",
+          "summary": "与 OpenAI 赛跑：Anthropic 被曝最快 10 月 IPO 上市",
+          "highlight": "OpenAI",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "摩根士丹利加入比特币 ETF 竞争，拟以超低费率抢占市场",
+          "summary": "摩根士丹利拟推出现货比特币 ETF，并以约 1% 的低费率争夺市场份额。",
+          "highlight": "低费率",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Anthropic 大规模模型泄露冲击软件股与加密市场",
+          "summary": "Claude Mythos 泄露被认为可能显著放大网络安全风险，拖累软件板块与加密资产同步下跌。",
+          "highlight": "模型泄露",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "特朗普延长对伊朗打击暂停期后，加密市场自低位小幅反弹",
+          "summary": "在中东局势引发全球市场大跌后，因特朗普延长对伊朗军事行动暂停期，加密资产暂时脱离日内最差水平。",
+          "highlight": "局势缓和",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "沦为PvP绞肉机的Meme币赌场",
+          "summary": "沦为PvP绞肉机的Meme币赌场",
+          "highlight": "沦为",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "AI与加密应用的深度捆绑",
+          "summary": "AI与加密应用的深度捆绑",
+          "highlight": "与加密应",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ]
+    }
+  },
+  "source": "vps"
+}
