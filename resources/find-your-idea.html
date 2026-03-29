@@ -1213,7 +1213,7 @@
               </button>
               <button
                 class="btn btn-primary"
-                onclick="window.print()"
+                onclick="window.safePrint()"
                 data-ai-action="print"
               >
                 🖨️ 打印保存
@@ -2204,6 +2204,25 @@ ${rows || "（暂无填写）"}
           if (!confirm("确认重新开始？所有填写内容将被清空。")) return;
           localStorage.removeItem(SK);
           location.reload();
+        };
+
+        window.safePrint = function () {
+          var ua = navigator.userAgent;
+          var isInApp =
+            /MicroMessenger|BytedanceWebview|Douyin|ToutiaoMicroApp/i.test(ua);
+          if (isInApp) {
+            window.alert(
+              "当前浏览器不支持打印功能。\n\n请点击「📋 复制分析」保存结果，或截图保存本页内容。",
+            );
+            return;
+          }
+          try {
+            window.print();
+          } catch (e) {
+            window.alert(
+              "当前浏览器不支持直接打印，请使用浏览器菜单中的「分享 → 打印」或截图保存。",
+            );
+          }
         };
 
         window.copyAnalysis = function () {
