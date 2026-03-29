@@ -294,7 +294,23 @@
         var params = new URLSearchParams(window.location.search);
         var epNum = parseInt(params.get("ep"), 10);
         if (!epNum) {
-          document.getElementById("epTitle").textContent = "未找到节目";
+          // No episode specified — load latest from episodes.json
+          fetch("data/episodes.json")
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              var episodes = data.episodes || data;
+              if (episodes.length > 0) {
+                var latest = episodes[0].ep;
+                window.location.replace("episodes/ep" + latest + ".html");
+              } else {
+                document.getElementById("epTitle").textContent = "暂无节目";
+              }
+            })
+            .catch(function () {
+              document.getElementById("epTitle").textContent = "加载失败";
+            });
           return;
         }
 
