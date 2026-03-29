@@ -207,13 +207,14 @@
         margin-bottom: 16px;
       }
       .step-title {
-        font-size: 17px;
+        font-size: 19px;
         font-weight: 700;
         margin-bottom: 6px;
+        color: var(--navy);
       }
       .step-desc {
         font-size: 14px;
-        color: var(--gray);
+        color: #666;
         line-height: 1.6;
         margin-bottom: 16px;
       }
@@ -1888,7 +1889,15 @@
 
         // ── STEP 4: customer + path ──
         function renderS4() {
-          document.getElementById("customer_input").value = S.customer;
+          var inp = document.getElementById("customer_input");
+          if (!S.customer && (S.ml_customer || S.ml_scene)) {
+            S.customer =
+              (S.ml_customer || "") +
+              (S.ml_customer && S.ml_scene
+                ? "（" + S.ml_scene + "）"
+                : S.ml_scene || "");
+          }
+          inp.value = S.customer;
           restoreRadio("pathGrid", S.path);
           updateNextButtonState();
         }
