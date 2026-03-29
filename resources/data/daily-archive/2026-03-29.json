@@ -1,0 +1,90 @@
+{
+  "date": "2026-03-29",
+  "display_date": "2026.03.29",
+  "status": "generated",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "遭中国学界集体「拉黑」后 NeurIPS 道歉",
+          "summary": "在引发中国学界集中抵制后，NeurIPS 就相关争议公开致歉，试图缓和学术社区矛盾。",
+          "highlight": "NeurIPS致歉",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "产品",
+          "title": "华为盘古大模型负责人王云鹤离职，被曝 Agent 创业",
+          "summary": "华为盘古大模型负责人王云鹤被曝离职并投身 Agent 创业，显示大模型核心人才继续流向新一代智能体赛道。",
+          "highlight": "Agent创业",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "融资",
+          "title": "谷歌即将达成协议，将为 Anthropic 数据中心提供融资支持",
+          "summary": "谷歌据称将为 Anthropic 数据中心建设提供融资支持，进一步加码 AI 基础设施与战略绑定。",
+          "highlight": "谷歌支持Anthropic",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "公链",
+          "title": "比特币估值压缩，较美股下行风险更低",
+          "summary": "在油气价格上涨和市场避险情绪升温背景下，比特币因估值已被压缩，被认为相较股票具备更小下行空间。",
+          "highlight": "比特币抗跌",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 2,
+          "category": "实务",
+          "title": "Kalshi 获牌照，向机构投资者开放保证金交易",
+          "summary": "预测市场平台 Kalshi 获得开展保证金交易的许可，首次向机构客户提供带杠杆的合约交易能力。",
+          "highlight": "Kalshi获牌照",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 3,
+          "category": "金融",
+          "title": "华盛顿州起诉 Kalshi，多州加码施压预测市场",
+          "summary": "华盛顿州总检察长起诉 Kalshi，指控其业务违规，显示美国多州正同步加强对预测市场的法律打压。",
+          "highlight": "多州施压Kalshi",
+          "highlight_color": "section",
+          "source": "CoinDesk"
+        },
+        {
+          "id": 4,
+          "category": "文化",
+          "title": "RealGo刮起抽卡挖矿风潮，Meme 3.0游戏赚足眼球",
+          "summary": "RealGo 以抽卡与挖矿结合的玩法带火 Meme 3.0 概念，链上游戏叙事再度吸引市场关注。",
+          "highlight": "Meme 3.0",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 5,
+          "category": "创新",
+          "title": "地缘冲突与特朗普拉扯下的加密市场大雪崩",
+          "summary": "在地缘冲突升级与特朗普相关政策预期反复摇摆影响下，加密市场出现大幅回撤并引发连锁恐慌。",
+          "highlight": "市场雪崩",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ]
+    }
+  },
+  "source": "vps"
+}
