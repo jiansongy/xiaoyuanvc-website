@@ -484,6 +484,44 @@
       .paste-counter.over {
         color: #ef4444;
       }
+      .context-card {
+        margin: 12px 0 14px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid #fed7aa;
+        background: #fff7ed;
+      }
+      .context-card__title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .context-card__desc {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--gray);
+        line-height: 1.7;
+      }
+      .context-card__meta {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--navy);
+      }
+      .context-card__preview {
+        margin-top: 8px;
+        padding: 9px 10px;
+        border-radius: 10px;
+        background: white;
+        font-size: 13px;
+        color: var(--navy);
+        line-height: 1.7;
+      }
+      .context-card__actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
 
       /* Confirm screen */
       .confirm-row {
@@ -755,6 +793,7 @@
         <p class="step-desc">
           用一句话描述你的项目——填写下面四个空，完成后可以预览效果。
         </p>
+        <div id="contextSyncCard" style="display: none"></div>
         <div class="madlib-row">
           <span class="madlib-label">核心技术</span>
           <input
@@ -1519,11 +1558,13 @@
       ></div>
     </div>
 
+    <script src="./tool-context.js"></script>
     <script>
       (function () {
         "use strict";
 
         // ── CONSTANTS ──
+        var TOOL_ID = "hard-tech-check";
         var SK = "xyvc-hard-tech-check-v1";
         var TOTAL_STEPS = 6;
         var AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
@@ -1626,8 +1667,10 @@
           difficulties: [],
           diff_note: "",
           eco: [],
+          paste_text: "",
           report: "",
         };
+        var contextSyncState = null;
         // expose S for inline oninput handlers
         window.S = S;
 
@@ -1637,6 +1680,18 @@
             localStorage.setItem(SK, JSON.stringify(S));
           } catch (e) {
             /* localStorage may be unavailable in incognito */
+          }
+          if (window.XYVCToolContext) {
+            window.XYVCToolContext.write(TOOL_ID, {
+              projectContext: {
+                track: "硬科技",
+                oneLiner: buildSharedProjectSummary(),
+                isHardTech: true,
+              },
+              userProfile: {
+                lastActiveTool: TOOL_ID,
+              },
+            });
           }
         }
         function load() {
@@ -1654,6 +1709,31 @@
               localStorage.removeItem(SK);
             } catch (e2) {}
           }
+        }
+
+        function buildSharedProjectSummary() {
+          if (
+            S.ml_tech &&
+            S.ml_scene &&
+            S.ml_customer &&
+            S.ml_problem
+          ) {
+            return (
+              "我们用" +
+              S.ml_tech +
+              "，解决" +
+              S.ml_scene +
+              "中" +
+              S.ml_customer +
+              "面临的" +
+              S.ml_problem +
+              "。"
+            );
+          }
+          if (S.paste_text && S.paste_text.trim()) {
+            return S.paste_text.trim().slice(0, 120);
+          }
+          return "";
         }
 
         // ── ESCAPE HELPER ──
@@ -1702,6 +1782,9 @@
         // ── NAVIGATION ──
         window.startApp = function () {
           S.step = 1;
+          if (!contextSyncState) {
+            refreshContextSyncState();
+          }
           save();
           showStep(1);
           render(1);
@@ -1824,19 +1907,21 @@
         }
 
         // ── STEP 1: Mad-libs ──
-        window.updatePasteCount = function () {
+        window.updatePasteCount = function (shouldSave) {
           var ta = document.getElementById("pasteText");
           var counter = document.getElementById("pasteCounter");
           if (!ta || !counter) return;
           if (ta.value.length > 2000) {
             ta.value = ta.value.slice(0, 2000);
           }
+          S.paste_text = ta.value;
           var len = ta.value.length;
           counter.textContent = len + " / 2000 字";
           counter.className = "paste-counter" + (len >= 2000 ? " over" : "");
+          if (shouldSave !== false) save();
         };
 
-        window.updateMadlib = function () {
+        window.updateMadlib = function (shouldSave) {
           S.ml_tech = document.getElementById("ml_tech").value;
           S.ml_scene = document.getElementById("ml_scene").value;
           S.ml_customer = document.getElementById("ml_customer").value;
@@ -1850,13 +1935,121 @@
           document.getElementById("prev_problem").textContent =
             S.ml_problem || "【核心问题】";
           updateNextButtonState();
+          if (shouldSave !== false) save();
+        };
+        function buildContextMeta(context) {
+          var meta = [];
+          if (context.projectContext && context.projectContext.track) {
+            meta.push("赛道：" + context.projectContext.track);
+          }
+          if (context.projectContext && context.projectContext.stage) {
+            meta.push("阶段：" + context.projectContext.stage);
+          }
+          if (context.projectContext && context.projectContext.isHardTech) {
+            meta.push("项目类型：硬科技");
+          }
+          return meta.join(" · ");
+        }
+        function refreshContextSyncState() {
+          if (!window.XYVCToolContext) {
+            contextSyncState = null;
+            return;
+          }
+          var context = window.XYVCToolContext.read();
+          if (
+            !window.XYVCToolContext.hasProjectContext(context) ||
+            context.sourceToolId === TOOL_ID ||
+            !context.projectContext.oneLiner
+          ) {
+            contextSyncState = null;
+            return;
+          }
+
+          var currentText = String(S.paste_text || "").trim();
+          var incomingText = context.projectContext.oneLiner;
+          contextSyncState = {
+            sourceToolId: context.sourceToolId,
+            sourceLabel: window.XYVCToolContext.getLabel(context.sourceToolId),
+            oneLiner: incomingText,
+            meta: buildContextMeta(context),
+            canApply: currentText !== incomingText,
+            autoApplied: false,
+            dismissed: false,
+          };
+
+          if (!currentText) {
+            S.paste_text = incomingText;
+            contextSyncState.canApply = false;
+            contextSyncState.autoApplied = true;
+          } else if (currentText === incomingText) {
+            contextSyncState.canApply = false;
+          }
+        }
+        function renderContextSyncCard() {
+          var card = document.getElementById("contextSyncCard");
+          if (!card) return;
+          if (!contextSyncState || contextSyncState.dismissed) {
+            card.style.display = "none";
+            card.innerHTML = "";
+            return;
+          }
+
+          var actionHtml = contextSyncState.canApply
+            ? '<div class="context-card__actions">' +
+              '<button class="btn btn-primary" style="margin-top:0" onclick="applySharedProjectMaterial()">同步到项目材料</button>' +
+              '<button class="btn btn-ghost" style="margin-top:0" onclick="dismissSharedProjectMaterial()">暂不处理</button>' +
+              "</div>"
+            : '<div class="context-card__actions">' +
+              '<button class="btn btn-ghost" style="margin-top:0" onclick="dismissSharedProjectMaterial()">知道了</button>' +
+              "</div>";
+
+          card.style.display = "block";
+          card.innerHTML =
+            '<div class="context-card">' +
+            '<div class="context-card__title">已从「' +
+            esc(contextSyncState.sourceLabel) +
+            '」带入项目背景</div>' +
+            '<div class="context-card__desc">' +
+            (contextSyncState.autoApplied
+              ? "我们已经把上一工具里的一句话项目描述自动放到了“项目材料”里，方便你继续补充。"
+              : "检测到你在上一工具里更新过项目背景。你可以一键同步到这里，也可以保留当前材料。") +
+            "</div>" +
+            (contextSyncState.meta
+              ? '<div class="context-card__meta">' +
+                esc(contextSyncState.meta) +
+                "</div>"
+              : "") +
+            '<div class="context-card__preview">' +
+            esc(contextSyncState.oneLiner) +
+            "</div>" +
+            actionHtml +
+            "</div>";
+        }
+        window.applySharedProjectMaterial = function () {
+          if (!contextSyncState) return;
+          S.paste_text = contextSyncState.oneLiner;
+          contextSyncState.canApply = false;
+          contextSyncState.autoApplied = true;
+          save();
+          renderS1();
+        };
+        window.dismissSharedProjectMaterial = function () {
+          if (!contextSyncState) return;
+          contextSyncState.dismissed = true;
+          renderContextSyncCard();
         };
         function renderS1() {
           document.getElementById("ml_tech").value = S.ml_tech;
           document.getElementById("ml_scene").value = S.ml_scene;
           document.getElementById("ml_customer").value = S.ml_customer;
           document.getElementById("ml_problem").value = S.ml_problem;
-          updateMadlib();
+          var pasteText = document.getElementById("pasteText");
+          if (pasteText) {
+            pasteText.value = S.paste_text || "";
+          }
+          updatePasteCount(false);
+          updateMadlib(false);
+          renderContextSyncCard();
         }
 
         // ── STEP 2: TRL radio ──
@@ -2406,6 +2599,7 @@
 
         // ── BOOT ──
         load();
+        refreshContextSyncState();
         // Restore step from URL hash if present and valid
         (function () {
           var hash = window.location.hash;
