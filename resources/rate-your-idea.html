@@ -568,6 +568,146 @@
         color: var(--navy);
       }
 
+      .sub-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        margin: 16px 0;
+        overflow: hidden;
+      }
+      .sub-card__body {
+        padding: 16px 18px;
+      }
+      .sub-card__title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--navy);
+        margin-bottom: 6px;
+      }
+      .sub-card__hint {
+        font-size: 12px;
+        color: var(--gray);
+        line-height: 1.6;
+      }
+      .growth-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .growth-stat {
+        background: var(--beige);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+      }
+      .growth-stat__label {
+        font-size: 12px;
+        color: var(--gray);
+      }
+      .growth-stat__value {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--navy);
+        margin-top: 2px;
+      }
+      .growth-note {
+        margin-top: 12px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--navy);
+      }
+      .history-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .history-item {
+        border: 1px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        padding: 12px;
+        background: #fffdf8;
+      }
+      .history-item.active {
+        border-color: var(--gold);
+        background: var(--gold-light);
+      }
+      .history-item__top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .history-item__title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .history-item__meta {
+        font-size: 12px;
+        color: var(--gray);
+        margin-top: 4px;
+      }
+      .history-score {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--gold-dark);
+        white-space: nowrap;
+      }
+      .history-item__actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .history-link {
+        border: none;
+        background: transparent;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 0;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .history-link:hover {
+        color: var(--blue-dark);
+      }
+      .compare-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .compare-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        background: var(--beige);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+      }
+      .compare-row__label {
+        font-size: 13px;
+        color: var(--navy);
+      }
+      .compare-row__value {
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .compare-up {
+        color: var(--green);
+      }
+      .compare-down {
+        color: var(--red);
+      }
+      .compare-flat {
+        color: var(--gray);
+      }
+      .hidden-block {
+        display: none;
+      }
+
       /* ── Loading ── */
       .pulse {
         display: inline-flex;
@@ -981,6 +1121,42 @@
             <div class="ai-body" id="aiBody"></div>
           </div>
 
+          <div class="sub-card" id="growthCard" style="display: none">
+            <div class="sub-card__body">
+              <div class="sub-card__title">成长视图</div>
+              <div class="sub-card__hint" id="growthHint"></div>
+              <div class="growth-grid">
+                <div class="growth-stat">
+                  <div class="growth-stat__label">总分变化</div>
+                  <div class="growth-stat__value" id="growthDelta">--</div>
+                </div>
+                <div class="growth-stat">
+                  <div class="growth-stat__label">当前版本</div>
+                  <div class="growth-stat__value" id="growthCurrent">--</div>
+                </div>
+              </div>
+              <div class="growth-note" id="growthNote"></div>
+            </div>
+          </div>
+
+          <div class="sub-card hidden-block" id="compareCard">
+            <div class="sub-card__body">
+              <div class="sub-card__title">版本对比</div>
+              <div class="sub-card__hint" id="compareHint"></div>
+              <div class="compare-list" id="compareList"></div>
+            </div>
+          </div>
+
+          <div class="sub-card" id="historyCard">
+            <div class="sub-card__body">
+              <div class="sub-card__title">历史记录</div>
+              <div class="sub-card__hint">
+                可以重新打开旧版本，或和当前版本做对比。
+              </div>
+              <div class="history-list" id="historyList"></div>
+            </div>
+          </div>
+
           <!-- Action buttons -->
           <div class="btn-row">
             <button
@@ -1095,6 +1271,8 @@
             },
             toolHistory: [],
             result: null,
+            selectedHistoryVersionId: null,
+            compareVersionId: null,
           };
         }
 
@@ -1421,6 +1599,228 @@
           if (tierEl) tierEl.textContent = tierText;
         }
 
+        function formatDateTime(isoString) {
+          if (!isoString) return "未知时间";
+          try {
+            return new Date(isoString).toLocaleString("zh-CN", {
+              month: "numeric",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+          } catch (e) {
+            return isoString;
+          }
+        }
+
+        function findHistoryEntry(versionId) {
+          return (S.toolHistory || []).find(function (entry) {
+            return entry.versionId === versionId;
+          });
+        }
+
+        function getSelectedHistoryEntry() {
+          return findHistoryEntry(S.selectedHistoryVersionId) || S.toolHistory[0] || null;
+        }
+
+        function getDimensionDiff(currentScores, previousScores, key) {
+          return Number((currentScores && currentScores[key]) || 0) - Number((previousScores && previousScores[key]) || 0);
+        }
+
+        function formatDiff(diff) {
+          if (diff > 0) return "+" + diff;
+          if (diff < 0) return String(diff);
+          return "0";
+        }
+
+        function getDiffClass(diff) {
+          if (diff > 0) return "compare-up";
+          if (diff < 0) return "compare-down";
+          return "compare-flat";
+        }
+
+        function renderGrowthView() {
+          const growthCard = document.getElementById("growthCard");
+          const growthHint = document.getElementById("growthHint");
+          const growthDelta = document.getElementById("growthDelta");
+          const growthCurrent = document.getElementById("growthCurrent");
+          const growthNote = document.getElementById("growthNote");
+          if (!growthCard || !growthHint || !growthDelta || !growthCurrent || !growthNote) {
+            return;
+          }
+
+          const currentEntry = getSelectedHistoryEntry();
+          const history = S.toolHistory || [];
+          if (!currentEntry || history.length < 2) {
+            growthCard.style.display = "none";
+            return;
+          }
+
+          const currentIndex = history.findIndex(function (entry) {
+            return entry.versionId === currentEntry.versionId;
+          });
+          const previousEntry = history[currentIndex + 1];
+          if (!previousEntry) {
+            growthCard.style.display = "none";
+            return;
+          }
+
+          const currentSnapshot = currentEntry.outputSnapshot || {};
+          const previousSnapshot = previousEntry.outputSnapshot || {};
+          const currentScores = currentSnapshot.finalDimensionScores || {};
+          const previousScores = previousSnapshot.finalDimensionScores || {};
+          const totalDiff = Number(currentSnapshot.totalScore || 0) - Number(previousSnapshot.totalScore || 0);
+
+          let bestKey = null;
+          let worstKey = null;
+          let bestDiff = -Infinity;
+          let worstScore = Infinity;
+
+          DIM_LABELS.forEach(function (dim) {
+            const diff = getDimensionDiff(currentScores, previousScores, dim.key);
+            if (diff > bestDiff) {
+              bestDiff = diff;
+              bestKey = dim.key;
+            }
+            const currentValue = Number(currentScores[dim.key] || 0);
+            if (currentValue < worstScore) {
+              worstScore = currentValue;
+              worstKey = dim.key;
+            }
+          });
+
+          const bestDim = DIM_LABELS.find(function (dim) {
+            return dim.key === bestKey;
+          });
+          const worstDim = DIM_LABELS.find(function (dim) {
+            return dim.key === worstKey;
+          });
+
+          growthCard.style.display = "block";
+          growthHint.textContent =
+            "相对 " + formatDateTime(previousEntry.createdAt) + " 这版，看看你是进步了，还是还卡在同一个短板。";
+          growthDelta.textContent = formatDiff(totalDiff);
+          growthDelta.className = "growth-stat__value " + getDiffClass(totalDiff);
+          growthCurrent.textContent = String(currentSnapshot.totalScore || 0) + "/50";
+          growthNote.textContent =
+            (bestDiff > 0 && bestDim
+              ? "本轮进步最大的是「" + bestDim.label + "」，提升了 " + bestDiff + " 分。"
+              : "这次还没有出现明显的进步项，说明你改动后的证据强度还不够。") +
+            " 目前仍最弱的是「" +
+            (worstDim ? worstDim.label : "未识别") +
+            "」，建议继续优先处理。";
+        }
+
+        function renderCompareView() {
+          const compareCard = document.getElementById("compareCard");
+          const compareHint = document.getElementById("compareHint");
+          const compareList = document.getElementById("compareList");
+          if (!compareCard || !compareHint || !compareList) return;
+
+          const currentEntry = getSelectedHistoryEntry();
+          const compareEntry = findHistoryEntry(S.compareVersionId);
+          if (!currentEntry || !compareEntry || currentEntry.versionId === compareEntry.versionId) {
+            compareCard.classList.add("hidden-block");
+            compareList.innerHTML = "";
+            return;
+          }
+
+          const currentSnapshot = currentEntry.outputSnapshot || {};
+          const compareSnapshot = compareEntry.outputSnapshot || {};
+          const currentScores = currentSnapshot.finalDimensionScores || {};
+          const compareScores = compareSnapshot.finalDimensionScores || {};
+          const totalDiff = Number(currentSnapshot.totalScore || 0) - Number(compareSnapshot.totalScore || 0);
+
+          compareCard.classList.remove("hidden-block");
+          compareHint.textContent =
+            "当前查看版本 vs " + formatDateTime(compareEntry.createdAt) + "。总分变化 " + formatDiff(totalDiff) + "。";
+
+          const rows = [
+            {
+              label: "总分",
+              diff: totalDiff,
+            },
+          ].concat(
+            DIM_LABELS.map(function (dim) {
+              return {
+                label: dim.label,
+                diff: getDimensionDiff(currentScores, compareScores, dim.key),
+              };
+            }),
+          );
+
+          compareList.innerHTML = rows
+            .map(function (row) {
+              return (
+                '<div class="compare-row"><span class="compare-row__label">' +
+                row.label +
+                '</span><span class="compare-row__value ' +
+                getDiffClass(row.diff) +
+                '">' +
+                formatDiff(row.diff) +
+                "</span></div>"
+              );
+            })
+            .join("");
+        }
+
+        function renderHistoryList() {
+          const historyList = document.getElementById("historyList");
+          if (!historyList) return;
+
+          if (!S.toolHistory || !S.toolHistory.length) {
+            historyList.innerHTML =
+              '<div class="sub-card__hint">还没有历史版本。完成一次自检后，结果会自动记录在这里。</div>';
+            return;
+          }
+
+          historyList.innerHTML = S.toolHistory
+            .slice(0, 5)
+            .map(function (entry, index) {
+              const snapshot = entry.outputSnapshot || {};
+              const activeClass =
+                entry.versionId === S.selectedHistoryVersionId ? " active" : "";
+              const compareLabel =
+                entry.versionId === S.compareVersionId ? "取消对比" : "对比此版本";
+              const isActive = entry.versionId === S.selectedHistoryVersionId;
+
+              return (
+                '<div class="history-item' +
+                activeClass +
+                '">' +
+                '<div class="history-item__top">' +
+                '<div>' +
+                '<div class="history-item__title">版本 ' +
+                (index + 1) +
+                (index === 0 ? " · 最新" : "") +
+                (isActive ? " · 当前查看" : "") +
+                "</div>" +
+                '<div class="history-item__meta">' +
+                formatDateTime(entry.createdAt) +
+                " · " +
+                (snapshot.tier || "未分级") +
+                "</div>" +
+                "</div>" +
+                '<div class="history-score">' +
+                String(snapshot.totalScore || 0) +
+                "/50</div>" +
+                "</div>" +
+                '<div class="history-item__actions">' +
+                '<button class="history-link" onclick="window.openHistoryVersion(\'' +
+                entry.versionId +
+                "')\">打开此版本</button>" +
+                '<button class="history-link" onclick="window.toggleCompareVersion(\'' +
+                entry.versionId +
+                "')\">" +
+                compareLabel +
+                "</button>" +
+                "</div>" +
+                "</div>"
+              );
+            })
+            .join("");
+        }
+
         function showScreen(n, skipSave) {
           const screens = document.querySelectorAll(".screen");
           for (let i = 0; i < screens.length; i++) {
@@ -1527,6 +1927,10 @@
             const pulseEl = aiStatusLabel.parentElement.querySelector(".pulse");
             if (pulseEl) pulseEl.style.display = "none";
           }
+
+          renderGrowthView();
+          renderCompareView();
+          renderHistoryList();
         }
 
         function buildRequestPayload() {
@@ -1626,6 +2030,11 @@
               ? response.toolHistory
               : S.toolHistory;
             S.result = response.scoring || null;
+            S.selectedHistoryVersionId =
+              (response.historyEntry && response.historyEntry.versionId) ||
+              (S.toolHistory[0] && S.toolHistory[0].versionId) ||
+              null;
+            S.compareVersionId = null;
             saveState(true);
             renderResult(S.result);
 
@@ -1734,6 +2143,30 @@
           }
         };
 
+        window.openHistoryVersion = function (versionId) {
+          const entry = findHistoryEntry(versionId);
+          if (!entry || !entry.outputSnapshot) return;
+          S.selectedHistoryVersionId = versionId;
+          S.result = clone(entry.outputSnapshot);
+          if (S.compareVersionId === versionId) {
+            S.compareVersionId = null;
+          }
+          persistState(true);
+          showScreen(2, true);
+          renderResult(S.result);
+        };
+
+        window.toggleCompareVersion = function (versionId) {
+          if (S.compareVersionId === versionId) {
+            S.compareVersionId = null;
+          } else {
+            S.compareVersionId = versionId;
+          }
+          persistState(true);
+          renderCompareView();
+          renderHistoryList();
+        };
+
         window.tryAnother = function () {
           S.result = null;
           S.toolState.draftData = Object.assign({}, S.toolState.draftData, {
@@ -1744,6 +2177,8 @@
             team: "",
             validationPlan: "",
           });
+          S.selectedHistoryVersionId = null;
+          S.compareVersionId = null;
           S.toolState.updatedAt = new Date().toISOString();
           persistState(true);
           showScreen(1, true);
@@ -1762,6 +2197,9 @@
 
         function boot() {
           loadState();
+          if (!S.selectedHistoryVersionId && S.toolHistory && S.toolHistory.length) {
+            S.selectedHistoryVersionId = S.toolHistory[0].versionId;
+          }
           syncStateToFields();
 
           const hash = window.location.hash;
