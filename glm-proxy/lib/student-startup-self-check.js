@@ -494,19 +494,53 @@ function calculateInputSimilarity(currentSnapshot, previousSnapshot) {
   return (2 * overlap) / (currentTokens.length + previousTokens.length);
 }
 
+function isExactSnapshotMatch(currentSnapshot, previousSnapshot) {
+  return canonicalizeSnapshot(currentSnapshot) === canonicalizeSnapshot(previousSnapshot);
+}
+
+function alignReasoningScoresToFinal(heuristicScores, reasoningScores, targetFinalScores) {
+  return DIMENSIONS.reduce(function (acc, dim) {
+    const heuristicScore = clampScore(heuristicScores[dim.key]);
+    const reasoningScore = clampScore(reasoningScores[dim.key]);
+    const targetFinalScore = clampScore(targetFinalScores[dim.key]);
+
+    let bestScore = reasoningScore;
+    let bestDistance = Infinity;
+
+    for (let candidate = 1; candidate <= 10; candidate++) {
+      const combined = clampScore(heuristicScore * 0.4 + candidate * 0.6);
+      if (combined !== targetFinalScore) {
+        continue;
+      }
+
+      const distance = Math.abs(candidate - reasoningScore);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        bestScore = candidate;
+      }
+    }
+
+    acc[dim.key] = bestScore;
+    return acc;
+  }, {});
+}
+
 async function maybeRecalibrateWithHistory(options) {
   const latestHistory = options.latestHistory;
   if (!latestHistory || !latestHistory.outputSnapshot) {
     return {
       recalibrated: false,
+      reusedPreviousScores: false,
       inputSimilarity: 0,
       comparedVersionId: null,
       reasoning: options.reasoning,
+      finalDimensionScores: options.finalDimensionScores,
     };
   }
 
   const previousInput = buildInputSnapshot(latestHistory.inputSnapshot);
   const similarity = calculateInputSimilarity(options.snapshot, previousInput);
+  const exactMatch = isExactSnapshotMatch(options.snapshot, previousInput);
   const previousScores =
     latestHistory.outputSnapshot.finalDimensionScores ||
     latestHistory.outputSnapshot.scoring ||
@@ -515,9 +549,28 @@ async function maybeRecalibrateWithHistory(options) {
   if (!previousScores) {
     return {
       recalibrated: false,
+      reusedPreviousScores: false,
       inputSimilarity: similarity,
       comparedVersionId: latestHistory.versionId,
       reasoning: options.reasoning,
+      finalDimensionScores: options.finalDimensionScores,
+    };
+  }
+
+  if (exactMatch) {
+    return {
+      recalibrated: false,
+      reusedPreviousScores: true,
+      inputSimilarity: similarity,
+      comparedVersionId: latestHistory.versionId,
+      reasoning: Object.assign({}, options.reasoning, {
+        dimensionScores: alignReasoningScoresToFinal(
+          options.heuristicScores,
+          options.reasoning.dimensionScores,
+          previousScores,
+        ),
+      }),
+      finalDimensionScores: previousScores,
     };
   }
 
@@ -527,9 +580,11 @@ async function maybeRecalibrateWithHistory(options) {
   if (similarity < 0.88 || Math.abs(previousTotal - currentTotal) <= 5) {
     return {
       recalibrated: false,
+      reusedPreviousScores: false,
       inputSimilarity: similarity,
       comparedVersionId: latestHistory.versionId,
       reasoning: options.reasoning,
+      finalDimensionScores: options.finalDimensionScores,
     };
   }
 
@@ -558,12 +613,21 @@ async function maybeRecalibrateWithHistory(options) {
     messages: recalibrationMessages,
     temperature: 0.1,
   });
+  const recalibratedReasoning = normalizeReasoningResult(
+    recalibrated.parsed,
+    options.snapshot,
+  );
 
   return {
     recalibrated: true,
+    reusedPreviousScores: false,
     inputSimilarity: similarity,
     comparedVersionId: latestHistory.versionId,
-    reasoning: normalizeReasoningResult(recalibrated.parsed, options.snapshot),
+    reasoning: recalibratedReasoning,
+    finalDimensionScores: combineDimensionScores(
+      options.heuristicScores,
+      recalibratedReasoning.dimensionScores,
+    ),
   };
 }
 
@@ -750,16 +814,14 @@ async function scoreStudentStartupSelfCheck(payload) {
     const recalibration = await maybeRecalibrateWithHistory({
       latestHistory: latestHistory,
       snapshot: snapshot,
+      heuristicScores: heuristicLayer.dimensionScores,
       finalDimensionScores: finalDimensionScores,
       reasoning: reasoningLayer,
     });
 
-    if (recalibration.recalibrated) {
+    if (recalibration.recalibrated || recalibration.reusedPreviousScores) {
       reasoningLayer = recalibration.reasoning;
-      finalDimensionScores = combineDimensionScores(
-        heuristicLayer.dimensionScores,
-        reasoningLayer.dimensionScores,
-      );
+      finalDimensionScores = recalibration.finalDimensionScores;
     }
 
     const totalScore = getTotalScore(finalDimensionScores);
@@ -775,6 +837,7 @@ async function scoreStudentStartupSelfCheck(payload) {
       actions: actions,
       consistencyCheck: {
         recalibrated: recalibration.recalibrated,
+        reusedPreviousScores: recalibration.reusedPreviousScores,
         comparedVersionId: recalibration.comparedVersionId,
         inputSimilarity: recalibration.inputSimilarity,
         fallback: false,
@@ -816,8 +879,10 @@ module.exports = {
   buildInputSnapshot,
   calculateInputSimilarity,
   combineDimensionScores,
+  alignReasoningScoresToFinal,
   getTier,
   getTotalScore,
   inferSectorLabel,
+  isExactSnapshotMatch,
   scoreStudentStartupSelfCheck,
 };

@@ -4,11 +4,13 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+  alignReasoningScoresToFinal,
   buildHeuristicLayer,
   buildInputSnapshot,
   calculateInputSimilarity,
   combineDimensionScores,
   getTotalScore,
+  isExactSnapshotMatch,
 } = require("../lib/student-startup-self-check");
 
 test("heuristic layer rewards objective validation signals from the PRD", function () {
@@ -62,4 +64,63 @@ test("final scores combine heuristic and reasoning with a 40/60 ratio", function
     growth: 7,
   });
   assert.equal(getTotalScore(combined), 34);
+});
+
+test("exact same input stays stable even if mode changes", function () {
+  const gentle = buildInputSnapshot({
+    product: "一个帮大学生整理课程作业和 ddl 的 AI 学习助手",
+    audience: "课程多、容易拖延的大学生",
+    model: "先免费获取用户，再提供协作和提醒订阅",
+    stage: "已做用户访谈",
+    team: "我有校园学习社群运营经验",
+    validationPlan: "本周访谈 6 位学生，下周做 MVP",
+    mode: "gentle",
+  });
+  const roast = buildInputSnapshot({
+    product: "一个帮大学生整理课程作业和 ddl 的 AI 学习助手",
+    audience: "课程多、容易拖延的大学生",
+    model: "先免费获取用户，再提供协作和提醒订阅",
+    stage: "已做用户访谈",
+    team: "我有校园学习社群运营经验",
+    validationPlan: "本周访谈 6 位学生，下周做 MVP",
+    mode: "roast",
+  });
+
+  assert.equal(isExactSnapshotMatch(gentle, roast), true);
+  assert.equal(calculateInputSimilarity(gentle, roast), 1);
+});
+
+test("reasoning scores can be aligned to keep the reused final score exact", function () {
+  const heuristicScores = {
+    problem: 7,
+    wedge: 6,
+    mvp: 8,
+    team: 5,
+    growth: 6,
+  };
+  const reasoningScores = {
+    problem: 8,
+    wedge: 8,
+    mvp: 7,
+    team: 8,
+    growth: 7,
+  };
+  const targetFinalScores = {
+    problem: 7,
+    wedge: 6,
+    mvp: 8,
+    team: 6,
+    growth: 6,
+  };
+
+  const aligned = alignReasoningScoresToFinal(
+    heuristicScores,
+    reasoningScores,
+    targetFinalScores,
+  );
+
+  assert.deepEqual(
+    combineDimensionScores(heuristicScores, aligned),
+    targetFinalScores,
+  );
 });
