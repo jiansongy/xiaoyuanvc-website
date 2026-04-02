@@ -2,6 +2,9 @@
   "functions": {
     "api/glm-proxy.js": {
       "maxDuration": 60
+    },
+    "api/student-startup-self-check.js": {
+      "maxDuration": 60
     }
   }
 }

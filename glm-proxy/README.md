@@ -12,6 +12,13 @@ Goal:
   - health check
 - `POST /api/glm-proxy`
   - forwards requests to GLM
+- `GET /api/student-startup-self-check`
+  - health check
+- `POST /api/student-startup-self-check`
+  - runs the student startup self-check backend
+  - applies unified data schema normalization
+  - uses double-layer scoring with heuristic rules + AI reasoning
+  - returns structured history snapshots and action mapping
 
 ## Required Environment Variables
 

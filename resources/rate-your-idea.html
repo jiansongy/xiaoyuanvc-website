@@ -893,6 +893,19 @@
             </div>
 
             <div class="form-group">
+              <label>
+                <span class="q-num">6</span>
+                你准备在什么时间内，用什么动作验证这个想法？
+              </label>
+              <textarea
+                id="fValidationPlan"
+                data-testid="validation-plan-input"
+                placeholder="例如：本周先访谈 8 位想找兼职的大二学生，下周做一个飞书表单 + 微信群招募页，验证是否有 20 人愿意留下联系方式..."
+                oninput="window.saveState()"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
               <label>自检风格</label>
               <div class="mode-toggle">
                 <button
@@ -925,6 +938,7 @@
             <p class="btn-hint" id="btnHint">
               请先在上方「产品/服务描述」中输入至少 20 字
             </p>
+            <p class="btn-hint hidden" id="saveStateText">已自动保存</p>
           </div>
         </div>
       </div>
@@ -1017,117 +1031,106 @@
       (function () {
         "use strict";
 
-        /* ── AI Proxy ── */
-        const AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
-        const AI_PROXY_CANDIDATES = [
-          window.__XYVC_AI_PROXY__,
-          new URLSearchParams(window.location.search).get("ai_proxy"),
+        const TOOL_ID = "student-startup-self-check";
+        const STORAGE_KEY = "xyvc-rater-v2";
+        const TOOL_API_HINT_KEY = "xyvc-student-self-check-api";
+        const TOOL_API_CANDIDATES = [
+          window.__XYVC_STUDENT_STARTUP_SELF_CHECK_API__,
+          new URLSearchParams(window.location.search).get("tool_api"),
           (function () {
             try {
-              return localStorage.getItem(AI_PROXY_HINT_KEY);
+              return localStorage.getItem(TOOL_API_HINT_KEY);
             } catch (e) {
               return "";
             }
           })(),
-          "https://api.xiaoyuanvc.com/api/glm-proxy",
+          "https://api.xiaoyuanvc.com/api/student-startup-self-check",
           /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
-            ? window.location.origin.replace(/\/$/, "") + "/api/glm-proxy"
+            ? window.location.origin.replace(/\/$/, "") +
+              "/api/student-startup-self-check"
             : "",
         ].filter(Boolean);
 
-        /* ── Storage ── */
-        const STORAGE_KEY = "xyvc-rater-v1";
+        const DIM_LABELS = [
+          { key: "problem", label: "痛点真实度" },
+          { key: "wedge", label: "初始突破口" },
+          { key: "mvp", label: "快速验证力" },
+          { key: "team", label: "团队-赛道匹配" },
+          { key: "growth", label: "演进空间" },
+        ];
 
-        let S = {
-          screen: 0,
-          product: "",
-          audience: "",
-          model: "",
-          stage: "只有想法",
-          mode: "gentle",
-          scores: null,
-          analysis: "",
-        };
+        let saveToastTimer = null;
 
-        function saveState() {
-          syncFieldsToState();
+        function createInitialState() {
+          return {
+            toolId: TOOL_ID,
+            screen: 0,
+            userProfile: {
+              uid: "anonymous",
+              basicInfo: {
+                major: "",
+                grade: "",
+                teamSize: "",
+              },
+              projectContext: {
+                track: "",
+                stage: "",
+                oneLiner: "",
+                isHardTech: false,
+              },
+              lastActiveTool: TOOL_ID,
+            },
+            toolState: {
+              toolId: TOOL_ID,
+              draftData: {
+                product: "",
+                audience: "",
+                model: "",
+                stage: "只有想法",
+                team: "",
+                validationPlan: "",
+                mode: "gentle",
+              },
+              updatedAt: "",
+            },
+            toolHistory: [],
+            result: null,
+          };
+        }
+
+        let S = createInitialState();
+
+        function clone(obj) {
+          return JSON.parse(JSON.stringify(obj));
+        }
+
+        function getDraft() {
+          return S.toolState.draftData;
+        }
+
+        function rememberWorkingEndpoint(url) {
           try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+            localStorage.setItem(TOOL_API_HINT_KEY, url);
           } catch (e) {
-            /* storage unavailable, non-critical */
+            /* ignore */
           }
         }
-        window.saveState = saveState;
 
-        function loadState() {
-          try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) {
-              const parsed = JSON.parse(raw);
-              if (parsed && typeof parsed === "object") {
-                for (const k in parsed) {
-                  if (Object.prototype.hasOwnProperty.call(parsed, k)) {
-                    S[k] = parsed[k];
-                  }
-                }
-              }
-            }
-          } catch (e) {
-            /* corrupted data, ignore */
-          }
-        }
-
-        function syncFieldsToState() {
-          const p = document.getElementById("fProduct");
-          const a = document.getElementById("fAudience");
-          const m = document.getElementById("fModel");
-          const st = document.getElementById("fStage");
-          const tm = document.getElementById("fTeam");
-          if (p) S.product = p.value;
-          if (a) S.audience = a.value;
-          if (m) S.model = m.value;
-          if (st) S.stage = st.value;
-          if (tm) S.team = tm.value;
-        }
-
-        function syncStateToFields() {
-          const p = document.getElementById("fProduct");
-          const a = document.getElementById("fAudience");
-          const m = document.getElementById("fModel");
-          const st = document.getElementById("fStage");
-          const tm = document.getElementById("fTeam");
-          if (p) p.value = S.product || "";
-          if (a) a.value = S.audience || "";
-          if (m) m.value = S.model || "";
-          if (st) st.value = S.stage || "只有想法";
-          if (tm) tm.value = S.team || "";
-          updateModeUI();
-          updateCharHint();
-          updateScoreBtn();
-        }
-
-        /* ── AI Functions (exact pattern) ── */
-        function normalizeAIError(err) {
+        function normalizeToolError(err) {
           const msg = (err && err.message) || String(err) || "未知错误";
-          if (/Failed to fetch/i.test(msg))
-            return "AI 服务连接失败，通常是代理不可达、跨域拦截或网络异常。";
-          if (/AbortError|aborted|timeout|timed out/i.test(msg))
-            return "AI 服务响应超时，请稍后重试。";
+          if (/Failed to fetch/i.test(msg)) {
+            return "评分服务连接失败，通常是接口不可达、跨域拦截或当前网络异常。";
+          }
+          if (/AbortError|aborted|timeout|timed out/i.test(msg)) {
+            return "评分服务响应超时，请稍后重试。";
+          }
           return msg;
         }
 
-        function rememberWorkingProxy(url) {
-          try {
-            localStorage.setItem(AI_PROXY_HINT_KEY, url);
-          } catch (e) {
-            /* storage unavailable, non-critical */
-          }
-        }
-
-        async function fetchAIResult(prompt) {
+        async function fetchToolResult(payload) {
           let lastErr = null;
-          for (let idx = 0; idx < AI_PROXY_CANDIDATES.length; idx++) {
-            const endpoint = AI_PROXY_CANDIDATES[idx];
+          for (let idx = 0; idx < TOOL_API_CANDIDATES.length; idx++) {
+            const endpoint = TOOL_API_CANDIDATES[idx];
             const ctrl =
               typeof AbortController !== "undefined"
                 ? new AbortController()
@@ -1135,47 +1138,28 @@
             const timer = ctrl
               ? setTimeout(function () {
                   ctrl.abort();
-                }, 60000)
+                }, 65000)
               : null;
             try {
               const res = await fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  model: "glm-4-flash",
-                  messages: [{ role: "user", content: prompt }],
-                  stream: false,
-                }),
+                body: JSON.stringify(payload),
                 signal: ctrl ? ctrl.signal : undefined,
               });
               if (timer) clearTimeout(timer);
-              if (!res.ok) {
-                let detail = "";
-                try {
-                  const payload = await res.json();
-                  detail =
-                    (payload && (payload.error || payload.message)) || "";
-                } catch (parseErr) {
-                  /* ignore non-json error body */
-                }
-                throw new Error(detail || "API 错误 " + res.status);
-              }
               const json = await res.json();
-              const text =
-                (json &&
-                  json.choices &&
-                  json.choices[0] &&
-                  json.choices[0].message &&
-                  json.choices[0].message.content) ||
-                "";
-              rememberWorkingProxy(endpoint);
-              return text;
+              if (!res.ok || !json.ok) {
+                throw new Error(json.error || "接口错误 " + res.status);
+              }
+              rememberWorkingEndpoint(endpoint);
+              return json;
             } catch (err) {
               if (timer) clearTimeout(timer);
               lastErr = err;
             }
           }
-          throw lastErr || new Error("没有可用的 AI 代理");
+          throw lastErr || new Error("没有可用的评分接口");
         }
 
         function renderMd(text) {
@@ -1203,6 +1187,10 @@
           );
           t = t.replace(/^[*-] (.+)$/gm, '<li style="margin:3px 0">$1</li>');
           t = t.replace(
+            /^(\d+)\.\s+(.+)$/gm,
+            '<li style="margin:3px 0">$2</li>',
+          );
+          t = t.replace(
             /((?:<li[^>]*>[^\n]*<\/li>\n?)+)/g,
             '<ul style="padding-left:18px;margin:6px 0">$1</ul>',
           );
@@ -1222,133 +1210,168 @@
             .join("");
         }
 
-        /* ── Score Parsing ── */
-        function parseScores(text) {
-          const defaults = {
-            feasibility: 5,
-            market: 5,
-            moat: 5,
-            execution: 5,
-            ai: 5,
-          };
-          const map = [
-            [/痛点真实度[:：]\s*(\d+)/, "problem"],
-            [/初始突破口[:：]\s*(\d+)/, "wedge"],
-            [/快速验证力[:：]\s*(\d+)/, "mvp"],
-            [/团队[—\-]?赛道匹配[:：]\s*(\d+)/, "team"],
-            [/演进空间[:：]\s*(\d+)/, "growth"],
-          ];
-          const scores = {};
-          for (const k in defaults) {
-            if (Object.prototype.hasOwnProperty.call(defaults, k)) {
-              scores[k] = defaults[k];
-            }
-          }
-          let foundCount = 0;
-          for (let i = 0; i < map.length; i++) {
-            const m = text.match(map[i][0]);
-            if (m) {
-              scores[map[i][1]] = Math.max(1, Math.min(10, parseInt(m[1], 10)));
-              foundCount++;
-            }
-          }
-          scores._parsed = foundCount >= 3;
-          return scores;
-        }
-
-        function extractAnalysis(text) {
-          const idx1 = text.indexOf("[/SCORES]");
-          if (idx1 !== -1) {
-            return text
-              .substring(idx1 + 9)
-              .replace(/\[ANALYSIS\]/g, "")
-              .replace(/\[\/ANALYSIS\]/g, "")
-              .trim();
-          }
-          const idx2 = text.indexOf("[ANALYSIS]");
-          if (idx2 !== -1) {
-            const result = text.substring(idx2 + 10).trim();
-            return result.replace(/\[\/ANALYSIS\]/g, "").trim();
-          }
-          // Fallback: try to find analysis after the scores block
-          const lastScoreLine = text.lastIndexOf("/10");
-          if (lastScoreLine !== -1) {
-            const afterScores = text.substring(lastScoreLine + 3).trim();
-            if (afterScores.length > 50) return afterScores;
-          }
-          return text;
-        }
-
-        function getTier(total) {
-          if (total >= 40) return "\u{1F984} 独角兽预备！";
-          if (total >= 30) return "\u{1F680} 潜力股";
-          if (total >= 20) return "\u{1F35C} 拉面盈利级";
-          if (total >= 10) return "\u{1F4DD} 回炉重造";
-          return "\u{1F4A1} 先从想法打磨开始";
-        }
-
         function getBarColor(score) {
           if (score <= 3) return "c-red";
           if (score <= 6) return "c-yellow";
           return "c-green";
         }
 
-        /* ── Prompt Builder ── */
-        function buildPrompt() {
-          const sysInstruction =
-            S.mode === "roast"
-              ? "你是一位以犀利著称的风险投资人。你看过上千个项目，对平庸的想法毫不留情，但对真正有潜力的想法也会给出中肯的认可。请用直接、辛辣但专业的语气评估。可以适当用比喻和反问来刺激学生思考。"
-              : "你是一位资深创业导师，温和但诚实地评估学生的创业想法。请用鼓励但务实的语气。";
-
-          return (
-            sysInstruction +
-            "\n\n学生的创业想法：\n- 产品/服务：" +
-            S.product +
-            "\n- 目标用户：" +
-            (S.audience || "未指定") +
-            "\n- 商业模式：" +
-            (S.model || "未指定") +
-            "\n- 当前阶段：" +
-            S.stage +
-            "\n- 团队背景：" +
-            (S.team || "未填写，请根据赛道特性合理推断") +
-            "\n\n请严格按以下格式回复，先给出评分，再给出分析：\n\n" +
-            "[SCORES]\n" +
-            "痛点真实度: X\n" +
-            "初始突破口: X\n" +
-            "快速验证力: X\n" +
-            "团队-赛道匹配: X\n" +
-            "演进空间: X\n" +
-            "[/SCORES]\n\n" +
-            "[ANALYSIS]\n" +
-            "## 整体评价\n" +
-            "（3-4 句综合判断，直接说清这个想法最大的机会和最大的风险）\n\n" +
-            "## 下一步建议\n" +
-            "1. ...\n" +
-            "2. ...\n" +
-            "3. ...\n" +
-            "[/ANALYSIS]"
-          );
+        function getTier(total) {
+          if (total >= 40) return "独角兽预备";
+          if (total >= 30) return "潜力股";
+          if (total >= 20) return "拉面盈利级";
+          return "回炉重造";
         }
 
-        /* ── Render Score Bars ── */
-        const DIM_LABELS = [
-          { key: "problem", label: "痛点真实度" },
-          { key: "wedge", label: "初始突破口" },
-          { key: "mvp", label: "快速验证力" },
-          { key: "team", label: "团队-赛道匹配" },
-          { key: "growth", label: "演进空间" },
-        ];
+        function migrateLegacyState(parsed) {
+          const next = createInitialState();
+          if (!parsed || typeof parsed !== "object") {
+            return next;
+          }
 
-        function renderScoreBars(scores, rationales) {
+          if (parsed.toolState && parsed.userProfile) {
+            return Object.assign(next, parsed, {
+              toolState: Object.assign(next.toolState, parsed.toolState || {}, {
+                draftData: Object.assign(
+                  {},
+                  next.toolState.draftData,
+                  (parsed.toolState && parsed.toolState.draftData) || {},
+                ),
+              }),
+              userProfile: Object.assign(
+                {},
+                next.userProfile,
+                parsed.userProfile || {},
+              ),
+              toolHistory: Array.isArray(parsed.toolHistory)
+                ? parsed.toolHistory
+                : [],
+              result: parsed.result || null,
+            });
+          }
+
+          const legacyScores = parsed.scores || null;
+          let legacyResult = null;
+          if (legacyScores) {
+            const total = DIM_LABELS.reduce(function (sum, dim) {
+              return sum + Number(legacyScores[dim.key] || 5);
+            }, 0);
+            legacyResult = {
+              totalScore: total,
+              tier: getTier(total),
+              finalDimensionScores: legacyScores,
+              reasoningLayer: {
+                dimensionRationales: {},
+                strengths: [],
+                risks: [],
+                sectorLabel: "",
+              },
+              actions: [],
+              analysisMarkdown: parsed.analysis || "",
+              consistencyCheck: {
+                fallback: true,
+                recalibrated: false,
+              },
+            };
+          }
+
+          next.screen = Number(parsed.screen || 0);
+          next.toolState.draftData.product = parsed.product || "";
+          next.toolState.draftData.audience = parsed.audience || "";
+          next.toolState.draftData.model = parsed.model || "";
+          next.toolState.draftData.stage = parsed.stage || "只有想法";
+          next.toolState.draftData.team = parsed.team || "";
+          next.toolState.draftData.validationPlan = parsed.validationPlan || "";
+          next.toolState.draftData.mode =
+            parsed.mode === "roast" ? "roast" : "gentle";
+          next.result = legacyResult;
+          return next;
+        }
+
+        function syncFieldsToState() {
+          const draft = getDraft();
+          const product = document.getElementById("fProduct");
+          const audience = document.getElementById("fAudience");
+          const model = document.getElementById("fModel");
+          const stage = document.getElementById("fStage");
+          const team = document.getElementById("fTeam");
+          const validationPlan = document.getElementById("fValidationPlan");
+          if (product) draft.product = product.value;
+          if (audience) draft.audience = audience.value;
+          if (model) draft.model = model.value;
+          if (stage) draft.stage = stage.value;
+          if (team) draft.team = team.value;
+          if (validationPlan) draft.validationPlan = validationPlan.value;
+          S.toolState.updatedAt = new Date().toISOString();
+          S.userProfile.lastActiveTool = TOOL_ID;
+          S.userProfile.projectContext.oneLiner = draft.product;
+          S.userProfile.projectContext.stage = draft.stage;
+        }
+
+        function syncStateToFields() {
+          const draft = getDraft();
+          const product = document.getElementById("fProduct");
+          const audience = document.getElementById("fAudience");
+          const model = document.getElementById("fModel");
+          const stage = document.getElementById("fStage");
+          const team = document.getElementById("fTeam");
+          const validationPlan = document.getElementById("fValidationPlan");
+          if (product) product.value = draft.product || "";
+          if (audience) audience.value = draft.audience || "";
+          if (model) model.value = draft.model || "";
+          if (stage) stage.value = draft.stage || "只有想法";
+          if (team) team.value = draft.team || "";
+          if (validationPlan) validationPlan.value = draft.validationPlan || "";
+          updateModeUI();
+          updateCharHint();
+          updateScoreBtn();
+        }
+
+        function persistState(silent) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+            if (!silent) {
+              flashSavedState();
+            }
+          } catch (e) {
+            /* ignore */
+          }
+        }
+
+        function saveState(silent) {
+          syncFieldsToState();
+          persistState(silent);
+        }
+        window.saveState = saveState;
+
+        function loadState() {
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return;
+            S = migrateLegacyState(JSON.parse(raw));
+          } catch (e) {
+            S = createInitialState();
+          }
+        }
+
+        function flashSavedState() {
+          const el = document.getElementById("saveStateText");
+          if (!el) return;
+          el.classList.remove("hidden");
+          if (saveToastTimer) clearTimeout(saveToastTimer);
+          saveToastTimer = setTimeout(function () {
+            el.classList.add("hidden");
+          }, 1400);
+        }
+
+        function renderScoreBars(scores, rationales, totalScore, tierText) {
           const container = document.getElementById("dimBars");
           if (!container) return;
           container.innerHTML = "";
-          let total = 0;
+
           for (let i = 0; i < DIM_LABELS.length; i++) {
             const dim = DIM_LABELS[i];
-            const val = scores[dim.key] || 5;
-            total += val;
+            const val = Number(scores[dim.key] || 5);
 
             const item = document.createElement("div");
             item.className = "dim-bar-item";
@@ -1383,7 +1406,6 @@
             container.appendChild(item);
           }
 
-          // Animate bars after a brief delay
           requestAnimationFrame(function () {
             setTimeout(function () {
               const fills = container.querySelectorAll(".dim-bar-fill");
@@ -1393,42 +1415,13 @@
             }, 100);
           });
 
-          // Update total score
           const numEl = document.getElementById("scoreNum");
           const tierEl = document.getElementById("tierLabel");
-          if (numEl) numEl.textContent = total;
-          if (tierEl) tierEl.textContent = getTier(total);
-
-          return total;
+          if (numEl) numEl.textContent = totalScore;
+          if (tierEl) tierEl.textContent = tierText;
         }
 
-        function extractRationales(text) {
-          const rationales = {};
-          const dimPatterns = [
-            { key: "problem", re: /### 痛点真实度[^]*?(?=###|## |$)/i },
-            { key: "wedge", re: /### 初始突破口[^]*?(?=###|## |$)/i },
-            { key: "mvp", re: /### 快速验证力[^]*?(?=###|## |$)/i },
-            { key: "team", re: /### 团队[—\-]?赛道匹配[^]*?(?=###|## |$)/i },
-            { key: "growth", re: /### 演进空间[^]*?(?=###|## |$)/i },
-          ];
-          for (let i = 0; i < dimPatterns.length; i++) {
-            const m = text.match(dimPatterns[i].re);
-            if (m) {
-              const content = m[0]
-                .replace(/^###[^\n]*\n/, "")
-                .trim()
-                .split("\n")[0]
-                .trim();
-              if (content.length > 5) {
-                rationales[dimPatterns[i].key] = content;
-              }
-            }
-          }
-          return rationales;
-        }
-
-        /* ── Screen Navigation ── */
-        function showScreen(n) {
+        function showScreen(n, skipSave) {
           const screens = document.querySelectorAll(".screen");
           for (let i = 0; i < screens.length; i++) {
             screens[i].classList.remove("on");
@@ -1436,7 +1429,9 @@
           const target = document.getElementById("s" + n);
           if (target) target.classList.add("on");
           S.screen = n;
-          saveState();
+          if (!skipSave) {
+            persistState(true);
+          }
           if (n === 2) {
             history.replaceState(null, "", "#result");
           } else if (n === 1) {
@@ -1451,21 +1446,12 @@
           window.scrollTo(0, 0);
         }
 
-        window.goWelcome = function () {
-          showScreen(0);
-        };
-
-        window.goInput = function () {
-          showScreen(1);
-          syncStateToFields();
-        };
-
-        /* ── Mode Toggle ── */
         function updateModeUI() {
           const gentle = document.getElementById("modeGentle");
           const roast = document.getElementById("modeRoast");
+          const mode = getDraft().mode;
           if (!gentle || !roast) return;
-          if (S.mode === "roast") {
+          if (mode === "roast") {
             gentle.classList.remove("active");
             roast.classList.add("active");
           } else {
@@ -1474,13 +1460,6 @@
           }
         }
 
-        window.setMode = function (mode) {
-          S.mode = mode;
-          updateModeUI();
-          saveState();
-        };
-
-        /* ── Char Hint & Button ── */
         function updateCharHint() {
           const el = document.getElementById("fProduct");
           const hint = document.getElementById("charHint");
@@ -1505,14 +1484,99 @@
           if (!el || !btn) return;
           const tooShort = el.value.trim().length < 20;
           btn.disabled = tooShort;
-          if (btnHint) {
-            if (tooShort) {
-              btnHint.classList.remove("hidden");
-            } else {
-              btnHint.classList.add("hidden");
-            }
+          if (!btnHint) return;
+          if (tooShort) {
+            btnHint.classList.remove("hidden");
+          } else {
+            btnHint.classList.add("hidden");
           }
         }
+
+        function renderResult(result) {
+          const loadingWrap = document.getElementById("loadingWrap");
+          const scoreSection = document.getElementById("scoreSection");
+          const aiBody = document.getElementById("aiBody");
+          const aiStatusLabel = document.getElementById("aiStatusLabel");
+
+          if (loadingWrap) loadingWrap.style.display = "none";
+          if (scoreSection) scoreSection.style.display = "block";
+
+          renderScoreBars(
+            result.finalDimensionScores || {},
+            (result.reasoningLayer && result.reasoningLayer.dimensionRationales) ||
+              null,
+            result.totalScore || 0,
+            result.tier || getTier(result.totalScore || 0),
+          );
+
+          if (aiBody) {
+            aiBody.innerHTML = renderMd(result.analysisMarkdown || "");
+          }
+
+          if (aiStatusLabel) {
+            if (result.consistencyCheck && result.consistencyCheck.fallback) {
+              aiStatusLabel.textContent = "已生成规则层结果";
+            } else if (
+              result.consistencyCheck &&
+              result.consistencyCheck.recalibrated
+            ) {
+              aiStatusLabel.textContent = "AI 分析完成（已校准）";
+            } else {
+              aiStatusLabel.textContent = "AI 分析完成";
+            }
+            const pulseEl = aiStatusLabel.parentElement.querySelector(".pulse");
+            if (pulseEl) pulseEl.style.display = "none";
+          }
+        }
+
+        function buildRequestPayload() {
+          return {
+            userProfile: clone(S.userProfile),
+            toolState: clone(S.toolState),
+            toolHistory: clone(S.toolHistory),
+          };
+        }
+
+        function showToast(msg) {
+          const toast = document.getElementById("toast");
+          if (!toast) return;
+          toast.textContent = msg;
+          toast.classList.add("show");
+          setTimeout(function () {
+            toast.classList.remove("show");
+          }, 2000);
+        }
+
+        function fallbackCopy(text) {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+            showToast("已复制到剪贴板");
+          } catch (e) {
+            showToast("复制失败，请手动复制");
+          }
+          document.body.removeChild(ta);
+        }
+
+        window.goWelcome = function () {
+          showScreen(0);
+        };
+
+        window.goInput = function () {
+          showScreen(1);
+          syncStateToFields();
+        };
+
+        window.setMode = function (mode) {
+          getDraft().mode = mode === "roast" ? "roast" : "gentle";
+          updateModeUI();
+          saveState();
+        };
 
         window.onProductInput = function () {
           updateCharHint();
@@ -1520,113 +1584,79 @@
           saveState();
         };
 
-        /* ── Main Score Action ── */
         window.doScore = async function () {
-          syncFieldsToState();
-          saveState();
+          saveState(true);
 
           const btnScore = document.querySelector(
             '[data-ai-action="submit-score"]',
           );
-          if (btnScore) btnScore.disabled = true;
-
-          showScreen(2);
-
-          // Show loading, hide results
           const loadingWrap = document.getElementById("loadingWrap");
           const scoreSection = document.getElementById("scoreSection");
           const aiBody = document.getElementById("aiBody");
           const aiStatusLabel = document.getElementById("aiStatusLabel");
+          const loadingText = document.getElementById("loadingText");
           const scoreNum = document.getElementById("scoreNum");
           const tierLabel = document.getElementById("tierLabel");
+          const dimBars = document.getElementById("dimBars");
+
+          if (btnScore) btnScore.disabled = true;
+          showScreen(2, true);
+          if (loadingText) {
+            loadingText.textContent = S.toolHistory.length
+              ? "AI 正在结合历史结果校准评分..."
+              : "AI 正在分析你的创业想法...";
+          }
           if (loadingWrap) loadingWrap.style.display = "block";
           if (scoreSection) scoreSection.style.display = "none";
+          if (aiBody) aiBody.innerHTML = "";
+          if (dimBars) dimBars.innerHTML = "";
           if (scoreNum) scoreNum.textContent = "-";
           if (tierLabel) tierLabel.textContent = "";
-
-          const prompt = buildPrompt();
-          let fullText = "";
+          if (aiStatusLabel) aiStatusLabel.textContent = "AI 分析中";
+          if (aiStatusLabel) {
+            const pulseEl = aiStatusLabel.parentElement.querySelector(".pulse");
+            if (pulseEl) pulseEl.style.display = "inline-flex";
+          }
 
           try {
-            fullText = await fetchAIResult(prompt, null);
+            const response = await fetchToolResult(buildRequestPayload());
+            S.userProfile = response.userProfile || S.userProfile;
+            S.toolState = response.toolState || S.toolState;
+            S.toolHistory = Array.isArray(response.toolHistory)
+              ? response.toolHistory
+              : S.toolHistory;
+            S.result = response.scoring || null;
+            saveState(true);
+            renderResult(S.result);
+
+            try {
+              if (typeof gtag === "function" && S.result) {
+                gtag("event", "idea_scored", {
+                  event_category: "rate_your_idea",
+                  event_label: getDraft().mode,
+                  value: Number(S.result.totalScore || 0),
+                });
+              }
+            } catch (e) {
+              /* ignore */
+            }
           } catch (err) {
             if (loadingWrap) loadingWrap.style.display = "none";
             if (scoreSection) scoreSection.style.display = "block";
             if (aiBody) {
               aiBody.innerHTML =
                 '<p style="color: var(--red);">评估失败：' +
-                renderMd(normalizeAIError(err)) +
+                renderMd(normalizeToolError(err)) +
                 "</p>";
             }
             if (aiStatusLabel) aiStatusLabel.textContent = "自检失败";
             if (scoreNum) scoreNum.textContent = "-";
             if (tierLabel) tierLabel.textContent = "暂未完成";
-            const dimBars = document.getElementById("dimBars");
-            if (dimBars) dimBars.innerHTML = "";
-            if (btnScore) btnScore.disabled = false;
-            return;
+          } finally {
+            updateScoreBtn();
           }
-
-          // Parse scores
-          const scores = parseScores(fullText);
-          S.scores = scores;
-
-          // Extract rationales and analysis
-          const rationales = extractRationales(fullText);
-          const analysis = extractAnalysis(fullText);
-          S.analysis = fullText;
-          saveState();
-
-          // Hide loading, show results
-          if (loadingWrap) loadingWrap.style.display = "none";
-          if (scoreSection) scoreSection.style.display = "block";
-
-          // Render score bars
-          if (scores._parsed) {
-            renderScoreBars(scores, rationales);
-          } else {
-            renderScoreBars(scores, null);
-          }
-
-          // Render analysis
-          if (aiBody) {
-            if (scores._parsed) {
-              aiBody.innerHTML = renderMd(analysis);
-            } else {
-              aiBody.innerHTML =
-                '<p style="color: var(--gold-dark); font-size: 13px; margin-bottom: 10px;">⚠️ 自检解析不完整，以下为默认分值，请参考 AI 分析内容。</p>' +
-                renderMd(analysis);
-            }
-          }
-
-          // Update status
-          if (aiStatusLabel) aiStatusLabel.textContent = "AI 分析完成";
-          const pulseDot = aiStatusLabel
-            ? aiStatusLabel.parentElement.querySelector(".pulse")
-            : null;
-          if (pulseDot) pulseDot.style.display = "none";
-
-          // GA4 event
-          try {
-            if (typeof gtag === "function") {
-              let total = 0;
-              for (let i = 0; i < DIM_LABELS.length; i++) {
-                total += scores[DIM_LABELS[i].key] || 5;
-              }
-              gtag("event", "idea_scored", {
-                event_category: "rate_your_idea",
-                event_label: S.mode,
-                value: total,
-              });
-            }
-          } catch (e) {
-            /* GA4 unavailable, non-critical */
-          }
-
-          if (btnScore) btnScore.disabled = false;
         };
 
-        /* ── Print / Save ── */
         window.safePrint = function () {
           var ua = navigator.userAgent;
           var isInApp =
@@ -1646,36 +1676,49 @@
           }
         };
 
-        /* ── Copy Report ── */
         window.copyReport = function () {
-          if (!S.scores) return;
-          const scores = S.scores;
-          let total = 0;
-          const lines = [];
-          for (let i = 0; i < DIM_LABELS.length; i++) {
-            const val = scores[DIM_LABELS[i].key] || 5;
-            total += val;
+          if (!S.result) return;
+          const draft = getDraft();
+          const scores = S.result.finalDimensionScores || {};
+          const lines = DIM_LABELS.map(function (dim) {
+            const val = Number(scores[dim.key] || 5);
             let bar = "";
-            for (let j = 0; j < val; j++) bar += "\u2588";
-            lines.push(DIM_LABELS[i].label + "：" + val + "/10 " + bar);
-          }
+            for (let i = 0; i < val; i++) bar += "\u2588";
+            return dim.label + "：" + val + "/10 " + bar;
+          });
+          const actions = Array.isArray(S.result.actions)
+            ? S.result.actions
+                .map(function (action) {
+                  return (
+                    action.priority +
+                    ". " +
+                    action.title +
+                    "： " +
+                    action.brief
+                  );
+                })
+                .join("\n")
+            : "";
 
           const report =
-            "\u{1F3AF} 学生创业自检 — 校园VC\n" +
+            "学生创业自检 — 校园VC\n" +
             "想法：" +
-            S.product.substring(0, 60) +
-            (S.product.length > 60 ? "..." : "") +
+            (draft.product || "").substring(0, 60) +
+            ((draft.product || "").length > 60 ? "..." : "") +
             "\n" +
             "总分：" +
-            total +
+            Number(S.result.totalScore || 0) +
             "/50（" +
-            getTier(total) +
+            (S.result.tier || getTier(Number(S.result.totalScore || 0))) +
             "）\n" +
-            "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n" +
+            "━━━━━━━━━━━━━━━━\n" +
             lines.join("\n") +
             "\n" +
-            "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n" +
-            "\u{1F517} 来给你的想法打分：xiaoyuanvc.com/resources/rate-your-idea.html";
+            (actions
+              ? "━━━━━━━━━━━━━━━━\n本周优先动作\n" + actions + "\n"
+              : "") +
+            "━━━━━━━━━━━━━━━━\n" +
+            "来给你的想法打分：xiaoyuanvc.com/resources/rate-your-idea.html";
 
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard
@@ -1691,105 +1734,53 @@
           }
         };
 
-        function fallbackCopy(text) {
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          ta.style.position = "fixed";
-          ta.style.left = "-9999px";
-          document.body.appendChild(ta);
-          ta.select();
-          try {
-            document.execCommand("copy");
-            showToast("已复制到剪贴板");
-          } catch (e) {
-            showToast("复制失败，请手动复制");
-          }
-          document.body.removeChild(ta);
-        }
-
-        function showToast(msg) {
-          const toast = document.getElementById("toast");
-          if (!toast) return;
-          toast.textContent = msg;
-          toast.classList.add("show");
-          setTimeout(function () {
-            toast.classList.remove("show");
-          }, 2000);
-        }
-
-        /* ── Navigation Actions ── */
         window.tryAnother = function () {
-          S.scores = null;
-          S.analysis = "";
-          S.product = "";
-          S.audience = "";
-          S.model = "";
-          S.stage = "只有想法";
-          saveState();
-          showScreen(1);
-          syncStateToFields();
-        };
-
-        window.resetAll = function () {
-          S = {
-            screen: 0,
+          S.result = null;
+          S.toolState.draftData = Object.assign({}, S.toolState.draftData, {
             product: "",
             audience: "",
             model: "",
             stage: "只有想法",
-            mode: "gentle",
-            scores: null,
-            analysis: "",
-          };
+            team: "",
+            validationPlan: "",
+          });
+          S.toolState.updatedAt = new Date().toISOString();
+          persistState(true);
+          showScreen(1, true);
+          syncStateToFields();
+        };
+
+        window.resetAll = function () {
+          S = createInitialState();
           try {
             localStorage.removeItem(STORAGE_KEY);
           } catch (e) {
-            /* storage unavailable, non-critical */
+            /* ignore */
           }
-          showScreen(0);
+          showScreen(0, true);
         };
 
-        /* ── Boot ── */
         function boot() {
-          try {
-            loadState();
-            // URL hash can override saved screen state
-            const hash = window.location.hash;
-            if (hash === "#result" && S.scores) {
-              S.screen = 2;
-            } else if (hash === "#input") {
-              S.screen = 1;
-            }
-            if (S.screen === 2 && S.scores) {
-              // Restore results screen
-              showScreen(2);
-              const loadingWrap = document.getElementById("loadingWrap");
-              const scoreSection = document.getElementById("scoreSection");
-              const aiBody = document.getElementById("aiBody");
-              const aiStatusLabel = document.getElementById("aiStatusLabel");
-              if (loadingWrap) loadingWrap.style.display = "none";
-              if (scoreSection) scoreSection.style.display = "block";
-              renderScoreBars(S.scores, extractRationales(S.analysis || ""));
-              if (aiBody && S.analysis) {
-                aiBody.innerHTML = renderMd(extractAnalysis(S.analysis));
-              }
-              if (aiStatusLabel) aiStatusLabel.textContent = "AI 分析完成";
-              const pulseEl = aiStatusLabel
-                ? aiStatusLabel.parentElement.querySelector(".pulse")
-                : null;
-              if (pulseEl) pulseEl.style.display = "none";
-            } else if (S.screen === 1) {
-              showScreen(1);
-              syncStateToFields();
-            } else {
-              showScreen(0);
-            }
-          } catch (e) {
-            showScreen(0);
+          loadState();
+          syncStateToFields();
+
+          const hash = window.location.hash;
+          if (hash === "#result" && S.result) {
+            S.screen = 2;
+          } else if (hash === "#input") {
+            S.screen = 1;
+          }
+
+          if (S.screen === 2 && S.result) {
+            showScreen(2, true);
+            renderResult(S.result);
+          } else if (S.screen === 1) {
+            showScreen(1, true);
+          } else {
+            showScreen(0, true);
           }
         }
 
-        // Wait for DOM
         if (document.readyState === "loading") {
           document.addEventListener("DOMContentLoaded", boot);
         } else {
