@@ -294,6 +294,44 @@
       .tag-x:hover {
         opacity: 1;
       }
+      .context-card {
+        margin: 12px 0 14px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid #dbeafe;
+        background: #f8fbff;
+      }
+      .context-card__title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .context-card__desc {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--gray);
+        line-height: 1.7;
+      }
+      .context-card__meta {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--navy);
+      }
+      .context-card__preview {
+        margin-top: 8px;
+        padding: 9px 10px;
+        border-radius: 10px;
+        background: white;
+        font-size: 13px;
+        color: var(--navy);
+        line-height: 1.7;
+      }
+      .context-card__actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
       .tag-input {
         border: none;
         background: none;
@@ -986,6 +1024,7 @@
                 >不知道怎么做社团竞选PPT</em
               >
             </p>
+            <div id="contextSyncCard" style="display: none"></div>
             <div id="ideasBox"></div>
             <button class="add-btn" onclick="addIdea()">
               ＋ 再添加一个想法
@@ -1249,6 +1288,7 @@
       </button>
     </div>
 
+    <script src="./tool-context.js"></script>
     <script>
       (function () {
         "use strict";
@@ -1256,6 +1296,7 @@
         // ══════════════════════════════════════════════
         // STATE
         // ══════════════════════════════════════════════
+        const TOOL_ID = "find-your-idea";
         const SK = "xyvc-find-idea-v1";
         // AI 统一走代理，支持同域 /api 和外部代理自动切换
         const AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
@@ -1341,6 +1382,7 @@
             },
           },
         };
+        let contextSyncState = null;
 
         // ══════════════════════════════════════════════
         // PERSISTENCE
@@ -1350,6 +1392,16 @@
           try {
             localStorage.setItem(SK, JSON.stringify(S));
           } catch (e) {}
+          if (window.XYVCToolContext) {
+            window.XYVCToolContext.write(TOOL_ID, {
+              projectContext: {
+                oneLiner: S.ideas[0] || "",
+              },
+              userProfile: {
+                lastActiveTool: TOOL_ID,
+              },
+            });
+          }
         }
 
         function load() {
@@ -1480,8 +1532,118 @@
         }
 
         // ── Step 1 ──
+        function buildContextMeta(context) {
+          const meta = [];
+          if (context.projectContext && context.projectContext.stage) {
+            meta.push("阶段：" + context.projectContext.stage);
+          }
+          if (context.projectContext && context.projectContext.track) {
+            meta.push("赛道：" + context.projectContext.track);
+          }
+          if (context.projectContext && context.projectContext.isHardTech) {
+            meta.push("项目类型：硬科技");
+          }
+          return meta.join(" · ");
+        }
+
+        function refreshContextSyncState() {
+          if (!window.XYVCToolContext) {
+            contextSyncState = null;
+            return;
+          }
+
+          const context = window.XYVCToolContext.read();
+          if (
+            !window.XYVCToolContext.hasProjectContext(context) ||
+            context.sourceToolId === TOOL_ID ||
+            !context.projectContext.oneLiner
+          ) {
+            contextSyncState = null;
+            return;
+          }
+
+          const currentIdea = String(S.ideas[0] || "").trim();
+          const incomingIdea = context.projectContext.oneLiner;
+
+          contextSyncState = {
+            sourceToolId: context.sourceToolId,
+            sourceLabel: window.XYVCToolContext.getLabel(context.sourceToolId),
+            oneLiner: incomingIdea,
+            meta: buildContextMeta(context),
+            canApply: currentIdea !== incomingIdea,
+            autoApplied: false,
+            dismissed: false,
+          };
+
+          if (!currentIdea) {
+            S.ideas[0] = incomingIdea;
+            contextSyncState.canApply = false;
+            contextSyncState.autoApplied = true;
+          } else if (currentIdea === incomingIdea) {
+            contextSyncState.canApply = false;
+          }
+        }
+
+        function renderContextSyncCard() {
+          const card = document.getElementById("contextSyncCard");
+          if (!card) return;
+
+          if (!contextSyncState || contextSyncState.dismissed) {
+            card.style.display = "none";
+            card.innerHTML = "";
+            return;
+          }
+
+          const actionHtml = contextSyncState.canApply
+            ? '<div class="context-card__actions">' +
+              '<button class="btn btn-primary" style="margin-top:0" onclick="applySharedIdea()">同步这段背景信息</button>' +
+              '<button class="btn btn-ghost" style="margin-top:0" onclick="dismissSharedIdea()">暂不处理</button>' +
+              "</div>"
+            : '<div class="context-card__actions">' +
+              '<button class="btn btn-ghost" style="margin-top:0" onclick="dismissSharedIdea()">知道了</button>' +
+              "</div>";
+
+          card.style.display = "block";
+          card.innerHTML =
+            '<div class="context-card">' +
+            '<div class="context-card__title">已从「' +
+            esc(contextSyncState.sourceLabel) +
+            '」带入项目背景</div>' +
+            '<div class="context-card__desc">' +
+            (contextSyncState.autoApplied
+              ? "我们已经帮你把上一工具里的一句话项目描述自动带到这里了。你可以继续修改，不会被锁定。"
+              : "检测到你在上一工具里更新过项目背景。你可以一键同步到这里，也可以保留当前输入。") +
+            "</div>" +
+            (contextSyncState.meta
+              ? '<div class="context-card__meta">' +
+                esc(contextSyncState.meta) +
+                "</div>"
+              : "") +
+            '<div class="context-card__preview">' +
+            esc(contextSyncState.oneLiner) +
+            "</div>" +
+            actionHtml +
+            "</div>";
+        }
+
+        window.applySharedIdea = function () {
+          if (!contextSyncState) return;
+          S.ideas[0] = contextSyncState.oneLiner;
+          contextSyncState.canApply = false;
+          contextSyncState.autoApplied = true;
+          save();
+          renderS1();
+        };
+
+        window.dismissSharedIdea = function () {
+          if (!contextSyncState) return;
+          contextSyncState.dismissed = true;
+          renderContextSyncCard();
+        };
+
         function renderS1() {
           const box = document.getElementById("ideasBox");
+          renderContextSyncCard();
           box.innerHTML = "";
           if (!S.ideas.length) S.ideas = [""];
           S.ideas.forEach((v, i) => {
@@ -2349,6 +2511,7 @@ ${rows || "（暂无填写）"}
         // ══════════════════════════════════════════════
         try {
           load();
+          refreshContextSyncState();
           // Restore step from URL hash if present (overrides localStorage step)
           const hashStep = parseInt(
             (window.location.hash.match(/[#&]step=(\d+)/) || [])[1],

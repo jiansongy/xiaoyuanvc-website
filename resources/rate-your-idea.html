@@ -1203,6 +1203,7 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
+    <script src="./tool-context.js"></script>
     <script>
       (function () {
         "use strict";
@@ -1518,6 +1519,12 @@
           S.userProfile.lastActiveTool = TOOL_ID;
           S.userProfile.projectContext.oneLiner = draft.product;
           S.userProfile.projectContext.stage = draft.stage;
+          if (window.XYVCToolContext) {
+            window.XYVCToolContext.write(TOOL_ID, {
+              userProfile: S.userProfile,
+              projectContext: S.userProfile.projectContext,
+            });
+          }
         }
 
         function syncStateToFields() {
@@ -2249,6 +2256,12 @@
 
         function boot() {
           loadState();
+          if (window.XYVCToolContext) {
+            window.XYVCToolContext.write(TOOL_ID, {
+              userProfile: S.userProfile,
+              projectContext: S.userProfile.projectContext,
+            });
+          }
           if (!S.selectedHistoryVersionId && S.toolHistory && S.toolHistory.length) {
             S.selectedHistoryVersionId = S.toolHistory[0].versionId;
           }
