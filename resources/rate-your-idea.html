@@ -1236,6 +1236,7 @@
         ];
 
         let saveToastTimer = null;
+        let loadingPhaseTimers = [];
 
         function createInitialState() {
           return {
@@ -1292,6 +1293,39 @@
           } catch (e) {
             /* ignore */
           }
+        }
+
+        function clearLoadingPhaseTimers() {
+          for (let i = 0; i < loadingPhaseTimers.length; i++) {
+            clearTimeout(loadingPhaseTimers[i]);
+          }
+          loadingPhaseTimers = [];
+        }
+
+        function scheduleLoadingPhases(loadingText) {
+          clearLoadingPhaseTimers();
+          if (!loadingText) return;
+
+          loadingPhaseTimers.push(
+            setTimeout(function () {
+              loadingText.textContent =
+                "AI 正在深度思考中，我们会先自动重试一次。内容已保存，不会丢失。";
+            }, 3500),
+          );
+
+          loadingPhaseTimers.push(
+            setTimeout(function () {
+              loadingText.textContent =
+                "主模型还没稳定返回，将自动切到精简建议。内容已保存，不会丢失。";
+            }, 9000),
+          );
+
+          loadingPhaseTimers.push(
+            setTimeout(function () {
+              loadingText.textContent =
+                "如果完整分析仍未成功，系统会先给你一份手动评估清单，方便你继续推进。";
+            }, 16000),
+          );
         }
 
         function normalizeToolError(err) {
@@ -1914,13 +1948,28 @@
           }
 
           if (aiStatusLabel) {
-            if (result.consistencyCheck && result.consistencyCheck.fallback) {
+            if (
+              result.gracefulDegradation &&
+              result.gracefulDegradation.stage === "manual_checklist"
+            ) {
+              aiStatusLabel.textContent = "已生成手动评估清单";
+            } else if (
+              result.gracefulDegradation &&
+              result.gracefulDegradation.stage === "compact_advice"
+            ) {
+              aiStatusLabel.textContent = "已生成精简建议";
+            } else if (result.consistencyCheck && result.consistencyCheck.fallback) {
               aiStatusLabel.textContent = "已生成规则层结果";
             } else if (
               result.consistencyCheck &&
               result.consistencyCheck.recalibrated
             ) {
               aiStatusLabel.textContent = "AI 分析完成（已校准）";
+            } else if (
+              result.consistencyCheck &&
+              result.consistencyCheck.reusedPreviousScores
+            ) {
+              aiStatusLabel.textContent = "AI 分析完成（已复用上次分数）";
             } else {
               aiStatusLabel.textContent = "AI 分析完成";
             }
@@ -2010,6 +2059,7 @@
               ? "AI 正在结合历史结果校准评分..."
               : "AI 正在分析你的创业想法...";
           }
+          scheduleLoadingPhases(loadingText);
           if (loadingWrap) loadingWrap.style.display = "block";
           if (scoreSection) scoreSection.style.display = "none";
           if (aiBody) aiBody.innerHTML = "";
@@ -2050,18 +2100,20 @@
               /* ignore */
             }
           } catch (err) {
+            clearLoadingPhaseTimers();
             if (loadingWrap) loadingWrap.style.display = "none";
             if (scoreSection) scoreSection.style.display = "block";
             if (aiBody) {
               aiBody.innerHTML =
                 '<p style="color: var(--red);">评估失败：' +
-                renderMd(normalizeToolError(err)) +
+                renderMd(normalizeToolError(err) + " 内容已保存，不会丢失，请稍后重试。") +
                 "</p>";
             }
             if (aiStatusLabel) aiStatusLabel.textContent = "自检失败";
             if (scoreNum) scoreNum.textContent = "-";
             if (tierLabel) tierLabel.textContent = "暂未完成";
           } finally {
+            clearLoadingPhaseTimers();
             updateScoreBtn();
           }
         };

@@ -93,27 +93,65 @@ async function callStructuredGLM(options) {
   };
 
   let rawText = "";
-  const errors = [];
+  const attemptLog = [];
+  const retryModel = payload.model;
+  const fallbackModel = options.fallbackModel || DEFAULT_FALLBACK_MODEL;
+  const sequence = [
+    { model: payload.model, stage: "primary" },
+    { model: retryModel, stage: "retry" },
+    {
+      model:
+        fallbackModel && fallbackModel !== retryModel ? fallbackModel : null,
+      stage: "fallback_model",
+    },
+  ];
 
-  for (const model of [
-    payload.model,
-    options.fallbackModel || DEFAULT_FALLBACK_MODEL,
-  ]) {
-    if (!model) {
+  for (const attempt of sequence) {
+    if (!attempt.model) {
       continue;
     }
 
     try {
-      const json = await callGLM(Object.assign({}, payload, { model }));
+      const json = await callGLM(
+        Object.assign({}, payload, { model: attempt.model }),
+      );
       rawText = extractTextFromCompletion(json) || "";
       const parsed = JSON.parse(extractJsonBlock(rawText));
-      return { model, rawText, parsed };
+      attemptLog.push({
+        stage: attempt.stage,
+        model: attempt.model,
+        ok: true,
+      });
+      return {
+        model: attempt.model,
+        rawText,
+        parsed,
+        attemptLog,
+        retriedPrimary: attemptLog.some(function (entry) {
+          return entry.stage === "retry" && entry.ok;
+        }),
+        usedFallbackModel: attempt.stage === "fallback_model",
+      };
     } catch (err) {
-      errors.push(model + ": " + err.message);
+      attemptLog.push({
+        stage: attempt.stage,
+        model: attempt.model,
+        ok: false,
+        error: err.message,
+      });
     }
   }
 
-  throw new Error(errors.join(" | "));
+  throw new Error(
+    attemptLog
+      .filter(function (entry) {
+        return !entry.ok;
+      })
+      .map(function (entry) {
+        return entry.model + ": " + entry.error;
+      })
+      .join(" | "),
+  );
 }
 
 module.exports = {

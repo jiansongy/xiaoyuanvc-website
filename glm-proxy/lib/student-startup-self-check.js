@@ -665,6 +665,75 @@ function buildActions(finalDimensionScores, sectorLabel, snapshot) {
     });
 }
 
+function buildManualChecklist(snapshot, heuristicLayer) {
+  const sectorLabel = inferSectorLabel(snapshot);
+  const checklist = [];
+
+  if (!hasUserInterviewEvidence(snapshot)) {
+    checklist.push({
+      title: "先补 5-10 个真实用户访谈",
+      brief:
+        "现在最缺的不是继续想功能，而是补到第一手证据。优先找真正会遇到这个问题的人，确认他们现在怎么解决、为什么现有方案不够好。",
+    });
+  }
+
+  if (!isSpecificEnough(snapshot.audience) || !isSpecificEnough(snapshot.model)) {
+    checklist.push({
+      title: "把第一批用户和收费方式写具体",
+      brief:
+        "不要只写“大学生”或“以后再收费”。先写清楚第一批最容易触达的用户是谁，以及你准备先用什么方式验证他们愿不愿意留下联系方式或付费。",
+    });
+  }
+
+  if (!hasTimeBoundPlan(snapshot)) {
+    checklist.push({
+      title: "写一份 7 天内能执行的验证计划",
+      brief:
+        "把本周要做的动作、样本数量和判断标准写出来，例如访谈多少人、上线什么最小页面、看到什么信号算继续做。",
+    });
+  }
+
+  if (!hasMvpEvidence(snapshot)) {
+    checklist.push({
+      title: "做一个最小验证载体",
+      brief:
+        "不一定要完整产品。对 " +
+        sectorLabel +
+        " 这个方向，先用表单、落地页、Demo 或手动服务把关键假设跑起来。",
+    });
+  }
+
+  if (!scoreTeamMatch(snapshot) || !snapshot.team) {
+    checklist.push({
+      title: "梳理当前团队缺口",
+      brief:
+        "把现有能力、缺失能力和下一位关键合作者画像列出来，避免项目推进到一半才发现核心环节没人能做。",
+      });
+  }
+
+  if (!checklist.length) {
+    checklist.push(
+      {
+        title: "把最大风险改成可验证问题",
+        brief:
+          "不要继续抽象讨论，直接把当前最不确定的一点改写成一句可验证假设，并给出本周验证动作。",
+      },
+      {
+        title: "优先验证真实使用意愿",
+        brief:
+          "先拿到用户愿意停下来、愿意留下联系方式或愿意继续试用的信号，再考虑把方案做大。",
+      },
+      {
+        title: "记录本轮输入和结果差异",
+        brief:
+          "把这次改了什么、分数为什么变化、下次准备补什么证据写下来，避免反复凭感觉迭代。",
+      },
+    );
+  }
+
+  return checklist.slice(0, 3);
+}
+
 function buildAnalysisMarkdown(result) {
   const rationaleLines = DIMENSIONS.map(function (dim) {
     return (
@@ -702,7 +771,25 @@ function buildAnalysisMarkdown(result) {
         .join("\n")
     : "1. 继续积累一手验证证据，把目前最高分的维度做成更强的正反馈。";
 
+  const manualChecklist = Array.isArray(result.manualChecklist) && result.manualChecklist.length
+    ? result.manualChecklist
+        .map(function (item, index) {
+          return index + 1 + ". **" + item.title + "**： " + item.brief;
+        })
+        .join("\n")
+    : "";
+
+  const degradationNote =
+    result.gracefulDegradation &&
+    result.gracefulDegradation.stage === "compact_advice"
+      ? "## 当前模式\n这次主模型响应较慢，系统已自动切到快速模型，为你先生成了一份精简建议。内容可用于继续推进，但仍建议你后续再看一次完整版判断。\n"
+      : result.gracefulDegradation &&
+          result.gracefulDegradation.stage === "manual_checklist"
+        ? "## 当前模式\n这次 AI 完整分析没有成功返回，系统先给你一份手动评估清单。内容已保存，不会丢失，你可以先按下面的动作继续推进。\n"
+        : "";
+
   return [
+    degradationNote,
     "## 整体评价",
     result.reasoningLayer.overallSummary || "这个方向还需要更多一手验证，先别急着自我说服。",
     "",
@@ -717,6 +804,7 @@ function buildAnalysisMarkdown(result) {
     "",
     "## 本周优先动作",
     nextActions,
+    manualChecklist ? "\n## 手动评估清单\n" + manualChecklist : "",
   ].join("\n");
 }
 
@@ -729,6 +817,8 @@ function buildOutputSnapshot(result) {
     heuristicLayer: result.heuristicLayer,
     reasoningLayer: result.reasoningLayer,
     actions: result.actions,
+    manualChecklist: result.manualChecklist || [],
+    gracefulDegradation: result.gracefulDegradation || null,
     analysisMarkdown: result.analysisMarkdown,
     consistencyCheck: result.consistencyCheck,
   };
@@ -739,6 +829,7 @@ function buildFallbackResult(snapshot, heuristicLayer, latestHistory) {
   const totalScore = getTotalScore(finalDimensionScores);
   const sectorLabel = inferSectorLabel(snapshot);
   const actions = buildActions(finalDimensionScores, sectorLabel, snapshot);
+  const manualChecklist = buildManualChecklist(snapshot, heuristicLayer);
   const reasoningLayer = {
     dimensionScores: finalDimensionScores,
     dimensionRationales: DIMENSIONS.reduce(function (acc, dim) {
@@ -771,12 +862,19 @@ function buildFallbackResult(snapshot, heuristicLayer, latestHistory) {
     heuristicLayer: heuristicLayer,
     reasoningLayer: reasoningLayer,
     actions: actions,
+    manualChecklist: manualChecklist,
+    gracefulDegradation: {
+      stage: "manual_checklist",
+      autoRetried: true,
+      usedFallbackModel: false,
+    },
     analysisMarkdown: "",
     consistencyCheck: {
       recalibrated: false,
       comparedVersionId: latestHistory ? latestHistory.versionId : null,
       inputSimilarity: 0,
       fallback: true,
+      reusedPreviousScores: false,
     },
   };
 
@@ -835,6 +933,12 @@ async function scoreStudentStartupSelfCheck(payload) {
       heuristicLayer: heuristicLayer,
       reasoningLayer: reasoningLayer,
       actions: actions,
+      manualChecklist: [],
+      gracefulDegradation: {
+        stage: reasoningResponse.usedFallbackModel ? "compact_advice" : "full_analysis",
+        autoRetried: Boolean(reasoningResponse.retriedPrimary),
+        usedFallbackModel: Boolean(reasoningResponse.usedFallbackModel),
+      },
       consistencyCheck: {
         recalibrated: recalibration.recalibrated,
         reusedPreviousScores: recalibration.reusedPreviousScores,
@@ -877,6 +981,7 @@ module.exports = {
   TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
   buildHeuristicLayer,
   buildInputSnapshot,
+  buildManualChecklist,
   calculateInputSimilarity,
   combineDimensionScores,
   alignReasoningScoresToFinal,

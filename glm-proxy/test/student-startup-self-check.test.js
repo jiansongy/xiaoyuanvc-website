@@ -7,6 +7,7 @@ const {
   alignReasoningScoresToFinal,
   buildHeuristicLayer,
   buildInputSnapshot,
+  buildManualChecklist,
   calculateInputSimilarity,
   combineDimensionScores,
   getTotalScore,
@@ -123,4 +124,22 @@ test("reasoning scores can be aligned to keep the reused final score exact", fun
     combineDimensionScores(heuristicScores, aligned),
     targetFinalScores,
   );
+});
+
+test("manual checklist gives at least three concrete fallback actions", function () {
+  const snapshot = buildInputSnapshot({
+    product: "做一个大学生创业灵感展示页，先看看有没有人喜欢。",
+    audience: "大学生",
+    model: "以后再想",
+    stage: "只有想法",
+    team: "",
+    validationPlan: "先发朋友圈看看。",
+  });
+
+  const checklist = buildManualChecklist(snapshot, buildHeuristicLayer(snapshot));
+
+  assert.equal(checklist.length, 3);
+  assert.ok(checklist.every(function (item) {
+    return item.title && item.brief;
+  }));
 });
