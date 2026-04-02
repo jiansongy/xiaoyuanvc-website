@@ -362,6 +362,44 @@
         resize: vertical;
         min-height: 72px;
       }
+      .context-card {
+        margin: 12px 0 14px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+      }
+      .context-card__title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .context-card__desc {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--gray);
+        line-height: 1.7;
+      }
+      .context-card__meta {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--navy);
+      }
+      .context-card__preview {
+        margin-top: 8px;
+        padding: 9px 10px;
+        border-radius: 10px;
+        background: white;
+        font-size: 13px;
+        color: var(--navy);
+        line-height: 1.7;
+      }
+      .context-card__actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
 
       /* Pill chips (single/multi select) */
       .pill-grid {
@@ -1207,6 +1245,20 @@
         <p class="step-title">看看你的时间黑洞 Top 3</p>
         <p class="step-desc">针对最耗时的 3 件事，帮你深入分析</p>
       </div>
+      <div id="contextSyncCard" style="display: none"></div>
+      <div class="card">
+        <p class="step-title">项目 / 业务背景（可选）</p>
+        <p class="step-desc">
+          如果你已经有一个明确项目、业务方向或想验证的场景，补充在这里，AI 会结合你的时间黑洞一起分析。
+        </p>
+        <textarea
+          id="projectContextInput"
+          placeholder="例如：我们在做一个帮助大学生团队更快完成创业自检和机会判断的工具。"
+          maxlength="240"
+          oninput="window.onProjectContextInput()"
+          data-testid="project-context-input"
+        ></textarea>
+      </div>
       <div id="top3Cards"></div>
       <div class="card">
         <p class="step-title">你最希望 AI 先帮你解决什么？</p>
@@ -1274,6 +1326,7 @@
       </div>
     </div>
 
+    <script src="./tool-context.js"></script>
     <script>
       (function () {
         "use strict";
@@ -1283,6 +1336,7 @@
           window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         // ── CONSTANTS ──
+        var TOOL_ID = "ai-ready-check";
         var SK = "xyvc-ai-ready-v1";
         var TOTAL_STEPS = 5;
         var STEP_NAMES = [
@@ -1408,19 +1462,36 @@
           industry: "",
           teamSize: "",
           tasks: [],
+          projectContextNote: "",
           top3: [],
           aiGoal: "",
           report: null,
           reportRaw: "",
           checkboxes: [],
         };
+        var contextSyncState = null;
 
         // ── PERSISTENCE ──
+        function buildSharedProjectSummary() {
+          return String(S.projectContextNote || "").trim().slice(0, 120);
+        }
+
         function save() {
           try {
             localStorage.setItem(SK, JSON.stringify(S));
           } catch (e) {
             /* localStorage may be unavailable in incognito */
+          }
+          var sharedSummary = buildSharedProjectSummary();
+          if (window.XYVCToolContext && sharedSummary) {
+            window.XYVCToolContext.write(TOOL_ID, {
+              projectContext: {
+                oneLiner: sharedSummary,
+              },
+              userProfile: {
+                lastActiveTool: TOOL_ID,
+              },
+            });
           }
         }
 
@@ -1464,6 +1535,121 @@
         function $(id) {
           return document.getElementById(id);
         }
+
+        function buildContextMeta(context) {
+          var meta = [];
+          if (context.projectContext && context.projectContext.track) {
+            meta.push("赛道：" + context.projectContext.track);
+          }
+          if (context.projectContext && context.projectContext.stage) {
+            meta.push("阶段：" + context.projectContext.stage);
+          }
+          if (context.projectContext && context.projectContext.isHardTech) {
+            meta.push("项目类型：硬科技");
+          }
+          return meta.join(" · ");
+        }
+
+        function refreshContextSyncState() {
+          if (!window.XYVCToolContext) {
+            contextSyncState = null;
+            return;
+          }
+
+          var context = window.XYVCToolContext.read();
+          if (
+            !window.XYVCToolContext.hasProjectContext(context) ||
+            context.sourceToolId === TOOL_ID ||
+            !context.projectContext.oneLiner
+          ) {
+            contextSyncState = null;
+            return;
+          }
+
+          var currentText = String(S.projectContextNote || "").trim();
+          var incomingText = context.projectContext.oneLiner;
+          contextSyncState = {
+            sourceToolId: context.sourceToolId,
+            sourceLabel: window.XYVCToolContext.getLabel(context.sourceToolId),
+            oneLiner: incomingText,
+            meta: buildContextMeta(context),
+            canApply: currentText !== incomingText,
+            autoApplied: false,
+            dismissed: false,
+          };
+
+          if (!currentText) {
+            S.projectContextNote = incomingText;
+            contextSyncState.canApply = false;
+            contextSyncState.autoApplied = true;
+          } else if (currentText === incomingText) {
+            contextSyncState.canApply = false;
+          }
+        }
+
+        function renderContextSyncCard() {
+          var card = $("contextSyncCard");
+          if (!card) return;
+
+          if (!contextSyncState || contextSyncState.dismissed) {
+            card.style.display = "none";
+            card.innerHTML = "";
+            return;
+          }
+
+          var actionHtml = contextSyncState.canApply
+            ? '<div class="context-card__actions">' +
+              '<button class="btn btn-primary" style="margin-top:0" onclick="applySharedProjectContext()">同步这段项目背景</button>' +
+              '<button class="btn btn-ghost" style="margin-top:0" onclick="dismissSharedProjectContext()">暂不处理</button>' +
+              "</div>"
+            : '<div class="context-card__actions">' +
+              '<button class="btn btn-ghost" style="margin-top:0" onclick="dismissSharedProjectContext()">知道了</button>' +
+              "</div>";
+
+          card.style.display = "block";
+          card.innerHTML =
+            '<div class="context-card">' +
+            '<div class="context-card__title">已从「' +
+            esc(contextSyncState.sourceLabel) +
+            '」带入项目背景</div>' +
+            '<div class="context-card__desc">' +
+            (contextSyncState.autoApplied
+              ? "我们已经把上一工具里的一句话项目描述自动放到了这里，方便你继续补充和改写。"
+              : "检测到你在上一工具里更新过项目背景。你可以一键同步到这里，也可以保留当前内容。") +
+            "</div>" +
+            (contextSyncState.meta
+              ? '<div class="context-card__meta">' +
+                esc(contextSyncState.meta) +
+                "</div>"
+              : "") +
+            '<div class="context-card__preview">' +
+            esc(contextSyncState.oneLiner) +
+            "</div>" +
+            actionHtml +
+            "</div>";
+        }
+
+        window.applySharedProjectContext = function () {
+          if (!contextSyncState) return;
+          S.projectContextNote = contextSyncState.oneLiner;
+          contextSyncState.canApply = false;
+          contextSyncState.autoApplied = true;
+          save();
+          renderS3();
+        };
+
+        window.dismissSharedProjectContext = function () {
+          if (!contextSyncState) return;
+          contextSyncState.dismissed = true;
+          renderContextSyncCard();
+        };
+
+        window.onProjectContextInput = function () {
+          var input = $("projectContextInput");
+          if (!input) return;
+          S.projectContextNote = input.value;
+          save();
+        };
 
         function getTasksWithTime() {
           return S.tasks.filter(function (t) {
@@ -1534,6 +1720,9 @@
         // ── NAVIGATION ──
         function startApp() {
           S.step = 1;
+          if (!contextSyncState) {
+            refreshContextSyncState();
+          }
           save();
           showStep(1);
           render(1);
@@ -1930,6 +2119,12 @@
         }
 
         function renderS3() {
+          var projectContextInput = $("projectContextInput");
+          if (projectContextInput) {
+            projectContextInput.value = S.projectContextNote || "";
+          }
+          renderContextSyncCard();
+
           var container = $("top3Cards");
           if (!container) return;
           container.innerHTML = "";
@@ -2258,6 +2453,7 @@
             role: S.role,
             industry: S.industry,
             teamSize: S.teamSize,
+            project_context: S.projectContextNote,
             tasks: S.tasks
               .filter(function (t) {
                 return t.time > 0;
@@ -2920,6 +3116,7 @@
         // ── INIT ──
         function init() {
           load();
+          refreshContextSyncState();
           bindEvents();
 
           // Restore step from URL hash if present and valid
