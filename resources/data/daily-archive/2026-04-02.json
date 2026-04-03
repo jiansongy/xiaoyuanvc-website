@@ -1,0 +1,111 @@
+{
+  "date": "2026-04-02",
+  "display_date": "2026.04.02",
+  "status": "archived",
+  "source": "local",
+  "reports": {
+    "scb": {
+      "title": "数创日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "认知",
+          "title": "微软计划明年推出大型前沿 AI 模型，目标在 2027 年全面替代 OpenAI 和 Anthropic 工具。",
+          "summary": "微软计划明年推出大型前沿 AI 模型，目标在 2027 年全面替代 OpenAI 和 Anthropic 工具。",
+          "highlight": "自研前沿模型",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 2,
+          "category": "机会",
+          "title": "中小银行开启新一轮存款挂牌利率下调，银行正进入管控负债成本的关键窗口期。",
+          "summary": "中小银行开启新一轮存款挂牌利率下调，银行正进入管控负债成本的关键窗口期。",
+          "highlight": "利率持续下调",
+          "highlight_color": "red",
+          "source": "Readhub"
+        },
+        {
+          "id": 3,
+          "category": "产品",
+          "title": "2026 款小鹏 MONA M03 正式上市，首次将 1500TOPS 有效算力带入 2 万美元级别。",
+          "summary": "2026 款小鹏 MONA M03 正式上市，首次将 1500TOPS 有效算力带入 2 万美元级别。",
+          "highlight": "1500TOPS 算力",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 4,
+          "category": "增长",
+          "title": "特斯拉 Q1 全球交付超 35.8 万辆同比增长 6.5%，年内外资机构调研 A 股热情持续高涨。",
+          "summary": "特斯拉 Q1 全球交付超 35.8 万辆同比增长 6.5%，年内外资机构调研 A 股热情持续高涨。",
+          "highlight": "交付增长 6.5%",
+          "highlight_color": "section",
+          "source": "Readhub"
+        },
+        {
+          "id": 5,
+          "category": "融资",
+          "title": "SpaceX 据悉已秘密递交 IPO 申请，目标估值超 2 万亿美元，最快有望于今年 6 月上市。",
+          "summary": "SpaceX 据悉已秘密递交 IPO 申请，目标估值超 2 万亿美元，最快有望于今年 6 月上市。",
+          "highlight": "估值超 2 万亿",
+          "highlight_color": "section",
+          "source": "Readhub"
+        }
+      ],
+      "keywords": [
+        "AI 军备",
+        "负债管控",
+        "高算力智驾",
+        "估值巅峰"
+      ]
+    },
+    "css": {
+      "title": "加密日报",
+      "items": [
+        {
+          "id": 1,
+          "category": "实务",
+          "title": "Solana 明星协议 Drift 遭黑客攻击损失 2.7 亿美元，占家底一半并引发全生态连环爆仓。",
+          "summary": "Solana 明星协议 Drift 遭黑客攻击损失 2.7 亿美元，占家底一半并引发全生态连环爆仓。",
+          "highlight": "损失 2.7 亿美元",
+          "highlight_color": "red",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 2,
+          "category": "金融",
+          "title": "Mezo 正式发币开启 BTC 生息新纪元，机构需向散户租赁投票权以实现收益最大化。",
+          "summary": "Mezo 正式发币开启 BTC 生息新纪元，机构需向散户租赁投票权以实现收益最大化。",
+          "highlight": "散户掌握定价权",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 3,
+          "category": "文化",
+          "title": "RealGo 将 Meme 币映射至物理空间，玩家需在真实地图中像抓宝可梦一样收集代币。",
+          "summary": "RealGo 将 Meme 币映射至物理空间，玩家需在真实地图中像抓宝可梦一样收集代币。",
+          "highlight": "物理地图收集",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        },
+        {
+          "id": 4,
+          "category": "创新",
+          "title": "Sui 链黑马 Ferra Protocol 推出三台“流动性印钞机”，直接化身为链上最高效基座。",
+          "summary": "Sui 链黑马 Ferra Protocol 推出三台“流动性印钞机”，直接化身为链上最高效基座。",
+          "highlight": "三台做市引擎",
+          "highlight_color": "section",
+          "source": "riyuexiaochu"
+        }
+      ],
+      "keywords": [
+        "安全事故",
+        "BTC 生息",
+        "物理 Meme",
+        "流动性引擎"
+      ]
+    }
+  }
+}
