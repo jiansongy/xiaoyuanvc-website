@@ -206,6 +206,51 @@
         box-shadow: var(--shadow-sm);
         margin-bottom: 16px;
       }
+      .history-list {
+        display: grid;
+        gap: 10px;
+      }
+      .history-item {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: #fff;
+      }
+      .history-item.active {
+        border-color: #fdba74;
+        background: #fff7ed;
+      }
+      .history-item__top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .history-item__title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .history-item__meta {
+        font-size: 12px;
+        color: var(--gray);
+        margin-top: 4px;
+      }
+      .history-item__summary {
+        margin-top: 10px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: #374151;
+      }
+      .history-link {
+        border: none;
+        background: transparent;
+        color: var(--orange-dark);
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 0;
+      }
       .step-title {
         font-size: 19px;
         font-weight: 700;
@@ -642,6 +687,24 @@
           min-width: unset;
         }
       }
+      /* ── Print ── */
+      .print-title { display: none; }
+      @media print {
+        .header,
+        #navBar,
+        .result-actions {
+          display: none !important;
+        }
+        body { margin: 0; padding: 16px; }
+        .print-title {
+          display: block;
+          font-size: 20px;
+          font-weight: 700;
+          text-align: center;
+          margin: 20px 0;
+        }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
     </style>
   </head>
   <body>
@@ -793,6 +856,11 @@
         <p class="step-desc">
           用一句话描述你的项目——填写下面四个空，完成后可以预览效果。
         </p>
+        <div
+          style="margin: 12px 0 16px; padding: 10px 12px; border-radius: 10px; background: #fff7ed; color: #9a3412; font-size: 13px; line-height: 1.7"
+        >
+          这一页在验证什么：你能不能先用客户听得懂的话，把技术、场景、客户和问题说清楚。
+        </div>
         <div id="contextSyncCard" style="display: none"></div>
         <div class="madlib-row">
           <span class="madlib-label">核心技术</span>
@@ -870,6 +938,11 @@
       <div class="card">
         <p class="step-title">Step 2：技术成熟度</p>
         <p class="step-desc">你的技术目前处于哪个状态？</p>
+        <div
+          style="margin: 12px 0 16px; padding: 10px 12px; border-radius: 10px; background: #fff7ed; color: #9a3412; font-size: 13px; line-height: 1.7"
+        >
+          这一页在验证什么：你的技术到底停留在论文、实验室，还是已经走到外部可验证的阶段。
+        </div>
         <div class="radio-grid" id="trlGrid">
           <label
             class="radio-card"
@@ -922,6 +995,11 @@
         <p class="step-desc">
           技术成果的知识产权归属？（这是高校创业最关键的起点问题）
         </p>
+        <div
+          style="margin: 12px 0 16px; padding: 10px 12px; border-radius: 10px; background: #fff7ed; color: #9a3412; font-size: 13px; line-height: 1.7"
+        >
+          这一页在验证什么：这项成果未来到底归谁、谁能拍板授权，以及团队是否真的具备往下推的组织基础。
+        </div>
         <div class="radio-grid" id="ipGrid">
           <label class="radio-card" data-v="school" data-testid="radio-school">
             <input type="radio" name="ip" value="school" />
@@ -1097,6 +1175,11 @@
       <div class="card">
         <p class="step-title">Step 4：目标客户与商业路径</p>
         <p class="step-desc">你最想服务的客户是谁？你计划如何赚钱？</p>
+        <div
+          style="margin: 12px 0 16px; padding: 10px 12px; border-radius: 10px; background: #fff7ed; color: #9a3412; font-size: 13px; line-height: 1.7"
+        >
+          这一页在验证什么：你是否已经把“谁会买、为什么买、按什么方式成交”想到了客户语言层面。
+        </div>
         <div style="margin-bottom: 16px">
           <div style="font-size: 13px; color: var(--gray); margin-bottom: 6px">
             目标客户 / 应用场景
@@ -1159,6 +1242,11 @@
       <div class="card">
         <p class="step-title">Step 5：当前所处阶段</p>
         <p class="step-desc">选择最符合你现状的描述</p>
+        <div
+          style="margin: 12px 0 16px; padding: 10px 12px; border-radius: 10px; background: #fff7ed; color: #9a3412; font-size: 13px; line-height: 1.7"
+        >
+          这一页在验证什么：你的项目到底卡在哪一段，不是听上去像做到哪，而是证据真正支持做到哪。
+        </div>
         <div class="radio-grid" id="stageGrid">
           <label
             class="radio-card"
@@ -1247,6 +1335,11 @@
       <div class="card">
         <p class="step-title">Step 6：当前最大困难</p>
         <p class="step-desc">选择你现在最卡的问题（最多选 2 个）</p>
+        <div
+          style="margin: 12px 0 16px; padding: 10px 12px; border-radius: 10px; background: #fff7ed; color: #9a3412; font-size: 13px; line-height: 1.7"
+        >
+          这一页在验证什么：你当前最真实的断点是市场、验证、商业化，还是产权和组织问题。
+        </div>
         <p class="difficulty-limit-note" id="diffLimit">已选 0 / 2</p>
         <div
           class="chip-grid"
@@ -1445,6 +1538,7 @@
 
     <!-- ── Screen 8: 报告页 ── -->
     <div class="screen" id="s8">
+      <h1 class="print-title">硬科技创业自检 · 结果报告 — 校园VC</h1>
       <div class="card" id="reportCard">
         <div
           style="
@@ -1480,11 +1574,17 @@
         </div>
         <div id="reportContent" style="display: none">
           <div class="ai-body" id="aiBody"></div>
+          <div id="stagePathCard" style="margin-top: 16px"></div>
+          <div id="glossaryCard" style="margin-top: 16px"></div>
+          <div id="nextToolCard" style="margin-top: 16px"></div>
+          <div id="historyCard" style="margin-top: 16px"></div>
         </div>
       </div>
       <div
+        class="result-actions"
         style="
           display: flex;
+          flex-wrap: wrap;
           gap: 10px;
           max-width: 560px;
           margin: 0 auto;
@@ -1495,6 +1595,15 @@
           ← 修改
         </button>
         <button
+          class="btn btn-ghost"
+          style="flex: 1"
+          id="saveBtn"
+          onclick="saveVersion()"
+          aria-label="保存当前版本"
+        >
+          💾 保存版本
+        </button>
+        <button
           class="btn btn-primary"
           style="flex: 1"
           id="copyBtn"
@@ -1503,6 +1612,24 @@
           aria-label="复制报告"
         >
           📋 复制报告
+        </button>
+        <button
+          class="btn btn-ghost"
+          style="flex: 1"
+          id="shareBtn"
+          onclick="copyShareLink()"
+          data-ai-action="share-link"
+          aria-label="复制分享链接"
+        >
+          🔗 分享链接
+        </button>
+        <button
+          class="btn btn-primary btn-print"
+          style="flex: 1"
+          onclick="window.safePrint()"
+          aria-label="保存或打印 PDF"
+        >
+          🖨️ 保存 / 打印 PDF
         </button>
       </div>
       <div class="attribution">
@@ -1640,6 +1767,14 @@
           poc: "产业PoC机会",
           alumni: "校友/投资资源",
         };
+        var STAGE_FLOW = [
+          { key: "stage1", short: "阶段1", title: "成果识别" },
+          { key: "stage23", short: "阶段2-3", title: "共创组队 / 权责建模" },
+          { key: "stage4", short: "阶段4", title: "切入点市场界定" },
+          { key: "stage5", short: "阶段5", title: "价值主张转译" },
+          { key: "stage6", short: "阶段6", title: "双十验证" },
+          { key: "stage79", short: "阶段7-9", title: "放大闭环" },
+        ];
         var TEAM_LABELS = {
           pi: "导师/PI",
           phd: "博士/硕士",
@@ -1669,6 +1804,7 @@
           eco: [],
           paste_text: "",
           report: "",
+          selectedHistoryVersionId: "",
         };
         var contextSyncState = null;
         // expose S for inline oninput handlers
@@ -1692,6 +1828,20 @@
                 lastActiveTool: TOOL_ID,
               },
             });
+          }
+          if (window.XYVCUnifiedDataManager) {
+            window.XYVCUnifiedDataManager.saveToolState(
+              TOOL_ID,
+              buildSerializableState(),
+              {
+                projectContext: {
+                  track: "硬科技",
+                  stage: STAGE_LABELS[S.stage] || "",
+                  oneLiner: buildSharedProjectSummary(),
+                  isHardTech: true,
+                },
+              },
+            );
           }
         }
         function load() {
@@ -1735,6 +1885,161 @@
           }
           return "";
         }
+
+        function clone(value) {
+          return JSON.parse(JSON.stringify(value));
+        }
+
+        function getToolHistory() {
+          if (!window.XYVCUnifiedDataManager) return [];
+          return window.XYVCUnifiedDataManager.getToolHistory(TOOL_ID) || [];
+        }
+
+        function buildSerializableState() {
+          return {
+            step: 8,
+            ml_tech: S.ml_tech || "",
+            ml_scene: S.ml_scene || "",
+            ml_customer: S.ml_customer || "",
+            ml_problem: S.ml_problem || "",
+            trl: S.trl || "",
+            ip: S.ip || "",
+            team: clone(S.team || []),
+            coCreate: S.coCreate || "",
+            customer: S.customer || "",
+            path: S.path || "",
+            stage: S.stage || "",
+            difficulties: clone(S.difficulties || []),
+            diff_note: S.diff_note || "",
+            eco: clone(S.eco || []),
+            paste_text: S.paste_text || "",
+            report: S.report || "",
+          };
+        }
+
+        function buildReportOutputSnapshot() {
+          return {
+            stageKey: S.stage || "",
+            stageLabel: STAGE_LABELS[S.stage] || "",
+            project: S.ml_tech || "",
+            report: S.report || "",
+            generatedAt: new Date().toISOString(),
+          };
+        }
+
+        function formatDateTime(value) {
+          if (!value) return "刚刚";
+          var date = new Date(value);
+          if (isNaN(date.getTime())) return "刚刚";
+          return date.toLocaleString("zh-CN");
+        }
+
+        function ensureReportHistorySaved() {
+          if (!S.report || !window.XYVCUnifiedDataManager) return;
+          if (S.selectedHistoryVersionId) return;
+          var history = window.XYVCUnifiedDataManager.appendToolHistory(
+            TOOL_ID,
+            {
+              versionId: "ver_" + Date.now().toString(36),
+              inputSnapshot: buildSerializableState(),
+              outputSnapshot: buildReportOutputSnapshot(),
+              createdAt: new Date().toISOString(),
+              isShared: false,
+            },
+            20,
+          );
+          S.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
+          save();
+        }
+
+        function renderHistoryList() {
+          var card = document.getElementById("historyCard");
+          if (!card) return;
+          var history = getToolHistory().slice(0, 5);
+          if (!history.length) {
+            card.innerHTML =
+              '<div class="card"><div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:6px">历史版本</div><div style="font-size:13px;color:#6b7280;line-height:1.7">当前还没有历史版本。生成诊断报告后会自动保存到这里。</div></div>';
+            return;
+          }
+
+          card.innerHTML =
+            '<div class="card">' +
+            '<div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:10px">历史版本</div>' +
+            '<div class="history-list">' +
+            history
+              .map(function (entry, index) {
+                var snapshot = entry.outputSnapshot || {};
+                var input = entry.inputSnapshot || {};
+                var isActive = entry.versionId === S.selectedHistoryVersionId;
+                var summary =
+                  String(snapshot.report || "")
+                    .replace(/\s+/g, " ")
+                    .slice(0, 86) || "已生成一份硬科技创业诊断报告。";
+                return (
+                  '<div class="history-item' +
+                  (isActive ? " active" : "") +
+                  '">' +
+                  '<div class="history-item__top">' +
+                  '<div>' +
+                  '<div class="history-item__title">版本 ' +
+                  (index + 1) +
+                  (index === 0 ? " · 最新" : "") +
+                  (isActive ? " · 当前查看" : "") +
+                  "</div>" +
+                  '<div class="history-item__meta">' +
+                  esc((snapshot.stageLabel || STAGE_LABELS[input.stage] || "未标记阶段") + " · " + formatDateTime(entry.createdAt)) +
+                  "</div>" +
+                  "</div>" +
+                  '<button class="history-link" onclick="window.openSavedVersion(\'' +
+                  entry.versionId +
+                  "')\">打开此版本</button>" +
+                  "</div>" +
+                  '<div class="history-item__summary">' +
+                  esc(summary) +
+                  "</div>" +
+                  "</div>"
+                );
+              })
+              .join("") +
+            "</div></div>";
+        }
+
+        window.saveVersion = function () {
+          if (!S.report || !window.XYVCUnifiedDataManager) {
+            window.alert("请先生成诊断报告，再保存版本。");
+            return;
+          }
+          var history = window.XYVCUnifiedDataManager.appendToolHistory(
+            TOOL_ID,
+            {
+              versionId: "ver_" + Date.now().toString(36),
+              inputSnapshot: buildSerializableState(),
+              outputSnapshot: buildReportOutputSnapshot(),
+              createdAt: new Date().toISOString(),
+              isShared: false,
+            },
+            20,
+          );
+          S.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
+          save();
+          renderHistoryList();
+          window.alert("当前版本已保存。");
+        };
+
+        window.openSavedVersion = function (versionId) {
+          var entry = getToolHistory().find(function (item) {
+            return item.versionId === versionId;
+          });
+          if (!entry || !entry.inputSnapshot) return;
+          S = Object.assign(S, clone(entry.inputSnapshot));
+          S.report =
+            (entry.outputSnapshot && entry.outputSnapshot.report) || S.report;
+          S.selectedHistoryVersionId = versionId;
+          window.S = S;
+          save();
+          showStep(8);
+          showSavedReport();
+        };
 
         // ── ESCAPE HELPER ──
         function esc(s) {
@@ -2513,6 +2818,137 @@
             .replace(/\n/g, "<br>");
         }
 
+        function renderStagePath() {
+          var card = document.getElementById("stagePathCard");
+          if (!card) return;
+          var currentIndex = STAGE_FLOW.findIndex(function (item) {
+            return item.key === S.stage;
+          });
+          if (currentIndex < 0) currentIndex = 0;
+
+          card.innerHTML =
+            '<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:16px">' +
+            '<div style="font-size:14px;font-weight:700;color:#9a3412;margin-bottom:10px">三层九阶段路径图</div>' +
+            '<div style="display:grid;gap:8px">' +
+            STAGE_FLOW.map(function (item, index) {
+              var isCurrent = index === currentIndex;
+              var isDone = index < currentIndex;
+              return (
+                '<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;border:1px solid ' +
+                (isCurrent ? "#fb923c" : isDone ? "#fdba74" : "#fed7aa") +
+                ";background:" +
+                (isCurrent ? "#ffedd5" : isDone ? "#fff7ed" : "#ffffff") +
+                '">' +
+                '<div style="min-width:62px;font-size:12px;font-weight:700;color:' +
+                (isCurrent ? "#c2410c" : "#9a3412") +
+                '">' +
+                item.short +
+                "</div>" +
+                '<div style="font-size:13px;line-height:1.6;color:#7c2d12"><strong>' +
+                item.title +
+                "</strong>" +
+                (isCurrent
+                  ? ' <span style="font-size:12px;color:#ea580c">← 你当前最该补的就是这一段</span>'
+                  : "") +
+                "</div>" +
+                "</div>"
+              );
+            }).join("") +
+            "</div>" +
+            "</div>";
+        }
+
+        function renderGlossaryCard() {
+          var card = document.getElementById("glossaryCard");
+          if (!card) return;
+          card.innerHTML =
+            '<div style="background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;padding:16px">' +
+            '<div style="font-size:14px;font-weight:700;color:#1f2937;margin-bottom:10px">关键术语白话解释</div>' +
+            '<div style="display:grid;gap:10px;font-size:13px;line-height:1.7;color:#374151">' +
+            '<div><strong>TRL / 技术成熟度</strong>：不是问技术多先进，而是问它有没有走出论文或实验室，变成别人能试的东西。</div>' +
+            '<div><strong>IP 归属</strong>：你这项成果未来到底归谁，谁能授权、谁能拿去创业，规则不清就很难往下走。</div>' +
+            '<div><strong>师生共创</strong>：不是“导师有没有出现”，而是老师、学生、产业方是不是已经在同一张桌子上把分工和利益说清楚。</div>' +
+            '<div><strong>商业化路径</strong>：你到底是卖产品、做定制项目，还是做技术授权。这三条路的团队、客户和节奏完全不同。</div>' +
+            '<div><strong>价值主张转译</strong>：把技术语言翻译成客户语言，让外部人听得懂“你解决什么问题，为什么值得付钱”。</div>' +
+            "</div>" +
+            "</div>";
+        }
+
+        function renderNextToolCard() {
+          var card = document.getElementById("nextToolCard");
+          if (!card) return;
+          var ctas = [];
+          if (S.stage === "stage1" || S.stage === "stage23" || S.stage === "stage4") {
+            ctas.push({
+              href: "./find-your-idea.html",
+              title: "先去补切入口和创业定位",
+              desc: "如果你还没把客户、场景和问题说具体，先去把方向说清楚，再回来做硬科技诊断。",
+              color: "#eff6ff",
+              border: "#bfdbfe",
+              text: "#1d4ed8",
+            });
+            ctas.push({
+              href: "./rate-your-idea.html",
+              title: "用学生创业自检补商业判断",
+              desc: "把技术项目放到更一般的创业视角再看一遍，能更快暴露验证和团队短板。",
+              color: "#fef3c7",
+              border: "#fcd34d",
+              text: "#92400e",
+            });
+          } else {
+            ctas.push({
+              href: "./ai-ready-check.html",
+              title: "进入 AI 员工面试，补执行效率",
+              desc: "如果你已经进入试点或转化阶段，下一步要开始把文档、调研、客户沟通这些执行动作提效。",
+              color: "#eff6ff",
+              border: "#bfdbfe",
+              text: "#1d4ed8",
+            });
+            ctas.push({
+              href: "./ai-opportunity.html",
+              title: "回到机会探索器，看相邻应用场景",
+              desc: "当你准备扩大切口时，可以先看相邻行业的相似痛点，判断放大路径。",
+              color: "#eef2ff",
+              border: "#c7d2fe",
+              text: "#4338ca",
+            });
+          }
+
+          card.innerHTML =
+            '<div style="background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;padding:16px">' +
+            '<div style="font-size:14px;font-weight:700;color:#1f2937;margin-bottom:10px">做完这份诊断后，下一步去哪</div>' +
+            ctas
+              .map(function (cta) {
+                return (
+                  '<a href="' +
+                  cta.href +
+                  '" style="display:block;text-decoration:none;background:' +
+                  cta.color +
+                  ";border:1px solid " +
+                  cta.border +
+                  ";border-radius:12px;padding:12px 14px;margin-top:10px;color:" +
+                  cta.text +
+                  '">' +
+                  '<strong style="display:block;font-size:13px;margin-bottom:4px">' +
+                  cta.title +
+                  "</strong>" +
+                  '<span style="font-size:12px;line-height:1.6">' +
+                  cta.desc +
+                  "</span>" +
+                  "</a>"
+                );
+              })
+              .join("") +
+            "</div>";
+        }
+
+        function buildShareSnapshotPayload() {
+          return {
+            state: buildSerializableState(),
+            report: S.report,
+          };
+        }
+
         // ── GENERATE REPORT ──
         window.generateReport = function () {
           var validationMessage = "";
@@ -2542,9 +2978,15 @@
           fetchAIResult(buildPrompt(), body)
             .then(function (text) {
               S.report = text;
+              S.selectedHistoryVersionId = "";
               save();
               loading.style.display = "none";
               content.style.display = "block";
+              renderStagePath();
+              renderGlossaryCard();
+              renderNextToolCard();
+              ensureReportHistorySaved();
+              renderHistoryList();
               copyBtn.disabled = false;
             })
             .catch(function (err) {
@@ -2565,6 +3007,11 @@
           var content = document.getElementById("reportContent");
           content.style.display = "block";
           document.getElementById("aiBody").innerHTML = renderMd(S.report);
+          renderStagePath();
+          renderGlossaryCard();
+          renderNextToolCard();
+          ensureReportHistorySaved();
+          renderHistoryList();
           document.getElementById("copyBtn").disabled = false;
         }
 
@@ -2597,8 +3044,57 @@
           }
         };
 
+        window.copyShareLink = function () {
+          if (!S.report || !window.XYVCUnifiedDataManager) {
+            window.alert("请先生成诊断报告，再复制分享链接。");
+            return;
+          }
+          var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+            TOOL_ID,
+            buildShareSnapshotPayload(),
+            {
+              title: "硬科技创业诊断报告",
+              baseUrl: window.location.href.split("#")[0],
+            },
+          );
+          var onCopied = function () {
+            window.alert("分享链接已复制。");
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(snapshot.url).then(onCopied);
+          } else {
+            var el = document.createElement("textarea");
+            el.value = snapshot.url;
+            el.style.position = "fixed";
+            el.style.opacity = "0";
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand("copy");
+            document.body.removeChild(el);
+            onCopied();
+          }
+        };
+
         // ── BOOT ──
         load();
+        if (window.XYVCUnifiedDataManager) {
+          var sharedSnapshot =
+            window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
+              window.location.href,
+            );
+          if (
+            sharedSnapshot &&
+            sharedSnapshot.toolId === TOOL_ID &&
+            sharedSnapshot.payload &&
+            sharedSnapshot.payload.state
+          ) {
+            S = Object.assign(S, sharedSnapshot.payload.state);
+            window.S = S;
+            if (sharedSnapshot.payload.report) {
+              S.report = sharedSnapshot.payload.report;
+            }
+          }
+        }
         refreshContextSyncState();
         // Restore step from URL hash if present and valid
         (function () {
@@ -2618,6 +3114,16 @@
           else if (S.step === 8 && S.report) showSavedReport();
         }
       })();
+
+      window.safePrint = function () {
+        var ua = navigator.userAgent;
+        var isInApp = /MicroMessenger|BytedanceWebview|Douyin|ToutiaoMicroApp/i.test(ua);
+        if (isInApp) {
+          alert("请在浏览器中打开本页面，再使用打印/保存功能。");
+          return;
+        }
+        window.print();
+      };
     </script>
   </body>
 </html>

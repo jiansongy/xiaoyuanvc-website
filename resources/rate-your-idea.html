@@ -861,6 +861,25 @@
           flex-direction: column;
         }
       }
+      /* ── Print ── */
+      .print-title { display: none; }
+      @media print {
+        .header,
+        .btn-row,
+        .result-actions,
+        .sub-card {
+          display: none !important;
+        }
+        body { margin: 0; padding: 16px; }
+        .print-title {
+          display: block;
+          font-size: 20px;
+          font-weight: 700;
+          text-align: center;
+          margin: 20px 0;
+        }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
     </style>
   </head>
   <body>
@@ -1095,6 +1114,7 @@
 
         <!-- Score badge -->
         <div id="scoreSection" style="display: none">
+          <h1 class="print-title">学生创业自检 · 结果报告 — 校园VC</h1>
           <div class="score-badge">
             <div class="score-circle score-pop" id="scoreCircle">
               <div class="score-number" id="scoreNum">0</div>
@@ -1177,6 +1197,14 @@
             </button>
             <button
               class="btn-outline"
+              onclick="window.copyShareLink()"
+              data-ai-action="share-link"
+              aria-label="复制分享链接"
+            >
+              复制分享链接
+            </button>
+            <button
+              class="btn-outline"
               onclick="window.safePrint()"
               data-ai-action="print-result"
               aria-label="打印或保存结果"
@@ -1185,7 +1213,7 @@
             </button>
           </div>
           <button
-            class="btn-outline"
+            class="btn-outline result-actions"
             onclick="window.resetAll()"
             aria-label="重新开始评估"
             style="
@@ -1546,10 +1574,65 @@
           updateScoreBtn();
         }
 
+        function mergeHistoryLists(primary, secondary) {
+          const merged = {};
+          const items = []
+            .concat(Array.isArray(primary) ? primary : [])
+            .concat(Array.isArray(secondary) ? secondary : []);
+          items.forEach(function (entry) {
+            if (!entry || !entry.versionId || merged[entry.versionId]) return;
+            merged[entry.versionId] = true;
+          });
+          return items
+            .filter(function (entry) {
+              return entry && entry.versionId && merged[entry.versionId];
+            })
+            .map(function (entry) {
+              delete merged[entry.versionId];
+              return entry;
+            })
+            .sort(function (a, b) {
+              return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            });
+        }
+
+        function syncUnifiedWorkspace() {
+          if (!window.XYVCUnifiedDataManager) return;
+          const draft = getDraft();
+          window.XYVCUnifiedDataManager.saveToolState(
+            TOOL_ID,
+            clone(draft),
+            {
+              projectContext: {
+                oneLiner: draft.product || "",
+                stage: draft.stage || "",
+              },
+            },
+          );
+
+          const existing = {};
+          const history = window.XYVCUnifiedDataManager.getToolHistory(TOOL_ID) || [];
+          history.forEach(function (entry) {
+            if (entry && entry.versionId) existing[entry.versionId] = true;
+          });
+
+          (S.toolHistory || []).forEach(function (entry) {
+            if (!entry || !entry.versionId || existing[entry.versionId]) return;
+            window.XYVCUnifiedDataManager.appendToolHistory(TOOL_ID, entry, 20);
+            existing[entry.versionId] = true;
+          });
+        }
+
         function persistState(silent) {
           try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+            syncUnifiedWorkspace();
             if (!silent) {
+              if (window.XYVCUnifiedDataManager) {
+                window.XYVCUnifiedDataManager.track(TOOL_ID, "autosave_success", {
+                  screen: S.screen,
+                });
+              }
               flashSavedState();
             }
           } catch (e) {
@@ -1566,8 +1649,25 @@
         function loadState() {
           try {
             const raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) return;
-            S = migrateLegacyState(JSON.parse(raw));
+            if (raw) {
+              S = migrateLegacyState(JSON.parse(raw));
+            }
+            if (window.XYVCUnifiedDataManager) {
+              S.toolHistory = mergeHistoryLists(
+                S.toolHistory,
+                window.XYVCUnifiedDataManager.getToolHistory(TOOL_ID) || [],
+              );
+            }
+            if (
+              window.XYVCUnifiedDataManager &&
+              S.toolState &&
+              S.toolState.updatedAt
+            ) {
+              window.XYVCUnifiedDataManager.track(TOOL_ID, "draft_restored", {
+                history_count: (S.toolHistory || []).length,
+              });
+            }
+            syncUnifiedWorkspace();
           } catch (e) {
             S = createInitialState();
           }
@@ -2202,9 +2302,57 @@
           }
         };
 
+        function buildShareSnapshotPayload() {
+          const entry = getSelectedHistoryEntry();
+          return {
+            draftData: clone(getDraft()),
+            result: clone(S.result || {}),
+            historyEntry: entry ? clone(entry) : null,
+          };
+        }
+
+        window.copyShareLink = function () {
+          if (!S.result || !window.XYVCUnifiedDataManager) {
+            showToast("当前结果暂不支持生成分享链接");
+            return;
+          }
+
+          const entry = getSelectedHistoryEntry();
+          const snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+            TOOL_ID,
+            buildShareSnapshotPayload(),
+            {
+              title: "学生创业自检结果",
+              baseUrl: window.location.href.split("#")[0],
+              versionId: entry ? entry.versionId : "",
+            },
+          );
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard
+              .writeText(snapshot.url)
+              .then(function () {
+                window.XYVCUnifiedDataManager.track(TOOL_ID, "share_snapshot_created", {
+                  portable: snapshot.portable,
+                });
+                showToast("分享链接已复制");
+              })
+              .catch(function () {
+                fallbackCopy(snapshot.url);
+              });
+          } else {
+            fallbackCopy(snapshot.url);
+          }
+        };
+
         window.openHistoryVersion = function (versionId) {
           const entry = findHistoryEntry(versionId);
           if (!entry || !entry.outputSnapshot) return;
+          if (window.XYVCUnifiedDataManager) {
+            window.XYVCUnifiedDataManager.track(TOOL_ID, "history_reopened", {
+              version_id: versionId,
+            });
+          }
           S.selectedHistoryVersionId = versionId;
           S.result = clone(entry.outputSnapshot);
           if (S.compareVersionId === versionId) {
@@ -2216,6 +2364,11 @@
         };
 
         window.toggleCompareVersion = function (versionId) {
+          if (window.XYVCUnifiedDataManager) {
+            window.XYVCUnifiedDataManager.track(TOOL_ID, "history_compare_toggled", {
+              version_id: versionId,
+            });
+          }
           if (S.compareVersionId === versionId) {
             S.compareVersionId = null;
           } else {
@@ -2256,6 +2409,34 @@
 
         function boot() {
           loadState();
+          if (window.XYVCUnifiedDataManager) {
+            const sharedSnapshot =
+              window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
+                window.location.href,
+              );
+            if (
+              sharedSnapshot &&
+              sharedSnapshot.toolId === TOOL_ID &&
+              sharedSnapshot.payload
+            ) {
+              const payload = sharedSnapshot.payload;
+              if (payload.draftData) {
+                S.toolState.draftData = Object.assign(
+                  {},
+                  S.toolState.draftData,
+                  payload.draftData,
+                );
+              }
+              if (payload.historyEntry) {
+                S.toolHistory = [payload.historyEntry];
+                S.selectedHistoryVersionId = payload.historyEntry.versionId;
+              }
+              if (payload.result) {
+                S.result = payload.result;
+                S.screen = 2;
+              }
+            }
+          }
           if (window.XYVCToolContext) {
             window.XYVCToolContext.write(TOOL_ID, {
               userProfile: S.userProfile,

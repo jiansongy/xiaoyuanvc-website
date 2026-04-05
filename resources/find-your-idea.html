@@ -756,18 +756,28 @@
       }
 
       /* ── Print ── */
+      .print-title { display: none; }
       @media print {
         .nav-bar,
         .progress-wrap,
         .header,
         .btn-ai,
-        .add-btn {
+        .add-btn,
+        .result-actions {
           display: none !important;
         }
         .main {
           padding: 0;
           max-width: 100%;
         }
+        .print-title {
+          display: block;
+          font-size: 20px;
+          font-weight: 700;
+          text-align: center;
+          margin: 20px 0;
+        }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       }
 
       @media (max-width: 480px) {
@@ -1197,6 +1207,7 @@
 
       <!-- ─── STEP 6 : Top 3 ─── -->
       <div class="screen" id="s6">
+        <h1 class="print-title">发现你的创业想法 · 结果报告 — 校园VC</h1>
         <div class="card">
           <div class="card-head">
             <div class="badge">第一阶段：构思</div>
@@ -1237,6 +1248,7 @@
               <div id="summaryBox"></div>
             </div>
             <div
+              class="result-actions"
               style="
                 display: flex;
                 gap: 10px;
@@ -1251,6 +1263,12 @@
               >
                 📋 复制分析
               </button>
+              <button class="btn btn-outline" onclick="window.saveVersion()">
+                💾 保存版本
+              </button>
+              <button class="btn btn-outline" onclick="window.copyShareLink()">
+                🔗 分享链接
+              </button>
               <button
                 class="btn btn-primary"
                 onclick="window.safePrint()"
@@ -1261,6 +1279,14 @@
               <button class="btn btn-outline" onclick="resetApp()">
                 🔄 重新开始
               </button>
+            </div>
+            <div class="summary-box" style="margin-top: 14px; text-align: left">
+              <div class="summary-title">下一步推荐</div>
+              <div id="nextToolBox"></div>
+            </div>
+            <div class="summary-box" style="margin-top: 14px; text-align: left">
+              <div class="summary-title">历史版本</div>
+              <div id="historyBox"></div>
             </div>
           </div>
         </div>
@@ -1381,6 +1407,7 @@
               note: "",
             },
           },
+          selectedHistoryVersionId: "",
         };
         let contextSyncState = null;
 
@@ -1402,6 +1429,78 @@
               },
             });
           }
+        }
+
+        function clone(obj) {
+          return JSON.parse(JSON.stringify(obj));
+        }
+
+        function getToolHistory() {
+          if (!window.XYVCUnifiedDataManager) return [];
+          return window.XYVCUnifiedDataManager.getToolHistory(TOOL_ID) || [];
+        }
+
+        function hasMeaningfulTop3() {
+          return ["gold", "silver", "bronze"].some(function (key) {
+            var item = S.medals[key];
+            return item && (String(item.p || "").trim() || String(item.q || "").trim());
+          });
+        }
+
+        function buildSerializableState() {
+          return {
+            step: 6,
+            ideas: clone(S.ideas),
+            skills: clone(S.skills),
+            niches: clone(S.niches),
+            scores: clone(S.scores),
+            ai4: S.ai4,
+            ai5: S.ai5,
+            ai6: S.ai6,
+            refs: clone(S.refs),
+            medals: clone(S.medals),
+          };
+        }
+
+        function applySerializableState(snapshot) {
+          if (!snapshot || typeof snapshot !== "object") return;
+          S.ideas = Array.isArray(snapshot.ideas) ? snapshot.ideas : S.ideas;
+          S.skills = Array.isArray(snapshot.skills) ? snapshot.skills : S.skills;
+          S.niches = Array.isArray(snapshot.niches) ? snapshot.niches : S.niches;
+          S.scores = Array.isArray(snapshot.scores) ? snapshot.scores : S.scores;
+          S.ai4 = snapshot.ai4 || "";
+          S.ai5 = snapshot.ai5 || "";
+          S.ai6 = snapshot.ai6 || "";
+          S.refs = snapshot.refs ? Object.assign({}, S.refs, snapshot.refs) : S.refs;
+          S.medals = snapshot.medals
+            ? Object.assign({}, S.medals, snapshot.medals)
+            : S.medals;
+          S.step = 6;
+          save();
+          showStep(6);
+          render(6);
+        }
+
+        function buildResultSnapshot() {
+          const top3 = ["gold", "silver", "bronze"].map(function (key, index) {
+            const item = S.medals[key] || {};
+            const fallback = [S.refs.top1, S.refs.top2, S.refs.top3][index] || "";
+            return {
+              rank: key,
+              user: item.p || "",
+              problem: item.q || "",
+              summary:
+                item.p && item.q
+                  ? item.p + " — " + item.q
+                  : item.p || fallback || "（待填写）",
+              firstStep: item.note || item.excited || "",
+            };
+          });
+          return {
+            top3: top3,
+            aiValidation: S.ai6 || "",
+            generatedAt: new Date().toISOString(),
+          };
         }
 
         function load() {
@@ -1463,7 +1562,7 @@
           const pw = document.getElementById("progressWrap");
           const nb = document.getElementById("navBar");
           pw.style.display = n > 0 ? "block" : "none";
-          nb.style.display = n > 0 ? "flex" : "none";
+          nb.style.display = n > 0 && n < 6 ? "flex" : "none";
           document.getElementById("settingsBtn").style.display =
             n > 0 ? "block" : "none";
 
@@ -2034,6 +2133,61 @@
               return `<span class="niche-chip">${icon} ${txt}</span>`;
             })
             .join("");
+          renderNextToolSuggestions();
+          renderHistoryList();
+        }
+
+        function renderNextToolSuggestions() {
+          const box = document.getElementById("nextToolBox");
+          if (!box) return;
+          box.innerHTML =
+            '<div style="display:grid;gap:10px">' +
+            '<a href="./rate-your-idea.html" style="display:block;padding:12px 14px;border:1px solid #d1fae5;border-radius:12px;background:#f0fdf4;color:#14532d;text-decoration:none"><strong>学生创业自检</strong><br><span style="font-size:12px;color:#166534">当你已经有了 1-2 个方向，下一步先判断哪个更靠谱。</span></a>' +
+            '<a href="./ai-ready-check.html" style="display:block;padding:12px 14px;border:1px solid #dbeafe;border-radius:12px;background:#eff6ff;color:#1d4ed8;text-decoration:none"><strong>AI 员工面试</strong><br><span style="font-size:12px;color:#1e40af">如果你准备开始执行，先找出最值得用 AI 提效的环节。</span></a>' +
+            '<a href="./hard-tech-check.html" style="display:block;padding:12px 14px;border:1px solid #ffedd5;border-radius:12px;background:#fff7ed;color:#c2410c;text-decoration:none"><strong>硬科技创业自检</strong><br><span style="font-size:12px;color:#9a3412">如果你的方向更偏实验室、技术转化或师生共创，走这条专业路径。</span></a>' +
+            "</div>";
+        }
+
+        function renderHistoryList() {
+          const box = document.getElementById("historyBox");
+          if (!box) return;
+          const history = getToolHistory();
+          if (!history.length) {
+            box.innerHTML =
+              '<div style="font-size:13px;color:var(--gray)">还没有保存的历史版本。你可以先点上方「保存版本」。</div>';
+            return;
+          }
+
+          box.innerHTML = history
+            .map(function (entry, index) {
+              const snapshot = entry.outputSnapshot || {};
+              const title =
+                snapshot.top3 &&
+                snapshot.top3[0] &&
+                snapshot.top3[0].summary
+                  ? snapshot.top3[0].summary
+                  : "未命名版本";
+              return (
+                '<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-top:' +
+                (index === 0 ? "none" : "1px solid #e5e7eb") +
+                '">' +
+                '<div><div style="font-size:13px;font-weight:700;color:var(--navy)">' +
+                esc(title) +
+                '</div><div style="font-size:12px;color:var(--gray)">' +
+                new Date(entry.createdAt).toLocaleString("zh-CN", {
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }) +
+                "</div></div>" +
+                '<button class="btn btn-outline" style="padding:7px 10px" onclick="window.openSavedVersion(\'' +
+                entry.versionId +
+                "')\">打开</button>" +
+                "</div>"
+              );
+            })
+            .join("");
         }
 
         // ══════════════════════════════════════════════
@@ -2424,6 +2578,65 @@ ${rows || "（暂无填写）"}
           }
         };
 
+        window.saveVersion = function () {
+          if (!hasMeaningfulTop3() || !window.XYVCUnifiedDataManager) {
+            window.alert("请先至少填出一个明确的定位，再保存版本。");
+            return;
+          }
+          var history = window.XYVCUnifiedDataManager.appendToolHistory(TOOL_ID, {
+            versionId: "ver_" + Date.now().toString(36),
+            inputSnapshot: buildSerializableState(),
+            outputSnapshot: buildResultSnapshot(),
+            createdAt: new Date().toISOString(),
+            isShared: false,
+          }, 20);
+          S.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
+          save();
+          renderHistoryList();
+          window.alert("当前版本已保存。");
+        };
+
+        window.openSavedVersion = function (versionId) {
+          var entry = getToolHistory().find(function (item) {
+            return item.versionId === versionId;
+          });
+          if (!entry || !entry.inputSnapshot) return;
+          S.selectedHistoryVersionId = versionId;
+          applySerializableState(entry.inputSnapshot);
+        };
+
+        window.copyShareLink = function () {
+          if (!hasMeaningfulTop3() || !window.XYVCUnifiedDataManager) {
+            window.alert("请先完成你的 Top 3，再生成分享链接。");
+            return;
+          }
+          var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+            TOOL_ID,
+            {
+              state: buildSerializableState(),
+              result: buildResultSnapshot(),
+            },
+            {
+              title: "发现你的创业方向",
+              baseUrl: window.location.href.split("#")[0],
+            },
+          );
+          var onCopied = function () {
+            window.alert("分享链接已复制。");
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(snapshot.url).then(onCopied);
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = snapshot.url;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            onCopied();
+          }
+        };
+
         window.goHome = function () {
           save();
           history.replaceState(
@@ -2511,6 +2724,20 @@ ${rows || "（暂无填写）"}
         // ══════════════════════════════════════════════
         try {
           load();
+          if (window.XYVCUnifiedDataManager) {
+            var sharedSnapshot =
+              window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
+                window.location.href,
+              );
+            if (
+              sharedSnapshot &&
+              sharedSnapshot.toolId === TOOL_ID &&
+              sharedSnapshot.payload &&
+              sharedSnapshot.payload.state
+            ) {
+              applySerializableState(sharedSnapshot.payload.state);
+            }
+          }
           refreshContextSyncState();
           // Restore step from URL hash if present (overrides localStorage step)
           const hashStep = parseInt(

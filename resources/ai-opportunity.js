@@ -4,8 +4,10 @@
   var DATA = window.AI_OPPORTUNITY_DATA;
   if (!DATA) return;
 
+  var TOOL_ID = "ai-opportunity";
   var STEP_LABELS = ["选择方向", "选择行业", "分析痛点", "AI 解法", "验证计划"];
   var LS_KEY = "ai-opp-state";
+  var contextSyncState = null;
 
   /* ── State ── */
   var state = {
@@ -15,6 +17,8 @@
     industryId: null,
     painPointId: null,
     bookmarks: [],
+    contextDismissed: false,
+    selectedHistoryVersionId: "",
   };
 
   /* ── Helpers ── */
@@ -41,6 +45,158 @@
     return ind.painPoints.find(function (p) {
       return p.id === painId;
     });
+  }
+
+  function clone(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function getToolHistory() {
+    if (!window.XYVCUnifiedDataManager) return [];
+    return window.XYVCUnifiedDataManager.getToolHistory(TOOL_ID) || [];
+  }
+
+  function trackEvent(eventName, payload) {
+    if (window.XYVCUnifiedDataManager) {
+      window.XYVCUnifiedDataManager.track(TOOL_ID, eventName, payload || {});
+    } else if (typeof gtag === "function") {
+      gtag("event", eventName, payload || {});
+    }
+  }
+
+  function inferCategoryFromContext(text) {
+    var source = String(text || "").toLowerCase();
+    if (!source) return "";
+    if (
+      /内容|创作|自媒体|小红书|直播|mcn|剪辑|博主/.test(source)
+    ) {
+      return "content";
+    }
+    if (/电商|跨境|卖货|店铺|选品|客服|贸易/.test(source)) {
+      return "ecommerce";
+    }
+    if (/校园|学生|招聘|留学|求职|课程|学校/.test(source)) {
+      return "campus";
+    }
+    if (/本地|门店|商家|家政|短租|培训|餐饮/.test(source)) {
+      return "local";
+    }
+    return "";
+  }
+
+  function buildCurrentOpportunitySummary() {
+    var category = getCategory(state.categoryId);
+    var industry = getIndustry(state.industryId);
+    var pain = getPainPoint(state.industryId, state.painPointId);
+    var summary = {
+      category: category ? category.name : "",
+      industry: industry ? industry.name : "",
+      painPoint: pain ? pain.title : "",
+      oneLiner: "",
+    };
+
+    if (industry && pain) {
+      summary.oneLiner =
+        "在" + industry.name + "里，优先解决「" + pain.title + "」这个痛点。";
+    } else if (industry) {
+      summary.oneLiner = "正在探索「" + industry.name + "」相关的 AI 创业机会。";
+    }
+
+    return summary;
+  }
+
+  function syncSharedContext() {
+    if (!window.XYVCUnifiedDataManager) return;
+    var summary = buildCurrentOpportunitySummary();
+    if (!summary.oneLiner) return;
+
+    window.XYVCUnifiedDataManager.writeContext(TOOL_ID, {
+      projectContext: {
+        track: summary.category,
+        stage: "机会探索",
+        oneLiner: summary.oneLiner,
+      },
+    });
+  }
+
+  function detectContextSyncState() {
+    if (!window.XYVCToolContext) {
+      contextSyncState = null;
+      return;
+    }
+
+    var context = window.XYVCToolContext.read();
+    if (
+      !window.XYVCToolContext.hasProjectContext(context) ||
+      context.sourceToolId === TOOL_ID ||
+      state.contextDismissed
+    ) {
+      contextSyncState = null;
+      return;
+    }
+
+    var sourceText =
+      (context.projectContext && context.projectContext.oneLiner) ||
+      (context.projectContext && context.projectContext.track) ||
+      "";
+    var recommendedCategory = inferCategoryFromContext(
+      [context.projectContext.track, context.projectContext.oneLiner].join(" "),
+    );
+
+    contextSyncState = {
+      sourceToolId: context.sourceToolId,
+      sourceLabel: window.XYVCToolContext.getLabel(context.sourceToolId),
+      oneLiner: sourceText,
+      stage:
+        context.projectContext && context.projectContext.stage
+          ? context.projectContext.stage
+          : "",
+      track:
+        context.projectContext && context.projectContext.track
+          ? context.projectContext.track
+          : "",
+      recommendedCategory: recommendedCategory,
+    };
+  }
+
+  function renderContextSyncCard() {
+    var card = document.getElementById("contextSyncCard");
+    if (!card) return;
+
+    if (!contextSyncState) {
+      card.style.display = "none";
+      card.innerHTML = "";
+      return;
+    }
+
+    var meta = [];
+    if (contextSyncState.track) meta.push("已有赛道：" + contextSyncState.track);
+    if (contextSyncState.stage) meta.push("阶段：" + contextSyncState.stage);
+
+    var actionText = contextSyncState.recommendedCategory
+      ? "按这个背景推荐方向"
+      : "带着这个背景继续探索";
+
+    card.style.display = "";
+    card.innerHTML =
+      '<div class="context-card">' +
+      '<div class="context-card__title">已从「' +
+      esc(contextSyncState.sourceLabel) +
+      "」带入项目背景</div>" +
+      '<div class="context-card__desc">这样你在看机会时，不会脱离自己当前正在做的项目。</div>' +
+      (meta.length
+        ? '<div class="context-card__meta">' + esc(meta.join(" · ")) + "</div>"
+        : "") +
+      '<div class="context-card__preview">' +
+      esc(contextSyncState.oneLiner) +
+      "</div>" +
+      '<div class="context-card__actions">' +
+      '<button class="context-card__btn context-card__btn--primary" data-action="apply-context">' +
+      esc(actionText) +
+      "</button>" +
+      '<button class="context-card__btn context-card__btn--ghost" data-action="dismiss-context">先不带入</button>' +
+      "</div>" +
+      "</div>";
   }
 
   /* ── State Management ── */
@@ -81,7 +237,14 @@
       localStorage.setItem(
         LS_KEY,
         JSON.stringify({
+          mode: state.mode,
+          step: state.step,
+          categoryId: state.categoryId,
+          industryId: state.industryId,
+          painPointId: state.painPointId,
           bookmarks: state.bookmarks,
+          contextDismissed: state.contextDismissed,
+          selectedHistoryVersionId: state.selectedHistoryVersionId,
         }),
       );
     } catch (e) {
@@ -92,18 +255,208 @@
   function loadLocal() {
     try {
       var d = JSON.parse(localStorage.getItem(LS_KEY));
-      if (d && d.bookmarks) state.bookmarks = d.bookmarks;
+      if (!d || typeof d !== "object") return;
+      if (d.mode) state.mode = d.mode;
+      if (d.step) state.step = parseInt(d.step, 10) || 1;
+      if (d.categoryId) state.categoryId = d.categoryId;
+      if (d.industryId) state.industryId = d.industryId;
+      if (d.painPointId) state.painPointId = d.painPointId;
+      if (d.bookmarks) state.bookmarks = d.bookmarks;
+      state.contextDismissed = Boolean(d.contextDismissed);
+      state.selectedHistoryVersionId = d.selectedHistoryVersionId || "";
     } catch (e) {
       /* corrupt */
     }
   }
 
+  function buildSerializableState() {
+    return {
+      mode: state.mode,
+      step: 5,
+      categoryId: state.categoryId,
+      industryId: state.industryId,
+      painPointId: state.painPointId,
+      bookmarks: clone(state.bookmarks || []),
+    };
+  }
+
+  function applySerializableState(snapshot) {
+    if (!snapshot || typeof snapshot !== "object") return;
+    state.mode = snapshot.mode || state.mode;
+    state.categoryId = snapshot.categoryId || null;
+    state.industryId = snapshot.industryId || null;
+    state.painPointId = snapshot.painPointId || null;
+    state.bookmarks = Array.isArray(snapshot.bookmarks)
+      ? snapshot.bookmarks
+      : state.bookmarks;
+    state.step = 5;
+    syncHash();
+    saveLocal();
+    render();
+  }
+
+  function buildOpportunityOutputSnapshot() {
+    var summary = buildCurrentOpportunitySummary();
+    var industry = getIndustry(state.industryId);
+    var pain = getPainPoint(state.industryId, state.painPointId);
+    return {
+      summary: summary,
+      validation: industry ? clone(industry.validation || {}) : {},
+      tools:
+        pain && Array.isArray(pain.solutions)
+          ? pain.solutions.map(function (solution) {
+              return {
+                title: solution.title,
+                stacks: clone(solution.stacks || []),
+              };
+            })
+          : [],
+      generatedAt: new Date().toISOString(),
+    };
+  }
+
+  function ensureValidationHistorySaved() {
+    if (!window.XYVCUnifiedDataManager) return;
+    if (state.selectedHistoryVersionId) return;
+    if (!state.industryId || !state.painPointId) return;
+    var history = window.XYVCUnifiedDataManager.appendToolHistory(
+      TOOL_ID,
+      {
+        versionId: "ver_" + Date.now().toString(36),
+        inputSnapshot: buildSerializableState(),
+        outputSnapshot: buildOpportunityOutputSnapshot(),
+        createdAt: new Date().toISOString(),
+        isShared: false,
+      },
+      20,
+    );
+    state.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
+    saveLocal();
+    trackEvent("history_saved", {
+      history_count: history.length,
+      industry_id: state.industryId || "",
+    });
+  }
+
+  function buildNextToolSectionHtml() {
+    var cards = [
+      {
+        href: "./ai-ready-check.html",
+        title: "去 AI 员工面试，把执行动作落到真实工具",
+        desc: "如果这个机会你已经想试，下一步应该拆出最耗时的工作环节，看看先让哪些 AI 员工上岗。",
+        bg: "#eff6ff",
+        border: "#bfdbfe",
+        color: "#1d4ed8",
+      },
+    ];
+
+    if (state.mode === "student") {
+      cards.push({
+        href: "./rate-your-idea.html",
+        title: "去学生创业自检，判断这个方向是否站得住",
+        desc: "你已经看到一个明确痛点，下一步要验证它是不是值得投入，而不是只停在“感觉不错”。",
+        bg: "#f0fdf4",
+        border: "#bbf7d0",
+        color: "#166534",
+      });
+    } else {
+      cards.push({
+        href: "./find-your-idea.html",
+        title: "去发现你的创业想法，把更多方向收敛成切口",
+        desc: "如果你在课堂或项目里想继续扩展方向，可以把今天看到的痛点带过去，再做一轮聚焦。",
+        bg: "#f5f3ff",
+        border: "#ddd6fe",
+        color: "#6d28d9",
+      });
+    }
+
+    return (
+      '<div class="validation-card__section">' +
+      '<div class="validation-card__label">下一步推荐</div>' +
+      cards
+        .map(function (card) {
+          return (
+            '<a href="' +
+            card.href +
+            '" style="display:block;text-decoration:none;background:' +
+            card.bg +
+            ";border:1px solid " +
+            card.border +
+            ";border-radius:14px;padding:14px 16px;margin-top:10px;color:" +
+            card.color +
+            '">' +
+            '<strong style="display:block;font-size:14px;margin-bottom:6px">' +
+            esc(card.title) +
+            "</strong>" +
+            '<span style="font-size:13px;line-height:1.7;color:' +
+            card.color +
+            '">' +
+            esc(card.desc) +
+            "</span></a>"
+          );
+        })
+        .join("") +
+      "</div>"
+    );
+  }
+
+  function buildHistorySectionHtml() {
+    var history = getToolHistory().slice(0, 5);
+    if (!history.length) {
+      return (
+        '<div class="validation-card__section">' +
+        '<div class="validation-card__label">历史版本</div>' +
+        '<div style="font-size:13px;color:#64748b">当前还没有历史版本。进入验证计划后会自动保存。</div>' +
+        "</div>"
+      );
+    }
+
+    return (
+      '<div class="validation-card__section">' +
+      '<div class="validation-card__label">历史版本</div>' +
+      history
+        .map(function (entry, index) {
+          var summary = entry.outputSnapshot && entry.outputSnapshot.summary;
+          var title =
+            (summary && summary.oneLiner) || "AI 创业机会探索结果";
+          var isActive = entry.versionId === state.selectedHistoryVersionId;
+          return (
+            '<div style="border:1px solid ' +
+            (isActive ? "#bfdbfe" : "#e2e8f0") +
+            ";border-radius:12px;padding:12px 14px;margin-top:10px;background:" +
+            (isActive ? "#eff6ff" : "#ffffff") +
+            '">' +
+            '<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">' +
+            '<div>' +
+            '<div style="font-size:13px;font-weight:700;color:#0f172a">版本 ' +
+            (history.length - index) +
+            "</div>" +
+            '<div style="font-size:12px;color:#64748b;margin-top:4px">' +
+            esc(new Date(entry.createdAt).toLocaleString("zh-CN")) +
+            "</div>" +
+            "</div>" +
+            '<button class="btn btn-outline" data-action="open-history" data-id="' +
+            esc(entry.versionId) +
+            '" style="margin:0;padding:6px 10px">打开</button>' +
+            "</div>" +
+            '<div style="font-size:13px;line-height:1.7;color:#334155;margin-top:10px">' +
+            esc(title) +
+            "</div></div>"
+          );
+        })
+        .join("") +
+      "</div>"
+    );
+  }
+
   /* ── Render Orchestrator ── */
   function render() {
+    detectContextSyncState();
     renderStepper();
     renderModeToggle();
     renderFooter();
     renderBookmarks();
+    renderContextSyncCard();
 
     for (var i = 1; i <= 5; i++) {
       var el = document.getElementById("step" + i);
@@ -119,15 +472,13 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     // GA4 event
-    if (typeof gtag === "function") {
-      gtag("event", "tool_step_view", {
-        tool_name: "ai_opportunity",
-        step: state.step,
-        mode: state.mode,
-        category: state.categoryId || "",
-        industry: state.industryId || "",
-      });
-    }
+    trackEvent("tool_step_view", {
+      tool_name: "ai_opportunity",
+      step: state.step,
+      mode: state.mode,
+      category: state.categoryId || "",
+      industry: state.industryId || "",
+    });
   }
 
   /* ── Stepper ── */
@@ -412,13 +763,38 @@
       .join("");
   }
 
+  /* ── Tool Stack ── */
+  function renderToolStack(toolStack) {
+    if (!toolStack || !toolStack.length) return '';
+    var cards = toolStack.map(function(tool) {
+      return (
+        '<div class="tool-stack-card">' +
+          '<div class="tool-stack-card__header">' +
+            '<span class="tool-stack-card__name">' + esc(tool.name) + '</span>' +
+            '<span class="tool-stack-card__price">' + esc(tool.price) + '</span>' +
+          '</div>' +
+          '<div class="tool-stack-card__platform">' + esc(tool.platform) + '</div>' +
+          '<div class="tool-stack-card__use">' + esc(tool.useCase) + '</div>' +
+        '</div>'
+      );
+    }).join('');
+    return (
+      '<div class="validation-card__section tool-stack-section">' +
+        '<div class="validation-card__label">推荐工具栈</div>' +
+        '<div class="tool-stack-grid">' + cards + '</div>' +
+      '</div>'
+    );
+  }
+
   /* ── Step 5: Validation ── */
   function renderValidation() {
     var container = document.getElementById("validationContent");
     var ind = getIndustry(state.industryId);
     if (!container || !ind || !ind.validation) return;
+    ensureValidationHistorySaved();
 
     var v = ind.validation;
+    var pp = getPainPoint(state.industryId, state.painPointId);
     var timelineHtml = "";
     if (v.day1)
       timelineHtml +=
@@ -460,7 +836,19 @@
       "</div>" +
       "</div>" +
       "</div>" +
+      renderToolStack(pp && pp.toolStack ? pp.toolStack : []) +
+      '<div class="validation-card__section">' +
+      '<div class="validation-card__label">保存与分享</div>' +
+      '<div style="display:flex;gap:10px;flex-wrap:wrap">' +
+      '<button class="btn btn-prev" data-action="save-history" style="display:inline-flex">保存版本</button>' +
+      '<button class="btn btn-share" data-action="share" style="display:inline-flex;width:auto;height:auto;padding:10px 14px;border-radius:12px">复制分享链接</button>' +
+      "</div>" +
+      "</div>" +
+      buildNextToolSectionHtml() +
+      buildHistorySectionHtml() +
       "</div>";
+
+    syncSharedContext();
   }
 
   /* ── Bookmarks ── */
@@ -502,16 +890,53 @@
     var id = trigger.getAttribute("data-id");
 
     switch (action) {
+      case "apply-context":
+        if (contextSyncState && contextSyncState.recommendedCategory) {
+          setState({
+            categoryId: contextSyncState.recommendedCategory,
+            industryId: null,
+            painPointId: null,
+            step: 2,
+            selectedHistoryVersionId: "",
+          });
+        } else {
+          setState({ step: 1, selectedHistoryVersionId: "" });
+        }
+        trackEvent("context_applied", {
+          source_tool: contextSyncState ? contextSyncState.sourceToolId : "",
+        });
+        break;
+
+      case "dismiss-context":
+        state.contextDismissed = true;
+        setState({});
+        trackEvent("context_dismissed", {
+          source_tool: contextSyncState ? contextSyncState.sourceToolId : "",
+        });
+        break;
+
       case "select-category":
-        setState({ categoryId: id, industryId: null, painPointId: null });
+        setState({
+          categoryId: id,
+          industryId: null,
+          painPointId: null,
+          selectedHistoryVersionId: "",
+        });
+        trackEvent("opportunity_category_selected", { category_id: id });
         break;
 
       case "select-industry":
-        setState({ industryId: id, painPointId: null });
+        setState({
+          industryId: id,
+          painPointId: null,
+          selectedHistoryVersionId: "",
+        });
+        trackEvent("opportunity_industry_selected", { industry_id: id });
         break;
 
       case "select-pain":
-        setState({ painPointId: id });
+        setState({ painPointId: id, selectedHistoryVersionId: "" });
+        trackEvent("opportunity_pain_selected", { pain_id: id });
         break;
 
       case "set-mode":
@@ -555,6 +980,9 @@
           state.bookmarks.splice(idx, 1);
         }
         setState({});
+        trackEvent("opportunity_bookmark_toggled", {
+          industry_id: state.industryId,
+        });
         break;
 
       case "remove-bookmark":
@@ -572,18 +1000,74 @@
             industryId: id,
             painPointId: null,
             step: 3,
+            selectedHistoryVersionId: "",
+          });
+        }
+        break;
+
+      case "save-history":
+        if (!window.XYVCUnifiedDataManager) {
+          alert("当前浏览器暂不支持历史保存。");
+          break;
+        }
+        state.selectedHistoryVersionId = "";
+        ensureValidationHistorySaved();
+        render();
+        alert("当前版本已保存。");
+        break;
+
+      case "open-history":
+        var entry = getToolHistory().find(function (item) {
+          return item.versionId === id;
+        });
+        if (entry && entry.inputSnapshot) {
+          state.selectedHistoryVersionId = id;
+          applySerializableState(entry.inputSnapshot);
+          trackEvent("history_reopened", {
+            version_id: id,
+            industry_id: state.industryId || "",
           });
         }
         break;
 
       case "share":
         var url = location.href;
+        if (window.XYVCUnifiedDataManager && state.step === 5) {
+          var summary = buildCurrentOpportunitySummary();
+          var industry = getIndustry(state.industryId);
+          var pain = getPainPoint(state.industryId, state.painPointId);
+          var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+            TOOL_ID,
+            {
+              mode: state.mode,
+              categoryId: state.categoryId,
+              industryId: state.industryId,
+              painPointId: state.painPointId,
+              summary: summary,
+              validation: industry ? industry.validation : null,
+              tools:
+                pain && Array.isArray(pain.solutions)
+                  ? pain.solutions.map(function (solution) {
+                      return {
+                        title: solution.title,
+                        stacks: solution.stacks || [],
+                      };
+                    })
+                  : [],
+            },
+            {
+              title: summary.oneLiner || "AI 创业机会探索快照",
+              baseUrl: location.href.split("#")[0],
+            },
+          );
+          url = snapshot.url;
+        }
         if (navigator.share) {
           navigator
             .share({
               title:
                 "AI 创业机会探索器 — " +
-                  (getIndustry(state.industryId) || {}).name || "",
+                (((getIndustry(state.industryId) || {}).name) || ""),
               url: url,
             })
             .catch(function () {});
@@ -592,6 +1076,10 @@
             alert("链接已复制");
           });
         }
+        trackEvent("share_snapshot_created", {
+          step: state.step,
+          industry_id: state.industryId || "",
+        });
         break;
     }
   });
@@ -610,6 +1098,17 @@
   /* ── Init ── */
   loadLocal();
   parseHash();
+  if (window.XYVCUnifiedDataManager) {
+    var sharedSnapshot =
+      window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(location.href);
+    if (sharedSnapshot && sharedSnapshot.toolId === TOOL_ID && sharedSnapshot.payload) {
+      state.mode = sharedSnapshot.payload.mode || state.mode;
+      state.categoryId = sharedSnapshot.payload.categoryId || state.categoryId;
+      state.industryId = sharedSnapshot.payload.industryId || state.industryId;
+      state.painPointId = sharedSnapshot.payload.painPointId || state.painPointId;
+      state.step = state.industryId ? 5 : state.step;
+    }
+  }
   render();
 
   window.addEventListener("hashchange", function () {

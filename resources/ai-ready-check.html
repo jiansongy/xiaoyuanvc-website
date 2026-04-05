@@ -904,6 +904,70 @@
         background: var(--blue-light);
         border-radius: var(--radius-sm);
       }
+      .tool-stack {
+        margin-top: 14px;
+        display: grid;
+        gap: 10px;
+      }
+      .tool-stack__title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--gray);
+      }
+      .tool-card {
+        border: 1px solid #dbeafe;
+        background: #f8fbff;
+        border-radius: 12px;
+        padding: 12px 14px;
+      }
+      .tool-card__top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .tool-card__name {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .tool-card__type {
+        font-size: 12px;
+        color: var(--gray);
+        margin-top: 2px;
+      }
+      .tool-card__badge {
+        flex-shrink: 0;
+        border-radius: 999px;
+        padding: 4px 8px;
+        font-size: 11px;
+        font-weight: 700;
+        background: #e0f2fe;
+        color: #0369a1;
+      }
+      .tool-card__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+      .tool-card__meta span {
+        font-size: 11px;
+        border-radius: 999px;
+        padding: 4px 8px;
+        background: #eef2ff;
+        color: #3730a3;
+      }
+      .tool-card__why,
+      .tool-card__best {
+        font-size: 12px;
+        line-height: 1.65;
+        color: #334155;
+      }
+      .tool-card__best {
+        margin-top: 6px;
+      }
 
       .report-section {
         background: var(--white);
@@ -1327,6 +1391,7 @@
     </div>
 
     <script src="./tool-context.js"></script>
+    <script src="./ai-ready-tool-library.js"></script>
     <script>
       (function () {
         "use strict";
@@ -1338,6 +1403,9 @@
         // ── CONSTANTS ──
         var TOOL_ID = "ai-ready-check";
         var SK = "xyvc-ai-ready-v1";
+        var TOOL_LIBRARY = Array.isArray(window.AI_READY_TOOL_LIBRARY)
+          ? window.AI_READY_TOOL_LIBRARY
+          : [];
         var TOTAL_STEPS = 5;
         var STEP_NAMES = [
           "身份校准",
@@ -1468,6 +1536,7 @@
           report: null,
           reportRaw: "",
           checkboxes: [],
+          selectedHistoryVersionId: "",
         };
         var contextSyncState = null;
 
@@ -1530,6 +1599,101 @@
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;");
+        }
+
+        function clone(value) {
+          return JSON.parse(JSON.stringify(value));
+        }
+
+        function getToolHistory() {
+          if (!window.XYVCUnifiedDataManager) return [];
+          return window.XYVCUnifiedDataManager.getToolHistory(TOOL_ID) || [];
+        }
+
+        function getToolMatchScore(tool, text) {
+          if (!tool || !tool.keywords) return 0;
+          return tool.keywords.reduce(function (score, keyword) {
+            return score + (text.indexOf(keyword) >= 0 ? 1 : 0);
+          }, 0);
+        }
+
+        function getRecommendedToolsForEmployee(item) {
+          var text = [
+            item && item.name,
+            item && item.scene,
+            item && item.why,
+            item && item.method,
+            item && item.before,
+            item && item.after,
+          ]
+            .join(" ")
+            .toLowerCase();
+
+          return TOOL_LIBRARY.map(function (tool) {
+            return {
+              tool: tool,
+              score: getToolMatchScore(tool, text),
+            };
+          })
+            .filter(function (entry) {
+              return entry.score > 0;
+            })
+            .sort(function (a, b) {
+              return b.score - a.score;
+            })
+            .slice(0, 3)
+            .map(function (entry) {
+              return entry.tool;
+            });
+        }
+
+        function renderToolCards(item) {
+          var tools = getRecommendedToolsForEmployee(item);
+          if (!tools.length) return "";
+
+          return (
+            '<div class="tool-stack">' +
+            '<div class="tool-stack__title">建议先从这些真实工具开始</div>' +
+            tools
+              .map(function (tool) {
+                return (
+                  '<div class="tool-card">' +
+                  '<div class="tool-card__top">' +
+                  '<div>' +
+                  '<div class="tool-card__name">' +
+                  esc(tool.name) +
+                  "</div>" +
+                  '<div class="tool-card__type">' +
+                  esc(tool.category) +
+                  "</div>" +
+                  "</div>" +
+                  '<span class="tool-card__badge">' +
+                  esc(tool.difficulty) +
+                  "</span>" +
+                  "</div>" +
+                  '<div class="tool-card__meta">' +
+                  "<span>" +
+                  esc(tool.price) +
+                  "</span>" +
+                  "<span>" +
+                  esc(tool.availability) +
+                  "</span>" +
+                  "<span>" +
+                  esc(tool.platforms) +
+                  "</span>" +
+                  "</div>" +
+                  '<div class="tool-card__why">' +
+                  esc(tool.why) +
+                  "</div>" +
+                  '<div class="tool-card__best"><strong>更适合：</strong>' +
+                  esc(tool.bestFor) +
+                  "</div>" +
+                  "</div>"
+                );
+              })
+              .join("") +
+            "</div>"
+          );
         }
 
         function $(id) {
@@ -1668,6 +1832,204 @@
         function getTimeLabelByValue(v) {
           var idx = TIME_VALUES.indexOf(v);
           return idx >= 0 ? TIME_LABELS[idx] : "";
+        }
+
+        function buildSerializableState() {
+          return {
+            role: S.role,
+            industry: S.industry,
+            teamSize: S.teamSize,
+            tasks: clone(S.tasks || []),
+            projectContextNote: S.projectContextNote || "",
+            top3: clone(S.top3 || []),
+            aiGoal: S.aiGoal || "",
+            report: S.report ? clone(S.report) : null,
+            reportRaw: S.reportRaw || "",
+            checkboxes: clone(S.checkboxes || []),
+          };
+        }
+
+        function applySerializableState(snapshot) {
+          if (!snapshot || typeof snapshot !== "object") return;
+          S.role = snapshot.role || "";
+          S.industry = snapshot.industry || "";
+          S.teamSize = snapshot.teamSize || "";
+          S.tasks = Array.isArray(snapshot.tasks) ? snapshot.tasks : [];
+          S.projectContextNote = snapshot.projectContextNote || "";
+          S.top3 = Array.isArray(snapshot.top3) ? snapshot.top3 : [];
+          S.aiGoal = snapshot.aiGoal || "";
+          S.report = snapshot.report || null;
+          S.reportRaw = snapshot.reportRaw || "";
+          S.checkboxes = Array.isArray(snapshot.checkboxes)
+            ? snapshot.checkboxes
+            : [];
+          S.step = S.report || S.reportRaw ? 5 : 3;
+          save();
+          showStep(S.step);
+          if (S.step === 5) renderS5();
+          else render(S.step);
+        }
+
+        function buildReportOutputSnapshot() {
+          var report = S.report || {};
+          return {
+            summary: report.summary || "",
+            top3: clone(report.top3 || []),
+            actionPlan: clone(report.action_plan || {}),
+            boundaries: clone(report.boundaries || []),
+            generatedAt: new Date().toISOString(),
+          };
+        }
+
+        function ensureReportHistorySaved() {
+          if (!window.XYVCUnifiedDataManager) return;
+          if (S.selectedHistoryVersionId) return;
+          if (!S.report && !S.reportRaw) return;
+          var history = window.XYVCUnifiedDataManager.appendToolHistory(
+            TOOL_ID,
+            {
+              versionId: "ver_" + Date.now().toString(36),
+              inputSnapshot: buildSerializableState(),
+              outputSnapshot: buildReportOutputSnapshot(),
+              createdAt: new Date().toISOString(),
+              isShared: false,
+            },
+            20,
+          );
+          S.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
+          save();
+          if (window.XYVCUnifiedDataManager.track) {
+            window.XYVCUnifiedDataManager.track(TOOL_ID, "history_saved", {
+              history_count: history.length,
+            });
+          }
+        }
+
+        function isHardTechContext() {
+          return /技术|专利|实验室|导师|高校|芯片|材料|硬件|科研/.test(
+            String(S.projectContextNote || ""),
+          );
+        }
+
+        function buildNextToolSection() {
+          var cards = [
+            {
+              href: "./ai-opportunity.html",
+              title: "去 AI 创业机会探索器，扩一轮相邻机会",
+              desc: "如果你已经知道自己哪些环节最值得 AI 提效，下一步可以看同赛道还有哪些更值得切入的痛点。",
+              bg: "#eff6ff",
+              border: "#bfdbfe",
+              color: "#1d4ed8",
+            },
+          ];
+
+          if (isHardTechContext()) {
+            cards.push({
+              href: "./hard-tech-check.html",
+              title: "去硬科技创业自检，看转化断点",
+              desc: "如果你现在做的是科研或技术项目，下一步更该判断成果转化、团队和验证路径是否真的站得住。",
+              bg: "#fff7ed",
+              border: "#fed7aa",
+              color: "#c2410c",
+            });
+          } else if (String(S.projectContextNote || "").trim()) {
+            cards.push({
+              href: "./rate-your-idea.html",
+              title: "去学生创业自检，判断这个方向靠不靠谱",
+              desc: "当你已经有具体项目背景时，下一步要看验证力、执行力和商业判断，而不是只看提效。",
+              bg: "#f0fdf4",
+              border: "#bbf7d0",
+              color: "#166534",
+            });
+          } else {
+            cards.push({
+              href: "./find-your-idea.html",
+              title: "先去发现你的创业想法，把方向说清楚",
+              desc: "如果你只是知道自己很忙，但项目方向还模糊，先把用户、问题和切口说清楚，再回来做 AI 提效更稳。",
+              bg: "#f5f3ff",
+              border: "#ddd6fe",
+              color: "#6d28d9",
+            });
+          }
+
+          return (
+            '<div class="report-section">' +
+            '<h3 class="section-title">&#x1F9ED; 做完这份诊断后，下一步去哪</h3>' +
+            cards
+              .map(function (card) {
+                return (
+                  '<a href="' +
+                  card.href +
+                  '" style="display:block;text-decoration:none;background:' +
+                  card.bg +
+                  ";border:1px solid " +
+                  card.border +
+                  ";border-radius:14px;padding:14px 16px;margin-top:10px;color:" +
+                  card.color +
+                  '">' +
+                  '<strong style="display:block;font-size:14px;margin-bottom:6px">' +
+                  esc(card.title) +
+                  "</strong>" +
+                  '<span style="font-size:13px;line-height:1.7;color:' +
+                  card.color +
+                  '">' +
+                  esc(card.desc) +
+                  "</span></a>"
+                );
+              })
+              .join("") +
+            "</div>"
+          );
+        }
+
+        function buildHistorySection() {
+          var history = getToolHistory().slice(0, 5);
+          if (!history.length) {
+            return (
+              '<div class="report-section">' +
+              '<h3 class="section-title">&#x1F4DA; 历史版本</h3>' +
+              '<div style="font-size:13px;color:var(--gray)">当前还没有可回看的历史版本。生成报告后会自动保存。</div>' +
+              "</div>"
+            );
+          }
+
+          return (
+            '<div class="report-section">' +
+            '<h3 class="section-title">&#x1F4DA; 历史版本</h3>' +
+            history
+              .map(function (entry, index) {
+                var snapshot = entry.outputSnapshot || {};
+                var title = snapshot.summary || "AI 员工诊断报告";
+                var isActive =
+                  entry.versionId === S.selectedHistoryVersionId;
+                return (
+                  '<div style="border:1px solid ' +
+                  (isActive ? "#bfdbfe" : "#e5e7eb") +
+                  ";border-radius:12px;padding:12px 14px;margin-top:10px;background:" +
+                  (isActive ? "#eff6ff" : "#ffffff") +
+                  '">' +
+                  '<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">' +
+                  '<div>' +
+                  '<div style="font-size:13px;font-weight:700;color:#111827">版本 ' +
+                  (history.length - index) +
+                  "</div>" +
+                  '<div style="font-size:12px;color:#6b7280;margin-top:4px">' +
+                  esc(new Date(entry.createdAt).toLocaleString("zh-CN")) +
+                  "</div>" +
+                  "</div>" +
+                  '<button class="btn btn-outline" style="margin:0;padding:6px 10px" onclick="window.openReadyHistoryVersion(\'' +
+                  entry.versionId +
+                  "')\">打开</button>" +
+                  "</div>" +
+                  '<div style="font-size:13px;line-height:1.7;color:#374151;margin-top:10px">' +
+                  esc(title) +
+                  "</div>" +
+                  "</div>"
+                );
+              })
+              .join("") +
+            "</div>"
+          );
         }
 
         // ── VALIDATION ──
@@ -2572,6 +2934,7 @@
                     var report = JSON.parse(cleaned);
                     S.report = report;
                     S.reportRaw = text;
+                    S.selectedHistoryVersionId = "";
                     S.step = 5;
                     save();
                     showStep(5);
@@ -2584,6 +2947,7 @@
                     // Store raw text as fallback
                     S.report = null;
                     S.reportRaw = text;
+                    S.selectedHistoryVersionId = "";
                     S.step = 5;
                     save();
                     showStep(5);
@@ -2615,12 +2979,16 @@
           var container = $("reportContent");
           if (!container) return;
 
+          ensureReportHistorySaved();
+
           // Fallback rendering if no structured report
           if (!S.report && S.reportRaw) {
             container.innerHTML =
               '<div class="report-fallback">' +
               renderMd(S.reportRaw) +
               "</div>" +
+              buildNextToolSection() +
+              buildHistorySection() +
               buildActionBar();
             bindReportActions();
             return;
@@ -2628,6 +2996,7 @@
           if (!S.report) {
             container.innerHTML =
               '<div class="report-fallback"><p>暂无报告数据。</p></div>' +
+              buildHistorySection() +
               buildActionBar();
             bindReportActions();
             return;
@@ -2694,7 +3063,9 @@
                 "</div></div>" +
                 '<div class="employee-method"><strong>&#x1F4A1; 推荐做法：</strong>' +
                 esc(item.method || "") +
-                "</div></div>";
+                "</div>" +
+                renderToolCards(item) +
+                "</div>";
             });
             if (r.top3.length < 3) {
               html +=
@@ -2765,6 +3136,9 @@
             html += "</div>";
           }
 
+          html += buildNextToolSection();
+          html += buildHistorySection();
+
           // Section 6: Action Bar
           html += buildActionBar();
 
@@ -2831,8 +3205,10 @@
         function buildActionBar() {
           return (
             '<div class="report-actions">' +
+            '<button class="btn btn-outline" id="saveVersionBtn" data-ai-action="save-version"><span aria-hidden="true">&#x1F4BE;</span> 保存版本</button>' +
             '<button class="btn btn-primary" id="printBtn" data-ai-action="print-report"><span aria-hidden="true">&#x1F5A8;&#xFE0F;</span> 打印 / 导出 PDF</button>' +
             '<button class="btn btn-outline" id="shareBtn" data-ai-action="share-report"><span aria-hidden="true">&#x1F4CB;</span> 复制分享文字</button>' +
+            '<button class="btn btn-outline" id="shareLinkBtn" data-ai-action="share-link"><span aria-hidden="true">&#x1F517;</span> 复制分享链接</button>' +
             '<button class="btn btn-outline" id="reviewBtn"><span aria-hidden="true">&#x1F440;</span> 查看我的回答</button>' +
             '<button class="btn btn-ghost" id="restartBtn">&#x1F504; 重新诊断</button>' +
             "</div>"
@@ -2840,6 +3216,13 @@
         }
 
         function bindReportActions() {
+          var saveVersionBtn = $("saveVersionBtn");
+          if (saveVersionBtn) {
+            saveVersionBtn.addEventListener("click", function () {
+              window.saveReadyHistoryVersion(true);
+            });
+          }
+
           var printBtn = $("printBtn");
           if (printBtn) {
             printBtn.addEventListener("click", function () {
@@ -2971,6 +3354,49 @@
             });
           }
 
+          var shareLinkBtn = $("shareLinkBtn");
+          if (shareLinkBtn) {
+            shareLinkBtn.addEventListener("click", function () {
+              if (!window.XYVCUnifiedDataManager) {
+                window.alert("当前浏览器暂不支持生成分享链接，请先复制分享文字。");
+                return;
+              }
+              var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+                TOOL_ID,
+                buildShareSnapshotPayload(),
+                {
+                  title: "AI 员工面试报告",
+                  baseUrl: location.href.split("#")[0],
+                },
+              );
+              var shareUrl = snapshot.url;
+              var onCopied = function () {
+                shareLinkBtn.textContent = "已复制链接 ✓";
+                setTimeout(function () {
+                  shareLinkBtn.innerHTML = "&#x1F517; 复制分享链接";
+                }, 2000);
+              };
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(shareUrl).then(onCopied);
+              } else {
+                var ta = document.createElement("textarea");
+                ta.value = shareUrl;
+                ta.style.cssText =
+                  "position:fixed;left:0;top:0;width:1px;height:1px;padding:0;border:none;outline:none;box-shadow:none;background:transparent;font-size:16px";
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.setSelectionRange(0, ta.value.length);
+                try {
+                  document.execCommand("copy");
+                } catch (e) {
+                  window.alert("请手动复制当前页面链接。");
+                }
+                document.body.removeChild(ta);
+                onCopied();
+              }
+            });
+          }
+
           var reviewBtn = $("reviewBtn");
           if (reviewBtn) {
             reviewBtn.addEventListener("click", function () {
@@ -2991,6 +3417,54 @@
             });
           }
         }
+
+        function buildShareSnapshotPayload() {
+          return {
+            role: S.role,
+            industry: S.industry,
+            teamSize: S.teamSize,
+            aiGoal: S.aiGoal,
+            projectContextNote: S.projectContextNote,
+            top3Tasks: (S.top3 || []).slice(0, 3),
+            report: S.report || null,
+            reportRaw: S.reportRaw || "",
+          };
+        }
+
+        window.saveReadyHistoryVersion = function (manual) {
+          if (!window.XYVCUnifiedDataManager) {
+            if (manual) {
+              window.alert("当前浏览器暂不支持历史保存。");
+            }
+            return;
+          }
+          if (!S.report && !S.reportRaw) {
+            if (manual) {
+              window.alert("请先生成报告，再保存版本。");
+            }
+            return;
+          }
+          S.selectedHistoryVersionId = "";
+          ensureReportHistorySaved();
+          if (manual) {
+            window.alert("当前版本已保存。");
+            renderS5();
+          }
+        };
+
+        window.openReadyHistoryVersion = function (versionId) {
+          var entry = getToolHistory().find(function (item) {
+            return item.versionId === versionId;
+          });
+          if (!entry || !entry.inputSnapshot) return;
+          S.selectedHistoryVersionId = versionId;
+          applySerializableState(entry.inputSnapshot);
+          if (window.XYVCUnifiedDataManager.track) {
+            window.XYVCUnifiedDataManager.track(TOOL_ID, "history_reopened", {
+              version_id: versionId,
+            });
+          }
+        };
 
         function buildShareText() {
           if (!S.report) return S.reportRaw || "暂无报告。";
@@ -3118,6 +3592,35 @@
           load();
           refreshContextSyncState();
           bindEvents();
+
+          if (window.XYVCUnifiedDataManager) {
+            var sharedSnapshot =
+              window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
+                location.href,
+              );
+            if (
+              sharedSnapshot &&
+              sharedSnapshot.toolId === TOOL_ID &&
+              sharedSnapshot.payload
+            ) {
+              var payload = sharedSnapshot.payload;
+              S.role = payload.role || S.role;
+              S.industry = payload.industry || S.industry;
+              S.teamSize = payload.teamSize || S.teamSize;
+              S.aiGoal = payload.aiGoal || S.aiGoal;
+              S.projectContextNote =
+                payload.projectContextNote || S.projectContextNote;
+              S.top3 = Array.isArray(payload.top3Tasks) ? payload.top3Tasks : S.top3;
+              S.report = payload.report || S.report;
+              S.reportRaw = payload.reportRaw || S.reportRaw;
+              if (S.report || S.reportRaw) {
+                S.step = 5;
+                showStep(5);
+                renderS5();
+                return;
+              }
+            }
+          }
 
           // Restore step from URL hash if present and valid
           try {

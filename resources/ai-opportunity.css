@@ -182,6 +182,70 @@ body {
   padding: 16px 16px 100px;
 }
 
+.context-card {
+  background: linear-gradient(135deg, #ffffff, #eff6ff);
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.context-card__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.context-card__desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.context-card__meta {
+  font-size: 12px;
+  color: var(--brand-dark);
+  margin-top: 8px;
+}
+
+.context-card__preview {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.context-card__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.context-card__btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: var(--font);
+}
+
+.context-card__btn--primary {
+  background: var(--brand);
+  color: #fff;
+}
+
+.context-card__btn--ghost {
+  background: #fff;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
 /* ── Step Section ── */
 .step-section {
   display: none;
@@ -890,6 +954,61 @@ body {
   .step-title {
     font-size: 24px;
   }
+}
+
+/* ── Tool Stack ── */
+.tool-stack-section {
+  margin-top: 0;
+}
+
+.tool-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tool-stack-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.tool-stack-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  gap: 6px;
+}
+
+.tool-stack-card__name {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--navy);
+}
+
+.tool-stack-card__price {
+  font-size: 11px;
+  background: #f0fdf4;
+  color: #16a34a;
+  border-radius: 999px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tool-stack-card__platform {
+  font-size: 11px;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+
+.tool-stack-card__use {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的探索记录 | 校园VC</title>
+    <meta
+      name="description"
+      content="统一查看校园VC互动工具的历史结果、最近分享和下一步入口。"
+    />
+    <link rel="icon" href="../assets/favicon.ico" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei",
+          sans-serif;
+        color: #0f172a;
+        background:
+          radial-gradient(circle at top right, rgba(249, 115, 22, 0.14), transparent 32%),
+          linear-gradient(180deg, #fff7ed 0%, #ffffff 36%, #f8fafc 100%);
+      }
+      a {
+        color: inherit;
+      }
+      .page {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 28px 20px 56px;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: #c2410c;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 18px;
+      }
+      .hero {
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(251, 146, 60, 0.18);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+      }
+      .eyebrow {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #ea580c;
+      }
+      .hero h1 {
+        margin: 10px 0 10px;
+        font-size: clamp(30px, 5vw, 48px);
+        line-height: 1.05;
+      }
+      .hero p {
+        margin: 0;
+        max-width: 760px;
+        color: #475569;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 22px;
+      }
+      .stat {
+        border-radius: 18px;
+        padding: 16px 18px;
+        background: linear-gradient(180deg, #ffffff, #fff7ed);
+        border: 1px solid #fed7aa;
+      }
+      .stat__label {
+        font-size: 12px;
+        color: #9a3412;
+        margin-bottom: 8px;
+      }
+      .stat__value {
+        font-size: 26px;
+        font-weight: 800;
+      }
+      .section {
+        margin-top: 28px;
+      }
+      .merge-banner {
+        display: none;
+        margin-top: 20px;
+        padding: 18px 20px;
+        border-radius: 18px;
+        border: 1px solid #fdba74;
+        background: linear-gradient(180deg, #fff7ed, #ffffff);
+        box-shadow: 0 12px 30px rgba(249, 115, 22, 0.08);
+      }
+      .merge-banner.is-visible {
+        display: block;
+      }
+      .merge-banner__title {
+        font-size: 16px;
+        font-weight: 800;
+        color: #9a3412;
+      }
+      .merge-banner__desc {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 1.75;
+        color: #7c2d12;
+      }
+      .section h2 {
+        margin: 0 0 14px;
+        font-size: 22px;
+      }
+      .panel {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+      }
+      .resume-card {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: center;
+      }
+      .resume-card__label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 800;
+        color: #c2410c;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .resume-card__title {
+        font-size: 22px;
+        font-weight: 800;
+        margin-top: 8px;
+      }
+      .resume-card__desc {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 1.75;
+        color: #475569;
+      }
+      .btn-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 42px;
+        padding: 0 16px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        color: #fff;
+        box-shadow: 0 12px 28px rgba(249, 115, 22, 0.28);
+      }
+      .btn-ghost {
+        background: #fff;
+        border-color: #fdba74;
+        color: #c2410c;
+      }
+      .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .tool-card {
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+      }
+      .tool-card--empty {
+        opacity: 0.72;
+      }
+      .tool-card__top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .tool-card__tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: #fff7ed;
+        color: #c2410c;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .tool-card__time {
+        font-size: 12px;
+        color: #64748b;
+      }
+      .tool-card h3 {
+        margin: 14px 0 6px;
+        font-size: 20px;
+      }
+      .tool-card__summary {
+        min-height: 70px;
+        font-size: 14px;
+        line-height: 1.75;
+        color: #475569;
+      }
+      .tool-card__meta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .meta-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        color: #334155;
+        font-size: 12px;
+      }
+      .shares {
+        display: grid;
+        gap: 12px;
+      }
+      .share-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        padding: 16px 18px;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        background: rgba(255, 255, 255, 0.92);
+      }
+      .share-item__title {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .share-item__meta {
+        margin-top: 6px;
+        font-size: 13px;
+        color: #64748b;
+      }
+      .empty {
+        padding: 26px;
+        border-radius: 20px;
+        border: 1px dashed #cbd5e1;
+        background: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        color: #64748b;
+        font-size: 15px;
+        line-height: 1.8;
+      }
+      @media (max-width: 900px) {
+        .stats,
+        .tool-grid {
+          grid-template-columns: 1fr;
+        }
+        .resume-card,
+        .share-item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <a class="back-link" href="./index.html">← 返回资源中心</a>
+
+      <section class="hero">
+        <div class="eyebrow">Unified Workspace</div>
+        <h1>我的探索记录</h1>
+        <p>
+          把你在校园VC各个互动工具里的阶段判断、机会分析和行动建议收在一起。可以直接继续查看最近一次结果，也可以回看之前分享出去的快照。
+        </p>
+        <div class="stats" id="stats"></div>
+        <div class="merge-banner" id="mergeBanner"></div>
+      </section>
+
+      <section class="section">
+        <h2>继续上次</h2>
+        <div class="panel" id="resumePanel"></div>
+      </section>
+
+      <section class="section">
+        <h2>工具记录</h2>
+        <div class="tool-grid" id="toolGrid"></div>
+      </section>
+
+      <section class="section">
+        <h2>最近分享</h2>
+        <div id="sharesPanel"></div>
+      </section>
+    </div>
+
+    <script src="./tool-context.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        var TOOL_META = {
+          "find-your-idea": {
+            label: "发现你的创业想法",
+            path: "find-your-idea.html",
+            tag: "创业定位",
+          },
+          "find-what-you-want": {
+            label: "如何找到想做的事",
+            path: "find-what-you-want.html",
+            tag: "自我探索",
+          },
+          "student-startup-self-check": {
+            label: "学生创业自检",
+            path: "rate-your-idea.html",
+            tag: "想法评估",
+          },
+          "hard-tech-check": {
+            label: "硬科技创业自检",
+            path: "hard-tech-check.html",
+            tag: "硬科技",
+          },
+          "ai-ready-check": {
+            label: "AI 员工面试",
+            path: "ai-ready-check.html",
+            tag: "AI 提效",
+          },
+          "ai-opportunity": {
+            label: "AI 创业机会探索器",
+            path: "ai-opportunity.html",
+            tag: "机会发现",
+          },
+        };
+
+        function esc(value) {
+          return String(value || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+        }
+
+        function clone(value) {
+          return JSON.parse(JSON.stringify(value));
+        }
+
+        function formatDateTime(value) {
+          if (!value) return "暂无";
+          var date = new Date(value);
+          if (isNaN(date.getTime())) return "暂无";
+          return date.toLocaleString("zh-CN");
+        }
+
+        function getWorkspace() {
+          if (!window.XYVCUnifiedDataManager) return null;
+          return window.XYVCUnifiedDataManager.getWorkspace();
+        }
+
+        function getToolEntries(workspace) {
+          return Object.keys(TOOL_META).map(function (toolId) {
+            var bucket = (workspace && workspace.tools && workspace.tools[toolId]) || {
+              draftData: {},
+              history: [],
+              updatedAt: "",
+            };
+            return {
+              toolId: toolId,
+              meta: TOOL_META[toolId],
+              bucket: bucket,
+              latestHistory:
+                Array.isArray(bucket.history) && bucket.history.length ? bucket.history[0] : null,
+            };
+          });
+        }
+
+        function getLastActivity(entry) {
+          var historyAt = entry.latestHistory && entry.latestHistory.createdAt;
+          return historyAt || entry.bucket.updatedAt || "";
+        }
+
+        function countMeaningfulTools(entries) {
+          return entries.filter(function (entry) {
+            return Boolean(entry.latestHistory || entry.bucket.updatedAt);
+          }).length;
+        }
+
+        function summarizeResult(entry) {
+          var latest = entry.latestHistory;
+          var draft = entry.bucket.draftData || {};
+          var snapshot = latest && latest.outputSnapshot ? latest.outputSnapshot : {};
+          switch (entry.toolId) {
+            case "find-your-idea":
+              return (
+                (snapshot.top3 && snapshot.top3[0] && snapshot.top3[0].summary) ||
+                draft.ai6 ||
+                "还没有保存结果。"
+              );
+            case "find-what-you-want":
+              return snapshot.title
+                ? snapshot.title + "｜" + (snapshot.why || "")
+                : draft.outwardValue || "还没有保存结果。";
+            case "student-startup-self-check":
+              return snapshot.totalScore
+                ? "总分 " + snapshot.totalScore + "/50｜" + (snapshot.tier || "未分级")
+                : draft.product || "还没有保存结果。";
+            case "hard-tech-check":
+              return snapshot.stageLabel
+                ? snapshot.stageLabel + "｜" + String(snapshot.report || "").replace(/\s+/g, " ").slice(0, 42)
+                : draft.ml_tech || "还没有保存结果。";
+            case "ai-ready-check":
+              return snapshot.summary || draft.aiGoal || "还没有保存结果。";
+            case "ai-opportunity":
+              return (
+                (snapshot.summary && snapshot.summary.oneLiner) ||
+                (draft.industryId ? "已选定行业，等待继续查看" : "还没有保存结果。")
+              );
+            default:
+              return "还没有保存结果。";
+          }
+        }
+
+        function buildPayload(entry) {
+          var latest = entry.latestHistory;
+          var input = latest && latest.inputSnapshot ? clone(latest.inputSnapshot) : null;
+          var output = latest && latest.outputSnapshot ? clone(latest.outputSnapshot) : null;
+          var draft = clone(entry.bucket.draftData || {});
+
+          switch (entry.toolId) {
+            case "find-your-idea":
+              return input ? { state: input, result: output || {} } : null;
+            case "find-what-you-want":
+              return input ? { state: input, result: output || {} } : null;
+            case "student-startup-self-check":
+              if (!latest && !Object.keys(draft).length) return null;
+              return {
+                draftData: draft,
+                result: output || null,
+                historyEntry: latest || null,
+              };
+            case "hard-tech-check":
+              if (!input && !Object.keys(draft).length) return null;
+              return {
+                state: input || draft,
+                report:
+                  (output && output.report) ||
+                  (input && input.report) ||
+                  draft.report ||
+                  "",
+              };
+            case "ai-ready-check":
+              var ready = input || draft;
+              if (!ready || !Object.keys(ready).length) return null;
+              return {
+                role: ready.role || "",
+                industry: ready.industry || "",
+                teamSize: ready.teamSize || "",
+                aiGoal: ready.aiGoal || "",
+                projectContextNote: ready.projectContextNote || "",
+                top3Tasks: Array.isArray(ready.top3) ? ready.top3 : [],
+                report: ready.report || null,
+                reportRaw: ready.reportRaw || "",
+              };
+            case "ai-opportunity":
+              var opp = input || draft;
+              if (!opp || (!opp.categoryId && !opp.industryId)) return null;
+              return {
+                mode: opp.mode || "student",
+                categoryId: opp.categoryId || "",
+                industryId: opp.industryId || "",
+                painPointId: opp.painPointId || "",
+                summary: (output && output.summary) || {},
+                validation: (output && output.validation) || {},
+                tools: (output && output.tools) || [],
+              };
+            default:
+              return null;
+          }
+        }
+
+        function openLatest(toolId) {
+          var workspace = getWorkspace();
+          var entry = getToolEntries(workspace).find(function (item) {
+            return item.toolId === toolId;
+          });
+          if (!entry) return;
+
+          var targetUrl = new URL(entry.meta.path, window.location.href).toString();
+          var payload = buildPayload(entry);
+          if (!payload || !window.XYVCUnifiedDataManager) {
+            window.location.href = targetUrl;
+            return;
+          }
+
+          var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+            toolId,
+            payload,
+            {
+              title: entry.meta.label,
+              baseUrl: targetUrl,
+              versionId: entry.latestHistory ? entry.latestHistory.versionId : "",
+            },
+          );
+          window.location.href = snapshot.url;
+        }
+
+        function openShare(shareId, toolId) {
+          var meta = TOOL_META[toolId];
+          if (!meta) return;
+          var url = new URL(meta.path, window.location.href);
+          url.searchParams.set("xyvc_share", shareId);
+          window.location.href = url.toString();
+        }
+
+        function renderStats(entries, shares) {
+          var totalHistory = entries.reduce(function (sum, entry) {
+            return sum + ((entry.bucket.history && entry.bucket.history.length) || 0);
+          }, 0);
+          var stats = [
+            {
+              label: "有记录的工具",
+              value: String(countMeaningfulTools(entries)),
+            },
+            {
+              label: "累计历史版本",
+              value: String(totalHistory),
+            },
+            {
+              label: "最近分享快照",
+              value: String(shares.length),
+            },
+            {
+              label: "最近活跃工具",
+              value:
+                (window.XYVCUnifiedDataManager &&
+                  window.XYVCUnifiedDataManager.getLabel(
+                    (getWorkspace().userProfile || {}).lastActiveTool,
+                  )) ||
+                "暂无",
+            },
+          ];
+
+          document.getElementById("stats").innerHTML = stats
+            .map(function (item) {
+              return (
+                '<div class="stat">' +
+                '<div class="stat__label">' +
+                esc(item.label) +
+                "</div>" +
+                '<div class="stat__value">' +
+                esc(item.value) +
+                "</div>" +
+                "</div>"
+              );
+            })
+            .join("");
+        }
+
+        function renderPendingMerge(workspace) {
+          var banner = document.getElementById("mergeBanner");
+          if (!banner) return;
+          var pending =
+            window.XYVCUnifiedDataManager &&
+            window.XYVCUnifiedDataManager.getPendingMerge
+              ? window.XYVCUnifiedDataManager.getPendingMerge()
+              : null;
+
+          if (!pending) {
+            banner.className = "merge-banner";
+            banner.innerHTML = "";
+            return;
+          }
+
+          var detailId = "mergeBannerDetail";
+          banner.className = "merge-banner is-visible";
+          banner.innerHTML = [
+            '<div class="merge-banner__title">发现本地未同步记录</div>',
+            '<div class="merge-banner__desc">',
+              "检测到你的浏览器里有一些探索记录，与当前账号的数据不一致。",
+              "你可以选择保留本地记录，或者暂时忽略。",
+            "</div>",
+            '<div class="btn-row" style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">',
+              '<button class="btn btn-primary" id="mergeBannerKeep">保留本地记录</button>',
+              '<button class="btn btn-ghost" id="mergeBannerDismiss">暂不处理</button>',
+              '<button class="btn btn-ghost" id="mergeBannerMore">了解更多</button>',
+            "</div>",
+            '<div id="' + detailId + '" style="display:none;margin-top:12px;font-size:13px;line-height:1.75;color:#7c2d12;">',
+              "本地记录是指你在未登录状态下，在各互动工具里产生的历史结果和草稿数据，",
+              "保存在你的浏览器本地。选择「保留本地记录」会将这些数据标记为已处理；",
+              "选择「暂不处理」会保留提示，下次打开时继续显示。",
+            "</div>"
+          ].join("");
+
+          document.getElementById("mergeBannerKeep").addEventListener("click", function () {
+            window.XYVCUnifiedDataManager.clearPendingMerge();
+            banner.classList.remove("is-visible");
+            window.location.reload();
+          });
+
+          document.getElementById("mergeBannerDismiss").addEventListener("click", function () {
+            banner.classList.remove("is-visible");
+          });
+
+          document.getElementById("mergeBannerMore").addEventListener("click", function () {
+            var detail = document.getElementById(detailId);
+            detail.style.display = detail.style.display === "none" ? "block" : "none";
+          });
+        }
+
+        function renderResume(entries) {
+          var panel = document.getElementById("resumePanel");
+          var sorted = entries
+            .filter(function (entry) {
+              return Boolean(getLastActivity(entry));
+            })
+            .sort(function (a, b) {
+              return new Date(getLastActivity(b)).getTime() - new Date(getLastActivity(a)).getTime();
+            });
+
+          if (!sorted.length) {
+            panel.innerHTML =
+              '<div class="empty">你还没有保存过探索记录。先去任意一个互动工具生成结果，之后这里就会自动聚合。</div>';
+            return;
+          }
+
+          var latest = sorted[0];
+          panel.innerHTML =
+            '<div class="resume-card">' +
+            '<div>' +
+            '<div class="resume-card__label">上次停在这里</div>' +
+            '<div class="resume-card__title">' +
+            esc(latest.meta.label) +
+            "</div>" +
+            '<div class="resume-card__desc">' +
+            esc(summarizeResult(latest)) +
+            "<br>最近更新：" +
+            esc(formatDateTime(getLastActivity(latest))) +
+            "</div>" +
+            '<div class="btn-row">' +
+            '<button class="btn btn-primary" onclick="window.openLatestExploration(\'' +
+            latest.toolId +
+            "')\">继续查看最近结果</button>" +
+            '<a class="btn btn-ghost" href="' +
+            esc(latest.meta.path) +
+            '">打开工具</a>' +
+            "</div>" +
+            "</div>" +
+            "</div>";
+        }
+
+        function renderTools(entries) {
+          var grid = document.getElementById("toolGrid");
+          grid.innerHTML = entries
+            .sort(function (a, b) {
+              return new Date(getLastActivity(b)).getTime() - new Date(getLastActivity(a)).getTime();
+            })
+            .map(function (entry) {
+              var hasData = Boolean(entry.latestHistory || entry.bucket.updatedAt);
+              var historyCount = (entry.bucket.history && entry.bucket.history.length) || 0;
+              return (
+                '<article class="tool-card' +
+                (hasData ? "" : " tool-card--empty") +
+                '">' +
+                '<div class="tool-card__top">' +
+                '<span class="tool-card__tag">' +
+                esc(entry.meta.tag) +
+                "</span>" +
+                '<span class="tool-card__time">' +
+                esc(formatDateTime(getLastActivity(entry))) +
+                "</span>" +
+                "</div>" +
+                "<h3>" +
+                esc(entry.meta.label) +
+                "</h3>" +
+                '<div class="tool-card__summary">' +
+                esc(summarizeResult(entry)) +
+                "</div>" +
+                '<div class="tool-card__meta">' +
+                '<span class="meta-pill">历史版本 ' +
+                esc(String(historyCount)) +
+                "</span>" +
+                '<span class="meta-pill">最近结果 ' +
+                esc(entry.latestHistory ? "已保存" : "暂无") +
+                "</span>" +
+                "</div>" +
+                '<div class="btn-row">' +
+                (hasData
+                  ? '<button class="btn btn-primary" onclick="window.openLatestExploration(\'' +
+                    entry.toolId +
+                    "')\">继续查看</button>"
+                  : "") +
+                '<a class="btn btn-ghost" href="' +
+                esc(entry.meta.path) +
+                '">进入工具</a>' +
+                "</div>" +
+                "</article>"
+              );
+            })
+            .join("");
+        }
+
+        function renderShares(workspace) {
+          var panel = document.getElementById("sharesPanel");
+          var shareMap = (workspace && workspace.shareSnapshots) || {};
+          var shares = Object.keys(shareMap)
+            .map(function (shareId) {
+              return shareMap[shareId];
+            })
+            .sort(function (a, b) {
+              return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            })
+            .slice(0, 8);
+
+          if (!shares.length) {
+            panel.innerHTML =
+              '<div class="empty">你还没有生成过分享链接。后续在任意工具结果页点击“分享链接”，这里会出现可再次打开的快照。</div>';
+            return shares;
+          }
+
+          panel.innerHTML =
+            '<div class="shares">' +
+            shares
+              .map(function (item) {
+                return (
+                  '<div class="share-item">' +
+                  '<div>' +
+                  '<div class="share-item__title">' +
+                  esc(item.title || TOOL_META[item.toolId].label) +
+                  "</div>" +
+                  '<div class="share-item__meta">' +
+                  esc(TOOL_META[item.toolId].label) +
+                  " · " +
+                  esc(formatDateTime(item.createdAt)) +
+                  "</div>" +
+                  "</div>" +
+                  '<button class="btn btn-ghost" onclick="window.openSharedExploration(\'' +
+                  item.shareId +
+                  "','" +
+                  item.toolId +
+                  "')\">打开分享快照</button>" +
+                  "</div>"
+                );
+              })
+              .join("") +
+            "</div>";
+
+          return shares;
+        }
+
+        function boot() {
+          var workspace = getWorkspace();
+          if (!workspace) {
+            document.getElementById("resumePanel").innerHTML =
+              '<div class="empty">当前浏览器还没有统一工作区数据，请先进入任意一个互动工具。</div>';
+            document.getElementById("toolGrid").innerHTML = "";
+            document.getElementById("sharesPanel").innerHTML = "";
+            return;
+          }
+
+          var entries = getToolEntries(workspace);
+          var shares = renderShares(workspace);
+          renderStats(entries, shares);
+          renderPendingMerge(workspace);
+          renderResume(entries);
+          renderTools(entries);
+        }
+
+        window.openLatestExploration = openLatest;
+        window.openSharedExploration = openShare;
+        window.hidePendingMergeBanner = function () {
+          var banner = document.getElementById("mergeBanner");
+          if (banner) banner.classList.remove("is-visible");
+        };
+
+        boot();
+      })();
+    </script>
+  </body>
+</html>

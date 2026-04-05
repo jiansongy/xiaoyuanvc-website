@@ -91,6 +91,7 @@
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
     ></script>
+    <script src="./tool-context.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -1021,6 +1022,25 @@
         cursor: not-allowed;
         transform: none;
       }
+      /* ── Print ── */
+      .print-title { display: none; }
+      @media print {
+        .nav-bar,
+        .back-link,
+        .p-dot,
+        .btn-secondary {
+          display: none !important;
+        }
+        body { margin: 0; padding: 16px; }
+        .print-title {
+          display: block;
+          font-size: 20px;
+          font-weight: 700;
+          text-align: center;
+          margin: 20px 0;
+        }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
     </style>
   </head>
   <body>
@@ -1705,6 +1725,7 @@
         </div>
 
         <div id="p4Final" style="display: none">
+          <h1 class="print-title">找到想做的事 · 结果报告 — 校园VC</h1>
           <div class="final-box">
             <h3>🎉 你想做的事</h3>
             <div class="final-title" id="finalTitle"></div>
@@ -1756,6 +1777,24 @@
           </button>
           <button
             class="btn-secondary"
+            onclick="window.saveVersion()"
+            style="margin-top: 8px"
+            data-ai-action="save-version"
+            aria-label="保存当前结果"
+          >
+            <span aria-hidden="true">💾</span> 保存版本
+          </button>
+          <button
+            class="btn-secondary"
+            onclick="window.copyShareLink()"
+            style="margin-top: 8px"
+            data-ai-action="share-link"
+            aria-label="复制分享链接"
+          >
+            <span aria-hidden="true">🔗</span> 分享链接
+          </button>
+          <button
+            class="btn-secondary"
             onclick="window.printResult()"
             style="margin-top: 8px"
             data-ai-action="print-result"
@@ -1763,6 +1802,14 @@
           >
             <span aria-hidden="true">🖨️</span> 打印结果
           </button>
+          <div class="ai-card" style="display: block; margin-top: 16px">
+            <div class="ai-label">🧭 下一步推荐</div>
+            <div class="ai-body" id="nextToolBox"></div>
+          </div>
+          <div class="ai-card" style="display: block; margin-top: 12px">
+            <div class="ai-label">📚 历史版本</div>
+            <div class="ai-body" id="historyBox"></div>
+          </div>
           <a
             href="index.html"
             style="
@@ -1804,6 +1851,7 @@
     <script>
       (function () {
         "use strict";
+        const TOOL_ID = "find-what-you-want";
         const AI_PROXY_HINT_KEY = "xyvc-ai-proxy";
         const SAVE_KEY = "xyvc-fwyw-v1";
         const AI_PROXY_CANDIDATES = [
@@ -1896,7 +1944,59 @@
             finalCandidates: [],
             monetization: null,
             chosenIndex: -1,
+            selectedHistoryVersionId: "",
           };
+        }
+
+        function clone(value) {
+          return JSON.parse(JSON.stringify(value));
+        }
+
+        function getToolHistory() {
+          if (!window.XYVCUnifiedDataManager) return [];
+          return window.XYVCUnifiedDataManager.getToolHistory(TOOL_ID) || [];
+        }
+
+        function buildSerializableState() {
+          return {
+            likes: clone(S.likes || []),
+            phase1AI: S.phase1AI || "",
+            followupAnswer: S.followupAnswer || "",
+            experience: S.experience || "",
+            angles: clone(S.angles || {}),
+            phase2AI: S.phase2AI || "",
+            valueAnswers: clone(S.valueAnswers || []),
+            allKeywords: clone(S.allKeywords || []),
+            selectedKeywords: clone(S.selectedKeywords || []),
+            phase3AI: S.phase3AI || "",
+            valueStatements: clone(S.valueStatements || []),
+            outwardValue: S.outwardValue || "",
+            finalCandidates: clone(S.finalCandidates || []),
+            monetization: clone(S.monetization || {}),
+            chosenIndex: typeof S.chosenIndex === "number" ? S.chosenIndex : -1,
+          };
+        }
+
+        function buildResultSnapshot() {
+          var c = S.finalCandidates[S.chosenIndex] || {};
+          return {
+            title: c.title || "",
+            why: c.why || "",
+            step: c.step || "",
+            monetization: clone(S.monetization || {}),
+            generatedAt: new Date().toISOString(),
+          };
+        }
+
+        function applySerializableState(snapshot) {
+          if (!snapshot || typeof snapshot !== "object") return;
+          Object.assign(S, createInitialState(), snapshot);
+          S.phase = 4;
+          showPhase(4);
+          renderResults();
+          if (typeof S.chosenIndex === "number" && S.chosenIndex >= 0) {
+            window.selectResult(S.chosenIndex);
+          }
         }
 
         // ══════════════════════════════════════════════
@@ -2096,8 +2196,10 @@
           S.phase = n;
           var pw = document.getElementById("progressWrap");
           var nb = document.getElementById("navBar");
-          pw.style.display = n > 0 ? "block" : "none";
-          nb.style.display = n > 0 ? "flex" : "none";
+          var showProgress = n > 0;
+          var showNav = n > 0 && n < 4;
+          pw.style.display = showProgress ? "block" : "none";
+          nb.style.display = showNav ? "flex" : "none";
           if (n > 0) {
             document.getElementById("phaseLabel").textContent =
               "第" +
@@ -2893,6 +2995,7 @@
 
         window.goPhase4 = function () {
           S.outwardValue = document.getElementById("outwardInput").value.trim();
+          S.selectedHistoryVersionId = "";
           clearSavedProgress(); // completed the full flow — clear stale save
           showPhase(4);
           callAI(4);
@@ -2944,6 +3047,51 @@
             S.monetization.high;
         }
 
+        function renderNextToolSuggestions() {
+          var box = document.getElementById("nextToolBox");
+          if (!box) return;
+          box.innerHTML =
+            '<a href="./find-your-idea.html" style="display:block;padding:12px 14px;border:1px solid #ddd6fe;border-radius:12px;background:#f5f3ff;color:#5b21b6;text-decoration:none;margin-bottom:10px"><strong>发现你的创业想法</strong><br><span style="font-size:12px;color:#6d28d9">把今天选出的方向继续收敛成“谁、什么问题、为什么值得做”。</span></a>' +
+            '<a href="./rate-your-idea.html" style="display:block;padding:12px 14px;border:1px solid #bbf7d0;border-radius:12px;background:#f0fdf4;color:#166534;text-decoration:none"><strong>学生创业自检</strong><br><span style="font-size:12px;color:#15803d">当你已经有一个清晰方向后，下一步要判断它是否靠谱、是否值得投入。</span></a>';
+        }
+
+        function renderHistoryList() {
+          var box = document.getElementById("historyBox");
+          if (!box) return;
+          var history = getToolHistory().slice(0, 5);
+          if (!history.length) {
+            box.innerHTML =
+              '<div style="font-size:13px;color:var(--gray)">当前还没有历史版本。你可以先保存这一版结果。</div>';
+            return;
+          }
+          box.innerHTML = history
+            .map(function (entry, index) {
+              var output = entry.outputSnapshot || {};
+              var active = entry.versionId === S.selectedHistoryVersionId;
+              return (
+                '<div style="border:1px solid ' +
+                (active ? "#c4b5fd" : "#e5e7eb") +
+                ";border-radius:12px;padding:10px 12px;margin-top:10px;background:" +
+                (active ? "#f5f3ff" : "#fff") +
+                '">' +
+                '<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">' +
+                '<div><div style="font-size:13px;font-weight:700;color:#1f2937">版本 ' +
+                (history.length - index) +
+                '</div><div style="font-size:12px;color:#6b7280;margin-top:4px">' +
+                new Date(entry.createdAt).toLocaleString("zh-CN") +
+                "</div></div>" +
+                '<button class="btn-secondary" style="margin:0;padding:6px 10px;font-size:12px" onclick="window.openSavedVersion(\'' +
+                entry.versionId +
+                "')\">打开</button>" +
+                "</div>" +
+                '<div style="font-size:13px;line-height:1.7;color:#374151;margin-top:8px">' +
+                (output.title || "想做的事探索结果") +
+                "</div></div>"
+              );
+            })
+            .join("");
+        }
+
         function renderResults() {
           document.getElementById("p4Loading").style.display = "none";
           var container = document.getElementById("resultCards");
@@ -2977,6 +3125,15 @@
             el.classList.toggle("chosen", idx === i);
           });
           var c = S.finalCandidates[i];
+          if (window.XYVCToolContext && c) {
+            window.XYVCToolContext.write("find-what-you-want", {
+              projectContext: {
+                track: "人生方向探索",
+                stage: "方向筛选完成",
+                oneLiner: c.title,
+              },
+            });
+          }
           document.getElementById("finalTitle").textContent = c.title;
           document.getElementById("finalMeta").textContent =
             "基于你的喜欢 × 擅长 × 价值观";
@@ -2990,6 +3147,8 @@
             fb.classList.add("entering");
           }
           renderMonetization();
+          renderNextToolSuggestions();
+          renderHistoryList();
         };
 
         window.reselectResult = function () {
@@ -3015,6 +3174,59 @@
               btn.textContent = "📋 复制结果";
             }, 2000);
           });
+        };
+
+        window.saveVersion = function () {
+          if (S.chosenIndex < 0 || !window.XYVCUnifiedDataManager) {
+            window.alert("请先选择一个结果，再保存版本。");
+            return;
+          }
+          var history = window.XYVCUnifiedDataManager.appendToolHistory(
+            TOOL_ID,
+            {
+              versionId: "ver_" + Date.now().toString(36),
+              inputSnapshot: buildSerializableState(),
+              outputSnapshot: buildResultSnapshot(),
+              createdAt: new Date().toISOString(),
+              isShared: false,
+            },
+            20,
+          );
+          S.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
+          renderHistoryList();
+          window.alert("当前版本已保存。");
+        };
+
+        window.openSavedVersion = function (versionId) {
+          var entry = getToolHistory().find(function (item) {
+            return item.versionId === versionId;
+          });
+          if (!entry || !entry.inputSnapshot) return;
+          S.selectedHistoryVersionId = versionId;
+          applySerializableState(entry.inputSnapshot);
+        };
+
+        window.copyShareLink = function () {
+          if (S.chosenIndex < 0 || !window.XYVCUnifiedDataManager) {
+            window.alert("请先选择一个结果，再生成分享链接。");
+            return;
+          }
+          var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+            TOOL_ID,
+            {
+              state: buildSerializableState(),
+              result: buildResultSnapshot(),
+            },
+            {
+              title: "如何找到想做的事",
+              baseUrl: window.location.href.split("#")[0],
+            },
+          );
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(snapshot.url).then(function () {
+              window.alert("分享链接已复制。");
+            });
+          }
         };
 
         window.printResult = function () {
@@ -3068,6 +3280,7 @@
                 ".mono-body{font-size:14px;line-height:1.5;}" +
                 ".footer{text-align:center;margin-top:32px;font-size:12px;color:#6b7280;}" +
                 ".btn-secondary{display:none;}" +
+                ".print-title{display:none;}" +
                 "</style></head><body>" +
                 "<h1>🔮 我的「想做的事」探索结果</h1>" +
                 el.innerHTML +
@@ -3101,6 +3314,21 @@
 
         // FIX 5: apply hash-based phase restore after all functions are defined
         (function () {
+          if (window.XYVCUnifiedDataManager) {
+            var sharedSnapshot =
+              window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
+                window.location.href,
+              );
+            if (
+              sharedSnapshot &&
+              sharedSnapshot.toolId === TOOL_ID &&
+              sharedSnapshot.payload &&
+              sharedSnapshot.payload.state
+            ) {
+              applySerializableState(sharedSnapshot.payload.state);
+              return;
+            }
+          }
           var targetPhase = window.__FWYW_RESTORE_PHASE__;
           if (!targetPhase) return;
           delete window.__FWYW_RESTORE_PHASE__;
