@@ -90,6 +90,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "搭建选题生成 AI 工作流" },
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "生成脚本大纲与文案初稿" },
+            { name: "即梦", platform: "jimeng.jianying.com", price: "免费/付费", useCase: "AI 生成封面图与配图" },
+          ],
         },
         {
           id: "monetization",
@@ -120,6 +125,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "适合内容营销课实训：粉丝画像→变现路径设计",
               },
             },
+          ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "搭建粉丝引导私域工作流" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "私域客户沉淀与管理" },
+            { name: "n8n", platform: "n8n.io", price: "免费/付费", useCase: "多平台内容一键分发" },
           ],
         },
       ],
@@ -172,6 +182,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "选品分析与话术脚本生成" },
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "搭建直播策划 AI 助手" },
+            { name: "飞书文档", platform: "feishu.cn", price: "免费", useCase: "策划方案协作与存档" },
+          ],
         },
         {
           id: "compliance-review",
@@ -206,6 +221,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: '"数字营销合规"课程+数据分析课联合实训',
               },
             },
+          ],
+          toolStack: [
+            { name: "通义听悟", platform: "tingwu.aliyun.com", price: "免费/付费", useCase: "直播录音自动转文字" },
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "违规话术检测与标记" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "复盘数据整理与报告" },
           ],
         },
       ],
@@ -262,6 +282,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "自动生成引流笔记内容" },
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "爆款文案分析与生成" },
+            { name: "即梦", platform: "jimeng.jianying.com", price: "免费/付费", useCase: "AI 生成笔记配图" },
+          ],
         },
         {
           id: "dm-overload",
@@ -293,6 +318,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "客户服务自动化课：从人工→半自动→数据驱动的演进",
               },
             },
+          ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "私信分类辅助与模板回复建议" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "咨询转化数据追踪" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "客户意向分级管理" },
           ],
         },
       ],
@@ -343,6 +373,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "竞品评论分析与选品报告" },
+            { name: "1688 AI选品", platform: "1688.com", price: "免费", useCase: "供应商数据与货源匹配" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "选品评分卡管理" },
+          ],
         },
         {
           id: "listing-labor",
@@ -374,6 +409,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "跨文化商务沟通课+AI 工具应用",
               },
             },
+          ],
+          toolStack: [
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "多语言 Listing 本地化改写" },
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "批量 Listing 生成工作流" },
+            { name: "飞书文档", platform: "feishu.cn", price: "免费", useCase: "Listing 模板存档与协作" },
           ],
         },
       ],
@@ -426,6 +466,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "自动生成投放方案与竞品分析" },
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "方案模板生成与输出" },
+            { name: "飞书文档", platform: "feishu.cn", price: "免费", useCase: "提案文档协作与发送" },
+          ],
         },
         {
           id: "delivery-overload",
@@ -461,6 +506,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "广告创意课+数据分析课联合实训",
               },
             },
+          ],
+          toolStack: [
+            { name: "Dify", platform: "cloud.dify.ai", price: "免费/付费", useCase: "自动化周报与月报生成" },
+            { name: "即梦", platform: "jimeng.jianying.com", price: "免费/付费", useCase: "多风格素材批量生成" },
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "文案多版本变体生成" },
           ],
         },
       ],
@@ -511,6 +561,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "客户分层标签与触达管理" },
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "个性化唤醒话术自动生成" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "客户消费数据分析" },
+          ],
         },
         {
           id: "content-creation",
@@ -529,7 +584,7 @@ window.AI_OPPORTUNITY_DATA = {
               desc: "拍一张照片，AI 自动生成小红书/大众点评风格的种草文案",
               input: ["产品/环境照片", "店铺特色关键词"],
               output: ["小红书图文", "大众点评好评引导", "朋友圈文案"],
-              stacks: ["Coze", "即梦", "小红书发布"],
+              stacks: ["Coze", "即梦", "通义千问"],
               difficulty: "低",
               antiPattern:
                 '不要追求"高级文案"，商家需要的是"能发就行，比没有强"',
@@ -538,6 +593,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "新媒体营销课：本地商家数字化推广实战",
               },
             },
+          ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "一键生成种草文案" },
+            { name: "即梦", platform: "jimeng.jianying.com", price: "免费/付费", useCase: "产品照片 AI 美化与配图" },
+            { name: "通义千问", platform: "tongyi.aliyun.com", price: "免费", useCase: "文案优化与多平台适配" },
           ],
         },
       ],
@@ -585,6 +645,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "服务后客户私域沉淀" },
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "定期保养提醒自动推送" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "客户服务记录与复购追踪" },
+          ],
         },
         {
           id: "dispatch-chaos",
@@ -611,6 +676,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "运营管理课：调度优化问题+AI辅助决策",
               },
             },
+          ],
+          toolStack: [
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "师傅排班与订单管理" },
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "智能派单逻辑与客户通知" },
+            { name: "高德地图API", platform: "lbs.amap.com", price: "免费/付费", useCase: "师傅位置与最优路线规划" },
           ],
         },
       ],
@@ -662,6 +732,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "房源 FAQ 智能问答机器人" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "租客咨询接待与跟进" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "房源信息库管理" },
+          ],
         },
         {
           id: "viewing-manual",
@@ -684,6 +759,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "运营管理课：预约系统设计+排期优化",
               },
             },
+          ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "看房预约与爽约提醒自动化" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "客户沟通与带看提醒" },
+            { name: "飞书日历", platform: "feishu.cn", price: "免费", useCase: "带看时段可视化排期" },
           ],
         },
       ],
@@ -735,6 +815,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "招生内容与跟进话术生成" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "体验课后自动跟进转化" },
+            { name: "即梦", platform: "jimeng.jianying.com", price: "免费/付费", useCase: "招生海报 AI 设计" },
+          ],
         },
         {
           id: "renewal-retention",
@@ -766,6 +851,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "教育管理课：学员生命周期分析+AI辅助教学评估",
               },
             },
+          ],
+          toolStack: [
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "出勤与学情数据统计分析" },
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "个性化学情报告自动生成" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "续费预警与关怀消息推送" },
           ],
         },
       ],
@@ -813,6 +903,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "自动报价与订单确认 Bot" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "接单管理与排队通知" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "订单记录与收款统计" },
+          ],
         },
         {
           id: "no-crm",
@@ -837,6 +932,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: '强调"付费意愿验证"比"功能开发"更重要',
               },
             },
+          ],
+          toolStack: [
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "客户消费频次统计与分析" },
+            { name: "Coze", platform: "coze.cn", price: "免费", useCase: "自动优惠券发放触发" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "会员通知与活动推送" },
           ],
         },
       ],
@@ -881,6 +981,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "Dify", platform: "cloud.dify.ai", price: "免费/付费", useCase: "简历解析与 JD 知识库搭建" },
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "简历匹配度评分与排名" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "候选人管理与面试流程追踪" },
+          ],
         },
         {
           id: "interview-prep",
@@ -902,7 +1007,7 @@ window.AI_OPPORTUNITY_DATA = {
               desc: "基于 JD + 候选人简历，自动生成针对性面试问题和评分标准",
               input: ["岗位 JD", "候选人简历"],
               output: ["定制面试问题", "预期回答要点", "评分量表"],
-              stacks: ["DeepSeek API", "飞书文档"],
+              stacks: ["DeepSeek API", "飞书文档", "讯飞星火"],
               difficulty: "低",
               antiPattern: '问题要接地气，不要生成"MBA教科书式"的通用问题',
               modeNotes: {
@@ -910,6 +1015,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "组织行为学课：结构化面试设计+AI辅助",
               },
             },
+          ],
+          toolStack: [
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "按简历生成定制面试问题" },
+            { name: "飞书文档", platform: "feishu.cn", price: "免费", useCase: "面试评分表模板管理" },
+            { name: "讯飞星火", platform: "xinghuo.xfyun.cn", price: "免费/付费", useCase: "面试问答模拟练习与评估" },
           ],
         },
       ],
@@ -961,6 +1071,11 @@ window.AI_OPPORTUNITY_DATA = {
               },
             },
           ],
+          toolStack: [
+            { name: "Dify", platform: "cloud.dify.ai", price: "免费/付费", useCase: "院校信息知识库与问答" },
+            { name: "企业微信", platform: "work.weixin.qq.com", price: "免费", useCase: "客户咨询接待与意向管理" },
+            { name: "飞书多维表格", platform: "feishu.cn", price: "免费", useCase: "客户档案与跟进记录" },
+          ],
         },
         {
           id: "plan-generation",
@@ -991,6 +1106,11 @@ window.AI_OPPORTUNITY_DATA = {
                 teacher: "跨文化教育课：AI辅助教育规划+伦理边界",
               },
             },
+          ],
+          toolStack: [
+            { name: "DeepSeek API", platform: "deepseek.com", price: "低价", useCase: "学生背景分析与院校推荐" },
+            { name: "飞书文档", platform: "feishu.cn", price: "免费", useCase: "留学方案模板生成与存档" },
+            { name: "Dify", platform: "cloud.dify.ai", price: "免费/付费", useCase: "院校数据库智能查询" },
           ],
         },
       ],
