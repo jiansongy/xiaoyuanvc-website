@@ -31,3 +31,8 @@ resources/data/tingwu-tasks.json
 # Claude internal
 .claude/
 .gstack/
+
+# Local agent state and scratch artifacts
+.omc/
+.tmp-test-artifacts/
+.claude-design/
