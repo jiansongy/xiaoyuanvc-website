@@ -1543,6 +1543,7 @@
         // NAVIGATION
         // ══════════════════════════════════════════════
         window.nav = function (dir) {
+          if (dir > 0 && !validateCurrentStep()) return;
           save();
           const next = S.step + dir;
           if (next < 1 || next > 6) return;
@@ -1616,6 +1617,22 @@
               if (el) S.refs[id] = el.value;
             });
           }
+        }
+
+        function validateCurrentStep() {
+          if (S.step !== 1) return true;
+          const hasIdea = (S.ideas || []).some(function (idea) {
+            return String(idea || "").trim();
+          });
+          if (hasIdea) return true;
+
+          window.alert("请先写下至少一个你想关注的人群和需求，再进入下一步。");
+          const firstInput = document.querySelector("#ideasBox input");
+          if (firstInput) {
+            firstInput.setAttribute("aria-invalid", "true");
+            firstInput.focus();
+          }
+          return false;
         }
 
         // ══════════════════════════════════════════════
@@ -1750,7 +1767,7 @@
             row.className = "idea-row";
             row.innerHTML = `
         <input type="text" value="${esc(v)}" placeholder="我想关注 [哪类人] 的 [什么烦恼/需求]…"
-          oninput="S.ideas[${i}]=this.value" style="flex:1" data-testid="idea-${i}-input">
+          oninput="S.ideas[${i}]=this.value;this.removeAttribute('aria-invalid')" style="flex:1" data-testid="idea-${i}-input">
         ${i > 0 ? `<button class="btn btn-ghost" onclick="delIdea(${i})" aria-label="删除第${i + 1}条想法">✕</button>` : ""}
       `;
             box.appendChild(row);

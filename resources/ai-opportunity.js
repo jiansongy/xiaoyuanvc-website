@@ -514,9 +514,11 @@
   function renderFooter() {
     var prev = document.querySelector(".btn-prev");
     var next = document.querySelector(".btn-next");
+    var reset = document.querySelector(".btn-reset");
     var bm = document.querySelector(".btn-bookmark");
 
     if (prev) prev.style.display = state.step > 1 ? "" : "none";
+    if (reset) reset.style.display = hasResettableProgress() ? "" : "none";
 
     if (next) {
       if (state.step === 5) {
@@ -534,6 +536,16 @@
       bm.classList.toggle("is-saved", saved);
       bm.innerHTML = saved ? "&#9733;" : "&#9734;";
     }
+  }
+
+  function hasResettableProgress() {
+    return Boolean(
+      state.step > 1 ||
+      state.categoryId ||
+      state.industryId ||
+      state.painPointId ||
+      state.selectedHistoryVersionId,
+    );
   }
 
   function canAdvance() {
@@ -967,6 +979,22 @@
         if (state.step > 1) {
           setState({ step: state.step - 1 });
         }
+        break;
+
+      case "reset":
+        if (!hasResettableProgress()) break;
+        if (!window.confirm("清空当前选择，从第 1 步重新开始？")) break;
+        setState({
+          step: 1,
+          categoryId: null,
+          industryId: null,
+          painPointId: null,
+          contextDismissed: false,
+          selectedHistoryVersionId: "",
+        });
+        trackEvent("opportunity_reset", {
+          mode: state.mode,
+        });
         break;
 
       case "bookmark":

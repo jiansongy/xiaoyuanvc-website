@@ -197,6 +197,11 @@
       .tool-card--empty {
         opacity: 0.72;
       }
+      .tool-card--featured {
+        opacity: 1;
+        border-color: rgba(251, 146, 60, 0.36);
+        background: linear-gradient(180deg, #ffffff, #fff7ed);
+      }
       .tool-card__top {
         display: flex;
         justify-content: space-between;
@@ -227,6 +232,12 @@
         font-size: 14px;
         line-height: 1.75;
         color: #475569;
+      }
+      .tool-card__reason {
+        margin-top: 12px;
+        font-size: 13px;
+        line-height: 1.75;
+        color: #9a3412;
       }
       .tool-card__meta {
         display: flex;
@@ -383,6 +394,38 @@
           return window.XYVCUnifiedDataManager.getWorkspace();
         }
 
+        function getFirstVisitRecommendations() {
+          return [
+            {
+              toolId: "ai-opportunity",
+              label: "AI 创业机会探索器",
+              path: "ai-opportunity.html",
+              tag: "最快拿到结果",
+              summary: "5-8 分钟内选行业、看痛点、拿到 7 天验证计划。",
+              reason: "适合第一次来，不需要先准备复杂输入。",
+              cta: "先试这个",
+            },
+            {
+              toolId: "ai-ready-check",
+              label: "AI 员工面试",
+              path: "ai-ready-check.html",
+              tag: "最强行动感",
+              summary: "6 分钟匹配 3 位 AI 员工，直接拿到可复制的上手动作。",
+              reason: "如果你已经有一个方向，最适合用它把动作拆出来。",
+              cta: "去面试 AI 员工",
+            },
+            {
+              toolId: "find-your-idea",
+              label: "发现你的创业想法",
+              path: "find-your-idea.html",
+              tag: "适合还没想法",
+              summary: "从人群、问题和可付费意愿出发，收敛出更像样的创业切口。",
+              reason: "如果你现在还很空白，先从这里开始更自然。",
+              cta: "去找一个切口",
+            },
+          ];
+        }
+
         function getToolEntries(workspace) {
           return Object.keys(TOOL_META).map(function (toolId) {
             var bucket = (workspace && workspace.tools && workspace.tools[toolId]) || {
@@ -409,6 +452,10 @@
           return entries.filter(function (entry) {
             return Boolean(entry.latestHistory || entry.bucket.updatedAt);
           }).length;
+        }
+
+        function hasAnyActivity(entries, shares) {
+          return countMeaningfulTools(entries) > 0 || (shares && shares.length > 0);
         }
 
         function summarizeResult(entry) {
@@ -539,6 +586,41 @@
         }
 
         function renderStats(entries, shares) {
+          if (!hasAnyActivity(entries, shares)) {
+            document.getElementById("stats").innerHTML = [
+              {
+                label: "先试这个",
+                value: "AI 创业机会探索器",
+              },
+              {
+                label: "单次体验",
+                value: "5-10 分钟",
+              },
+              {
+                label: "你会拿到",
+                value: "一张可分享结果",
+              },
+              {
+                label: "下一站推荐",
+                value: "AI 员工面试",
+              },
+            ]
+              .map(function (item) {
+                return (
+                  '<div class="stat">' +
+                  '<div class="stat__label">' +
+                  esc(item.label) +
+                  "</div>" +
+                  '<div class="stat__value" style="font-size:20px;line-height:1.35">' +
+                  esc(item.value) +
+                  "</div>" +
+                  "</div>"
+                );
+              })
+              .join("");
+            return;
+          }
+
           var totalHistory = entries.reduce(function (sum, entry) {
             return sum + ((entry.bucket.history && entry.bucket.history.length) || 0);
           }, 0);
@@ -644,8 +726,30 @@
             });
 
           if (!sorted.length) {
+            var recommendations = getFirstVisitRecommendations();
             panel.innerHTML =
-              '<div class="empty">你还没有保存过探索记录。先去任意一个互动工具生成结果，之后这里就会自动聚合。</div>';
+              '<div class="resume-card">' +
+              '<div>' +
+              '<div class="resume-card__label">第一次来，先挑一个开始</div>' +
+              '<div class="resume-card__title">先做 1 个工具，拿到第一张结果卡</div>' +
+              '<div class="resume-card__desc">建议先选最容易上手的 1 个体验。做完之后，这里就会自动出现你的最近结果和历史快照。</div>' +
+              '<div class="btn-row">' +
+              recommendations
+                .map(function (item) {
+                  return (
+                    '<a class="btn ' +
+                    (item.toolId === "ai-opportunity" ? "btn-primary" : "btn-ghost") +
+                    '" href="' +
+                    esc(item.path) +
+                    '">' +
+                    esc(item.cta) +
+                    "</a>"
+                  );
+                })
+                .join("") +
+              "</div>" +
+              "</div>" +
+              "</div>";
             return;
           }
 
@@ -676,6 +780,40 @@
 
         function renderTools(entries) {
           var grid = document.getElementById("toolGrid");
+          if (!countMeaningfulTools(entries)) {
+            grid.innerHTML = getFirstVisitRecommendations()
+              .map(function (item) {
+                return (
+                  '<article class="tool-card tool-card--featured">' +
+                  '<div class="tool-card__top">' +
+                  '<span class="tool-card__tag">' +
+                  esc(item.tag) +
+                  "</span>" +
+                  '<span class="tool-card__time">适合首次体验</span>' +
+                  "</div>" +
+                  "<h3>" +
+                  esc(item.label) +
+                  "</h3>" +
+                  '<div class="tool-card__summary">' +
+                  esc(item.summary) +
+                  "</div>" +
+                  '<div class="tool-card__reason">' +
+                  esc(item.reason) +
+                  "</div>" +
+                  '<div class="btn-row">' +
+                  '<a class="btn btn-primary" href="' +
+                  esc(item.path) +
+                  '">' +
+                  esc(item.cta) +
+                  "</a>" +
+                  "</div>" +
+                  "</article>"
+                );
+              })
+              .join("");
+            return;
+          }
+
           grid.innerHTML = entries
             .sort(function (a, b) {
               return new Date(getLastActivity(b)).getTime() - new Date(getLastActivity(a)).getTime();
