@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 2,
+  "updatedAt": "2026-04-03",
+  "description": "Unified workspace schema for all XYVC interactive tools.",
+  "tools": {
+    "student-startup-self-check": {
+      "label": "学生创业自检",
+      "sharedFields": [
+        "project.oneLiner",
+        "project.track",
+        "project.stage",
+        "project.teamSummary",
+        "basicInfo.major",
+        "basicInfo.grade",
+        "basicInfo.teamSize"
+      ]
+    },
+    "find-your-idea": {
+      "label": "发现你的创业想法",
+      "sharedFields": [
+        "project.oneLiner",
+        "project.track",
+        "project.stage",
+        "skills.summary",
+        "motivation.summary"
+      ]
+    },
+    "find-what-you-want": {
+      "label": "如何找到你想做的事",
+      "sharedFields": [
+        "motivation.summary",
+        "skills.summary",
+        "basicInfo.major",
+        "basicInfo.grade"
+      ]
+    },
+    "hard-tech-check": {
+      "label": "硬科技创业自检",
+      "sharedFields": [
+        "project.oneLiner",
+        "project.track",
+        "project.stage",
+        "project.isHardTech",
+        "project.teamSummary"
+      ]
+    },
+    "ai-ready-check": {
+      "label": "AI 员工准备度自检",
+      "sharedFields": [
+        "project.oneLiner",
+        "project.track",
+        "project.stage",
+        "workflow.biggestPain",
+        "workflow.primaryGoal"
+      ]
+    },
+    "ai-opportunity": {
+      "label": "AI 创业机会探索器",
+      "sharedFields": [
+        "project.oneLiner",
+        "project.track",
+        "project.stage",
+        "workflow.primaryGoal",
+        "opportunity.focusIndustry"
+      ]
+    }
+  },
+  "entities": {
+    "userProfile": {
+      "uid": "string",
+      "basicInfo": {
+        "major": "string",
+        "grade": "string",
+        "teamSize": "string"
+      },
+      "projectContext": {
+        "track": "string",
+        "stage": "string",
+        "oneLiner": "string",
+        "isHardTech": "boolean",
+        "teamSummary": "string"
+      },
+      "lastActiveTool": "string"
+    },
+    "toolState": {
+      "toolId": "string",
+      "draftData": "object",
+      "updatedAt": "iso-datetime"
+    },
+    "toolHistoryEntry": {
+      "versionId": "string",
+      "inputSnapshot": "object",
+      "outputSnapshot": "object",
+      "isShared": "boolean",
+      "shareId": "string",
+      "createdAt": "iso-datetime"
+    },
+    "actionItem": {
+      "actionId": "string",
+      "toolId": "string",
+      "dimension": "string",
+      "status": "待办|已完成",
+      "customNote": "string"
+    },
+    "shareSnapshot": {
+      "shareId": "string",
+      "toolId": "string",
+      "title": "string",
+      "payload": "object",
+      "createdAt": "iso-datetime"
+    },
+    "analyticsEvent": {
+      "eventId": "string",
+      "toolId": "string",
+      "eventName": "string",
+      "payload": "object",
+      "createdAt": "iso-datetime"
+    }
+  }
+}
