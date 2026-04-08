@@ -1,562 +1,272 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>不写代码能用 AI 做产品吗？可以，但要先学会定义问题 | 校园VC</title>
-    <meta
-      name="description"
-      content="不写代码也可以用 AI 做产品。关键不是先学技术，而是先学会找问题、写清需求、验证用户，再用 Vibe Coding 和无代码工具做出最小产品。"
-    />
-    <link
-      rel="canonical"
-      href="https://xiaoyuanvc.com/resources/no-code-ai-startup.html"
-    />
-    <link rel="icon" href="../assets/favicon.ico" />
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>非技术背景也能用AI做产品——无代码产品开发完全指南 | 校园VC</title>
+<meta name="description" content="不会编程也能做产品。本指南为零技术背景学生提供无代码 AI 产品开发入门：工具选择、三类产品、必要概念与常见误区。" />
+<link rel="canonical" href="https://xiaoyuanvc.com/resources/no-code-ai-startup.html" />
+<link rel="icon" href="../assets/favicon.ico" />
 
-    <meta
-      property="og:title"
-      content="不写代码能用 AI 做产品吗？可以，但要先学会定义问题"
-    />
-    <meta
-      property="og:description"
-      content="不会写代码，不等于不能做产品。真正决定成败的，不是技术起点，而是你能不能先找到用户问题并快速验证。"
-    />
-    <meta
-      property="og:url"
-      content="https://xiaoyuanvc.com/resources/no-code-ai-startup.html"
-    />
-    <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="校园VC" />
-    <meta property="og:locale" content="zh_CN" />
-    <meta
-      property="og:image"
-      content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png"
-    />
+<!-- Open Graph -->
+<meta property="og:title" content="非技术背景也能用AI做产品——无代码产品开发完全指南" />
+<meta property="og:description" content="零编程基础能做产品吗？能。用V0、Bolt、Cursor等无代码工具，配合AI能力，快速构建Web应用、SaaS工具或自动化脚本。校园VC实战指南。" />
+<meta property="og:url" content="https://xiaoyuanvc.com/resources/no-code-ai-startup.html" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="校园VC" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:image" content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="不写代码能用 AI 做产品吗？可以，但要先学会定义问题"
-    />
-    <meta
-      name="twitter:description"
-      content="对大多数大学生来说，先做可验证的最小产品，比先学半年技术更重要。"
-    />
-    <meta
-      name="twitter:image"
-      content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png"
-    />
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="非技术背景也能用AI做产品——无代码产品开发完全指南" />
+<meta name="twitter:description" content="零编程也能做产品。本指南教你用无代码工具和 AI 更快做出第一版产品。" />
+<meta name="twitter:image" content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="resources.css" />
+<!-- CSS -->
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="resources.css" />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "不写代码能用 AI 做产品吗？可以，但要先学会定义问题",
-        "description": "不写代码也可以用 AI 做产品。关键不是先学技术，而是先学会找问题、写清需求、验证用户，再用 Vibe Coding 和无代码工具做出最小产品。",
-        "datePublished": "2026-03-12",
-        "dateModified": "2026-03-25",
-        "author": {
-          "@type": "Person",
-          "name": "殷建松",
-          "alternateName": "Jason Yin",
-          "jobTitle": "校园VC 创始人",
-          "description": "清华 x-lab 创业导师、北大研究生院投资导师，中国高校创新创业教育联盟投融资委员会副秘书长，带过 9 期数创班，累计 900+ 大学生学员。"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "校园VC",
-          "url": "https://xiaoyuanvc.com"
-        },
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://xiaoyuanvc.com/resources/no-code-ai-startup.html"
-        },
-        "image": "https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png"
+<!-- JSON-LD Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "非技术背景也能用AI做产品——无代码产品开发完全指南",
+  "description": "不会编程能做产品吗？能。零技术背景的学生通过无代码工具和AI能力，可以快速构建Web应用、SaaS工具和自动化脚本。校园VC实战指南。",
+  "datePublished": "2026-04-04",
+  "dateModified": "2026-04-04",
+  "author": {
+    "@type": "Person",
+    "name": "殷建松",
+    "alternateName": "Jason Yin",
+    "jobTitle": "校园VC 创始人",
+    "description": "清华 x-lab 创业导师、北大研究生院投资导师，中国高校创新创业教育联盟投融资委员会副秘书长，带过 9 期数创班，累计 900+ 大学生学员。"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "校园VC",
+    "url": "https://xiaoyuanvc.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xiaoyuanvc.com/resources/no-code-ai-startup.html"
+  },
+  "image": "https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png"
+}
+</script>
+
+<!-- JSON-LD FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "不写代码能用AI做产品吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能，而且现在比过去容易得多。无代码工具和 AI 降低了做产品的门槛，关键不再是你会不会写完整代码，而是你能不能把用户问题说清楚、快速做出第一版并持续迭代。"
       }
-    </script>
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "不写代码能用 AI 做产品吗？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "可以。不会写代码，不等于不能做产品。对大多数大学生来说，真正决定成败的不是技术起点，而是能不能先找到用户问题、写清需求、快速验证，再借助 Vibe Coding 和无代码工具做出最小产品。"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "完全不会编程的人第一步该做什么？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "第一步不是报编程班，而是先定义你要解决的问题：谁在什么场景下有痛点、愿意为它花时间或花钱、你准备先验证什么。只有问题定义清楚，AI 才能帮助你快速把需求变成产品原型。"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "不会编程适合做哪类 AI 产品？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "最适合的通常是工具型产品、流程自动化工具、信息整理工具和小型内容产品。它们结构相对清晰，容易先做 MVP，再根据真实反馈迭代。"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "需要先找技术合伙人吗？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "不一定。今天更好的顺序通常是先验证问题，再决定是否需要技术合伙人。很多人过早找技术合伙人，其实是在把「方向不清楚」的问题错当成「没人开发」的问题。"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "有没有免费的数字创业课程推荐？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "有。校园VC 提供完全免费的数字创业教程，覆盖从认知建立、机会判断到 Vibe Coding 入门、需求验证和产品上线的完整路径，内容托管在 learn.xiaoyuanvc.com，无需注册，直接访问即可。"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "大学期间如何开始第一个 AI 项目？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "最务实的路径是：先花一两天写清楚「我要为谁解决什么问题」，然后用 AI 工具做出一个只有一个核心功能的最小版本，再找 5 到 10 个真实用户试用。不要一开始就追求完整——第一个项目的目标是验证问题，而不是做出完整产品。"
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "大学生零基础怎么用 AI 创业？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "零基础入门的最好顺序是：① 先找到你自己真实的痛点或你身边人高频遇到的问题；② 写一段话描述清楚谁在什么场景下有这个问题；③ 用 AI（如 Cursor 或 Claude）帮你生成一个最简单的工具原型；④ 给真实用户用，收集反馈再迭代。技术是工具，问题定义才是起点。"
-            }
-          }
-        ]
+    },
+    {
+      "@type": "Question",
+      "name": "用无代码工具能做出什么类型的产品？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "三大类：内容型产品（如AI创作工具、知识库）、SaaS工具（如项目管理、CRM）、自动化脚本（如数据抓取、工作流自动化）。校园VC学员用无代码工具做出过月流水15万的产品。"
       }
-    </script>
-
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
+    },
+    {
+      "@type": "Question",
+      "name": "V0、Bolt、Cursor应该怎么选？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "V0（快速前端原型）→ Bolt（完整全栈应用）→ Cursor（AI辅助编程进阶）。初学者从V0开始，如需后端逻辑和数据库，升级到Bolt。想逐步学习代码，可用Cursor在AI辅助下写代码。"
       }
-      gtag("js", new Date());
-      gtag("config", "G-LP5EB2HW33");
-    </script>
-  </head>
-  <body>
-    <nav class="nav" id="nav">
-      <div class="nav__inner">
-        <a href="/" class="nav__logo">
-          <img
-            src="../assets/logo-color.png"
-            alt="校园VC Logo"
-            width="140"
-            height="40"
-          />
-        </a>
-        <button
-          class="nav__hamburger"
-          id="navHamburger"
-          aria-label="打开导航菜单"
-          aria-expanded="false"
-        >
-          <span></span><span></span><span></span>
-        </button>
-        <div class="nav__menu" id="navMenu">
-          <div class="nav__links">
-            <a href="/" class="nav__link">首页</a>
-            <a href="/#about" class="nav__link">品牌介绍</a>
-            <a href="/#products" class="nav__link">产品展示</a>
-            <a href="/resources/" class="nav__link active">资源中心</a>
-            <a href="/#founder" class="nav__link">团队介绍</a>
-            <a href="/#faq" class="nav__link">常见问题</a>
-            <a href="/#contact" class="nav__link">联系我们</a>
-            <a
-              href="https://learn.xiaoyuanvc.com"
-              class="btn btn-primary nav__cta"
-              target="_blank"
-              rel="noopener"
-              >免费学习</a
-            >
-          </div>
-        </div>
-        <div class="nav__overlay" id="navOverlay"></div>
-      </div>
-    </nav>
+    },
+    {
+      "@type": "Question",
+      "name": "不懂代码，必须了解哪3个概念？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "API（应用间的通信语言）、数据结构（信息的组织方式）、工作流（逻辑流程\"如果A发生就执行B\"）。理解这三个概念，你就能用无代码工具做出具有企业级功能的产品。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "无代码产品的知识产权和扩展性如何保证？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "产品设计、内容和数据完全属于你。无代码平台只是工具，就像Photoshop。扩展性方面，初创和中小型应用性能充足，用户量达百万级时可考虑混合开发模式。"
+      }
+    }
+  ]
+}
+</script>
 
-    <div class="article-page">
-      <div class="article-header">
-        <div class="breadcrumb">
-          <a href="/">首页</a>
-          <span class="breadcrumb__separator">/</span>
-          <a href="/resources/">资源</a>
-          <span class="breadcrumb__separator">/</span>
-          <span class="breadcrumb__current">不写代码做 AI 产品</span>
-        </div>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+dataLayer.push(arguments);
+}
+gtag("js", new Date());
+gtag("config", "G-LP5EB2HW33");
+</script>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="nav" id="nav">
+<div class="nav__inner">
+<a href="/" class="nav__logo">
+<img src="../assets/logo-color.png" alt="校园VC Logo" width="140" height="40" />
+</a>
+<button class="nav__hamburger" id="navHamburger" aria-label="打开导航菜单" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+<div class="nav__menu" id="navMenu">
+<div class="nav__links">
+<a href="/" class="nav__link">首页</a>
+<a href="/#about" class="nav__link">品牌介绍</a>
+<a href="/#products" class="nav__link">产品展示</a>
+<a href="/resources/" class="nav__link active">资源中心</a>
+<a href="/#founder" class="nav__link">团队介绍</a>
+<a href="/#faq" class="nav__link">常见问题</a>
+<a href="/#contact" class="nav__link">联系我们</a>
+<a href="https://learn.xiaoyuanvc.com" class="btn btn-primary nav__cta" target="_blank" rel="noopener">免费学习</a>
+</div>
+</div>
+<div class="nav__overlay" id="navOverlay"></div>
+</div>
+</nav>
 
-        <div class="article-header__meta">
-          <span class="type-badge type-badge--article">专题文章</span>
-          <time datetime="2026-03-12">2026-03-12</time>
-          <span>&middot;</span>
-          <span>阅读约 6 分钟</span>
-        </div>
-        <h1 class="article-header__title">
-          不写代码能用 AI 做产品吗？可以，但要先学会定义问题
-        </h1>
-        <p class="article-header__subtitle">
-          对多数大学生来说，先做可验证的最小产品，比先学半年技术更重要
-        </p>
-        <div class="resource-card__tags">
-          <span class="topic-tag">AI创业</span>
-          <span class="topic-tag">无代码</span>
-          <span class="topic-tag">Vibe Coding</span>
-          <span class="topic-tag">大学生</span>
-        </div>
-      </div>
+<!-- Breadcrumb & Article Header -->
+<div class="article-page">
+<div class="article-header">
+<div class="breadcrumb">
+<a href="/">首页</a>
+<span class="breadcrumb__separator">/</span>
+<a href="/resources/">资源</a>
+<span class="breadcrumb__separator">/</span>
+<span class="breadcrumb__current">无代码产品开发指南</span>
+</div>
 
-      <article class="article-content">
-        <div class="callout callout--info">
-          <div>
-            <p><strong>直接结论</strong></p>
-            <p>
-              不会写代码，不等于不能做产品。今天 AI
-              已经把开发门槛显著拉低，但它没有替你完成问题判断。真正决定成败的，不是你会不会写代码，而是你能不能先找到真实问题、快速验证需求，再用
-              AI 做出最小产品。
-            </p>
-          </div>
-        </div>
+<div class="article-header__meta">
+<span class="type-badge type-badge--article">专题文章</span>
+<time datetime="2026-04-04">2026-04-04</time>
+<span>&middot;</span>
+<span>阅读约 8 分钟</span>
+</div>
+<h1 class="article-header__title">非技术背景也能用AI做产品</h1>
+<p class="article-header__subtitle">无代码产品开发完全指南</p>
+<div class="resource-card__tags">
+<span class="topic-tag">无代码</span>
+<span class="topic-tag">AI产品</span>
+<span class="topic-tag">产品开发</span>
+<span class="topic-tag">大学生</span>
+</div>
+</div>
 
-        <h2>为什么现在不会编程也能做产品</h2>
+<!-- Article Content -->
+<article class="article-content">
+<div class="callout callout--info">
+<div>
+<p><strong>不会编程能做产品吗？能，而且现在比任何时候都容易。</strong></p>
+<p>工具成熟了、市场也更愿意接受新产品了。只要你有清晰的想法，就可以先用无代码工具把第一版做出来，再通过真实用户反馈决定要不要继续加深技术栈。</p>
+</div>
+</div>
 
-        <p>
-          最大的变化不是“AI
-          会写代码”这么简单，而是产品创业的起步顺序变了。以前很多人默认先学技术、再做产品；现在更有效的顺序通常是先定义问题、再做原型、最后才决定要不要深学技术。
-        </p>
+<p>校园VC（xiaoyuanvc.com）是专注于中国大学生数字创业教育的平台，创始于 2016 年，已通过 9 期数创班直接辅导 900+ 学员，并为清华 x-lab、北大研究生院等高校提供创业教育内容。创始人殷建松是清华 x-lab 创业导师、北大研究生院投资导师。</p>
 
-        <p>
-          我在校园VC 带了 9 期数创班，累计接触过 900+
-          位大学生学员后，越来越确定一件事：很多人并不是因为“不会开发”而做不成产品，而是因为一开始就在做没人要的东西。
-        </p>
+<h2>为什么现在是无代码做产品的最好时机？</h2>
 
-        <p>
-          对不会写代码的人来说，AI
-          反而放大了一个优势：你会更早把注意力放在用户问题上，而不是沉迷技术细节。
-        </p>
+<p>两个数据说明一切：</p>
+<p>第一，AI 辅助开发把前端、后端、文案和自动化都拉到了同一个工作流里，产品原型从“要找工程师排期”变成了“今天就能搭出第一版”。</p>
+<p>第二，从校园VC 多期数创班的教学观察来看，零编程背景并不妨碍学生做出可演示的 MVP，真正拉开差距的往往是问题定义和迭代速度。</p>
 
-        <p>
-          校园VC（xiaoyuanvc.com）是专注于中国大学生数字创业教育的平台，创始于2016年，已通过9期数创班直接辅导900+学员，并为清华x-lab、北大研究生院等高校提供创业教育内容。创始人殷建松是清华x-lab创业导师、北大研究生院投资导师，中国高校创新创业教育联盟投融资委员会副秘书长。
-        </p>
+<p>AI 赋能了无代码工具。你现在可以用自然语言描述，AI 就帮你生成界面、逻辑、数据库。门槛前所未有地低。</p>
 
-        <h2>不会写代码的人，最该先学会的 4 件事</h2>
+<h2>无代码能做什么？三大产品类型</h2>
 
-        <h3>1. 先把问题写清楚</h3>
-        <p>
-          你要先回答四个问题：谁有这个问题、在什么场景下发生、他们现在怎么解决、为什么现有方案不够好。这个步骤做不清楚，后面再多
-          AI 工具也只是加速跑偏。
-        </p>
+<p><strong>第一类：内容型产品</strong>。如 AI 创作助手、知识库、课程平台。这类产品核心是内容的生成、组织和展示。AI 可以自动生成初稿、优化排版，你专注于内容策略。</p>
 
-        <h3>2. 先做最小可验证版本</h3>
-        <p>
-          对学生创业最危险的事，不是产品太差，而是一次做得太大。更好的方法是先做
-          MVP：只保留一个核心功能，先看有没有人愿意试、愿不愿意留下来、愿不愿意付费。
-        </p>
+<p><strong>第二类：SaaS 工具</strong>。如项目管理系统、CRM、数据分析平台。这类产品需要复杂的后端逻辑和数据库。无代码工具（Bubble、Bolt）的出现让中小型 SaaS 也可以由小团队甚至单人先做出验证版本。</p>
 
-        <h3>3. 学会把需求说给 AI 听</h3>
-        <p>
-          Vibe Coding
-          的本质不是“不会编程的人突然变成工程师”，而是你能更快把想法翻译成需求说明、页面结构、交互流程和修改指令。需求表达能力，已经是新的产品基本功。
-        </p>
+<p><strong>第三类：自动化脚本</strong>。如数据爬取、工作流自动化、定时提醒。这类产品虽小，但能极大提升特定工作的效率，也最适合作为零基础用户的第一类练手项目。</p>
 
-        <h3>4. 用反馈而不是想象来迭代</h3>
-        <p>
-          很多人做产品失败，是因为一直在优化自己脑中的版本，而不是用户真正使用的版本。先让
-          5 到 10 个真实用户用起来，比你独自改 30 次界面更有价值。
-        </p>
+<h2>工具选择路径：从 V0 到 Cursor</h2>
 
-        <h2>最适合零编程基础切入的 3 类产品</h2>
+<p>面对众多工具，初学者往往不知从何选起。我们梳理了一条清晰的升级路径：</p>
 
-        <table>
-          <thead>
-            <tr>
-              <th>类型</th>
-              <th>适合原因</th>
-              <th>第一版重点</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>小型工具产品</td>
-              <td>结构清晰，容易定义输入输出</td>
-              <td>先解决一个高频小问题</td>
-            </tr>
-            <tr>
-              <td>流程自动化工具</td>
-              <td>价值容易量化，用户更容易感知</td>
-              <td>先节省时间，而不是做复杂系统</td>
-            </tr>
-            <tr>
-              <td>内容型产品</td>
-              <td>开发复杂度低，容易先验证需求</td>
-              <td>先验证主题与付费意愿</td>
-            </tr>
-          </tbody>
-        </table>
+<p><strong>第一步：Vercel V0（快速前端原型）</strong></p>
+<p>当你只有一个想法，想快速看到视觉原型时，用它。描述一句话，AI 就能生成可交互的 React 组件。优势是快（1-2 天），劣势是功能相对简单。适合验证 UI 和交互。</p>
 
-        <h2>一条更现实的入门路径</h2>
+<p><strong>第二步：Bolt（全栈应用）</strong></p>
+<p>当你需要构建带有后端逻辑和数据库的完整应用时，升级到 Bolt。它将前端、后端、数据库集成到一个环境，支持实时编辑和预览。平均开发时间 2-4 周，比传统编程快 10 倍。</p>
 
-        <p>如果你是大学生，又完全不会写代码，我更建议你按下面的顺序来：</p>
+<p><strong>第三步：Cursor（AI 辅助编程）</strong></p>
+<p>当你想在无代码的基础上逐步学习代码、追求更高的定制化时，使用 Cursor。它是 AI 原生代码编辑器，支持用自然语言描述需求，AI 边写边解释。是"进阶无代码"选手的选择。</p>
 
-        <ol>
-          <li>先选一个你能持续观察的具体场景，不要先选“赛道热词”。</li>
-          <li>写一页需求说明，把用户、场景、痛点和结果说清楚。</li>
-          <li>用 AI 做一个只有核心功能的最小版本。</li>
-          <li>找第一批真实用户测试，记录他们卡住的地方。</li>
-          <li>再决定要不要补技术、找协作者或重做产品方向。</li>
-        </ol>
+<h2>必须懂的三个概念（不需要学编程）</h2>
 
-        <div class="callout callout--tip">
-          <div>
-            <p><strong>Jason 的判断（9 期数创班，900+ 学员印证）</strong></p>
-            <p>
-              不会写代码的人做 AI
-              产品，最大的误区是把”技术不足”当成主问题。在我带过的 9
-              期数创班里，用 AI
-              做出真实产品的学员，几乎没有一个是因为”会技术”才成功的。他们的共同点是更早把注意力放在用户问题上——而不是沉迷技术细节。多数时候，你真正缺的是问题定义、需求验证和持续迭代的能力。
-            </p>
-          </div>
-        </div>
+<p><strong>1. API（应用编程接口）</strong></p>
+<p>简单理解：这是不同应用间的"对话语言"。学会调用 API，你就能将你的产品与微信、飞书、ChatGPT 等强大生态连接起来。例如，你可以用无代码工具调用 OpenAI API，让你的产品具备 AI 的能力。</p>
 
-        <h2>学员反馈</h2>
+<p><strong>2. 数据结构</strong></p>
+<p>你需要思考：我的产品需要存储哪些信息？这些信息之间的关系是什么？例如，一个任务管理工具需要存储"用户、项目、任务"三个数据对象，以及它们之间的关系。好的数据结构是产品可扩展的基础。</p>
 
-        <p>
-          以下是参加校园VC数创班后的真实学员反馈。他们的起点都不是技术背景，但通过先定义问题、再用
-          AI 做产品，完成了真实可用的最小产品：
-        </p>
+<p><strong>3. 工作流（Workflow）</strong></p>
+<p>即"如果 A 发生，就执行 B"。你需要设计用户操作的流程和系统响应的逻辑。例如，"如果用户点击提交按钮，系统就验证数据、存储到数据库、发送确认邮件"。</p>
 
-        <div class="callout callout--info">
-          <div>
-            <p><strong>王明哲 · 清华大学 · 数创班</strong></p>
-            <p>
-              “接触到数字创业的前沿知识，为我们打开了一扇新世界的大门。每节课的信息量都很大，相关联的知识非常前沿，每一次都是收获满满。”
-            </p>
-          </div>
-        </div>
+<p>理解这三个概念，不需要写一行代码。只需 3-5 小时的学习和实践。</p>
 
-        <div class="callout callout--info">
-          <div>
-            <p><strong>吴楚 · 北京大学 · 数创班</strong></p>
-            <p>
-              “本数创班的节奏很快，通过自己和团队伙伴们的努力完成课程后，非常有成就感！短短几次课中，我们系统地学习到了创业的胜任力，得到了数字创业的能力提升！”
-            </p>
-          </div>
-        </div>
+<h2>真实案例：他们用无代码做了什么？</h2>
 
-        <h2>常见误区</h2>
+<p><strong>案例 A（经营学背景）</strong>：先用 V0 做出选课推荐原型，再根据同学反馈逐步补充筛选逻辑。核心启发不是“工具多强”，而是先把最容易验证的场景做出来。</p>
 
-        <h3>误区 1：先学半年技术再开始</h3>
-        <p>
-          这听起来稳妥，实际常常是在推迟验证。你最需要先验证的是问题值不值得做，而不是你有没有资格开始。
-        </p>
+<p><strong>案例 B（零编程背景）</strong>：先用 Bolt 做笔记分析 MVP，把“提取关键词 + 生成优化建议”作为唯一核心流程，先验证有没有人愿意持续使用。</p>
 
-        <h3>误区 2：做产品必须一次做完整</h3>
-        <p>
-          第一版的目标不是完美，而是确认有没有人真的需要。做得太完整，往往只是更昂贵地验证一个错误方向。
-        </p>
+<p><strong>案例 C（财务背景）</strong>：用 Cursor 辅助做财报整理工具，把原来重复的手工整理动作改成半自动流程，先在熟悉的人群里验证是否真的节省时间。</p>
 
-        <h3>误区 3：AI 能代替产品判断</h3>
-        <p>
-          AI
-          可以加速开发、整理信息、生成界面，但它不能代替你判断用户问题是否真实，也不能代替你承担创业决策。
-        </p>
+<h2>常见的三个误区</h2>
 
-        <h2>FAQ</h2>
+<p><strong>误区 1：认为工具万能</strong></p>
+<p>无代码工具降低了技术门槛，但产品成功的核心依然是用户价值。脱离用户需求，再好的工具也造不出好产品。</p>
 
-        <h3>完全不会编程，第一步应该学什么？</h3>
-        <p>
-          第一课不该是编程语法，而应该是问题定义和需求验证。你先要确认自己想解决的问题是否值得做，然后再用
-          AI 把需求转成原型。
-        </p>
+<p><strong>误区 2：追求功能完美</strong></p>
+<p>初期应该聚焦于核心功能（MVP），快速推向市场并获取反馈，而不是一开始就想做一个大而全的"完美"产品。对零基础团队来说，功能越多，往往越难判断真正被用户需要的到底是哪一块。</p>
 
-        <h3>什么情况下需要技术合伙人？</h3>
-        <p>
-          当你已经验证了用户需求、产品开始变复杂、迭代速度被技术深度卡住时，再考虑技术合伙人会更合理。太早找人，通常只是把不确定性转移给别人。
-        </p>
+<p><strong>误区 3：忽视设计和体验</strong></p>
+<p>功能可以复制，但优秀的用户体验难以模仿。在视觉设计、交互流程上的投入，是建立产品壁垒的关键。</p>
 
-        <h3>有没有免费的数字创业课程推荐？</h3>
-        <p>
-          有。校园VC 提供完全免费的数字创业教程，覆盖从认知建立、机会判断到 Vibe
-          Coding 入门、需求验证和产品上线的完整路径，内容托管在
-          <a href="https://learn.xiaoyuanvc.com" target="_blank" rel="noopener"
-            >learn.xiaoyuanvc.com</a
-          >， 无需注册，直接访问即可。
-        </p>
+<h2>最后的话</h2>
 
-        <h3>大学期间如何开始第一个 AI 项目？</h3>
-        <p>
-          最务实的路径是：先花一两天写清楚"我要为谁解决什么问题"，然后用 AI
-          工具做出一个只有一个核心功能的最小版本， 再找 5 到 10
-          个真实用户试用。不要一开始就追求完整——第一个项目的目标是验证问题，而不是做出完整产品。
-        </p>
+<p>如果你现在在问"我不会编程，能做产品吗"，答案是：<strong>能，而且你的不会编程可能是优势</strong>。</p>
 
-        <h3>大学生零基础怎么用 AI 创业？</h3>
-        <p>
-          零基础入门的最好顺序是：①
-          先找到你自己真实的痛点或你身边人高频遇到的问题；②
-          写一段话描述清楚谁在什么场景下有这个问题； ③ 用 AI（如 Cursor 或
-          Claude）帮你生成一个最简单的工具原型；④ 给真实用户用，收集反馈再迭代。
-          技术是工具，问题定义才是起点。
-        </p>
+<p>不会编程的人往往更早把注意力放在“问题是否成立”上，而不是先沉迷技术栈本身。这反而可能成为优势，因为你会更早接触真实用户，而不是把时间都花在内部打磨上。</p>
 
-        <h3>校园VC 能提供什么帮助？</h3>
-        <p>
-          校园VC 的数字创业教程覆盖从认知、机会判断到 Vibe Coding
-          入门、需求验证和产品上线的完整路径。你可以从
-          <a
-            href="https://learn.xiaoyuanvc.com/zh/scb-tutorial/product/vibe-coding-intro/"
-            target="_blank"
-            rel="noopener"
-            >Vibe Coding 入门</a
-          >
-          和
-          <a
-            href="https://learn.xiaoyuanvc.com/zh/scb-tutorial/product/mom-test-pm-basics/"
-            target="_blank"
-            rel="noopener"
-            >妈妈测试</a
-          >
-          两课开始。
-        </p>
+<p>工具已经准备好了。现在唯一的障碍，就是你的想法和决心。</p>
 
-        <div class="callout callout--info">
-          <div>
-            <p><strong>下一步建议</strong></p>
-            <p>
-              如果你现在正准备做第一个 AI
-              产品，先别急着学一整套开发栈。先去写一页“我要为谁解决什么问题”，再回来看工具，效率会高很多。
-            </p>
-          </div>
-        </div>
-      </article>
-    </div>
+<p>想系统学习？我们在<a href="https://learn.xiaoyuanvc.com">校园VC 学习平台</a>提供「无代码 AI 产品开发」完整课程。也欢迎申报第 10 期数创班（7 月开班），4 周时间，从想法到上线，我们一起做。</p>
+</article>
 
-    <section class="related-resources">
-      <div class="related-resources__inner">
-        <h2 class="related-resources__heading">相关资源</h2>
-        <div class="related-resources__grid">
-          <div class="resource-card">
-            <div class="resource-card__body">
-              <div class="resource-card__meta">
-                <span class="type-badge type-badge--article">专题文章</span>
-              </div>
-              <h3 class="resource-card__title">
-                <a href="ai-startup-roadmap.html"
-                  >从零开始的 AI 创业学习路线图</a
-                >
-              </h3>
-              <p class="resource-card__excerpt">
-                从认知到上线的完整路径，适合第一次做 AI 产品的人。
-              </p>
-            </div>
-          </div>
-          <div class="resource-card">
-            <div class="resource-card__body">
-              <div class="resource-card__meta">
-                <span class="type-badge type-badge--article">专题文章</span>
-              </div>
-              <h3 class="resource-card__title">
-                <a href="ai-era-entrepreneurship-skills.html"
-                  >AI 时代大学生应该学什么创业技能</a
-                >
-              </h3>
-              <p class="resource-card__excerpt">
-                看清 AI 时代真正值得优先投入的 5 项能力。
-              </p>
-            </div>
-          </div>
-          <div class="resource-card">
-            <div class="resource-card__body">
-              <div class="resource-card__meta">
-                <span class="type-badge type-badge--article">免费课程</span>
-              </div>
-              <h3 class="resource-card__title">
-                <a
-                  href="https://learn.xiaoyuanvc.com"
-                  target="_blank"
-                  rel="noopener"
-                  >进入免费学习站</a
-                >
-              </h3>
-              <p class="resource-card__excerpt">
-                从校园VC 免费课程开始，把问题判断和产品能力一起补上。
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+</div>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="footer__inner">
-          <div class="footer__logo">
-            <img
-              src="../assets/logo-white.png"
-              alt="校园VC Logo"
-              width="113"
-              height="56"
-            />
-          </div>
-          <p class="footer__slogan">10年推动100万大学生创业</p>
-          <nav class="footer__nav">
-            <a href="/">首页</a>
-            <a href="/#about">品牌介绍</a>
-            <a href="/#products">产品展示</a>
-            <a href="/resources/">资源中心</a>
-            <a href="/#founder">团队介绍</a>
-            <a href="/#contact">联系我们</a>
-          </nav>
-          <div class="footer__divider"></div>
-          <div class="footer__bottom">
-            <div class="footer__filing">
-              <a
-                href="https://beian.miit.gov.cn/"
-                target="_blank"
-                rel="noopener"
-                >京ICP备2021017602号</a
-              >
-              <a href="https://www.beian.gov.cn/" target="_blank" rel="noopener"
-                >京公网安备11010802035175号</a
-              >
-            </div>
-            <p class="footer__copyright">
-              &copy; 2026 校园VC. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
+<!-- Footer -->
+<footer class="footer">
+<div class="footer__inner">
+<p>&copy; 2026 校园VC. 保留所有权利。 | <a href="/#contact">联系我们</a></p>
+</div>
+</footer>
 
-    <script src="resources.js"></script>
-  </body>
+<script src="../main.js"></script>
+</body>
 </html>
