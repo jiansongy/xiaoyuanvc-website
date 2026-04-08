@@ -1,0 +1,352 @@
+[
+  {
+    "actionId": "Action_001",
+    "dimension": "problem",
+    "title": "完成 10 次 {{industry}} 用户访谈",
+    "brief": "优先找 10 位真实目标用户，确认他们现在如何解决这个问题、什么时候最痛、为什么现有方案不够好。",
+    "tags": ["evidence", "interview", "early"]
+  },
+  {
+    "actionId": "Action_002",
+    "dimension": "problem",
+    "title": "整理 20 条 {{audience}} 原话证据",
+    "brief": "把用户在访谈、群聊、评论区里说过的原话整理出来，避免只凭自己的理解判断需求强弱。",
+    "tags": ["evidence", "quotes", "early"]
+  },
+  {
+    "actionId": "Action_003",
+    "dimension": "problem",
+    "title": "对比 3 个现有替代方案",
+    "brief": "写清楚用户现在用什么土办法或竞品在解决问题，以及这些方案最让人不满意的点。",
+    "tags": ["competition", "alternatives", "early"]
+  },
+  {
+    "actionId": "Action_004",
+    "dimension": "problem",
+    "title": "用一张表拆解问题频次与损失",
+    "brief": "列出问题发生频率、造成的时间或金钱损失，以及用户为什么愿意为解决它停下来。",
+    "tags": ["pain", "urgency", "analysis"]
+  },
+  {
+    "actionId": "Action_005",
+    "dimension": "problem",
+    "title": "筛出最痛的 {{audience}} 子人群",
+    "brief": "不要把所有人都当用户。先确定最痛、最容易触达、最愿意配合验证的一批人。",
+    "tags": ["segmentation", "audience", "early"]
+  },
+  {
+    "actionId": "Action_006",
+    "dimension": "problem",
+    "title": "验证用户是否会主动求解决方案",
+    "brief": "设计一个简单触达动作，看目标用户是否愿意留下联系方式、预约试用或继续沟通。",
+    "tags": ["conversion", "signal", "validation"]
+  },
+  {
+    "actionId": "Action_007",
+    "dimension": "problem",
+    "title": "把问题改写成一句可验证假设",
+    "brief": "格式统一成“当 {{audience}} 在 ______ 场景下，会因为 ______ 而愿意尝试 {{product}}”。",
+    "tags": ["hypothesis", "clarity", "early"]
+  },
+  {
+    "actionId": "Action_008",
+    "dimension": "problem",
+    "title": "记录 5 个失败访谈样本",
+    "brief": "把不认可你方向的用户反馈也记下来，找出真正阻碍他们使用或付费的关键原因。",
+    "tags": ["disconfirm", "evidence", "validation"]
+  },
+  {
+    "actionId": "Action_009",
+    "dimension": "problem",
+    "title": "补一轮场景观察",
+    "brief": "如果用户自己说不清，直接去观察他们在真实场景里的动作流，确认问题是否持续存在。",
+    "tags": ["observation", "field", "evidence"]
+  },
+  {
+    "actionId": "Action_010",
+    "dimension": "problem",
+    "title": "给问题强度打证据分",
+    "brief": "按“是否高频、是否刚需、是否有预算、是否已有替代方案”四项各打 1-5 分，别只凭感觉。",
+    "tags": ["scoring", "evidence", "analysis"]
+  },
+  {
+    "actionId": "Action_011",
+    "dimension": "wedge",
+    "title": "定义第一批 30 个种子用户名单",
+    "brief": "列出你最容易直接触达的 30 个目标用户来源，说明为什么他们会是最早愿意试的人。",
+    "tags": ["seed-users", "distribution", "early"]
+  },
+  {
+    "actionId": "Action_012",
+    "dimension": "wedge",
+    "title": "把 {{audience}} 缩到一个具体场景",
+    "brief": "先不要做大而全，明确到“谁在什么场景下最容易被你解决”。",
+    "tags": ["niche", "positioning", "early"]
+  },
+  {
+    "actionId": "Action_013",
+    "dimension": "wedge",
+    "title": "写出 3 条首批触达路径",
+    "brief": "把你能用来拿到第一批用户的渠道写具体，例如社群、班级、校内组织、导师资源或公众号。",
+    "tags": ["channels", "distribution", "go-to-market"]
+  },
+  {
+    "actionId": "Action_014",
+    "dimension": "wedge",
+    "title": "设计一个一句话定位测试",
+    "brief": "写 3 个版本的一句话介绍，拿给目标用户看，测试谁能最快听懂并继续追问。",
+    "tags": ["messaging", "positioning", "validation"]
+  },
+  {
+    "actionId": "Action_015",
+    "dimension": "wedge",
+    "title": "选一个最小切入口 KPI",
+    "brief": "只保留一个最重要的启动指标，例如预约数、试用数、留资数或二次回复率。",
+    "tags": ["metrics", "focus", "early"]
+  },
+  {
+    "actionId": "Action_016",
+    "dimension": "wedge",
+    "title": "给第一批用户写进入门槛",
+    "brief": "明确哪些人现在先不做，避免切口过大导致验证成本失控。",
+    "tags": ["qualification", "focus", "early"]
+  },
+  {
+    "actionId": "Action_017",
+    "dimension": "wedge",
+    "title": "验证用户是否愿意转介绍同类人",
+    "brief": "如果方向真的切中痛点，首批用户至少愿意把你介绍给一个相似人群。",
+    "tags": ["referral", "signal", "distribution"]
+  },
+  {
+    "actionId": "Action_018",
+    "dimension": "wedge",
+    "title": "做一页种子用户着陆页",
+    "brief": "用一个页面把“人群、问题、承诺、CTA”讲清楚，测试点击和留资是否成立。",
+    "tags": ["landing-page", "conversion", "validation"]
+  },
+  {
+    "actionId": "Action_019",
+    "dimension": "wedge",
+    "title": "拆解首单成交路径",
+    "brief": "假设你本周必须拿到第一个付费或试用用户，倒推每一步应该由谁完成、在哪里发生。",
+    "tags": ["sales", "process", "go-to-market"]
+  },
+  {
+    "actionId": "Action_020",
+    "dimension": "wedge",
+    "title": "把用户获取成本先粗估一版",
+    "brief": "不求精准，先判断这个切入口是否可能靠低成本触达跑起来。",
+    "tags": ["cac", "distribution", "analysis"]
+  },
+  {
+    "actionId": "Action_021",
+    "dimension": "mvp",
+    "title": "写一份 7 天验证计划",
+    "brief": "把本周每天要验证的假设、动作、样本量和成功标准写出来，不允许只有笼统目标。",
+    "tags": ["plan", "validation", "execution"]
+  },
+  {
+    "actionId": "Action_022",
+    "dimension": "mvp",
+    "title": "搭一个最小可验证载体",
+    "brief": "哪怕只是表单、飞书文档、Figma、Demo 或手动服务，也要让用户能真实体验关键价值。",
+    "tags": ["mvp", "prototype", "execution"]
+  },
+  {
+    "actionId": "Action_023",
+    "dimension": "mvp",
+    "title": "先用人工替代自动化",
+    "brief": "在没证明需求前，先用人工完成后台流程，把时间花在学习用户反应，而不是早做系统。",
+    "tags": ["concierge", "mvp", "execution"]
+  },
+  {
+    "actionId": "Action_024",
+    "dimension": "mvp",
+    "title": "定义一个继续做 / 停止做阈值",
+    "brief": "例如“7 天内至少 5 人预约试用”或“10 人中至少 4 人愿意二次使用”，避免无限模糊试错。",
+    "tags": ["decision-rule", "metrics", "validation"]
+  },
+  {
+    "actionId": "Action_025",
+    "dimension": "mvp",
+    "title": "把 MVP 砍到单一核心价值",
+    "brief": "删掉所有非核心功能，只保留那个用户最在意、且最容易验证的动作。",
+    "tags": ["scope", "focus", "mvp"]
+  },
+  {
+    "actionId": "Action_026",
+    "dimension": "mvp",
+    "title": "记录首次使用的 5 个阻塞点",
+    "brief": "找 5 位用户过一遍体验流程，把所有卡点都记下来，再决定先修哪个。",
+    "tags": ["ux", "onboarding", "validation"]
+  },
+  {
+    "actionId": "Action_027",
+    "dimension": "mvp",
+    "title": "补一轮低成本投放测试",
+    "brief": "如果方向适合线上获客，先用小预算或校内分发测试点击、留资和试用意愿。",
+    "tags": ["experiment", "ads", "validation"]
+  },
+  {
+    "actionId": "Action_028",
+    "dimension": "mvp",
+    "title": "建立验证看板",
+    "brief": "把假设、动作、结果、结论统一放在一个表里，避免每次测试完没有复盘沉淀。",
+    "tags": ["tracking", "learning", "execution"]
+  },
+  {
+    "actionId": "Action_029",
+    "dimension": "mvp",
+    "title": "把验证动作精确到小时",
+    "brief": "不是“这周做做看”，而是拆到谁在什么时候完成什么动作。",
+    "tags": ["cadence", "execution", "plan"]
+  },
+  {
+    "actionId": "Action_030",
+    "dimension": "mvp",
+    "title": "先拿到一个高质量使用案例",
+    "brief": "哪怕用户数量少，也要先拿到一个能讲清问题、过程和结果的完整案例。",
+    "tags": ["case-study", "signal", "validation"]
+  },
+  {
+    "actionId": "Action_031",
+    "dimension": "team",
+    "title": "梳理团队能力矩阵",
+    "brief": "把产品、技术、运营、销售、内容、行业理解逐项列出来，明确已覆盖和缺失能力。",
+    "tags": ["team", "skills", "analysis"]
+  },
+  {
+    "actionId": "Action_032",
+    "dimension": "team",
+    "title": "定义下一位关键合作者画像",
+    "brief": "别笼统说“需要懂运营的人”。明确这个人要解决哪一段关键短板、从哪里找到。",
+    "tags": ["hiring", "team", "execution"]
+  },
+  {
+    "actionId": "Action_033",
+    "dimension": "team",
+    "title": "给每位成员分一个 7 天责任目标",
+    "brief": "如果团队存在，就要把本周每人负责的验证动作和交付结果写清楚。",
+    "tags": ["ownership", "execution", "team"]
+  },
+  {
+    "actionId": "Action_034",
+    "dimension": "team",
+    "title": "补足行业理解缺口",
+    "brief": "如果团队不熟行业，优先找 3 位从业者或导师做访谈，别闭门造车。",
+    "tags": ["industry", "learning", "team"]
+  },
+  {
+    "actionId": "Action_035",
+    "dimension": "team",
+    "title": "明确创始人为什么适合做这件事",
+    "brief": "用过往经历、资源、长期动机和可持续投入意愿来证明，而不是只说“我感兴趣”。",
+    "tags": ["founder-fit", "story", "analysis"]
+  },
+  {
+    "actionId": "Action_036",
+    "dimension": "team",
+    "title": "建立每周复盘节奏",
+    "brief": "固定一个时间，复盘本周验证结果、下周动作和仍未解决的风险。",
+    "tags": ["cadence", "team", "execution"]
+  },
+  {
+    "actionId": "Action_037",
+    "dimension": "team",
+    "title": "把外部资源写成列表",
+    "brief": "导师、社群、校园组织、行业前辈、校友等资源都算团队延伸能力，别让它们停留在脑子里。",
+    "tags": ["network", "resources", "team"]
+  },
+  {
+    "actionId": "Action_038",
+    "dimension": "team",
+    "title": "验证团队协作是否真的能推进项目",
+    "brief": "不是看人数，而是看这周能不能共同交付一个真实验证成果。",
+    "tags": ["execution", "team", "signal"]
+  },
+  {
+    "actionId": "Action_039",
+    "dimension": "team",
+    "title": "设定决策机制",
+    "brief": "遇到方向分歧时，谁拍板、以什么证据决策、什么时候复核，要提前说清楚。",
+    "tags": ["decision", "team", "governance"]
+  },
+  {
+    "actionId": "Action_040",
+    "dimension": "team",
+    "title": "补一个实际交付样本",
+    "brief": "如果团队匹配度难证明，先做一个最小交付成果，用行动证明而不是口头说明。",
+    "tags": ["proof", "execution", "team"]
+  },
+  {
+    "actionId": "Action_041",
+    "dimension": "growth",
+    "title": "画出三层扩展路径",
+    "brief": "从当前最小切口出发，写清楚下一层用户、下一层场景、下一层收入机会。",
+    "tags": ["expansion", "growth", "strategy"]
+  },
+  {
+    "actionId": "Action_042",
+    "dimension": "growth",
+    "title": "设计一个复购或回访信号",
+    "brief": "不是只看第一次兴趣，要验证用户愿不愿意回来、愿不愿意继续使用。",
+    "tags": ["retention", "growth", "metrics"]
+  },
+  {
+    "actionId": "Action_043",
+    "dimension": "growth",
+    "title": "拆解单点需求到产品矩阵的边界",
+    "brief": "明确哪些扩展是自然延伸，哪些会把你带进完全不同的战场。",
+    "tags": ["scope", "expansion", "strategy"]
+  },
+  {
+    "actionId": "Action_044",
+    "dimension": "growth",
+    "title": "初步估算单位经济",
+    "brief": "哪怕只是一版粗模，也要知道这个方向未来有没有可能形成健康收入结构。",
+    "tags": ["economics", "growth", "analysis"]
+  },
+  {
+    "actionId": "Action_045",
+    "dimension": "growth",
+    "title": "验证一个自然传播机制",
+    "brief": "思考用户为什么会主动带来更多用户，比如晒成果、邀请同学、组织协作等。",
+    "tags": ["virality", "distribution", "growth"]
+  },
+  {
+    "actionId": "Action_046",
+    "dimension": "growth",
+    "title": "定义下一阶段里程碑",
+    "brief": "把“继续做下去”拆成 30 天、90 天两个阶段的关键成果，而不是只有模糊愿景。",
+    "tags": ["milestone", "planning", "growth"]
+  },
+  {
+    "actionId": "Action_047",
+    "dimension": "growth",
+    "title": "写出一个失败预案",
+    "brief": "如果当前切口跑不通，下一步是换用户、换场景还是换收费方式，要提前想清楚。",
+    "tags": ["risk", "pivot", "strategy"]
+  },
+  {
+    "actionId": "Action_048",
+    "dimension": "growth",
+    "title": "找 3 个可对标的成长路径",
+    "brief": "挑 3 个与你相近的项目，研究他们是如何从小切口逐步扩起来的。",
+    "tags": ["benchmark", "learning", "growth"]
+  },
+  {
+    "actionId": "Action_049",
+    "dimension": "growth",
+    "title": "验证是否存在付费升级层",
+    "brief": "先判断最小版本跑通后，用户下一层更高价值的需求会是什么。",
+    "tags": ["monetization", "upsell", "growth"]
+  },
+  {
+    "actionId": "Action_050",
+    "dimension": "growth",
+    "title": "写清楚现在不该做的扩张",
+    "brief": "把会分散注意力的伪机会列出来，守住当前阶段最重要的增长前提。",
+    "tags": ["focus", "strategy", "growth"]
+  }
+]

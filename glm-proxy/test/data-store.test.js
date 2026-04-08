@@ -28,6 +28,7 @@ test("buildToolWorkspace normalizes the unified schema shape", function () {
   assert.equal(workspace.userProfile.uid, "u_123");
   assert.equal(workspace.userProfile.projectContext.oneLiner, "一个帮助大学生找兼职的平台");
   assert.equal(workspace.userProfile.projectContext.stage, "已做用户访谈");
+  assert.equal(workspace.userProfile.projectContext.teamSummary, "");
   assert.equal(workspace.toolState.toolId, "student-startup-self-check");
 });
 

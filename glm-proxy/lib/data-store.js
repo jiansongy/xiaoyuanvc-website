@@ -1,6 +1,19 @@
 "use strict";
 
 const TOOL_ID_STUDENT_STARTUP_SELF_CHECK = "student-startup-self-check";
+const TOOL_ID_FIND_YOUR_IDEA = "find-your-idea";
+const TOOL_ID_FIND_WHAT_YOU_WANT = "find-what-you-want";
+const TOOL_ID_HARD_TECH_CHECK = "hard-tech-check";
+const TOOL_ID_AI_READY_CHECK = "ai-ready-check";
+const TOOL_ID_AI_OPPORTUNITY = "ai-opportunity";
+const KNOWN_TOOL_IDS = [
+  TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
+  TOOL_ID_FIND_YOUR_IDEA,
+  TOOL_ID_FIND_WHAT_YOU_WANT,
+  TOOL_ID_HARD_TECH_CHECK,
+  TOOL_ID_AI_READY_CHECK,
+  TOOL_ID_AI_OPPORTUNITY,
+];
 
 function nowIso() {
   return new Date().toISOString();
@@ -30,6 +43,7 @@ function normalizeProjectContext(input) {
     stage: String(context.stage || "").trim(),
     oneLiner: String(context.oneLiner || "").trim(),
     isHardTech: Boolean(context.isHardTech),
+    teamSummary: String(context.teamSummary || "").trim(),
   };
 }
 
@@ -76,6 +90,8 @@ function normalizeActionItem(item) {
   const source = item && typeof item === "object" ? item : {};
   return {
     actionId: String(source.actionId || createId("action")).trim(),
+    toolId: String(source.toolId || "").trim(),
+    dimension: String(source.dimension || "").trim(),
     status: source.status === "已完成" ? "已完成" : "待办",
     customNote: String(source.customNote || "").trim(),
   };
@@ -102,6 +118,7 @@ function syncProfileFromToolDraft(userProfile, toolId, draftData) {
     track: draft.track || profile.projectContext.track,
     stage: draft.stage || profile.projectContext.stage,
     oneLiner: draft.product || draft.oneLiner || profile.projectContext.oneLiner,
+    teamSummary: draft.team || profile.projectContext.teamSummary,
     isHardTech:
       typeof draft.isHardTech === "boolean"
         ? draft.isHardTech
@@ -150,6 +167,12 @@ function buildToolWorkspace(payload) {
 }
 
 module.exports = {
+  KNOWN_TOOL_IDS,
+  TOOL_ID_AI_OPPORTUNITY,
+  TOOL_ID_AI_READY_CHECK,
+  TOOL_ID_FIND_WHAT_YOU_WANT,
+  TOOL_ID_FIND_YOUR_IDEA,
+  TOOL_ID_HARD_TECH_CHECK,
   TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
   appendHistory,
   buildToolWorkspace,

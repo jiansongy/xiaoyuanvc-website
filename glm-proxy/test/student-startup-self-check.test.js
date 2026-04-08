@@ -4,7 +4,9 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const {
+  ACTION_LIBRARY,
   alignReasoningScoresToFinal,
+  buildActions,
   buildHeuristicLayer,
   buildInputSnapshot,
   buildManualChecklist,
@@ -12,6 +14,7 @@ const {
   combineDimensionScores,
   getTotalScore,
   isExactSnapshotMatch,
+  selectActionIdForDimension,
 } = require("../lib/student-startup-self-check");
 
 test("heuristic layer rewards objective validation signals from the PRD", function () {
@@ -142,4 +145,58 @@ test("manual checklist gives at least three concrete fallback actions", function
   assert.ok(checklist.every(function (item) {
     return item.title && item.brief;
   }));
+});
+
+test("action library contains at least 50 standardized actions", function () {
+  assert.ok(Array.isArray(ACTION_LIBRARY));
+  assert.ok(ACTION_LIBRARY.length >= 50);
+  assert.ok(
+    ACTION_LIBRARY.every(function (item) {
+      return item.actionId && item.dimension && item.title && item.brief;
+    }),
+  );
+});
+
+test("low-score actions are always selected from the action library", function () {
+  const snapshot = buildInputSnapshot({
+    product: "做一个帮大学生整理创业灵感的网页。",
+    audience: "大学生",
+    model: "以后再考虑怎么收费",
+    stage: "只有想法",
+    team: "",
+    validationPlan: "先做出来再看。",
+  });
+  const finalDimensionScores = {
+    problem: 4,
+    wedge: 4,
+    mvp: 3,
+    team: 4,
+    growth: 5,
+  };
+
+  const actions = buildActions(finalDimensionScores, "校园工具", snapshot);
+
+  assert.equal(actions.length, 3);
+  assert.ok(
+    actions.every(function (item) {
+      return ACTION_LIBRARY.some(function (libraryItem) {
+        return libraryItem.actionId === item.actionId;
+      });
+    }),
+  );
+});
+
+test("dimension strategy picks concrete action ids by missing evidence", function () {
+  const snapshot = buildInputSnapshot({
+    product: "做一个 AI 工具帮助大学生写创业比赛周报。",
+    audience: "大学生",
+    model: "以后再想",
+    stage: "只有想法",
+    team: "",
+    validationPlan: "先想想看。",
+  });
+
+  assert.equal(selectActionIdForDimension("problem", snapshot), "Action_001");
+  assert.equal(selectActionIdForDimension("mvp", snapshot), "Action_021");
+  assert.equal(selectActionIdForDimension("team", snapshot), "Action_031");
 });

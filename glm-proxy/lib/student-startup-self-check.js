@@ -1,5 +1,7 @@
 "use strict";
 
+const ACTION_LIBRARY = require("../../src/data/action-library.json");
+
 const {
   TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
   appendHistory,
@@ -18,38 +20,19 @@ const DIMENSIONS = [
   { key: "growth", label: "演进空间" },
 ];
 
-const ACTION_LIBRARY = {
-  problem: {
-    actionId: "Action_001",
-    title: "完成 10 次 {{industry}} 用户访谈",
-    brief:
-      "找 10 位目标用户做半结构化访谈，重点验证他们是否真的被这个问题困扰，以及现有替代方案为什么不够好。",
-  },
-  wedge: {
-    actionId: "Action_005",
-    title: "定义第一批 {{audience}} 种子用户名单",
-    brief:
-      "写出你最容易触达的 30 个种子用户来源，并说明为什么他们会愿意第一批试用你的方案。",
-  },
-  mvp: {
-    actionId: "Action_007",
-    title: "设计一份针对 {{industry}} 的 7 天验证计划",
-    brief:
-      "把本周要做的验证动作写成日程，包括要验证的假设、执行动作、样本数量和判断标准。",
-  },
-  team: {
-    actionId: "Action_012",
-    title: "梳理团队核心能力矩阵与下一位关键合伙人画像",
-    brief:
-      "列出现有团队已经覆盖的能力、仍缺失的关键能力，以及你下一位必须补齐的合伙人或顾问画像。",
-  },
-  growth: {
-    actionId: "Action_017",
-    title: "画出 {{industry}} 项目的三层扩展路径",
-    brief:
-      "从校园场景出发，写清楚你下一层能扩到的用户群、下一层能扩到的场景，以及每一层的增长前提。",
-  },
-};
+const ACTION_LIBRARY_VERSION = 1;
+const ACTIONS_BY_ID = ACTION_LIBRARY.reduce(function (acc, item) {
+  acc[item.actionId] = item;
+  return acc;
+}, {});
+const ACTIONS_BY_DIMENSION = ACTION_LIBRARY.reduce(function (acc, item) {
+  const key = item.dimension;
+  if (!acc[key]) {
+    acc[key] = [];
+  }
+  acc[key].push(item);
+  return acc;
+}, {});
 
 const REASONING_SCHEMA_EXAMPLE = {
   dimensionScores: {
@@ -236,6 +219,125 @@ function inferSectorLabel(snapshot) {
   }
 
   return "你的目标行业";
+}
+
+function selectActionIdForDimension(dimensionKey, snapshot) {
+  const audienceSpecific = isSpecificEnough(snapshot.audience);
+  const modelSpecific = isSpecificEnough(snapshot.model);
+  const productSpecific = isSpecificEnough(snapshot.product);
+  const interviews = hasUserInterviewEvidence(snapshot);
+  const mvp = hasMvpEvidence(snapshot);
+  const timeBoundPlan = hasTimeBoundPlan(snapshot);
+  const teamMatch = scoreTeamMatch(snapshot);
+  const earlyStage = snapshot.stage === "只有想法" || snapshot.stage === "已做用户访谈";
+
+  const dimensionStrategies = {
+    problem: [
+      function () {
+        return interviews ? "" : "Action_001";
+      },
+      function () {
+        return audienceSpecific ? "" : "Action_005";
+      },
+      function () {
+        return modelSpecific ? "" : "Action_003";
+      },
+      function () {
+        return productSpecific ? "Action_006" : "Action_007";
+      },
+      function () {
+        return "Action_010";
+      },
+    ],
+    wedge: [
+      function () {
+        return audienceSpecific ? "" : "Action_012";
+      },
+      function () {
+        return modelSpecific ? "" : "Action_014";
+      },
+      function () {
+        return snapshot.validationPlan ? "Action_013" : "Action_011";
+      },
+      function () {
+        return "Action_018";
+      },
+      function () {
+        return "Action_020";
+      },
+    ],
+    mvp: [
+      function () {
+        return timeBoundPlan ? "" : "Action_021";
+      },
+      function () {
+        return mvp ? "" : "Action_022";
+      },
+      function () {
+        return interviews ? "Action_023" : "Action_026";
+      },
+      function () {
+        return earlyStage ? "Action_024" : "Action_028";
+      },
+      function () {
+        return "Action_030";
+      },
+    ],
+    team: [
+      function () {
+        return snapshot.team ? "" : "Action_031";
+      },
+      function () {
+        return teamMatch ? "" : "Action_034";
+      },
+      function () {
+        return snapshot.team ? "Action_033" : "Action_032";
+      },
+      function () {
+        return "Action_037";
+      },
+      function () {
+        return "Action_039";
+      },
+    ],
+    growth: [
+      function () {
+        return earlyStage ? "Action_041" : "Action_046";
+      },
+      function () {
+        return modelSpecific ? "" : "Action_044";
+      },
+      function () {
+        return hasAnyKeyword(snapshot.model + " " + snapshot.validationPlan, ["复购", "留存", "回访"])
+          ? "Action_045"
+          : "Action_042";
+      },
+      function () {
+        return mvp ? "Action_049" : "Action_048";
+      },
+      function () {
+        return "Action_050";
+      },
+    ],
+  };
+
+  const strategies = dimensionStrategies[dimensionKey] || [];
+  for (let i = 0; i < strategies.length; i++) {
+    const actionId = strategies[i]();
+    if (actionId && ACTIONS_BY_ID[actionId]) {
+      return actionId;
+    }
+  }
+
+  const fallbackList = ACTIONS_BY_DIMENSION[dimensionKey] || [];
+  return fallbackList.length ? fallbackList[0].actionId : "";
+}
+
+function fillActionTemplate(text, labels) {
+  return String(text || "")
+    .replace(/\{\{industry\}\}/g, labels.industry)
+    .replace(/\{\{audience\}\}/g, labels.audience)
+    .replace(/\{\{product\}\}/g, labels.product);
 }
 
 function buildHeuristicLayer(snapshot) {
@@ -632,17 +734,23 @@ async function maybeRecalibrateWithHistory(options) {
 }
 
 function buildActions(finalDimensionScores, sectorLabel, snapshot) {
-  const audienceLabel = snapshot.audience || "目标用户";
+  const labels = {
+    industry: sectorLabel || inferSectorLabel(snapshot),
+    audience: snapshot.audience || "目标用户",
+    product: snapshot.product || "当前方案",
+  };
+
   return DIMENSIONS.map(function (dim) {
+    const actionId = selectActionIdForDimension(dim.key, snapshot);
     return {
       key: dim.key,
       score: finalDimensionScores[dim.key],
-      template: ACTION_LIBRARY[dim.key],
+      template: ACTIONS_BY_ID[actionId],
       label: dim.label,
     };
   })
     .filter(function (item) {
-      return item.score < 6;
+      return item.score < 6 && item.template;
     })
     .sort(function (a, b) {
       return a.score - b.score;
@@ -651,16 +759,14 @@ function buildActions(finalDimensionScores, sectorLabel, snapshot) {
     .map(function (item, index) {
       return {
         actionId: item.template.actionId,
+        toolId: TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
         status: "待办",
         customNote: "",
-        title: item.template.title
-          .replace(/\{\{industry\}\}/g, sectorLabel)
-          .replace(/\{\{audience\}\}/g, audienceLabel),
-        brief: item.template.brief
-          .replace(/\{\{industry\}\}/g, sectorLabel)
-          .replace(/\{\{audience\}\}/g, audienceLabel),
+        title: fillActionTemplate(item.template.title, labels),
+        brief: fillActionTemplate(item.template.brief, labels),
         dimension: item.key,
         priority: index + 1,
+        libraryVersion: ACTION_LIBRARY_VERSION,
       };
     });
 }
@@ -817,6 +923,7 @@ function buildOutputSnapshot(result) {
     heuristicLayer: result.heuristicLayer,
     reasoningLayer: result.reasoningLayer,
     actions: result.actions,
+    actionLibraryVersion: ACTION_LIBRARY_VERSION,
     manualChecklist: result.manualChecklist || [],
     gracefulDegradation: result.gracefulDegradation || null,
     analysisMarkdown: result.analysisMarkdown,
@@ -977,8 +1084,10 @@ async function scoreStudentStartupSelfCheck(payload) {
 
 module.exports = {
   ACTION_LIBRARY,
+  ACTION_LIBRARY_VERSION,
   DIMENSIONS,
   TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
+  buildActions,
   buildHeuristicLayer,
   buildInputSnapshot,
   buildManualChecklist,
@@ -989,5 +1098,6 @@ module.exports = {
   getTotalScore,
   inferSectorLabel,
   isExactSnapshotMatch,
+  selectActionIdForDimension,
   scoreStudentStartupSelfCheck,
 };
