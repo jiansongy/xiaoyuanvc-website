@@ -290,11 +290,24 @@
   function initTracking() {
     if (typeof gtag !== "function") return;
 
+    function eventLabel(link) {
+      return (link.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80);
+    }
+
+    function pathLabel(href) {
+      try {
+        return new URL(href, window.location.href).pathname;
+      } catch (e) {
+        return href;
+      }
+    }
+
     document.addEventListener("click", function (e) {
       var link = e.target.closest("a[href]");
       if (!link) return;
 
       var href = link.getAttribute("href") || "";
+      var label = eventLabel(link);
 
       // learn.xiaoyuanvc.com — most important conversion
       if (href.indexOf("learn.xiaoyuanvc.com") !== -1) {
@@ -307,8 +320,7 @@
 
       // WeChat product links
       else if (href.indexOf("mp.weixin.qq.com") !== -1) {
-        var text = (link.textContent || "").trim();
-        gtag("event", "wechat_click", { link_text: text });
+        gtag("event", "wechat_click", { link_text: label });
       }
 
       // CSS site
@@ -325,12 +337,49 @@
       else if (href.indexOf("/resources/podcast") !== -1) {
         gtag("event", "podcast_click", {});
       }
+
+      if (link.closest(".page-hero__actions") && document.body.classList.contains("has-dark-hero")) {
+        gtag("event", "hero_hook_click", {
+          link_text: label,
+          page_path: window.location.pathname,
+        });
+      }
+
+      if (link.closest(".navboard-cta")) {
+        gtag("event", "navboard_click", {
+          link_text: label,
+          destination: href,
+        });
+      }
+
+      if (link.closest(".partners")) {
+        gtag("event", "partner_logo_click", {
+          partner_name: label,
+          destination: href,
+        });
+      }
+
+      if (link.closest("#tools")) {
+        gtag("event", "interactive_tool_click", {
+          tool_name: label,
+          destination_path: pathLabel(href),
+        });
+      }
+
+      if (href === "#join-group") {
+        gtag("event", "student_group_qr_click", {
+          page_path: window.location.pathname,
+        });
+      }
     });
 
     // QR code view tracking — fire once when QR image scrolls into view
     var qrTargets = [
       { selector: ".contact__qr:nth-child(1) img", label: "official_account" },
       { selector: ".contact__qr:nth-child(2) img", label: "assistant" },
+      { selector: ".contact__qr-row:nth-child(1) img", label: "official_account" },
+      { selector: ".contact__qr-row:nth-child(2) img", label: "assistant" },
+      { selector: ".bottom-cta-bar__qr img", label: "student_group" },
       { selector: ".founder-card__wechat-qr img", label: "founder_jason" },
     ];
 

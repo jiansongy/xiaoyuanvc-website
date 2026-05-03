@@ -1,1 +1,14 @@
-https://www.xiaoyuanvc.com/* https://xiaoyuanvc.com/:splat 301!
+# Cloudflare Pages _redirects rules
+# Format: <source> <destination> <status>
+# Docs: https://developers.cloudflare.com/pages/configuration/redirects/
+# Note: www → apex handled at Cloudflare custom domain level (DNS), not here
+
+# Trailing slash for resource index (case people drop the slash)
+/resources /resources/ 301
+
+# preview-v2 子目录如果不慎被 index，重定向到正式资源页
+/preview-v2 / 301
+/preview-v2/* / 301
+
+# 兼容旧分享链接：如果有人记得 /resources.html（preview 期间路径），跳到资源中心
+/resources.html /resources/ 301

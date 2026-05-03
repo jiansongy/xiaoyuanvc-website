@@ -13,6 +13,9 @@
   --color-bg-dark: #0f172a;
   --color-bg-dark-secondary: #1e293b;
 
+  /* Border */
+  --color-border: rgba(0, 0, 0, 0.08);
+
   /* Brand */
   --color-brand: #2563eb;
   --color-brand-hover: #3b82f6;
@@ -50,7 +53,7 @@
   --space-2xl: 48px;
   --space-3xl: 64px;
   --space-4xl: 96px;
-  --space-section: 80px;
+  --space-section: 64px;
 
   /* Radius */
   --radius-sm: 8px;
@@ -154,6 +157,10 @@ button {
 
 .section--alt {
   background-color: var(--color-bg-secondary);
+}
+
+.section--compact {
+  padding: calc(var(--space-section) * 0.75) 0;
 }
 
 .section-header {
@@ -369,10 +376,9 @@ button {
 
 /* --- Hero Section --- */
 .hero {
-  padding-top: calc(var(--nav-height) + var(--space-4xl));
-  padding-bottom: var(--space-4xl);
+  padding-top: calc(var(--nav-height) + var(--space-3xl));
+  padding-bottom: var(--space-3xl);
   background: var(--gradient-dawn);
-  min-height: 100vh;
   display: flex;
   align-items: center;
 }
@@ -395,7 +401,7 @@ button {
   padding: 6px 16px;
   border-radius: var(--radius-full);
   background: var(--color-brand-light);
-  color: var(--color-brand);
+  color: var(--color-brand-active);
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: var(--space-lg);
@@ -433,7 +439,6 @@ button {
 .hero__actions {
   display: flex;
   gap: var(--space-md);
-  margin-bottom: var(--space-3xl);
 }
 
 .hero__image {
@@ -714,7 +719,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-2xl);
-  align-items: start;
+  align-items: stretch;
 }
 
 .founder-card {
@@ -870,6 +875,11 @@ button {
   font-size: 0.9375rem;
   color: var(--color-text-secondary);
   line-height: 1.6;
+  margin-bottom: var(--space-md);
+}
+
+.book-card .product-card__cta {
+  margin-top: auto;
 }
 
 /* --- Team Section --- */
@@ -877,7 +887,6 @@ button {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-lg);
-  margin-bottom: var(--space-3xl);
 }
 
 .team-card {
@@ -1434,7 +1443,7 @@ button {
 /* Mobile: <= 768px */
 @media (max-width: 768px) {
   :root {
-    --space-section: 56px;
+    --space-section: 40px;
     --nav-height: 60px;
   }
 
