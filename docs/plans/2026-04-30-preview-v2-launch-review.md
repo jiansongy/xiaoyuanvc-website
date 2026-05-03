@@ -1,7 +1,7 @@
 # preview-v2 上线复盘与后续待办
 
 日期：2026-04-30
-最后更新：2026-05-03（已补到最新首页文案、日报、联系方式状态）
+最后更新：2026-05-03（已补到最新首页文案、日报、联系方式、SEO 兜底状态）
 
 这份文档记录校园VC 新官网 `preview-v2` 上线后的最新状态。重点是两件事：
 
@@ -26,6 +26,7 @@
 - `2f54d00`：把这份上线复盘文档补回 `docs/plans/`，并把新网站页尾标语统一为 `10年推动100万大学生创业`。
 - `0627d0e`：全站删除错误句子 `希望在未来影响100万名青年创业者`，更新 2026-05-03 的数创日报和加密日报，并给首页联系方式标题补冒号。
 - 本次提交：更新首页“我是学生 / 我是教师”卡片文案，并把这份复盘文档补到最新状态。
+- `4d49199`：补上旧资源页 `/resources.html` 的 HTML 跳转兜底，给 `preview-v2` 页面加 `noindex,follow`，并清理本机过程文件。
 
 ## 已完成的代码改动
 
@@ -190,6 +191,25 @@
 
 `llms.txt` 是给 AI 工具理解网站用的。如果它还写旧数字，即使页面上已经改对，AI 摘要仍可能引用旧说法。
 
+### 10. SEO / GEO 路径保护
+
+已完成：
+
+- 文章和工具继续使用正式路径 `/resources/...`，没有迁移到 `/articles/` 或 `/tools/`。
+- `sitemap.xml` 继续提交正式 URL，不包含 `preview-v2`。
+- 新增根目录 `resources.html`，兼容旧分享链接 `/resources.html`，打开后会跳到 `/resources/`。
+- `preview-v2/index.html`、`preview-v2/student.html`、`preview-v2/teacher.html`、`preview-v2/resources.html` 都加了 `noindex,follow`。
+
+当前限制：
+
+- 线上响应头显示当前仍由 GitHub Pages 服务，`server: GitHub.com`。
+- GitHub Pages 不读取 `_redirects`，所以 `_redirects` 里的规则现在不是线上真正的 HTTP `301`。
+- `/resources.html` 现在是 HTML 跳转兜底，不是真 HTTP `301`。
+
+原理解释：
+
+SEO / GEO 已经有效的文章页，最重要的是继续让原有正式 URL 返回 `200`，并用 sitemap、canonical 和 noindex 避免重复页面分散权重。真正的 HTTP `301` 需要 Cloudflare Pages 或 Cloudflare Redirect Rules 生效，不能只靠仓库里的 `_redirects` 文件。
+
 ## 已验证的证据
 
 ### Git 状态
@@ -206,14 +226,11 @@
 HEAD...origin/main = 0 0
 ```
 
-注意：工作区里还有一些和本次上线无关的残留文件，不要误合进发布提交：
+本机过程文件已清理，当前工作区没有未提交文件：
 
 ```text
-D  Design Guidline.md
-?? 404.html
-?? apple/
-?? archive/
-?? preview-v2/assets
+git status --short --branch
+## main...origin/main
 ```
 
 ### 线上页面可访问
