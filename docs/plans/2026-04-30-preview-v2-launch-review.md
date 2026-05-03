@@ -1,14 +1,14 @@
 # preview-v2 上线复盘与后续待办
 
 日期：2026-04-30
-最后更新：2026-05-03（已补到最新首页文案、日报、联系方式、SEO 兜底状态）
+最后更新：2026-05-03（已补到最新首页文案、日报、联系方式、SEO 兜底、后台验证状态）
 
 这份文档记录校园VC 新官网 `preview-v2` 上线后的最新状态。重点是两件事：
 
 1. 现在代码和线上网站已经完成了什么。
 2. 还有哪些事必须由你登录后台完成，不能在代码里代替。
 
-一句话结论：**新网站代码已经上线，主要页面可访问，结构化数据可解析，核心文案口径已修正；剩下的是 GA4、Google Search Console、Cloudflare 这三个后台里的发布收尾动作。**
+一句话结论：**新网站代码已经上线，主要页面可访问，结构化数据可解析，核心文案口径已修正；GSC sitemap 已重新提交，GA4 Realtime 已看到实时用户，剩下的是 Cloudflare 账号、缓存清理和真 301 规则。**
 
 ## 已经上线的页面
 
@@ -28,6 +28,7 @@
 - 本次提交：更新首页“我是学生 / 我是教师”卡片文案，并把这份复盘文档补到最新状态。
 - `4d49199`：补上旧资源页 `/resources.html` 的 HTML 跳转兜底，给 `preview-v2` 页面加 `noindex,follow`，并清理本机过程文件。
 - `fa57098`：把新版本 2026-05-03 加密日报图重新压缩并推送到官网。
+- `36e2376`：删除首页 FAQ 里带空格的旧品牌句变体，确保 `青年创业者` 这类错误口径不再出现。
 
 ## 已完成的代码改动
 
@@ -315,75 +316,69 @@ git status --short --branch
 
 这些后续改动发生后，文档没有立刻同步更新，所以你看到的是上一版复盘，不是最新状态。现在这份文档已经补齐这些后续变化。
 
-## 还需要你做的事
+## 后台验证状态
 
-下面三件事必须登录后台，代码里不能代替完成。
+下面这些事原本必须登录后台验证。现在状态如下。
 
 ### 1. GA4 Realtime 检查
 
-你需要做：
+状态：**已验证可见实时数据。**
 
-1. 打开 Google Analytics。
-2. 进入 `xiaoyuanvc.com` 对应的 GA4 property。
-3. 打开 Realtime 实时报告。
-4. 用普通浏览器访问：
-   - `https://xiaoyuanvc.com/`
-   - `https://xiaoyuanvc.com/student.html`
-   - `https://xiaoyuanvc.com/teacher.html`
-   - `https://xiaoyuanvc.com/resources/`
-5. 看 Realtime 里是否出现实时用户和 page_view。
-6. 点击几个关键位置，确认事件出现：
-   - `hero_hook_click`
-   - `interactive_tool_click`
-   - `student_group_qr_click`
-   - `qr_view`
+已看到的证据：
+
+- GA4 Realtime pages 页面显示：
+  - `ACTIVE USERS IN LAST 30 MINUTES = 1`
+  - `VIEWS IN LAST 30 MINUTES = 5`
+  - 页面路径包含 `/` 和 `/index.html`
+- 官网浏览器网络请求显示：
+  - 成功加载 `gtag.js?id=G-LP5EB2HW33`
+  - 成功发送 `page_view` 到 `google-analytics.com/g/collect`
+  - 请求返回 `204`
+- 在学生页点击“扫码入群”后，浏览器 `dataLayer` 已出现：
+  - `student_group_qr_click`
+  - `qr_view`
 
 原理解释：
 
-代码里能看到 `gtag(...)` 已经写好，但只有 GA4 Realtime 能证明线上浏览器真的把数据发到了正确的 GA4 账号。
+这说明两件事：第一，官网浏览器端确实在发 GA4 数据；第二，GA4 后台 Realtime 能看到这个账号下的实时访问。Realtime 里的事件卡片可能有延迟或需要切到事件维度查看，但从 `dataLayer` 和 Realtime users/page views 看，埋点链路已经不是“完全没数据”的状态。
 
 ### 2. Google Search Console 提交 sitemap
 
-你需要做：
+状态：**已完成。**
 
-1. 打开 Google Search Console。
-2. 选择 `xiaoyuanvc.com` 站点资源。
-3. 进入 Sitemaps。
-4. 提交：
+你已在 Google Search Console 重新提交：
 
 ```text
 https://xiaoyuanvc.com/sitemap.xml
 ```
 
-5. 确认 Search Console 接收成功。
+原理解释：
+
+代码里的 `sitemap.xml` 已更新。重新提交 sitemap 的作用是通知 Google 更快重新抓取首页、学生页、教师页、资源页和文章页。
+
+### 3. Cloudflare 缓存和真 301
+
+状态：**未完成，原因是当前没有 Cloudflare 账号 / 项目。**
+
+当前事实：
+
+- 没有替官网开过 Cloudflare 账号。
+- 当前线上响应头仍显示 `server: GitHub.com`，说明官网还在 GitHub Pages 上服务。
+- 因为没有 Cloudflare 项目，所以现在不能做 Cloudflare Purge Cache。
+- 因为 GitHub Pages 不读取 `_redirects`，所以 `_redirects` 里的规则目前不是线上真正的 HTTP `301`。
 
 原理解释：
 
-代码里的 `sitemap.xml` 已更新。提交 sitemap 的作用是通知 Google 更快重新抓取首页、学生页、教师页和资源页。
-
-### 3. Cloudflare 清缓存
-
-你需要做：
-
-1. 打开 Cloudflare。
-2. 进入 `xiaoyuanvc.com` 对应的站点或 Pages 项目。
-3. 清理这些 URL 的缓存，或者按你的习惯直接 Purge Everything：
-   - `https://xiaoyuanvc.com/`
-   - `https://xiaoyuanvc.com/student.html`
-   - `https://xiaoyuanvc.com/teacher.html`
-   - `https://xiaoyuanvc.com/resources/`
-   - `https://xiaoyuanvc.com/llms.txt`
-
-原理解释：
-
-现在新内容已经在线可见，所以这不是“让网站上线”的必要步骤，而是缓存卫生。清缓存可以降低少数用户、搜索引擎或 AI 爬虫看到旧页面的概率。
+目前已做的是代码侧兜底：`/resources.html` 会通过 HTML 跳转到 `/resources/`，`preview-v2` 页面带 `noindex,follow`。这能降低 SEO/GEO 风险，但不等同于服务器级 HTTP `301`。如果后续要严格做 301，需要新建 Cloudflare 项目或在 Cloudflare Redirect Rules 里配置规则。
 
 ## 当前判断
 
 代码上线已经完成，线上网站已经可访问并通过主要技术检查。
 
-但不要把这次上线说成“后台收尾也完成”，除非下面三项已经做完或你明确决定放弃：
+现在可以说：代码上线、GSC sitemap、GA4 Realtime 基础验证已经完成。
 
-- GA4 Realtime 检查。
-- Google Search Console sitemap 提交。
+但不要把 Cloudflare 收尾说成完成，除非下面事项已经做完或你明确决定暂时不做：
+
+- 开通 / 接入 Cloudflare。
+- 配置服务器级 HTTP `301`，尤其是 `/resources.html -> /resources/` 和不希望被访问的 `preview-v2` 路径。
 - Cloudflare CDN 清缓存。
