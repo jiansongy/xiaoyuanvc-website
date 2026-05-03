@@ -218,15 +218,39 @@ D  Design Guidline.md
 
 ### 线上页面可访问
 
-线上 23 个关键 URL 已经返回 HTTP `200`：
+线上 23 个关键 URL 已经返回 HTTP `200`。
 
-- 4 个主页面：
-  - `/`
-  - `/student.html`
-  - `/teacher.html`
-  - `/resources/`
-- 8 个互动工具页。
-- 11 篇文章页。
+4 个主页面：
+
+- `/`
+- `/student.html`
+- `/teacher.html`
+- `/resources/`
+
+8 个互动工具页：
+
+- `/resources/tools-presentation.html`
+- `/resources/my-explorations.html`
+- `/resources/find-your-idea.html`
+- `/resources/find-what-you-want.html`
+- `/resources/rate-your-idea.html`
+- `/resources/hard-tech-check.html`
+- `/resources/ai-ready-check.html`
+- `/resources/ai-opportunity.html`
+
+11 篇文章页：
+
+- `/resources/ai-startup-roadmap.html`
+- `/resources/no-code-ai-startup.html`
+- `/resources/ai-era-entrepreneurship-skills.html`
+- `/resources/crypto-investing-guide.html`
+- `/resources/chinese-web3-startup-course.html`
+- `/resources/what-is-digital-entrepreneurship-education.html`
+- `/resources/platforms-comparison.html`
+- `/resources/zero-to-hero-book.html`
+- `/resources/hackathon-starter-guide.html`
+- `/resources/digital-nomad-skills.html`
+- `/resources/free-digital-entrepreneurship-courses.html`
 
 通俗解释：主要页面都能从线上域名正常打开。
 
