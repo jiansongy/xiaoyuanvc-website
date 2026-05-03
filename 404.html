@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,follow" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <title>页面找不到了 — 校园VC</title>
+    <meta name="description" content="你访问的页面不存在或已被移动。返回校园VC首页继续探索创业之旅。" />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .error-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 1.5rem;
+        background: linear-gradient(135deg, #f1f5f9 0%, #e8edf5 100%);
+      }
+      .error-page__inner {
+        max-width: 640px;
+        text-align: center;
+      }
+      .error-page__logo {
+        height: 48px;
+        width: auto;
+        margin: 0 auto 2.5rem;
+        display: block;
+      }
+      .error-page__code {
+        font-size: clamp(5rem, 14vw, 9rem);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.05em;
+        background: var(--gradient-brand);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin: 0 0 0.75rem;
+      }
+      .error-page__title {
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--color-text-primary);
+        margin: 0 0 1rem;
+      }
+      .error-page__desc {
+        font-size: 1rem;
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+        margin: 0 0 2.5rem;
+      }
+      .error-page__links {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        max-width: 480px;
+        margin: 0 auto 2.5rem;
+      }
+      .error-page__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.25rem;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: var(--radius-md);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--color-text-primary);
+        text-decoration: none;
+        box-shadow: var(--shadow-sm);
+        transition: transform var(--duration-fast) var(--ease-out),
+                    border-color var(--duration-fast) var(--ease-out),
+                    color var(--duration-fast) var(--ease-out);
+      }
+      .error-page__link:hover {
+        transform: translateY(-2px);
+        border-color: var(--color-brand);
+        color: var(--color-brand);
+      }
+      .error-page__home {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 2rem;
+        background: var(--gradient-brand);
+        color: #fff;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+      }
+      .error-page__home:hover {
+        color: #fff;
+        opacity: 0.92;
+      }
+      @media (max-width: 480px) {
+        .error-page__links { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="error-page">
+      <div class="error-page__inner">
+        <a href="/" aria-label="校园VC 首页">
+          <img class="error-page__logo" src="/assets/logo-color.png" alt="校园VC Logo" width="97" height="48" />
+        </a>
+        <div class="error-page__code">404</div>
+        <h1 class="error-page__title">这个页面在创业路上迷路了</h1>
+        <p class="error-page__desc">
+          可能链接拼错了，也可能我们改版后页面换了位置。下面这些入口能带你回到对的地方：
+        </p>
+        <div class="error-page__links">
+          <a class="error-page__link" href="/student.html">🎓 我是学生</a>
+          <a class="error-page__link" href="/teacher.html">📋 我是教师</a>
+          <a class="error-page__link" href="/resources/">🛠 资源中心</a>
+          <a class="error-page__link" href="https://learn.xiaoyuanvc.com/">📚 免费教程</a>
+        </div>
+        <a class="error-page__home" href="/">返回首页 →</a>
+      </div>
+    </main>
+  </body>
+</html>
