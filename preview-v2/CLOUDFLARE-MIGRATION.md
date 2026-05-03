@@ -9,7 +9,7 @@
 - ✅ `_redirects`（已更新为 Cloudflare 兼容语法）
 - ✅ `404.html` — Cloudflare Pages 自动用作 404 兜底
 
-## 你要做的（10 分钟）
+## 你要做的（约 15-30 分钟）
 
 ### 第 1 步：在 Cloudflare Pages 连接仓库
 
@@ -18,8 +18,8 @@
 3. **Build settings**：
    - Framework preset: **None**
    - Build command: 留空（这是纯静态站，不需要构建）
-   - Build output directory: `/`（根目录）
-   - Root directory: `/`
+   - Build output directory: `/`（根目录；如果 UI 不接受 `/`，填 `.`）
+   - Root directory: 留空或 `/`（仓库根目录）
 4. Save and Deploy
 
 第一次部署完，会拿到一个 `xiaoyuanvc-website.pages.dev` 临时域名。
@@ -38,12 +38,31 @@
 
 1. CF Pages 项目 → Custom domains → Set up a custom domain
 2. 添加 `xiaoyuanvc.com`
-3. 添加 `www.xiaoyuanvc.com`（CF 会自动配置 www → apex 重定向）
-4. CF 会提示更新 DNS — 因为 xiaoyuanvc.com 的 DNS 已经在 Cloudflare（如果是的话），它会自动写好 CNAME；如果 DNS 不在 CF，你需要把 nameservers 切到 CF（有点折腾），或在原 DNS 商加 `CNAME xiaoyuanvc.com → <project>.pages.dev`
+3. 如果要让 `www.xiaoyuanvc.com` 也可访问，添加 `www.xiaoyuanvc.com`
+4. CF 会提示更新 DNS：
+   - **根域名 `xiaoyuanvc.com` 要接到 Cloudflare Pages，官方推荐把这个域名作为 Cloudflare zone，并把域名注册商里的 nameservers 切到 Cloudflare。**
+   - 如果 DNS 已经在 Cloudflare，CF 会自动创建 Pages 需要的 DNS 记录。
+   - 如果 DNS 不在 Cloudflare，通常只能给子域名加 CNAME；根域名 apex 迁移会受 DNS 服务商能力限制。
+
+注意：添加 `www.xiaoyuanvc.com` 不等于自动把 `www` 301 到根域名。要做 `www -> https://xiaoyuanvc.com` 的 301，需要在 Cloudflare 里单独配置 Bulk Redirect 或 Redirect Rule。
 
 ### 第 4 步：DNS 切换（这一步是真正的"上线"）
 
 完成第 3 步后，CF 自动把 xiaoyuanvc.com 流量路由到 Pages。从 GH Pages 切到 CF Pages 是几分钟内完成的（DNS TTL）。
+
+切换后用命令确认：
+
+```bash
+curl -I https://xiaoyuanvc.com/
+curl -I https://xiaoyuanvc.com/resources.html
+curl -I https://xiaoyuanvc.com/preview-v2/
+```
+
+期望看到：
+
+- `https://xiaoyuanvc.com/` 返回 `200`，响应头不再是 `server: GitHub.com`。
+- `https://xiaoyuanvc.com/resources.html` 返回 HTTP `301`，`location: /resources/` 或完整的 `https://xiaoyuanvc.com/resources/`。
+- `https://xiaoyuanvc.com/preview-v2/` 返回 HTTP `301` 到首页。
 
 ### 第 5 步：禁用 GitHub Pages 部署（避免双部署冲突）
 
@@ -61,7 +80,7 @@ git push
 
 ## 切换后立即生效的好处
 
-1. **`_redirects` 真生效**：你刚加的几条 301 规则（preview-v2 → 主页等）会被执行
+1. **`_redirects` 真生效**：仓库里的 301 规则（`/resources.html` → `/resources/`，`preview-v2` → 首页等）会被执行
 2. **`_headers` 真生效**：HSTS、X-Frame-Options、CSP 是 server header，安全等级提升一档
 3. **国内访问加速**：CF 全球节点 vs GH Pages 单美国
 4. **PR 预览**：每个 PR 自动生成预览域名，QA 友好
@@ -72,7 +91,7 @@ git push
 如果切换后发现严重问题：
 
 1. CF Pages → Deployments → 选回上一个稳定版本 → Rollback
-2. 或者：DNS 切回 GH Pages 原 IP（CF 改 CNAME 即可），3-5 分钟生效
+2. 或者：DNS 切回 GitHub Pages 原配置，等待 DNS 生效
 3. 仓库代码不会被破坏，可以独立调试
 
 ## 风险点
