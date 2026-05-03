@@ -1,8 +1,9 @@
 name: Deploy to GitHub Pages
 
+# 主站已切换到 Cloudflare Pages（项目 xiaoyuanvc-website，自动部署 main 分支）。
+# 此 workflow 保留为手动触发，仅作为应急回退到 GitHub Pages 的通道。
+# 不要再开 push 触发，避免与 Cloudflare Pages 双写源站。
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
