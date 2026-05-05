@@ -4,10 +4,19 @@ const HOSTNAME = "https://xiaoyuanvc.com";
 const BASE = "/learn/";
 const LOGO_URL = `${HOSTNAME}${BASE}campus-vc-logo.png`;
 
-const TUTORIAL_NAMES: Record<string, { name: string; url: string }> = {
+const TUTORIAL_NAMES: Record<
+  string,
+  { name: string; url: string; courseId: string }
+> = {
   "crypto-vc": {
     name: "加密创投教程",
     url: `${HOSTNAME}${BASE}crypto-vc/start/chapter1-overview/`,
+    courseId: `${HOSTNAME}/#course-crypto`,
+  },
+  "digital-startup": {
+    name: "数字创业教程",
+    url: `${HOSTNAME}${BASE}digital-startup/`,
+    courseId: `${HOSTNAME}/#course-digital`,
   },
 };
 
@@ -91,6 +100,8 @@ export default defineConfig({
         sameAs: [
           "https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab",
           "https://book.douban.com/subject/26957489/",
+          "https://mp.weixin.qq.com/s/xpOuwndxPF1dm3ZIVJOwxg",
+          "https://mp.weixin.qq.com/s/DYmJnRrbrjqaKgHx7nWiSQ",
         ],
       });
       addJsonLd(head, {
@@ -105,6 +116,8 @@ export default defineConfig({
         sameAs: [
           HOSTNAME,
           "https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab",
+          "https://mp.weixin.qq.com/s/xpOuwndxPF1dm3ZIVJOwxg",
+          "https://mp.weixin.qq.com/s/DYmJnRrbrjqaKgHx7nWiSQ",
         ],
       });
       addJsonLd(head, {
@@ -135,6 +148,26 @@ export default defineConfig({
           courseWorkload: "P29L",
         },
       });
+      addJsonLd(head, {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "@id": `${HOSTNAME}/#course-digital`,
+        name: "数字创业教程",
+        description:
+          "面向大学生的数字创业系统课程，涵盖创业认知、机会洞察、产品开发、营销增长、融资致胜五大模块，共5章34课。",
+        provider: { "@type": "EducationalOrganization", name: "校园VC" },
+        author: { "@id": `${HOSTNAME}/#founder` },
+        inLanguage: "zh-CN",
+        isAccessibleForFree: true,
+        educationalLevel: "大学生",
+        numberOfCredits: 34,
+        url: `${HOSTNAME}${BASE}digital-startup/`,
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: "online",
+          courseWorkload: "P34L",
+        },
+      });
     }
 
     if (tutorialKey) {
@@ -157,8 +190,40 @@ export default defineConfig({
       });
     }
 
+    const isCourseIndex =
+      pageData.relativePath === "crypto-vc/index.md" ||
+      pageData.relativePath === "digital-startup/index.md";
+    if (isCourseIndex) {
+      const isCrypto = pageData.relativePath === "crypto-vc/index.md";
+      addJsonLd(head, {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "@id": isCrypto
+          ? `${HOSTNAME}/#course-crypto`
+          : `${HOSTNAME}/#course-digital`,
+        name: isCrypto ? "加密创投教程" : "数字创业教程",
+        description: isCrypto
+          ? "面向大学生的加密货币与区块链投资教程，涵盖公链基础、实务操作、DeFi金融、NFT文化、AI创新五大模块，共5章29课。"
+          : "面向大学生的数字创业系统课程，涵盖创业认知、机会洞察、产品开发、营销增长、融资致胜五大模块，共5章34课。",
+        provider: { "@type": "EducationalOrganization", name: "校园VC" },
+        author: { "@id": `${HOSTNAME}/#founder` },
+        inLanguage: "zh-CN",
+        isAccessibleForFree: true,
+        educationalLevel: "大学生",
+        numberOfCredits: isCrypto ? 29 : 34,
+        url: isCrypto
+          ? `${HOSTNAME}${BASE}crypto-vc/start/chapter1-overview/`
+          : `${HOSTNAME}${BASE}digital-startup/`,
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: "online",
+          courseWorkload: isCrypto ? "P29L" : "P34L",
+        },
+      });
+    }
+
     if (tutorialKey && !isHome) {
-      const courseId = `${HOSTNAME}/#course-crypto`;
+      const courseId = TUTORIAL_NAMES[tutorialKey].courseId;
       const tags = pageData.frontmatter.tags as string[] | undefined;
       const datePublished = pageData.frontmatter.datePublished as
         | string
