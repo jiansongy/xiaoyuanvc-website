@@ -21,19 +21,17 @@ rm -rf "$DIST"
 mkdir -p "$DIST"
 
 echo "==> [2/4] 复制主站静态资源到 dist/"
-# 用 rsync 排除大目录与构建/缓存目录；保留隐藏文件（_redirects、_headers、.cloudflare 等）
-rsync -a \
-  --exclude="dist" \
-  --exclude="node_modules" \
-  --exclude=".git" \
-  --exclude=".obsidian" \
-  --exclude="learn-src/node_modules" \
-  --exclude="learn-src/docs/.vitepress/cache" \
-  --exclude="learn-src/docs/.vitepress/dist" \
-  --exclude="learn-src" \
-  --exclude="build.sh" \
-  --exclude=".DS_Store" \
-  "$ROOT/" "$DIST/"
+# 用 tar 流复制并排除大目录与构建产物；保留隐藏文件（_redirects、_headers、.cloudflare 等）
+# CF Pages 容器没有 rsync，tar 更通用。
+( cd "$ROOT" && tar -cf - \
+    --exclude="./dist" \
+    --exclude="./node_modules" \
+    --exclude="./.git" \
+    --exclude="./.obsidian" \
+    --exclude="./learn-src" \
+    --exclude="./build.sh" \
+    --exclude="./.DS_Store" \
+    . ) | ( cd "$DIST" && tar -xf - )
 
 echo "==> [3/4] 构建 VitePress 子站 (learn-src)"
 cd "$LEARN_SRC"
@@ -46,7 +44,7 @@ npx vitepress build docs
 
 echo "==> [4/4] 拷贝 VitePress 产物到 dist/learn/"
 mkdir -p "$DIST/learn"
-rsync -a "$LEARN_SRC/docs/.vitepress/dist/" "$DIST/learn/"
+cp -R "$LEARN_SRC/docs/.vitepress/dist/." "$DIST/learn/"
 
 echo ""
 echo "✅ 构建完成"
