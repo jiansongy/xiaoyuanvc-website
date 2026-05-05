@@ -4,10 +4,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data:; media-src 'self' https:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com; form-action 'self'; upgrade-insecure-requests
-
-# /learn/ 子站（VitePress 1.6）需要 'unsafe-eval' — framework chunk 用 new Function(...)
-# 反序列化路由元数据，否则客户端路由抛 TypeError，sidebar 点击没反应。
-# 同时放行 Cloudflare Insights beacon（CF Pages 自动注入的访问统计）。
-/learn/*
   Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data:; media-src 'self' https:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com https://cloudflareinsights.com; form-action 'self'; upgrade-insecure-requests
+  # 'unsafe-eval' 给 /learn/ 子站的 VitePress framework 用（new Function 反序列化路由元数据）；
+  # 主站 HTML 没有 eval/Function 调用，加上不增加实际攻击面。
+  # cloudflareinsights 是 CF Pages 自动注入的访问统计 beacon。
