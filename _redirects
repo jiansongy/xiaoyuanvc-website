@@ -12,3 +12,8 @@
 
 # 兼容旧分享链接：如果有人记得 /resources.html（preview 期间路径），跳到资源中心
 /resources.html /resources/ 301
+
+# /learn/ 是 VitePress 子站根，但落地页本身不展示，访客统一跳到学生中心两张课程卡
+# 子路径如 /learn/crypto-vc/* /learn/digital-startup/* 由静态文件服务，不会被这两条匹配
+/learn /student.html#courses 301
+/learn/ /student.html#courses 301
