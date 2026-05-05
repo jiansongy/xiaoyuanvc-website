@@ -1,0 +1,745 @@
+---
+title: "第四章：营销增长实战"
+description: "用户挣扎时刻、品牌三问、AARRR 与 1000 真粉丝增长方法"
+order: 4
+---
+
+# 第四章：营销增长实战
+
+找痛点  →  说人话  →  聚铁粉
+
+-  **找痛点**：先搞清楚你在帮谁解决什么真实的痛苦，验证有没有人真的需要
+- **说人话**：让创始团队真人出镜，把价值用普通人能听懂、愿意转发的方式讲出来
+- **聚铁粉**：通过搞社群活动，让喜欢你的人留下来、让他回来、并且带更多人来
+
+# 营销经典理论
+
+**科特勒**是营销经典理论的代表人物。他的《[营销管理](https%3A%2F%2Fbook.douban.com%2Fsubject%2F36082426)》一书被奉为营销学经典。
+
+![](/images/digital-startup/chapter-4/1.png)
+
+他最有名的是总结了 STP 和4P。对于营销从业者，这两个概念被奉为经典。
+
+**营销战略的STP**：市场细分（Segmentation）、目标市场选择（Targeting）和定位（Positioning）。
+
+**营销执行的4P**：产品（Product）、渠道或场景（Place）、定价（Price）、促销（Promotion）。
+
+<grid cols="2">
+
+  <column width="50">
+
+    <lark-table rows="4" cols="2" column-widths="100,147">
+
+      <lark-tr>
+        <lark-td>
+          **STP**
+        </lark-td>
+        <lark-td>
+          **营销战略**
+        </lark-td>
+      </lark-tr>
+      <lark-tr>
+        <lark-td>
+          Segment
+        </lark-td>
+        <lark-td>
+          市场细分
+        </lark-td>
+      </lark-tr>
+      <lark-tr>
+        <lark-td>
+          Targeting
+        </lark-td>
+        <lark-td>
+          目标市场选择
+        </lark-td>
+      </lark-tr>
+      <lark-tr>
+        <lark-td>
+          Positioning
+        </lark-td>
+        <lark-td>
+          市场定位
+        </lark-td>
+      </lark-tr>
+    </lark-table>
+
+  </column>
+  <column width="50">
+
+    <lark-table rows="5" cols="2" column-widths="86,108">
+
+      <lark-tr>
+        <lark-td>
+          **4P**
+        </lark-td>
+        <lark-td>
+          **营销执行**
+        </lark-td>
+      </lark-tr>
+      <lark-tr>
+        <lark-td>
+          Product
+        </lark-td>
+        <lark-td>
+          产品
+        </lark-td>
+      </lark-tr>
+      <lark-tr>
+        <lark-td>
+          Place
+        </lark-td>
+        <lark-td>
+          渠道（场景）
+        </lark-td>
+      </lark-tr>
+      <lark-tr>
+        <lark-td>
+          Price
+        </lark-td>
+        <lark-td>
+          定价
+        </lark-td>
+      </lark-tr>
+      <lark-tr>
+        <lark-td>
+          Promotion
+        </lark-td>
+        <lark-td>
+          促销
+        </lark-td>
+      </lark-tr>
+    </lark-table>
+
+  </column>
+
+</grid>
+
+我上本科时就学习过科特勒，后来在微软公司上班时，还专门被选送去参加过科特勒老先生的培训班。
+
+营销中最大的挑战是：**无力感**。如何解决无力感，就要把海洋分隔为池塘（S），然后选择其中某个目标市场（T），定位好自己（P），和伙伴们一起攒一块大石头，用力投进去，就能让水波荡漾好几天（破解无力感）。这是我在多年工作之后，第一次创业尝试中，遇到了挑战（笨笨美股 Benbenstock 项目），才顿悟到了科特勒老先生的 STP 精髓所在。大学学的很多东西，都没有深刻领会，必须被现实打击，才能有顿悟。
+
+不过从实战的角度，我更喜欢的口诀是：**找痛点、说人话、聚铁粉**。
+
+# <text color="red" bgcolor="yellow">第一节 找痛点（定位）</text>
+
+大多数创业失败，不是做得不好，而是做了没人要的东西。
+
+## 止疼药还是维生素
+
+你在解决一个“现在就很疼”的问题，还是“长期有好处”的问题？
+
+中医讲究“治未病”，但是没有病的人不会去找医生，商业化有点矛盾。
+
+<lark-table rows="4" cols="2" column-widths="235,210">
+
+  <lark-tr>
+    <lark-td>
+      **止疼药**
+    </lark-td>
+    <lark-td>
+      **维生素**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      紧急、不得不用
+    </lark-td>
+    <lark-td>
+      有好处、可以等等再用
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      明天早八要交的 PPT 汇报材料
+    </lark-td>
+    <lark-td>
+      长期提升表达力的社群
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      帮找实习的内推资源库
+    </lark-td>
+    <lark-td>
+      每日一句职场英语推送
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+**记忆方法**：如果你去掉这个产品，用户今天会很难受，它就是止疼药。如果去掉，用户说"哦那就算了"，它是维生素。
+
+**课堂练习**：把你们团队的项目，判断是止疼药还是维生素。如果是维生素，那怎么改成止疼药？
+
+## 从用户的挣扎时刻开始
+
+用户需要的并不是另一个营销工具，而是想从某种痛苦中逃出来。
+
+**反问自己**：你的用户在哪个具体时刻，感到最挣扎？
+
+<lark-table rows="4" cols="2" column-widths="183,319">
+
+  <lark-tr>
+    <lark-td>
+      **❌ 从功能出发**
+    </lark-td>
+    <lark-td>
+      **✅ 从挣扎时刻出发**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "我们做了一个笔记软件"
+    </lark-td>
+    <lark-td>
+      "期末复习，面对 1000 页课件不知道从哪开始"
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "AI写作助手"
+    </lark-td>
+    <lark-td>
+      "明天论文截止，今晚才发现思路是错的"
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "二手交易平台"
+    </lark-td>
+    <lark-td>
+      "毕业要搬家，宿舍堆了一屋子没用的东西"
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+**找用户挣扎时刻的方法**：说出那个具体的时间、地点和感受。
+
+"凌晨1点，考前一天，发现自己连知识点都不知道在哪里"——这个时刻，就是你的切入点。
+
+## 差异化 = 主动放弃一些人
+
+你不能让所有人满意。好的定位，会让一些人说"这不适合我"，同时让另一群人说"这就是为我准备的"。
+
+**例子**：
+
+- "校园摄影"太宽泛 → "专做毕业照的宿舍摄影师"更有力
+- "帮大学生提升能力"太宽泛 → "帮想进互联网的大二学生搭建实习作品集"更精准
+
+**测试**：说出你的定位后，有没有人会说"这不适合我"？
+
+如果所有人都说"好像都适合我"，说明你还没有真正定位。
+
+## 品牌三问——一句话说清楚你是谁
+
+**创业者问自己三个问题**：
+
+1. **你是什么？**（品类）：在用户脑子里，你属于哪一类东西？
+2. **有何不同？**（特色）：同类产品里，你有什么独特之处？
+3. **何以见得？**（证据）：凭什么让人相信你说的？
+
+**案例**：
+
+<quote-container>
+
+"我是校园二手数码群（品类），专做线下面交、不怕被骗（特色），已经成功撮合120单（证据）。"
+</quote-container>
+
+**课堂练习**：用三问句式，一分钟内介绍你的项目。让旁边同学判断：记住了吗？可信吗？
+
+## 最简版 MVP 先跑起来
+
+我有一个做民宿的创业大学生，一直在用腾讯 CodeBuddy 自己开发社交应用小程序，因为她的全女合租公寓项目，想用小程序上开展的社交活动，激活女性社群。我给她的建议是：做小程序和激活社群是两码事。
+
+真正优秀的社群运营，是不依靠微信小程序，而是用“微信群+共享表格”就够了，用户不会因为，你提供了小程序，就开始在小程序上交流了。创业不是做一个完美的产品，是用最快、最便宜的方式，让真实用户体验你的服务。
+
+**案例**：自习搭子 App——先不做 App，先建"早八自习打卡群"，手动每天提醒，看有没有人愿意坚持用。虽然我教大家编程、但不鼓励冲动开发。其他可以不写代码就能做 MVP 的案例还很多：
+
+<lark-table rows="4" cols="2" column-widths="162,249">
+
+  <lark-tr>
+    <lark-td>
+      **你想做的项目**
+    </lark-td>
+    <lark-td>
+      **最简版 MVP 的做法**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      信息聚合平台
+    </lark-td>
+    <lark-td>
+      微信群+腾讯文档
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      二手交易市场
+    </lark-td>
+    <lark-td>
+      小红书发帖+私信协商
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      知识付费课程
+    </lark-td>
+    <lark-td>
+      先开一次免费直播
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+# <text color="red" bgcolor="yellow">第二节 说人话（打造 IP）</text>
+
+内容是最高级的社交手段。但说得多，不如说对了。
+
+## 真人发声 > 品牌账号
+
+同一句话，由真实的人用第一人称说出来，效果是品牌账号的十倍。
+
+**对比**：
+
+<lark-table rows="3" cols="2" column-widths="262,345">
+
+  <lark-tr>
+    <lark-td>
+      **❌ 品牌账号说**
+    </lark-td>
+    <lark-td>
+      **✅ 真人说**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "XX团队官方通知：招新开始啦！"
+    </lark-td>
+    <lark-td>
+      "我大一参加这个社团，第一年就去了世界500强实习，这是我的经历……"
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "本店优质产品，欢迎选购"
+    </lark-td>
+    <lark-td>
+      "我自己用了三个月，分享一下真实感受"
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+**启示**：项目早期，用个人账号发内容。真实经历、真实失败、真实收获，远比精心排版更能建立信任。
+
+## 坚持发布 > 精品内容
+
+开始发内容时，别追求完美，追求频率。
+
+**数据参考**：MrBeast （野兽先生）发了 300 多条视频才爆，前期几乎没有播放量。
+
+**对比**：
+
+- ❌ "我要等想好了再发" → 拖延三个月，什么都没发
+- ✅ "先发一个B级内容，根据反馈再改" → 三个月后已经积累了第一批真实用户
+
+**每周练习**：这周内发出一条内容，不管多"不完美"。周更或者日更更重要。
+
+## 用户主角法则——你是向导，用户才是英雄
+
+不要把自己写成主角，用户才是那个需要被帮助的英雄。
+
+用户才是主角，你只是个向导，千万别搞错了；你的产品只是**帮助他赢**的关键工具。
+
+**对比**：
+
+<lark-table rows="3" cols="2" column-widths="200,376">
+
+  <lark-tr>
+    <lark-td>
+      **❌ 自己当英雄**
+    </lark-td>
+    <lark-td>
+      **✅ 用户是英雄**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "我们是最专业的课程"
+    </lark-td>
+    <lark-td>
+      "你想做数字创业，我们帮你少走三年弯路"
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "我们团队实力雄厚"
+    </lark-td>
+    <lark-td>
+      "用了我们的工具，你能在三周内拿到第一个真实用户"
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+## 问题故事 > 成功故事
+
+讲你如何解决问题，比讲你有多成功更吸引人。
+
+**对比**：
+
+<lark-table rows="3" cols="2" column-widths="200,437">
+
+  <lark-tr>
+    <lark-td>
+      **❌ 成功故事（无聊）**
+    </lark-td>
+    <lark-td>
+      **✅ 问题故事（有共鸣）**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "我的摊位月销2000元"
+    </lark-td>
+    <lark-td>
+      "第一天摆摊只卖出去2杯，后来我改了一个字，卖到了20杯"
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      "我们社团连续三年优秀"
+    </lark-td>
+    <lark-td>
+      "刚接手社团时，招新海报发出去零人报名，后来我们做了这一件事"
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+**原因**：困难和挣扎让人产生共鸣，每个人都经历过失败，好的结果让人感到希望。
+
+## 故事钩子——开头三句话决定生死
+
+文案开头没有抓力，后面再好也没人看。
+
+**三种有效开头**：
+
+1. **反常识**："越认真做 PPT 的人，路演效果往往越差。"
+2. **直接抛问题**："你有没有想过，为什么同样的简历，别人拿到面试你没有？"
+3. **从行动中间开始**："那天凌晨两点，我把三个月做的产品全删了。"
+
+**错误开头**："大家好，今天我来介绍一下……"（没有人会因为礼貌的开场白继续往下看）
+
+**课堂练习**：把你最近写的一条内容，只看第一句话——有钩子吗？5 秒内你愿意继续读吗？
+
+## 打造个人品牌 4 步法
+
+**4 步**（大学生可以从今天就开始）：
+
+1. **确定品牌定位**：你在哪个领域，帮什么人，解决什么问题？（用品牌三问）
+2. **建立内容系统**：选一个你能持续发内容的主题 + 平台（比如用数创日报发到朋友圈）
+3. **建立增长系统**：发完内容之后怎么引流？（公域→私域→借力）
+4. **开启商业化**：当你有了一批真实用户，才考虑怎么变现
+
+**案例**：一个大二学生持续分享"保研信息搜集+踩坑总结"，每周一篇，三个月后被同学们记成"信息整理型学姐"，开始有人愿意付费咨询。
+
+# <text color="red" bgcolor="yellow">第三节 聚铁粉（搞活动）</text>
+
+不需要百万粉丝。先让身边的 20 个人真正用起来，再想放大。
+
+## AARRR 简化版——理解增长的全链路
+
+**用中文动词记**（不用背英文）：
+
+<lark-table rows="6" cols="3" column-widths="200,200,200">
+
+  <lark-tr>
+    <lark-td>
+      **阶段**
+    </lark-td>
+    <lark-td>
+      **说人话**
+    </lark-td>
+    <lark-td>
+      **你需要问的问题**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      **拉新** 看见你 **A**cquisition
+    </lark-td>
+    <lark-td>
+      用户在哪里发现你？
+    </lark-td>
+    <lark-td>
+      多少人看到了我的内容？
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      **激活** 试一下 **A**ctivation
+    </lark-td>
+    <lark-td>
+      用户第一次体验是什么？
+    </lark-td>
+    <lark-td>
+      多少人真的用了一次？
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      **留存** 留下来 **R**etention
+    </lark-td>
+    <lark-td>
+      用户为什么成为回头客？
+    </lark-td>
+    <lark-td>
+      多少人下周还在买？
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      **推荐** 推荐给别人 **R**eferral
+    </lark-td>
+    <lark-td>
+      用户为什么帮你传播？
+    </lark-td>
+    <lark-td>
+      有没有人主动介绍新用户？
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      **收入** 愿意付钱 **R**evenue
+    </lark-td>
+    <lark-td>
+      用户付钱的理由是什么？
+    </lark-td>
+    <lark-td>
+      有没有人愿意为此买单？
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+**案例**：拼多多砍一刀——看见（微信朋友圈广告）→试一下（下载App）→留下来（便宜）→推荐（砍一刀必须找朋友）→付钱（下单）。五步全走完。
+
+## 1000 真粉丝——不需要百万粉丝
+
+你不需要很多人喜欢你，你只需要一批真正愿意支持你的人。
+
+**数字计算**（凯文·凯利）：
+
+- 1000 个真粉丝 × 每人每年贡献 100 元 = 每年 10 万元
+- 对大多数学生来说，这已经是一个不错的收入
+
+**什么是真粉丝**：愿意买你做的任何东西，愿意帮你推荐，知道你更新了第一时间去看。
+
+**启示**：与其追求"阅读量10万"，不如追求"有100个人真的期待你更新"。
+
+## 先从最活跃的 20 人开始
+
+建社群不要先求大，先找那 20 个最热情的人。
+
+**操作步骤**：
+
+1. 找出谁在没有任何好处的情况下，还在帮你推荐或夸你的项目
+2. 单独联系这 20 个人
+3. 先服务好这 20 人，听他们说什么，再考虑扩大
+
+**案例**：做校园跑步打卡群——先找 20 个天天在朋友圈晒步数的同学，而不是一口气拉满 200 个陌生人（结果变成死群）。
+
+## Aha 时刻——让用户尽快感受到价值
+
+用户第一次真正感受到"原来这个东西这么有用"的心动瞬间，就是 Aha 时刻。
+
+**重要性**：Aha 时刻来得越快，用户留下来的概率越高。
+
+**你的任务**：找出你产品/服务的 Aha 时刻，然后把它提到最前面。
+
+**案例**：
+
+- 自习室预约小程序的 Aha 时刻不是"注册成功"，而是"第一次自动提醒你换教室没迟到"
+- 校园二手书群的 Aha 时刻不是"进群成功"，而是"发出换书需求，5分钟内有人回应"
+
+**检查**：用户需要几步才能感受到核心价值？每减少一步，留存率都会提升。
+
+## 福格行为模型——让用户更容易做那件事
+
+**公式**（不用记公式，记三个问题）：
+
+用户做一件事 = 想做（动机）× 好做（能力）× 记得做（提示）
+
+三个条件缺一不可，**最容易被忽视的是"提示"**。
+
+**案例：瑞幸 9.9 元咖啡**
+
+<lark-table rows="4" cols="2" column-widths="200,372">
+
+  <lark-tr>
+    <lark-td>
+      **条件**
+    </lark-td>
+    <lark-td>
+      **瑞幸的做法**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      **想做（动机）**
+    </lark-td>
+    <lark-td>
+      9.9 元，便宜，品质不差
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      **好做（能力）**
+    </lark-td>
+    <lark-td>
+      微信小程序一键下单，门店自提，零等待
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      **记得做（提示）**
+    </lark-td>
+    <lark-td>
+      微信推送"今日限时"，早上 8 点提醒
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+## 找到分享元素——让用户自发传播
+
+社群能不能增长，关键是用户有没有东西可以分享——那个能体现自己身份的东西。
+
+**问自己**：你的产品/社群，成员最愿意向外人展示什么？
+
+- Notion 用户分享：他们做的漂亮 workspace 模板
+- 拼多多用户分享：砍一刀的链接（顺便带新用户进来）
+- 校园 VC 学员分享：项目上线的截图
+
+**设计提示**：如果你的社群没有"分享元素"，就要想办法创造一个——比如做一张漂亮的结业证书、一个可以截图的成就徽章、一张可以发朋友圈的数据报告。
+
+# 第四节 河床模型
+
+在创业项目找到痛点即定位（河流目的地）之后，需要用“河床模型”来指导**市场部门**的工作：
+
+左岸是创始团队 IP 的“说人话”，右岸是社群活动的“聚铁粉”，中间是日常流淌的内容运营。
+
+<whiteboard token="ELv4wdUsThjBHsbeTiRcn1NDnHh"/>
+
+# 第五节 营销心理学
+
+因为编程智能体，本质上是万能的，因此也可以用编程智能体，来做营销部门的工作。下面举例说明。
+
+我推荐一个营销技能包：https://github.com/coreyhaines31/marketingskills，其中有一个“[营销心理学](https%3A%2F%2Fgithub.com%2Fcoreyhaines31%2Fmarketingskills%2Fblob%2Fmain%2Fskills%2Fmarketing-psychology%2FSKILL.md)”技能。
+
+**营销心理学**研究的是：人为什么会买东西？表面上看，我们买东西是因为"需要"，但实际上大多数购买决定都发生在理性思考之前。人类大脑有一套根深蒂固的认知捷径——比如看到"限时特惠"会感到紧迫，看到"已有10万人购买"会觉得安心，看到划掉的原价会觉得自己赚到了。营销心理学就是把这些人类天然的心理规律摸透，然后有意识地设计进产品、文案和用户体验里。
+
+常见的营销心理学模型有：
+
+- **社会认同**（别人都买了，我也该买）、
+- **稀缺性**（快没了，赶紧下手）、
+- **损失厌恶**（人对"失去10元"的痛苦远大于"得到10元"的快乐）、
+- **锚定效应**（先看到高价，后面的价格就显得便宜）。
+
+这些不是什么操控技巧，而是人脑处理信息的基本方式。面对营销挑战时，营销团队常用的模型有：
+
+<lark-table rows="9" cols="2" column-widths="255,432">
+
+  <lark-tr>
+    <lark-td>
+      **Challenge  挑战**
+    </lark-td>
+    <lark-td>
+      **Relevant Models  相关模型**
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      Low conversions  转化率低
+    </lark-td>
+    <lark-td>
+      Hick's Law, Activation Energy, BJ Fogg, Friction
+      希克定律、活化能、BJ·福格、摩擦力
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      Price objections  价格异议
+    </lark-td>
+    <lark-td>
+      Anchoring, Framing, Mental Accounting, Loss Aversion
+      锚定效应、框架效应、心理账户、损失厌恶
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      Building trust  建立信任
+    </lark-td>
+    <lark-td>
+      Authority, Social Proof, Reciprocity, Pratfall Effect
+      权威、社会认同、互惠、出丑效应
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      Increasing urgency  日益紧迫
+    </lark-td>
+    <lark-td>
+      Scarcity, Loss Aversion, Zeigarnik Effect
+      稀缺性、损失厌恶、蔡格尼克效应
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      Retention/churn  留存率/流失率
+    </lark-td>
+    <lark-td>
+      Endowment Effect, Switching Costs, Status-Quo Bias
+      禀赋效应、转换成本、现状偏好
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      Growth stalling  增长停滞
+    </lark-td>
+    <lark-td>
+      Theory of Constraints, Local vs Global Optima, Compounding
+      约束理论、局部最优与全局最优、复合
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      Decision paralysis  决策瘫痪
+    </lark-td>
+    <lark-td>
+      Paradox of Choice, Default Effect, Nudge Theory
+      选择悖论、默认效应、助推理论
+    </lark-td>
+  </lark-tr>
+  <lark-tr>
+    <lark-td>
+      Onboarding  新人入职
+    </lark-td>
+    <lark-td>
+      Goal-Gradient, IKEA Effect, Commitment & Consistency
+      目标梯度、宜家效应、承诺与一致性
+    </lark-td>
+  </lark-tr>
+</lark-table>
+
+ 为什么创业者必须懂这个？因为你不只是在"卖产品"，**你在和用户大脑里的****情绪和偏见****对话**。一个懂营销心理学的人，写出来的产品文案，和不懂的人写出来的，转化率可能差十倍。这是所有营销技能里**最底层的基础**，学会了之后，做任何渠道都能用上。 
+
+# 第六节 龙虾 OpenClaw 🦞 入门
+
+![](/images/digital-startup/chapter-4/2.png)
+
+OpenClaw 的官网是：https://openclaw.ai/
+
+推荐阅读：<mention-doc token="H27Iw9ussiaYbokymhncExtjnAh" type="wiki">OpenClaw橙皮书：从入门到精通</mention-doc>（可下载免费pdf）。
+
+OpenClaw 是一个帮你干活的智能助手。它是一个**AI Agent （智能体）平台**，能连接20+消息渠道（WhatsApp、Telegram、飞书、钉钉等），主动执行任务、管理你的日程、处理邮件、操作浏览器、调用各种工具等等。 不过现在 Claude code（或者腾讯版的 CodeBuddy）和 OpenClaw（或者腾讯版的 WorkBuddy）已经越来越像了。
+
+![](/images/digital-startup/chapter-4/3.png)
+
+上面两本书的作者花叔提出：**这两者是苹果和安卓的关系。**从初学者的角度来说，先学苹果（Claude code）比较好，因为体验更为成熟一些。不过因为 OpenClaw（相当于安卓）是开源的软件，其知名度更大。你基本可以认为编程智能体和个人智能体，本质上是同一类软件：用 AI 大模型在驱动的数字赛车。

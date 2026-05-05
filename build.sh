@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# build.sh — XYVC + learn-src 合并构建脚本
+#
+# 输出 dist/：
+#   - 主站静态资源（XYVC 根目录所有 HTML/CSS/JS/资源），位于 dist/ 顶层
+#   - VitePress 子站构建产物，位于 dist/learn/
+#
+# Cloudflare Pages 配置（PR 合入后必须改）：
+#   Build command:           bash build.sh
+#   Build output directory:  dist
+#   Node version:            18+
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+DIST="$ROOT/dist"
+LEARN_SRC="$ROOT/learn-src"
+
+echo "==> [1/4] 清理 dist/"
+rm -rf "$DIST"
+mkdir -p "$DIST"
+
+echo "==> [2/4] 复制主站静态资源到 dist/"
+# 用 rsync 排除大目录与构建/缓存目录；保留隐藏文件（_redirects、_headers、.cloudflare 等）
+rsync -a \
+  --exclude="dist" \
+  --exclude="node_modules" \
+  --exclude=".git" \
+  --exclude=".obsidian" \
+  --exclude="learn-src/node_modules" \
+  --exclude="learn-src/docs/.vitepress/cache" \
+  --exclude="learn-src/docs/.vitepress/dist" \
+  --exclude="learn-src" \
+  --exclude="build.sh" \
+  --exclude=".DS_Store" \
+  "$ROOT/" "$DIST/"
+
+echo "==> [3/4] 构建 VitePress 子站 (learn-src)"
+cd "$LEARN_SRC"
+if [ -f package-lock.json ]; then
+  npm ci
+else
+  npm install
+fi
+npx vitepress build docs
+
+echo "==> [4/4] 拷贝 VitePress 产物到 dist/learn/"
+mkdir -p "$DIST/learn"
+rsync -a "$LEARN_SRC/docs/.vitepress/dist/" "$DIST/learn/"
+
+echo ""
+echo "✅ 构建完成"
+echo "   主站根：       $DIST/index.html"
+echo "   学习站首页：   $DIST/learn/index.html"
+echo "   加密创投教程： $DIST/learn/crypto-vc/start/chapter1-overview/index.html"
