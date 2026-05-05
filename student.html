@@ -408,7 +408,13 @@
       <div class="nav__menu" id="navMenu">
         <div class="nav__links">
           <a href="index.html" class="nav__link">首页</a>
-          <a href="student.html" class="nav__link active">我是学生</a>
+          <div class="nav__item nav__item--dropdown">
+            <a href="student.html" class="nav__link active">我是学生<span class="nav__caret" aria-hidden="true">▾</span></a>
+            <div class="nav__submenu" role="menu">
+              <a class="nav__submenu-link" href="learn/digital-startup/" role="menuitem">数创教程</a>
+              <a class="nav__submenu-link" href="learn/crypto-vc/" role="menuitem">加密教程</a>
+            </div>
+          </div>
           <a href="teacher.html" class="nav__link">我是教师</a>
           <a href="resources/" class="nav__link">资源中心</a>
           <a href="index.html#founder" class="nav__link">团队介绍</a>

@@ -223,46 +223,9 @@ export default defineConfig({
       },
     },
 
-    nav: [
-      { text: "校园VC 主站", link: "https://xiaoyuanvc.com" },
-      {
-        text: "数字创业教程",
-        items: [
-          { text: "教程总览", link: "/digital-startup/" },
-          { text: "第一章 数字创业认知", link: "/digital-startup/chapter-1" },
-          { text: "第二章 数创机会洞察", link: "/digital-startup/chapter-2" },
-          { text: "第三章 数字产品开发", link: "/digital-startup/chapter-3" },
-          { text: "第四章 营销增长实战", link: "/digital-startup/chapter-4" },
-          { text: "第五章 融资致胜法则", link: "/digital-startup/chapter-5" },
-        ],
-      },
-      {
-        text: "加密创投教程",
-        items: [
-          { text: "教程总览", link: "/crypto-vc/" },
-          {
-            text: "第一章：公链基础篇",
-            link: "/crypto-vc/start/chapter1-overview/",
-          },
-          {
-            text: "第二章：实务操作篇",
-            link: "/crypto-vc/start/chapter2-overview/",
-          },
-          {
-            text: "第三章：金融篇",
-            link: "/crypto-vc/advanced/chapter3-overview/",
-          },
-          {
-            text: "第四章：文化篇",
-            link: "/crypto-vc/advanced/chapter4-overview/",
-          },
-          {
-            text: "第五章：创新篇",
-            link: "/crypto-vc/advanced/chapter5-overview/",
-          },
-        ],
-      },
-    ],
+    // 顶部导航已被自定义 Layout（theme/Layout.vue）替换为主站导航；
+    // VitePress 默认 VPNav 通过 theme/style.css 隐藏。
+    nav: [],
 
     sidebar: {
       "/crypto-vc/": [
