@@ -84,7 +84,7 @@ onMounted(() => {
 <template>
   <Layout>
     <template #layout-top>
-      <nav class="nav" id="nav">
+      <nav class="nav vp-raw" id="nav">
         <div class="nav__inner">
           <a class="nav__logo" href="/" aria-label="校园VC 首页">
             <img :src="'/assets/logo-color.png'" alt="校园VC Logo" width="81" height="40" />
