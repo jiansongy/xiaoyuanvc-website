@@ -21,9 +21,10 @@ const TUTORIAL_NAMES: Record<
 };
 
 function toCanonical(relativePath: string) {
+  // CF Pages 把 *.html 308 重定向到无扩展名版本，canonical 对齐目标 URL
   const cleaned = relativePath
     .replace(/index\.md$/, "")
-    .replace(/\.md$/, ".html");
+    .replace(/\.md$/, "");
   return `${HOSTNAME}${BASE}${cleaned}`;
 }
 
