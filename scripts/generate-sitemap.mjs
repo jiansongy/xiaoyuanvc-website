@@ -22,27 +22,27 @@ const staticPages = [
     priority: "0.8",
   },
   {
-    loc: "https://xiaoyuanvc.com/resources/what-is-digital-entrepreneurship-education.html",
+    loc: "https://xiaoyuanvc.com/resources/what-is-digital-entrepreneurship-education",
     changefreq: "monthly",
     priority: "0.7",
   },
   {
-    loc: "https://xiaoyuanvc.com/resources/platforms-comparison.html",
+    loc: "https://xiaoyuanvc.com/resources/platforms-comparison",
     changefreq: "monthly",
     priority: "0.7",
   },
   {
-    loc: "https://xiaoyuanvc.com/resources/ai-startup-roadmap.html",
+    loc: "https://xiaoyuanvc.com/resources/ai-startup-roadmap",
     changefreq: "monthly",
     priority: "0.7",
   },
   {
-    loc: "https://xiaoyuanvc.com/resources/podcast.html",
+    loc: "https://xiaoyuanvc.com/resources/podcast",
     changefreq: "weekly",
     priority: "0.8",
   },
   {
-    loc: "https://xiaoyuanvc.com/resources/zero-to-hero-book.html",
+    loc: "https://xiaoyuanvc.com/resources/zero-to-hero-book",
     changefreq: "monthly",
     priority: "0.7",
   },
@@ -67,7 +67,7 @@ for (const page of staticPages) {
 for (const ep of episodes) {
   lines.push("  <url>");
   lines.push(
-    `    <loc>https://xiaoyuanvc.com/resources/episodes/ep${ep.ep}.html</loc>`,
+    `    <loc>https://xiaoyuanvc.com/resources/episodes/ep${ep.ep}</loc>`,
   );
   lines.push(`    <lastmod>${ep.date}</lastmod>`);
   lines.push("    <changefreq>monthly</changefreq>");
