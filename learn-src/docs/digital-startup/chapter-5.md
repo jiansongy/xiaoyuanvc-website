@@ -59,53 +59,12 @@ order: 5
 他们不找「能赚 3 倍的项目」，只找「万一成了能赚 100 倍的项目」
 
 ## 融资的三个早期阶段
-<lark-table rows="4" cols="3" column-widths="200,200,200">
 
-  <lark-tr>
-    <lark-td>
-      **阶段**
-    </lark-td>
-    <lark-td>
-      **状态**
-    </lark-td>
-    <lark-td>
-      **小店类比**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **种子轮 / 天使轮**
-    </lark-td>
-    <lark-td>
-      有想法，在验证
-    </lark-td>
-    <lark-td>
-      借钱进货，看有没有人买
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **A 轮**
-    </lark-td>
-    <lark-td>
-      有用户，要扩大
-    </lark-td>
-    <lark-td>
-      店开起来了，要多开几家
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **B 轮以后**
-    </lark-td>
-    <lark-td>
-      先不管
-    </lark-td>
-    <lark-td>
-      那是几年后的事
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| 阶段 | 状态 | 小店类比 |
+| --- | --- | --- |
+| **种子轮 / 天使轮** | 有想法，在验证 | 借钱进货，看有没有人买 |
+| **A 轮** | 有用户，要扩大 | 店开起来了，要多开几家 |
+| **B 轮以后** | 先不管 | 那是几年后的事 |
 
 ## 投资股权而非债权
 

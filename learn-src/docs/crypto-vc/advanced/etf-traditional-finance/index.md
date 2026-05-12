@@ -294,33 +294,6 @@ https://www.coingecko.com/en/etf/bitcoin-etf
 > - 主流DeFi协议：借贷、DEX、质押
 > - DeFi vs 传统金融的区别
 
-## 附录：参考资料
-
-<details>
-<summary><strong>点击展开查看参考资料来源</strong></summary>
-
-> 更新时间：2026-01-28
-
-| 内容类型 | 来源资料 | 页码/章节 |
-|-----------|-----------|----------|
-| BTC ETF数据 | [CoinGecko 2025年度报告](参考资料/CoinGecko-2025 Report.pdf) | P.32-35 |
-| IBIT数据 | [Messari 2026加密货币报告](参考资料/Messari-2026加密货币报告.pdf) | 第2章 |
-| Strategy持币数据 | CoinGecko 2025年度报告 | P.33 |
-| SBR信息 | Messari 2026加密货币报告 | 第2章 |
-| ETH ETF数据 | CoinGecko 2025年度报告 | P.35 |
-| M&A数据 | CoinGecko 2025年度报告 | P.38 |
-| 第二期加密创投营课件 | [第二期加密创投营课件.pdf](参考资料/第二期加密创投营课件.pdf) | P5, P28 |
-
-**关键数据来源**：
-- BTC ETF AUM排名：CoinGecko报告 P.32
-- IBIT 341天达$70B：Messari报告 第2章
-- Strategy持650,000 BTC：CoinGecko DATCo章节 P.33
-- SBR定义：Messari报告 第2章
-
-**工具推荐来源**：
-- ETF持仓查询：CoinGecko ETF页面
-
-</details>
 
 ---
 

@@ -225,29 +225,6 @@ Solana 是一条以速度和低费用著称的高性能公链，通过 PoH + PoS
 > - 2025 年三大代币的市场表现对比
 > - 如何理解加密市场的整体格局
 
----
-
-## 附录：参考资料
-
-<details>
-<summary><strong>点击展开查看参考资料来源</strong></summary>
-
-> 更新时间：2026-01-28
-
-| 内容类型 | 来源资料 | 页码/章节 |
-|----------|---------|----------|
-| Solana 概述 | 第二期加密创投营课件 | P10（Solana 时间线） |
-| SOL 价格数据 | CoinGecko 2025 年度报告 | 市场总览章节 |
-| DeFi TVL 增长 | Messari Crypto Theses 2026 | Solana 章节 |
-| DEX 交易量增长 | Messari Crypto Theses 2026 | Solana 章节 |
-| SOL ETF | CoinGecko 2025 年度报告 | ETF 章节 |
-
-**关键数据来源**：
-- SOL 年末 $124.52（-34.3%）：CoinGecko 2025 Report
-- DeFi TVL 增长 ~30 倍、DEX 交易量增长 ~33 倍：Messari
-- SOL ETF 获批：CoinGecko 2025 Report
-
-</details>
 
 ---
 

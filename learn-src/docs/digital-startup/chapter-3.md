@@ -161,86 +161,14 @@ RICE 是一套由 [Intercom](https%3A%2F%2Fwww.intercom.com%2F) 公司的量化�
 
 **Brainstorming 六步法，就是在装修时：先看清房子，再问需求，再出方案，确认后再施工。**
 
-<lark-table rows="7" cols="3" column-widths="145,288,268">
-
-  <lark-tr>
-    <lark-td>
-      **步骤**
-    </lark-td>
-    <lark-td>
-      **装修类比**
-    </lark-td>
-    <lark-td>
-      **你在做什么**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **1. 探索现状**
-    </lark-td>
-    <lark-td>
-      量尺寸、看户型、看水电
-    </lark-td>
-    <lark-td>
-      看项目文件、文档、历史记录
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **2. 逐个提问**
-    </lark-td>
-    <lark-td>
-      设计师问你：想省钱、好看，还是收纳强？
-    </lark-td>
-    <lark-td>
-      一次只问一个问题，优先给选择题
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **3. 提出方案**
-    </lark-td>
-    <lark-td>
-      给你看三种装修风格：极简 / 省钱 / 实用
-    </lark-td>
-    <lark-td>
-      提出 2-3 个方案，讲清优缺点，给推荐
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **4. 分段确认**
-    </lark-td>
-    <lark-td>
-      先敲定客厅，再看卧室
-    </lark-td>
-    <lark-td>
-      每段设计确认后，再继续下一段
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **5. 写设计文档**
-    </lark-td>
-    <lark-td>
-      把方案变成正式施工图
-    </lark-td>
-    <lark-td>
-      存档为设计文档，团队对齐
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **6. 过渡实施**
-    </lark-td>
-    <lark-td>
-      图纸定了，施工队进场
-    </lark-td>
-    <lark-td>
-      转入详细实施计划
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **步骤** | **装修类比** | **你在做什么** |
+| --- | --- | --- |
+| **1. 探索现状** | 量尺寸、看户型、看水电 | 看项目文件、文档、历史记录 |
+| **2. 逐个提问** | 设计师问你：想省钱、好看，还是收纳强？ | 一次只问一个问题，优先给选择题 |
+| **3. 提出方案** | 给你看三种装修风格：极简 / 省钱 / 实用 | 提出 2-3 个方案，讲清优缺点，给推荐 |
+| **4. 分段确认** | 先敲定客厅，再看卧室 | 每段设计确认后，再继续下一段 |
+| **5. 写设计文档** | 把方案变成正式施工图 | 存档为设计文档，团队对齐 |
+| **6. 过渡实施** | 图纸定了，施工队进场 | 转入详细实施计划 |
 
 **铁律：图纸没批准，谁都不能开工。**
 
@@ -317,7 +245,7 @@ Node.js + 阿里镜像 + 智谱 API 是目前国内环境下成功率高且对�
 
 先打开终端控制台，执行下面这条命令：（国内的网络环境也可以跑）
 ```bash
-npm install -g @anthropic-ai/claude-code --registry=https、://registry.npmmirror.com
+npm install -g @anthropic-ai/claude-code --registry=https://registry.npmmirror.com
 ```
 
 这条命令的作用，就是全局安装 Claude Code。

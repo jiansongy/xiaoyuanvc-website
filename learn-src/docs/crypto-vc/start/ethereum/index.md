@@ -253,30 +253,6 @@ Solana 确实在速度和费用上有优势，但以太坊的开发者生态、T
 > - Solana 生态 2025 年的爆发式增长
 > - 在 Solscan 上查看 Solana 链上活动
 
----
-
-## 附录：参考资料
-
-<details>
-<summary><strong>点击展开查看参考资料来源</strong></summary>
-
-> 更新时间：2026-01-28
-
-| 内容类型 | 来源资料 | 页码/章节 |
-|----------|---------|----------|
-| 以太坊概述 | 第二期加密创投营课件 | P9（以太坊发展时间线） |
-| ETH 价格数据 | CoinGecko 2025 年度报告 | 市场总览章节 |
-| DeFi TVL 数据 | CoinGecko 2025 年度报告 | DeFi 章节 |
-| L1 费用份额 | Messari Crypto Theses 2026 | 以太坊章节 |
-| ETH ETF 数据 | CoinGecko 2025 年度报告 | ETF 章节 |
-
-**关键数据来源**：
-- ETH ATH $4,946、年末 $2,967（-11.1%）：CoinGecko 2025 Report
-- DeFi TVL 以太坊占 57.7%：CoinGecko DeFi 章节
-- L1 费用份额降至 17%：Messari
-- ETH ETF 流入 $97.2 亿：CoinGecko 2025 Report
-
-</details>
 
 ---
 

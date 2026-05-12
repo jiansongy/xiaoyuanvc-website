@@ -82,86 +82,14 @@ order: 2
 
 因为 AI 虽能实现快速执行，但却缺乏对产品构建方向的清晰认知。
 
-<lark-table rows="7" cols="3" column-widths="121,283,319">
-
-  <lark-tr>
-    <lark-td>
-      **维度**
-    </lark-td>
-    <lark-td>
-      **效果逻辑（Effectuation）**
-    </lark-td>
-    <lark-td>
-      **精益创业（Lean Startup）**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **核心问题**
-    </lark-td>
-    <lark-td>
-      我现在有什么？
-    </lark-td>
-    <lark-td>
-      我的假设是否成立？
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **起点**
-    </lark-td>
-    <lark-td>
-      已有资源/关系
-    </lark-td>
-    <lark-td>
-      待验证的假设
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **对失败的态度**
-    </lark-td>
-    <lark-td>
-      视意外为资源（柠檬水）
-    </lark-td>
-    <lark-td>
-      快速失败，积累信息
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **对计划的态度**
-    </lark-td>
-    <lark-td>
-      控制当下，不预测未来
-    </lark-td>
-    <lark-td>
-      用最小成本验证未来
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **适用时机**
-    </lark-td>
-    <lark-td>
-      创业最早期（连问题都不清楚）
-    </lark-td>
-    <lark-td>
-      已有初步方向，开始验证
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **校园案例**
-    </lark-td>
-    <lark-td>
-      你认识10个同学，先帮他们解决任何问题
-    </lark-td>
-    <lark-td>
-      你认为同学愿意付5元买笔记，发一条消息验证
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| 维度 | 效果逻辑（Effectuation） | 精益创业（Lean Startup） |
+| --- | --- | --- |
+| **核心问题** | 我现在有什么？ | 我的假设是否成立？ |
+| **起点** | 已有资源/关系 | 待验证的假设 |
+| **对失败的态度** | 视意外为资源（柠檬水） | 快速失败，积累信息 |
+| **对计划的态度** | 控制当下，不预测未来 | 用最小成本验证未来 |
+| **适用时机** | 创业最早期（连问题都不清楚） | 已有初步方向，开始验证 |
+| **校园案例** | 你认识10个同学，先帮他们解决任何问题 | 你认为同学愿意付5元买笔记，发一条消息验证 |
 
 **关键假设**
 
@@ -224,41 +152,11 @@ order: 2
 
 <text underline="true">**第三步：手工解决，然后收钱**</text>：**不要写代码。** 用人工方式帮社区成员解决问题，然后收费。
 
-<lark-table rows="4" cols="2" column-widths="200,200">
-
-  <lark-tr>
-    <lark-td>
-      **痛点**
-    </lark-td>
-    <lark-td>
-      **手工方案**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      找不到二手教材
-    </lark-td>
-    <lark-td>
-      建群人工匹配，每单收 5 块
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      社团不会做海报
-    </lark-td>
-    <lark-td>
-      帮做，一张 30 块
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      考研不会选学校
-    </lark-td>
-    <lark-td>
-      一对一分析，一次 50 块
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **痛点** | **手工方案** |
+| --- | --- |
+| 找不到二手教材 | 建群人工匹配，每单收 5 块 |
+| 社团不会做海报 | 帮做，一张 30 块 |
+| 考研不会选学校 | 一对一分析，一次 50 块 |
 
 收到钱 = 需求被验证。手工交付让你学到客户真正在意什么、哪些步骤该自动化、哪些该砍。
 

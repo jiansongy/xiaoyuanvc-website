@@ -358,32 +358,6 @@ The Times 03/Jan/2009 Chancellor on brink of second bailout for banks
 > - 为什么说"互联网传递信息，区块链传递价值"
 > - 通过在线演示亲手体验区块+链的数据结构
 
----
-
-## 附录：参考资料
-
-<details>
-<summary><strong>点击展开查看参考资料来源</strong></summary>
-
-> 更新时间：2026-01-28
-
-| 内容类型       | 来源资料                    | 页码/章节    |
-| -------------- | --------------------------- | ------------ |
-| 比特币历史     | 第二期加密创投营课件        | P4-P5        |
-| BTC 价格数据   | CoinGecko 2025 年度报告     | 市场总览章节 |
-| ETF 数据       | CoinGecko 2025 年度报告     | ETF 章节     |
-| SBR 与机构采用 | Messari Crypto Theses 2026  | 第1章        |
-| Strategy 持仓  | CoinGecko 2025 年度报告     | DATCo 章节   |
-| 市场数据更新   | 第二期加密创投营课件-更新稿 | 第一章部分   |
-
-**关键数据来源**：
-
-- BTC ATH $124,774、年末 $87,520：CoinGecko 2025 Report
-- IBIT 341 天达 $70B AUM：Messari + CoinGecko
-- Strategy 650,000 BTC：CoinGecko DATCo 章节
-- 战略比特币储备（SBR）：Messari Crypto Theses 2026
-
-</details>
 
 ---
 

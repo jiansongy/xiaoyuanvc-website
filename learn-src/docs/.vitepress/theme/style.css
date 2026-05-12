@@ -342,3 +342,12 @@
     background: transparent;
   }
 }
+
+/* 4) 内容区标题样式微调：
+   去掉 VitePress 默认在每个 H2 顶部加的分隔线（章节太多时视觉嘈杂），
+   并把 H2 上方间距从 48px 收到 32px，让节奏更紧凑。 */
+.vp-doc h2 {
+  margin: 32px 0 16px;
+  border-top: none;
+  padding-top: 0;
+}

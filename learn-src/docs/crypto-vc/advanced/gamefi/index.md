@@ -425,30 +425,6 @@ https://dappradar.com/rankings/category/games
 > - DOGE、PEPE、TRUMP等经典案例
 > - Memecoin的极高风险性
 
-## 附录：参考资料
-
-<details>
-<summary><strong>点击展开查看参考资料来源</strong></summary>
-
-> 更新时间：2026-01-28
-
-| 内容类型 | 来源资料 | 页码/章节 |
-|-----------|-----------|----------|
-| GameFi基础概念 | knowledge-points.md | KP-009（NFT——游戏道具应用） |
-| Axie Infinity案例 | [第二期加密创投营课件](参考资料/第二期加密创投营课件.pdf) | P39-41 |
-| 链游困境分析 | content-analysis.md | GameFi相关章节 |
-| Web3游戏趋势 | content-analysis.md | 行业趋势分析 |
-
-**关键数据来源**：
-- Axie Infinity日活200万（2021年峰值）：第二期加密创投营课件 P.39
-- Axie收入暴跌99%（2022年）：课件 P.40
-- Big Time日活数十万（2024-2025）：content-analysis.md
-
-**工具推荐来源**：
-- 链游数据平台：DappRadar
-- 链游排行榜：DappRadar Games Category
-
-</details>
 
 ---
 

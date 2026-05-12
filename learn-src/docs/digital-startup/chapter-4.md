@@ -24,96 +24,18 @@ order: 4
 
 **营销执行的4P**：产品（Product）、渠道或场景（Place）、定价（Price）、促销（Promotion）。
 
-<grid cols="2">
+| STP | 营销战略 |
+| --- | --- |
+| Segment | 市场细分 |
+| Targeting | 目标市场选择 |
+| Positioning | 市场定位 |
 
-  <column width="50">
-
-    <lark-table rows="4" cols="2" column-widths="100,147">
-
-      <lark-tr>
-        <lark-td>
-          **STP**
-        </lark-td>
-        <lark-td>
-          **营销战略**
-        </lark-td>
-      </lark-tr>
-      <lark-tr>
-        <lark-td>
-          Segment
-        </lark-td>
-        <lark-td>
-          市场细分
-        </lark-td>
-      </lark-tr>
-      <lark-tr>
-        <lark-td>
-          Targeting
-        </lark-td>
-        <lark-td>
-          目标市场选择
-        </lark-td>
-      </lark-tr>
-      <lark-tr>
-        <lark-td>
-          Positioning
-        </lark-td>
-        <lark-td>
-          市场定位
-        </lark-td>
-      </lark-tr>
-    </lark-table>
-
-  </column>
-  <column width="50">
-
-    <lark-table rows="5" cols="2" column-widths="86,108">
-
-      <lark-tr>
-        <lark-td>
-          **4P**
-        </lark-td>
-        <lark-td>
-          **营销执行**
-        </lark-td>
-      </lark-tr>
-      <lark-tr>
-        <lark-td>
-          Product
-        </lark-td>
-        <lark-td>
-          产品
-        </lark-td>
-      </lark-tr>
-      <lark-tr>
-        <lark-td>
-          Place
-        </lark-td>
-        <lark-td>
-          渠道（场景）
-        </lark-td>
-      </lark-tr>
-      <lark-tr>
-        <lark-td>
-          Price
-        </lark-td>
-        <lark-td>
-          定价
-        </lark-td>
-      </lark-tr>
-      <lark-tr>
-        <lark-td>
-          Promotion
-        </lark-td>
-        <lark-td>
-          促销
-        </lark-td>
-      </lark-tr>
-    </lark-table>
-
-  </column>
-
-</grid>
+| 4P | 营销执行 |
+| --- | --- |
+| Product | 产品 |
+| Place | 渠道（场景） |
+| Price | 定价 |
+| Promotion | 促销 |
 
 我上本科时就学习过科特勒，后来在微软公司上班时，还专门被选送去参加过科特勒老先生的培训班。
 
@@ -131,41 +53,11 @@ order: 4
 
 中医讲究“治未病”，但是没有病的人不会去找医生，商业化有点矛盾。
 
-<lark-table rows="4" cols="2" column-widths="235,210">
-
-  <lark-tr>
-    <lark-td>
-      **止疼药**
-    </lark-td>
-    <lark-td>
-      **维生素**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      紧急、不得不用
-    </lark-td>
-    <lark-td>
-      有好处、可以等等再用
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      明天早八要交的 PPT 汇报材料
-    </lark-td>
-    <lark-td>
-      长期提升表达力的社群
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      帮找实习的内推资源库
-    </lark-td>
-    <lark-td>
-      每日一句职场英语推送
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **止疼药** | **维生素** |
+| --- | --- |
+| 紧急、不得不用 | 有好处、可以等等再用 |
+| 明天早八要交的 PPT 汇报材料 | 长期提升表达力的社群 |
+| 帮找实习的内推资源库 | 每日一句职场英语推送 |
 
 **记忆方法**：如果你去掉这个产品，用户今天会很难受，它就是止疼药。如果去掉，用户说"哦那就算了"，它是维生素。
 
@@ -177,41 +69,11 @@ order: 4
 
 **反问自己**：你的用户在哪个具体时刻，感到最挣扎？
 
-<lark-table rows="4" cols="2" column-widths="183,319">
-
-  <lark-tr>
-    <lark-td>
-      **❌ 从功能出发**
-    </lark-td>
-    <lark-td>
-      **✅ 从挣扎时刻出发**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "我们做了一个笔记软件"
-    </lark-td>
-    <lark-td>
-      "期末复习，面对 1000 页课件不知道从哪开始"
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "AI写作助手"
-    </lark-td>
-    <lark-td>
-      "明天论文截止，今晚才发现思路是错的"
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "二手交易平台"
-    </lark-td>
-    <lark-td>
-      "毕业要搬家，宿舍堆了一屋子没用的东西"
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **❌ 从功能出发** | **✅ 从挣扎时刻出发** |
+| --- | --- |
+| "我们做了一个笔记软件" | "期末复习，面对 1000 页课件不知道从哪开始" |
+| "AI写作助手" | "明天论文截止，今晚才发现思路是错的" |
+| "二手交易平台" | "毕业要搬家，宿舍堆了一屋子没用的东西" |
 
 **找用户挣扎时刻的方法**：说出那个具体的时间、地点和感受。
 
@@ -255,41 +117,11 @@ order: 4
 
 **案例**：自习搭子 App——先不做 App，先建"早八自习打卡群"，手动每天提醒，看有没有人愿意坚持用。虽然我教大家编程、但不鼓励冲动开发。其他可以不写代码就能做 MVP 的案例还很多：
 
-<lark-table rows="4" cols="2" column-widths="162,249">
-
-  <lark-tr>
-    <lark-td>
-      **你想做的项目**
-    </lark-td>
-    <lark-td>
-      **最简版 MVP 的做法**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      信息聚合平台
-    </lark-td>
-    <lark-td>
-      微信群+腾讯文档
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      二手交易市场
-    </lark-td>
-    <lark-td>
-      小红书发帖+私信协商
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      知识付费课程
-    </lark-td>
-    <lark-td>
-      先开一次免费直播
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **你想做的项目** | **最简版 MVP 的做法** |
+| --- | --- |
+| 信息聚合平台 | 微信群+腾讯文档 |
+| 二手交易市场 | 小红书发帖+私信协商 |
+| 知识付费课程 | 先开一次免费直播 |
 
 # <text color="red" bgcolor="yellow">第二节 说人话（打造 IP）</text>
 
@@ -301,33 +133,10 @@ order: 4
 
 **对比**：
 
-<lark-table rows="3" cols="2" column-widths="262,345">
-
-  <lark-tr>
-    <lark-td>
-      **❌ 品牌账号说**
-    </lark-td>
-    <lark-td>
-      **✅ 真人说**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "XX团队官方通知：招新开始啦！"
-    </lark-td>
-    <lark-td>
-      "我大一参加这个社团，第一年就去了世界500强实习，这是我的经历……"
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "本店优质产品，欢迎选购"
-    </lark-td>
-    <lark-td>
-      "我自己用了三个月，分享一下真实感受"
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **❌ 品牌账号说** | **✅ 真人说** |
+| --- | --- |
+| "XX团队官方通知：招新开始啦！" | "我大一参加这个社团，第一年就去了世界500强实习，这是我的经历……" |
+| "本店优质产品，欢迎选购" | "我自己用了三个月，分享一下真实感受" |
 
 **启示**：项目早期，用个人账号发内容。真实经历、真实失败、真实收获，远比精心排版更能建立信任。
 
@@ -352,33 +161,10 @@ order: 4
 
 **对比**：
 
-<lark-table rows="3" cols="2" column-widths="200,376">
-
-  <lark-tr>
-    <lark-td>
-      **❌ 自己当英雄**
-    </lark-td>
-    <lark-td>
-      **✅ 用户是英雄**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "我们是最专业的课程"
-    </lark-td>
-    <lark-td>
-      "你想做数字创业，我们帮你少走三年弯路"
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "我们团队实力雄厚"
-    </lark-td>
-    <lark-td>
-      "用了我们的工具，你能在三周内拿到第一个真实用户"
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **❌ 自己当英雄** | **✅ 用户是英雄** |
+| --- | --- |
+| "我们是最专业的课程" | "你想做数字创业，我们帮你少走三年弯路" |
+| "我们团队实力雄厚" | "用了我们的工具，你能在三周内拿到第一个真实用户" |
 
 ## 问题故事 > 成功故事
 
@@ -386,33 +172,10 @@ order: 4
 
 **对比**：
 
-<lark-table rows="3" cols="2" column-widths="200,437">
-
-  <lark-tr>
-    <lark-td>
-      **❌ 成功故事（无聊）**
-    </lark-td>
-    <lark-td>
-      **✅ 问题故事（有共鸣）**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "我的摊位月销2000元"
-    </lark-td>
-    <lark-td>
-      "第一天摆摊只卖出去2杯，后来我改了一个字，卖到了20杯"
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      "我们社团连续三年优秀"
-    </lark-td>
-    <lark-td>
-      "刚接手社团时，招新海报发出去零人报名，后来我们做了这一件事"
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **❌ 成功故事（无聊）** | **✅ 问题故事（有共鸣）** |
+| --- | --- |
+| "我的摊位月销2000元" | "第一天摆摊只卖出去2杯，后来我改了一个字，卖到了20杯" |
+| "我们社团连续三年优秀" | "刚接手社团时，招新海报发出去零人报名，后来我们做了这一件事" |
 
 **原因**：困难和挣扎让人产生共鸣，每个人都经历过失败，好的结果让人感到希望。
 
@@ -449,75 +212,13 @@ order: 4
 
 **用中文动词记**（不用背英文）：
 
-<lark-table rows="6" cols="3" column-widths="200,200,200">
-
-  <lark-tr>
-    <lark-td>
-      **阶段**
-    </lark-td>
-    <lark-td>
-      **说人话**
-    </lark-td>
-    <lark-td>
-      **你需要问的问题**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **拉新** 看见你 **A**cquisition
-    </lark-td>
-    <lark-td>
-      用户在哪里发现你？
-    </lark-td>
-    <lark-td>
-      多少人看到了我的内容？
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **激活** 试一下 **A**ctivation
-    </lark-td>
-    <lark-td>
-      用户第一次体验是什么？
-    </lark-td>
-    <lark-td>
-      多少人真的用了一次？
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **留存** 留下来 **R**etention
-    </lark-td>
-    <lark-td>
-      用户为什么成为回头客？
-    </lark-td>
-    <lark-td>
-      多少人下周还在买？
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **推荐** 推荐给别人 **R**eferral
-    </lark-td>
-    <lark-td>
-      用户为什么帮你传播？
-    </lark-td>
-    <lark-td>
-      有没有人主动介绍新用户？
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **收入** 愿意付钱 **R**evenue
-    </lark-td>
-    <lark-td>
-      用户付钱的理由是什么？
-    </lark-td>
-    <lark-td>
-      有没有人愿意为此买单？
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **阶段** | **说人话** | **你需要问的问题** |
+| --- | --- | --- |
+| **拉新** 看见你 **A**cquisition | 用户在哪里发现你？ | 多少人看到了我的内容？ |
+| **激活** 试一下 **A**ctivation | 用户第一次体验是什么？ | 多少人真的用了一次？ |
+| **留存** 留下来 **R**etention | 用户为什么成为回头客？ | 多少人下周还在买？ |
+| **推荐** 推荐给别人 **R**eferral | 用户为什么帮你传播？ | 有没有人主动介绍新用户？ |
+| **收入** 愿意付钱 **R**evenue | 用户付钱的理由是什么？ | 有没有人愿意为此买单？ |
 
 **案例**：拼多多砍一刀——看见（微信朋友圈广告）→试一下（下载App）→留下来（便宜）→推荐（砍一刀必须找朋友）→付钱（下单）。五步全走完。
 
@@ -571,41 +272,11 @@ order: 4
 
 **案例：瑞幸 9.9 元咖啡**
 
-<lark-table rows="4" cols="2" column-widths="200,372">
-
-  <lark-tr>
-    <lark-td>
-      **条件**
-    </lark-td>
-    <lark-td>
-      **瑞幸的做法**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **想做（动机）**
-    </lark-td>
-    <lark-td>
-      9.9 元，便宜，品质不差
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **好做（能力）**
-    </lark-td>
-    <lark-td>
-      微信小程序一键下单，门店自提，零等待
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      **记得做（提示）**
-    </lark-td>
-    <lark-td>
-      微信推送"今日限时"，早上 8 点提醒
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **条件** | **瑞幸的做法** |
+| --- | --- |
+| **想做（动机）** | 9.9 元，便宜，品质不差 |
+| **好做（能力）** | 微信小程序一键下单，门店自提，零等待 |
+| **记得做（提示）** | 微信推送"今日限时"，早上 8 点提醒 |
 
 ## 找到分享元素——让用户自发传播
 
@@ -644,89 +315,16 @@ order: 4
 
 这些不是什么操控技巧，而是人脑处理信息的基本方式。面对营销挑战时，营销团队常用的模型有：
 
-<lark-table rows="9" cols="2" column-widths="255,432">
-
-  <lark-tr>
-    <lark-td>
-      **Challenge  挑战**
-    </lark-td>
-    <lark-td>
-      **Relevant Models  相关模型**
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      Low conversions  转化率低
-    </lark-td>
-    <lark-td>
-      Hick's Law, Activation Energy, BJ Fogg, Friction
-      希克定律、活化能、BJ·福格、摩擦力
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      Price objections  价格异议
-    </lark-td>
-    <lark-td>
-      Anchoring, Framing, Mental Accounting, Loss Aversion
-      锚定效应、框架效应、心理账户、损失厌恶
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      Building trust  建立信任
-    </lark-td>
-    <lark-td>
-      Authority, Social Proof, Reciprocity, Pratfall Effect
-      权威、社会认同、互惠、出丑效应
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      Increasing urgency  日益紧迫
-    </lark-td>
-    <lark-td>
-      Scarcity, Loss Aversion, Zeigarnik Effect
-      稀缺性、损失厌恶、蔡格尼克效应
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      Retention/churn  留存率/流失率
-    </lark-td>
-    <lark-td>
-      Endowment Effect, Switching Costs, Status-Quo Bias
-      禀赋效应、转换成本、现状偏好
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      Growth stalling  增长停滞
-    </lark-td>
-    <lark-td>
-      Theory of Constraints, Local vs Global Optima, Compounding
-      约束理论、局部最优与全局最优、复合
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      Decision paralysis  决策瘫痪
-    </lark-td>
-    <lark-td>
-      Paradox of Choice, Default Effect, Nudge Theory
-      选择悖论、默认效应、助推理论
-    </lark-td>
-  </lark-tr>
-  <lark-tr>
-    <lark-td>
-      Onboarding  新人入职
-    </lark-td>
-    <lark-td>
-      Goal-Gradient, IKEA Effect, Commitment & Consistency
-      目标梯度、宜家效应、承诺与一致性
-    </lark-td>
-  </lark-tr>
-</lark-table>
+| **Challenge  挑战** | **Relevant Models  相关模型** |
+| --- | --- |
+| Low conversions  转化率低 | Hick's Law, Activation Energy, BJ Fogg, Friction<br>希克定律、活化能、BJ·福格、摩擦力 |
+| Price objections  价格异议 | Anchoring, Framing, Mental Accounting, Loss Aversion<br>锚定效应、框架效应、心理账户、损失厌恶 |
+| Building trust  建立信任 | Authority, Social Proof, Reciprocity, Pratfall Effect<br>权威、社会认同、互惠、出丑效应 |
+| Increasing urgency  日益紧迫 | Scarcity, Loss Aversion, Zeigarnik Effect<br>稀缺性、损失厌恶、蔡格尼克效应 |
+| Retention/churn  留存率/流失率 | Endowment Effect, Switching Costs, Status-Quo Bias<br>禀赋效应、转换成本、现状偏好 |
+| Growth stalling  增长停滞 | Theory of Constraints, Local vs Global Optima, Compounding<br>约束理论、局部最优与全局最优、复合 |
+| Decision paralysis  决策瘫痪 | Paradox of Choice, Default Effect, Nudge Theory<br>选择悖论、默认效应、助推理论 |
+| Onboarding  新人入职 | Goal-Gradient, IKEA Effect, Commitment & Consistency<br>目标梯度、宜家效应、承诺与一致性 |
 
  为什么创业者必须懂这个？因为你不只是在"卖产品"，**你在和用户大脑里的****情绪和偏见****对话**。一个懂营销心理学的人，写出来的产品文案，和不懂的人写出来的，转化率可能差十倍。这是所有营销技能里**最底层的基础**，学会了之后，做任何渠道都能用上。 
 

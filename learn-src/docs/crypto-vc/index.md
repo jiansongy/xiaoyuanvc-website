@@ -46,7 +46,7 @@ Polymarket 预测市场、AI 代理革命、DePIN 物理基础设施、Nof1 量�
 - **完全免费**，无需注册
 - 建议按章节顺序学习，每章配套学霸笔记图片
 - 每节课可独立阅读，复习时直接跳到对应小节
-- 配套播客 [CSS 加密创投播客](https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab)，深度内容补充
+- 配套播客 [CSS 加密创投播客](https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e)，深度内容补充
 
 ## 适合人群
 
