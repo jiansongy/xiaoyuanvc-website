@@ -302,7 +302,7 @@ order: 4
 
 因为编程智能体，本质上是万能的，因此也可以用编程智能体，来做营销部门的工作。下面举例说明。
 
-我推荐一个营销技能包：https://github.com/coreyhaines31/marketingskills，其中有一个“[营销心理学](https%3A%2F%2Fgithub.com%2Fcoreyhaines31%2Fmarketingskills%2Fblob%2Fmain%2Fskills%2Fmarketing-psychology%2FSKILL.md)”技能。
+我推荐一个营销技能包：<https://github.com/coreyhaines31/marketingskills>，其中有一个“[营销心理学](https%3A%2F%2Fgithub.com%2Fcoreyhaines31%2Fmarketingskills%2Fblob%2Fmain%2Fskills%2Fmarketing-psychology%2FSKILL.md)”技能。
 
 **营销心理学**研究的是：人为什么会买东西？表面上看，我们买东西是因为"需要"，但实际上大多数购买决定都发生在理性思考之前。人类大脑有一套根深蒂固的认知捷径——比如看到"限时特惠"会感到紧迫，看到"已有10万人购买"会觉得安心，看到划掉的原价会觉得自己赚到了。营销心理学就是把这些人类天然的心理规律摸透，然后有意识地设计进产品、文案和用户体验里。
 

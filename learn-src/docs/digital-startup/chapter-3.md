@@ -51,7 +51,7 @@ PMF 是 <text underline="true">**Product Market Fit**</text>（产品市场契�
 
 增长黑客 [Sean Ellis](https%3A%2F%2Fwww.seanellis.me%2F) 发现了，衡量产品/市场契合度（PMF）的一个领先指标：只需问用户“**如果你不能再使用该产品，你会有什么感受**”，并衡量回答“<text color="red" bgcolor="light-yellow">**非常失望**</text>”的百分比。
 
-在对近 100 家初创公司进行基准测试后，Sean Ellis 发现产品/市场契合度的神奇数字是 **40%**。也就是说，如果你倒闭了，有超过40%用户感到非常失望的话，你就找到了电灯开关。（详见：https://pmfsurvey.com/）。
+在对近 100 家初创公司进行基准测试后，Sean Ellis 发现产品/市场契合度的神奇数字是 **40%**。也就是说，如果你倒闭了，有超过40%用户感到非常失望的话，你就找到了电灯开关。（详见 <https://pmfsurvey.com/>）。
 
 ## 妈妈测试 The Mom Test
 
@@ -94,7 +94,7 @@ https://www.dedao.cn/course/detail?id=wpAkQqxR0EoV7OQsMbVgnMzdLBlmar
 
 ## 产品经理面试题
 
-知群（https://izhiqun.com）的马力说：通过考察你的思维方式的面试来筛选应聘者，比如
+[知群](https://izhiqun.com)的马力说：通过考察你的思维方式的面试来筛选应聘者，比如
 
 1. <text underline="true">3.05米高的卡车，如何过3米高的山洞？</text>
 1. 一根针掉在大海里，怎么捞起来？
@@ -142,7 +142,7 @@ RICE 是一套由 [Intercom](https%3A%2F%2Fwww.intercom.com%2F) 公司的量化�
 
 # 头脑风暴工具
 
-推荐经常使用[ Brainstorming 技能](https%3A%2F%2Fgithub.com%2Fobra%2Fsuperpowers%2Fblob%2Fmain%2Fskills%2Fbrainstorming%2FSKILL.md)，**让 AI 采访自己**，把模糊想法给清晰化。该技能来自开源库 https://github.com/obra/superpowers。
+推荐经常使用[ Brainstorming 技能](https%3A%2F%2Fgithub.com%2Fobra%2Fsuperpowers%2Fblob%2Fmain%2Fskills%2Fbrainstorming%2FSKILL.md)，**让 AI 采访自己**，把模糊想法给清晰化。该技能来自开源库 <https://github.com/obra/superpowers>。
 
 因为 AI 编程智能体的执行力实在是太强了，我们往往还没想好，它就已经不管三七二十一做出来了。所以在编程之前先把想做什么梳理清楚，比任何时候都重要！
 
@@ -340,7 +340,7 @@ https://open.bigmodel.cn/api/anthropic
 
 ## 备用方案之一：OpenCode
 
-请自学这个网站：https://learnopencode.com/，尤其是安装的环节，与 Claude code 很相似。
+请自学这个网站：<https://learnopencode.com/>，尤其是安装的环节，与 Claude code 很相似。
 
 ![](/images/digital-startup/chapter-3/16.png)
 

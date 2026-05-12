@@ -152,7 +152,7 @@ order: 1
 
 我使用电脑上命令行界面（终端）的“编程智能体”，已经开发了校园VC官网上的“六大互动工具”，如下图。
 
-https://xiaoyuanvc.com/resources/。编程已经不难了，你用“嘴”即可开发，因为机器能理解你，言出法随了。
+<https://xiaoyuanvc.com/resources/>。编程已经不难了，你用“嘴”即可开发，因为机器能理解你，言出法随了。
 
 ![](/images/digital-startup/chapter-1/6.png)
 
@@ -193,7 +193,7 @@ https://xiaoyuanvc.com/resources/。编程已经不难了，你用“嘴”即�
 
 ![](/images/digital-startup/chapter-1/13.png)
 
-因为开设 Claude 和 OpenAI 的账号及稳定使用，对普通用户来说有困难。因此推荐开源免费的 Claude code 替代产品：OpenCode。我朋友张永生建了 OpenCode 学习网站：https://learnopencode.com/。如果学会了它，你就能运行或开发类似我在使用的 council、daily 和 video 等技能了。
+因为开设 Claude 和 OpenAI 的账号及稳定使用，对普通用户来说有困难。因此推荐开源免费的 Claude code 替代产品：OpenCode。我朋友张永生建了 [OpenCode 学习网站](https://learnopencode.com/)。如果学会了它，你就能运行或开发类似我在使用的 council、daily 和 video 等技能了。
 
 ![](/images/digital-startup/chapter-1/14.png)
 
