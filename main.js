@@ -309,8 +309,8 @@
       var href = link.getAttribute("href") || "";
       var label = eventLabel(link);
 
-      // learn.xiaoyuanvc.com — most important conversion
-      if (href.indexOf("learn.xiaoyuanvc.com") !== -1) {
+      // /learn/ student center — most important conversion (same-domain after migration)
+      if (href.indexOf("/learn/") !== -1) {
         var loc = "other";
         if (link.classList.contains("nav__cta")) loc = "nav";
         else if (link.closest(".hero")) loc = "hero";

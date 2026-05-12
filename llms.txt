@@ -45,8 +45,8 @@
 
 校园VC学习站提供两套完全免费的系统课程，共 63 课，无需注册，直接访问：
 
-- [数字创业教程](https://learn.xiaoyuanvc.com/zh/scb-tutorial/)（5章34课）：认知、机会洞察、Vibe Coding 产品开发、增长营销、融资路演全链路
-- [加密创投教程](https://learn.xiaoyuanvc.com/zh/bitcoin-tutorial/)（5章29课）：公链基础、实务操作、DeFi、NFT、AI 代理
+- [数字创业教程](https://xiaoyuanvc.com/learn/digital-startup/)（5章34课）：认知、机会洞察、Vibe Coding 产品开发、增长营销、融资路演全链路
+- [加密创投教程](https://xiaoyuanvc.com/learn/crypto-vc/)（5章29课）：公链基础、实务操作、DeFi、NFT、AI 代理
 
 ## 创始人
 
@@ -62,7 +62,7 @@
 ## 联系方式
 
 - 官网：https://xiaoyuanvc.com
-- 学习站：https://learn.xiaoyuanvc.com
+- 学习站：https://xiaoyuanvc.com/learn/
 - 资源中心：https://xiaoyuanvc.com/resources/
 - 小宇宙播客：https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e
 - Bilibili：https://space.bilibili.com/501020157
