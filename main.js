@@ -333,11 +333,6 @@
         gtag("event", "edu_site_click", {});
       }
 
-      // Podcast page
-      else if (href.indexOf("/resources/podcast") !== -1) {
-        gtag("event", "podcast_click", {});
-      }
-
       if (link.closest(".page-hero__actions") && document.body.classList.contains("has-dark-hero")) {
         gtag("event", "hero_hook_click", {
           link_text: label,

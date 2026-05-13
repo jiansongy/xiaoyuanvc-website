@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@alicloud/credentials": "^2.4.4",
-    "@alicloud/openapi-client": "^0.4.15",
-    "@alicloud/tingwu20230930": "^2.0.23"
-  }
-}
