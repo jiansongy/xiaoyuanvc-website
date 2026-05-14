@@ -1,10 +1,20 @@
 /*
+  Cache-Control: public, max-age=600, s-maxage=600, stale-while-revalidate=86400
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data:; media-src 'self' https:; connect-src 'self' https://api.xiaoyuanvc.com https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com https://cloudflareinsights.com; form-action 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https: data:; media-src 'self' https:; connect-src 'self' https://api.xiaoyuanvc.com https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com https://cloudflareinsights.com; form-action 'self'; upgrade-insecure-requests
   # 'unsafe-eval' 给 /learn/ 子站的 VitePress framework 用（new Function 反序列化路由元数据）；
   # 主站 HTML 没有 eval/Function 调用，加上不增加实际攻击面。
   # cloudflareinsights 是 CF Pages 自动注入的访问统计 beacon。
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=14400, stale-while-revalidate=86400
+
+/*.js
+  Cache-Control: public, max-age=14400, stale-while-revalidate=86400
