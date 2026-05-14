@@ -1865,9 +1865,6 @@
             }
           })(),
           "https://api.xiaoyuanvc.com/api/glm-proxy",
-          /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
-            ? window.location.origin.replace(/\/$/, "") + "/api/glm-proxy"
-            : "",
         ].filter(Boolean);
 
         const CARDS = [

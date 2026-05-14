@@ -1250,10 +1250,6 @@
             }
           })(),
           "https://api.xiaoyuanvc.com/api/student-startup-self-check",
-          /(^|\.)xiaoyuanvc\.com$/i.test(window.location.hostname)
-            ? window.location.origin.replace(/\/$/, "") +
-              "/api/student-startup-self-check"
-            : "",
         ].filter(Boolean);
 
         const DIM_LABELS = [
