@@ -479,9 +479,8 @@
     }
     .gallery-card__img {
       width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      object-position: top;
+      height: auto;
+      display: block;
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-sm);
@@ -490,6 +489,7 @@
     .gallery-card__caption {
       display: flex;
       align-items: center;
+      margin-top: auto;
       gap: 0.4rem;
       font-size: 0.875rem;
       font-weight: 700;
