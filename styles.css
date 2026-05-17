@@ -1586,6 +1586,15 @@ button {
     display: none;
   }
 
+  /* 深色 Hero 页：移动端展开菜单是白底，强制一级链接用深色文字
+     （覆盖各页内联 has-dark-hero 的白字规则，否则白字白底不可见） */
+  body.has-dark-hero .nav__menu .nav__link {
+    color: var(--color-text-secondary);
+  }
+  body.has-dark-hero .nav__menu .nav__link.active {
+    color: var(--color-brand);
+  }
+
   .nav__overlay {
     display: none;
     position: fixed;

@@ -17,3 +17,7 @@
 # 子路径如 /learn/crypto-vc/* /learn/digital-startup/* 由静态文件服务，不会被这两条匹配
 /learn /student.html#courses 301
 /learn/ /student.html#courses 301
+
+# 数创班单页已从根目录迁入教师中心子树 /teacher/
+/shuchuangban.html /teacher/shuchuangban.html 301
+/shuchuangban /teacher/shuchuangban.html 301

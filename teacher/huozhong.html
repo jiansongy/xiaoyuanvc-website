@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https: data:; media-src 'self' https:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com; form-action 'self'; upgrade-insecure-requests"
+  />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <title>火种节 | 三小时极速创业的课堂实践工具 · 校园VC 教师中心</title>
+  <meta name="description" content="火种节是校园VC自研的创业实践教学工具：把谷歌设计冲刺方法论压缩为3小时课堂活动，让学生完整经历组队到路演的9个里程碑。已在上百所高校运行，累计19万+学生人次、2600+场。" />
+  <link rel="canonical" href="https://xiaoyuanvc.com/teacher/huozhong" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:site_name" content="校园VC" />
+  <meta property="og:title" content="火种节 | 三小时极速创业的课堂实践工具" />
+  <meta property="og:description" content="把谷歌设计冲刺方法论压缩为3小时课堂活动，让学生完整经历一次从想法到原型验证的创业闭环。已在上百所高校运行。" />
+  <meta property="og:image" content="https://xiaoyuanvc.com/assets/gallery/huozhong-01.webp" />
+  <meta property="og:url" content="https://xiaoyuanvc.com/teacher/huozhong" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="火种节 | 三小时极速创业的课堂实践工具" />
+  <meta name="twitter:description" content="把谷歌设计冲刺方法论压缩为3小时课堂活动，让学生完整经历一次从想法到原型验证的创业闭环。" />
+  <meta name="twitter:image" content="https://xiaoyuanvc.com/assets/gallery/huozhong-01.webp" />
+  <link rel="icon" href="../assets/favicon.ico" />
+  <link rel="stylesheet" href="../assets/fonts/inter.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ===== 页面 Hero — 深空蓝 ===== */
+    .page-hero {
+      background: var(--color-bg-dark);
+      padding: 7rem 0 4.5rem;
+      color: #fff;
+    }
+    .page-hero__inner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .page-hero__eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-brand-hover);
+      margin-bottom: 1.25rem;
+    }
+    .page-hero__title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.2;
+      font-weight: 800;
+      margin: 0 0 1.25rem;
+    }
+    .page-hero__hook {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.82);
+      margin: 0 0 0.75rem;
+    }
+    .page-hero__desc {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .page-hero__actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    /* Hero 数据条 */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 3rem;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-stats__cell {
+      background: var(--color-bg-dark);
+      padding: 1.5rem 0.75rem;
+      text-align: center;
+    }
+    .hero-stats__num {
+      font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .hero-stats__label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 0.4rem;
+    }
+
+    /* ===== 深色 Hero 上的导航 ===== */
+    body.has-dark-hero .nav {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: saturate(180%) blur(10px);
+      -webkit-backdrop-filter: saturate(180%) blur(10px);
+    }
+    body.has-dark-hero .nav__link {
+      color: rgba(255, 255, 255, 0.85);
+    }
+    body.has-dark-hero .nav__link.active {
+      color: #fff;
+    }
+
+    /* ===== 白描边按钮（深色背景上） ===== */
+    .btn-outline-white {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      border-radius: var(--radius-sm);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #fff;
+      background: transparent;
+      text-decoration: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .btn-outline-white:hover {
+      border-color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    /* ===== 通用小标题 ===== */
+    .kicker {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-brand);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ===== 痛点卡片 ===== */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .problem-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .problem-card__icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.85rem;
+    }
+    .problem-card__title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      color: var(--color-text-primary);
+    }
+    .problem-card__text {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .problem-bridge {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    /* ===== 方法论 ===== */
+    .method-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.5rem;
+      align-items: center;
+      margin-top: 2.5rem;
+    }
+    .method-source {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .method-source__item {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-brand);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.35rem;
+    }
+    .method-source__name {
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    .method-source__desc {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      margin-top: 0.25rem;
+      line-height: 1.6;
+    }
+    .method-claim {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--color-text-secondary);
+    }
+    .method-claim strong {
+      color: var(--color-text-primary);
+    }
+
+    /* ===== 9 个里程碑 ===== */
+    .milestones {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .milestone {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      position: relative;
+    }
+    .milestone__num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gradient-brand);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.85rem;
+    }
+    .milestone__name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0 0 0.35rem;
+    }
+    .milestone__skill {
+      font-size: 0.8rem;
+      color: var(--color-brand);
+      font-weight: 600;
+    }
+    .milestone__skill::before {
+      content: "训练 · ";
+      color: var(--color-text-tertiary);
+      font-weight: 400;
+    }
+    .milestone__goal {
+      font-size: 0.82rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0.6rem 0 0;
+    }
+
+    /* ===== 小程序界面展示 ===== */
+    .app-showcase {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+    .app-shot {
+      text-align: center;
+    }
+    .app-shot img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+    }
+    .app-shot__cap {
+      margin: 1rem auto 0;
+      max-width: 320px;
+      font-size: 0.88rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    .app-shot__cap strong {
+      color: var(--color-text-primary);
+    }
+
+    /* ===== 创业教育智慧系统 ===== */
+    .edu-band {
+      background: var(--color-bg-dark);
+      color: #fff;
+    }
+    .edu-band .section-title {
+      color: #fff;
+    }
+    .edu-band .section-subtitle {
+      color: rgba(255, 255, 255, 0.62);
+    }
+    .edu-wrap {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2.5rem;
+      align-items: center;
+      margin-top: 2.5rem;
+    }
+    .edu-shot img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+      display: block;
+    }
+    .edu-intro {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: rgba(255, 255, 255, 0.72);
+      margin: 0 0 1.5rem;
+    }
+    .edu-modules {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .edu-module {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1.05rem 1.3rem;
+    }
+    .edu-module--active {
+      border-color: var(--color-brand-hover);
+      background: rgba(37, 99, 235, 0.15);
+    }
+    .edu-module__name {
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .edu-module__badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      background: var(--color-brand);
+      color: #fff;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
+    }
+    .edu-module__desc {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.62);
+      margin-top: 0.35rem;
+      line-height: 1.65;
+    }
+    .edu-cta {
+      margin-top: 1.75rem;
+    }
+
+    /* ===== 教师怎么用 ===== */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .flow-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .flow-card__tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--color-brand);
+      text-transform: uppercase;
+    }
+    .flow-card__title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0.5rem 0 0.75rem;
+      color: var(--color-text-primary);
+    }
+    .flow-card__list {
+      margin: 0;
+      padding-left: 1.1rem;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+    }
+    .flow-note {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    /* ===== 规模验证 ===== */
+    .proof-band {
+      background: var(--color-bg-secondary);
+    }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .proof-cell {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 0.75rem;
+      text-align: center;
+    }
+    .proof-cell__num {
+      font-size: clamp(1.4rem, 3vw, 1.85rem);
+      font-weight: 800;
+      color: var(--color-brand);
+      line-height: 1.1;
+    }
+    .proof-cell__label {
+      font-size: 0.82rem;
+      color: var(--color-text-secondary);
+      margin-top: 0.4rem;
+      line-height: 1.5;
+    }
+    .proof-foot {
+      margin-top: 1.75rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--color-text-tertiary);
+    }
+
+    /* ===== 案例 ===== */
+    .case-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .case-card {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 0;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .case-card--flip {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+    .case-card__media {
+      min-height: 240px;
+      background: var(--color-bg-secondary);
+    }
+    .case-card__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .case-card--flip .case-card__media {
+      order: 2;
+    }
+    .case-card__body {
+      padding: 2rem;
+    }
+    .case-card__type {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--color-brand);
+      text-transform: uppercase;
+    }
+    .case-card__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0.5rem 0 0.75rem;
+      color: var(--color-text-primary);
+    }
+    .case-card__desc {
+      font-size: 0.92rem;
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+      margin: 0;
+    }
+    .case-card__meta {
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      color: var(--color-text-tertiary);
+    }
+
+    /* ===== AI 演进 ===== */
+    .ai-card {
+      background: var(--gradient-brand);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      color: #fff;
+    }
+    .ai-card__title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0 0 1rem;
+    }
+    .ai-card__feats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.75rem;
+    }
+    .ai-feat {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+    }
+    .ai-feat__name {
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .ai-feat__desc {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.7;
+    }
+    .ai-card__note {
+      margin-top: 1.75rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-list {
+      max-width: 760px;
+      margin: 2.5rem auto 0;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--color-border);
+    }
+    .faq-item summary {
+      cursor: pointer;
+      padding: 1.15rem 0.25rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-text-primary);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-item summary::after {
+      content: "+";
+      font-size: 1.3rem;
+      color: var(--color-brand);
+      font-weight: 400;
+      flex-shrink: 0;
+    }
+    .faq-item[open] summary::after {
+      content: "−";
+    }
+    .faq-item__answer {
+      padding: 0 0.25rem 1.25rem;
+      font-size: 0.92rem;
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+    }
+
+    /* ===== CTA ===== */
+    .cta-band {
+      background: var(--color-bg-dark);
+      color: #fff;
+      text-align: center;
+    }
+    .cta-band__title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      margin: 0 0 0.75rem;
+    }
+    .cta-band__desc {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .cta-band__actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 900px) {
+      .method-wrap {
+        grid-template-columns: 1fr;
+      }
+      .problem-grid,
+      .milestones,
+      .flow-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .proof-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .ai-card__feats {
+        grid-template-columns: 1fr;
+      }
+      .case-card,
+      .case-card--flip {
+        grid-template-columns: 1fr;
+      }
+      .case-card--flip .case-card__media {
+        order: 0;
+      }
+      .edu-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 560px) {
+      .hero-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+      .problem-grid,
+      .milestones,
+      .flow-grid {
+        grid-template-columns: 1fr;
+      }
+      .proof-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .app-showcase {
+        grid-template-columns: 1fr;
+      }
+      .ai-card {
+        padding: 2rem 1.5rem;
+      }
+      .case-card__body {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "火种节",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "微信小程序",
+      "inLanguage": "zh-CN",
+      "description": "火种节是校园VC自研的创业实践教学工具，把谷歌设计冲刺（Design Sprint）方法论压缩为3小时课堂活动，让学生完整经历组队、理解需求、定义需求、发散方案、决定方案、制作原型、验证原型、路演、复盘9个环节。",
+      "creator": {
+        "@type": "Organization",
+        "name": "校园VC",
+        "url": "https://xiaoyuanvc.com/"
+      },
+      "audience": {
+        "@type": "EducationalAudience",
+        "educationalRole": "teacher"
+      },
+      "featureList": [
+        "3小时课堂版极速创业体验",
+        "9个里程碑标准化引导流程",
+        "教师以行动官身份零准备发起活动",
+        "AI项目反馈与AI引导（演进中）"
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "学生需要会编程吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不需要。火种节训练的是从想法到原型验证的方法，原型可以用手绘、用PPT、用AI工具表达，不依赖代码。零编程基础的学生同样能完整走完9个里程碑。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "一场火种节需要多少人、多长时间？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "课堂版只需3小时，一个班级即可开展。也可以放大为院系级、校级活动，参与规模从几十人到上万人不等。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "教师需要做哪些准备？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "几乎零准备。学校开通后，教师以行动官身份在微信小程序里按9个里程碑引导课堂即可，流程由软件自动推进，教师专注于点评与引导。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "学校如何开通火种节？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "学校购买创业教育智慧系统的年度服务，指定一名管理员为本校教师开通行动官权限，行动官数量不限，每位行动官都可在服务期内创建火种节活动。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "火种节适合放进哪些课程？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "创新创业基础课、专业导论课、双创实践课、创业训练营、新生入学教育等都适用。它是一个可复制的实践教学单元，可嵌入现有课程，也可独立开展。"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body class="has-dark-hero">
+
+  <!-- ====== Navigation ====== -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <img src="../assets/logo-color.png" alt="校园VC Logo" width="81" height="40" />
+      </a>
+      <button class="nav__hamburger" id="navHamburger" aria-label="打开导航菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__menu" id="navMenu">
+        <div class="nav__links">
+          <a href="../index.html" class="nav__link">首页</a>
+          <div class="nav__item nav__item--dropdown">
+            <a href="../student.html" class="nav__link">我是学生<span class="nav__caret" aria-hidden="true">▾</span></a>
+            <div class="nav__submenu" role="menu">
+              <a class="nav__submenu-link" href="../learn/digital-startup/" role="menuitem">数创教程</a>
+              <a class="nav__submenu-link" href="../learn/crypto-vc/" role="menuitem">加密教程</a>
+            </div>
+          </div>
+          <div class="nav__item nav__item--dropdown">
+            <a href="../teacher.html" class="nav__link active">我是教师<span class="nav__caret" aria-hidden="true">▾</span></a>
+            <div class="nav__submenu" role="menu">
+              <a class="nav__submenu-link" href="shuchuangban.html" role="menuitem">数创班</a>
+              <a class="nav__submenu-link" href="huozhong.html" role="menuitem">火种节</a>
+            </div>
+          </div>
+          <a href="../resources/" class="nav__link">资源中心</a>
+          <a href="../index.html#founder" class="nav__link">团队介绍</a>
+          <a href="../index.html#contact" class="nav__link">联系我们</a>
+        </div>
+      </div>
+      <div class="nav__overlay" id="navOverlay"></div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ====== Hero ====== -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero__inner fade-in">
+          <span class="page-hero__eyebrow">创业教育智慧系统 · 火种节</span>
+          <h1 class="page-hero__title">三小时让学生心蹦蹦跳，<br>第一次体会创业的乐趣</h1>
+          <p class="page-hero__hook">火种节是一个可复制的创业实践教学单元，不是一场热闹的活动。</p>
+          <p class="page-hero__desc">它把谷歌设计冲刺的方法论压缩进一节课，让学生完整经历一次从想法到原型验证的创业闭环。教师只需以"行动官"身份开启，软件负责引导全程。</p>
+          <div class="page-hero__actions">
+            <a href="#how" class="btn btn-primary">看教师怎么用 →</a>
+            <a href="#contact" class="btn-outline-white">申请开通行动官</a>
+          </div>
+        </div>
+        <div class="hero-stats fade-in">
+          <div class="hero-stats__cell">
+            <div class="hero-stats__num">19万+</div>
+            <div class="hero-stats__label">累计学生人次</div>
+          </div>
+          <div class="hero-stats__cell">
+            <div class="hero-stats__num">2,600+</div>
+            <div class="hero-stats__label">已开展场次</div>
+          </div>
+          <div class="hero-stats__cell">
+            <div class="hero-stats__num">近2,000</div>
+            <div class="hero-stats__label">名教师行动官</div>
+          </div>
+          <div class="hero-stats__cell">
+            <div class="hero-stats__num">上百所</div>
+            <div class="hero-stats__label">高校在用</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 1. 课堂真问题 ====== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker">为什么需要火种节</span>
+          <h2 class="section-title">双创课最难的，是"做体验"</h2>
+          <p class="section-subtitle">讲创业概念容易，让学生真正经历一次创业很难。这是大多数创新创业课堂共同的瓶颈。</p>
+        </div>
+        <div class="problem-grid fade-in">
+          <div class="problem-card">
+            <div class="problem-card__icon" aria-hidden="true">📖</div>
+            <h3 class="problem-card__title">停留在听讲与写计划书</h3>
+            <p class="problem-card__text">学生听了很多创业理论，却没真正洞察过用户需求、做过方案取舍、验证过一个原型。知识没有变成能力。</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-card__icon" aria-hidden="true">😐</div>
+            <h3 class="problem-card__title">缺乏经验，体会不到乐趣</h3>
+            <p class="problem-card__text">大学生普遍没有创业经验，难以感受到和伙伴一起为一个想法激动、把它推进成型的那种乐趣，参与度自然低。</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-card__icon" aria-hidden="true">🧩</div>
+            <h3 class="problem-card__title">缺一种可复制的实践单元</h3>
+            <p class="problem-card__text">组织一次完整的创业实践，往往意味着大量准备、不确定的流程和难以把控的课堂。教师需要一个低门槛、能按时出成果的工具。</p>
+          </div>
+        </div>
+        <p class="problem-bridge fade-in">火种节要解决的，正是这个问题——把一次完整的创业过程，做成教师可以低成本组织、学生人人能走完的课堂实践单元。</p>
+      </div>
+    </section>
+
+    <!-- ====== 2. 方法论底座 ====== -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker">方法论底座</span>
+          <h2 class="section-title">不是把课堂做热闹，是把创业过程拆成学习路径</h2>
+          <p class="section-subtitle">火种节的设计有明确的方法论来源，这决定了它是教学工具，而不是娱乐活动。</p>
+        </div>
+        <div class="method-wrap fade-in">
+          <div class="method-source">
+            <div class="method-source__item">
+              <div class="method-source__name">谷歌设计冲刺 · Design Sprint</div>
+              <div class="method-source__desc">源自谷歌的产品创新方法：在限定时间内完成从问题到方案验证的完整闭环。火种节把它压缩进一节课。</div>
+            </div>
+            <div class="method-source__item">
+              <div class="method-source__name">斯坦福设计思维 · Design Thinking</div>
+              <div class="method-source__desc">以真实用户需求为起点的创新方法。火种节用它来组织"理解需求—定义需求—发散方案"的前半程。</div>
+            </div>
+            <div class="method-source__item">
+              <div class="method-source__name">黑客马拉松 · 组织形式</div>
+              <div class="method-source__desc">高强度、沉浸式、以成果路演收尾的活动形式，让学生在压力与协作中真正投入。</div>
+            </div>
+          </div>
+          <p class="method-claim">
+            火种节把以上方法论融合为一条<strong>可执行的学习路径</strong>。学生不是"听一节创业课"，而是<strong>走一遍创业过程</strong>——三小时里完整经历从一个想法，到产品原型，再到市场验证的全过程，相当于一次浓缩的 mini 版创业。<br /><br />
+            对教师而言，这意味着课堂的每一步都有方法支撑，<strong>过程可控、成果可预期</strong>。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 3. 9 个里程碑 ====== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker">学习路径</span>
+          <h2 class="section-title">9 个里程碑，每一步对应一项能力</h2>
+          <p class="section-subtitle">软件按里程碑逐步引导课堂。学生在"好玩"的体验背后，完成的是一套结构化的创业能力训练。</p>
+        </div>
+        <div class="milestones fade-in">
+          <div class="milestone">
+            <div class="milestone__num">1</div>
+            <h3 class="milestone__name">组队</h3>
+            <div class="milestone__skill">团队协作</div>
+            <p class="milestone__goal">组成一支梦之队，定下队名和一句话创业想法。</p>
+          </div>
+          <div class="milestone">
+            <div class="milestone__num">2</div>
+            <h3 class="milestone__name">理解需求</h3>
+            <div class="milestone__skill">用户洞察</div>
+            <p class="milestone__goal">发散探索客户画像、痛点问题与使用场景。</p>
+          </div>
+          <div class="milestone">
+            <div class="milestone__num">3</div>
+            <h3 class="milestone__name">定义需求</h3>
+            <div class="milestone__skill">问题定义</div>
+            <p class="milestone__goal">团队投票收敛，确定最佳客户需求与目标。</p>
+          </div>
+          <div class="milestone">
+            <div class="milestone__num">4</div>
+            <h3 class="milestone__name">发散方案</h3>
+            <div class="milestone__skill">创意生成</div>
+            <p class="milestone__goal">用"疯狂小八"激发头脑风暴，发散产品创意。</p>
+          </div>
+          <div class="milestone">
+            <div class="milestone__num">5</div>
+            <h3 class="milestone__name">决定方案</h3>
+            <div class="milestone__skill">团队决策</div>
+            <p class="milestone__goal">用创新矩阵筛选，选出需求强、可实现的方案。</p>
+          </div>
+          <div class="milestone">
+            <div class="milestone__num">6</div>
+            <h3 class="milestone__name">制作原型</h3>
+            <div class="milestone__skill">原型表达</div>
+            <p class="milestone__goal">协作做出最直观呈现产品的原型，可借助 AI 工具。</p>
+          </div>
+          <div class="milestone">
+            <div class="milestone__num">7</div>
+            <h3 class="milestone__name">验证原型</h3>
+            <div class="milestone__skill">用户验证</div>
+            <p class="milestone__goal">邀请他组同学当用户体验，收集真实反馈。</p>
+          </div>
+          <div class="milestone">
+            <div class="milestone__num">8</div>
+            <h3 class="milestone__name">路演</h3>
+            <div class="milestone__skill">公开表达</div>
+            <p class="milestone__goal">CEO 带队一分钟路演，同学化身投资人投票。</p>
+          </div>
+          <div class="milestone">
+            <div class="milestone__num">9</div>
+            <h3 class="milestone__name">复盘</h3>
+            <div class="milestone__skill">反思迭代</div>
+            <p class="milestone__goal">总结经验、分享体会，把过程沉淀为方法。</p>
+          </div>
+        </div>
+
+        <div class="section-header fade-in" style="margin-top: 3.5rem;">
+          <span class="kicker">产品界面</span>
+          <h2 class="section-title">一个微信小程序，把九大环节装进口袋</h2>
+          <p class="section-subtitle">学生扫码即用，无需下载。每完成一个环节，里程碑图标自动点亮——进度看得见，课堂有节奏。</p>
+        </div>
+        <div class="app-showcase fade-in">
+          <div class="app-shot">
+            <img src="../assets/huozhong/ui-home.webp" alt="火种节微信小程序首页" loading="lazy" />
+            <p class="app-shot__cap"><strong>小程序首页</strong><br>活动库、项目库、创建活动一目了然，教师与学生在同一个入口协作。</p>
+          </div>
+          <div class="app-shot">
+            <img src="../assets/huozhong/ui-milestones.webp" alt="火种节小程序项目详情·九大环节界面" loading="lazy" />
+            <p class="app-shot__cap"><strong>项目详情 · 九大环节</strong><br>每个环节都标注目标与产出，学生上传成果即点亮里程碑，完成九项得 90 分。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 4. 教师怎么用 ====== -->
+    <section class="section section--alt" id="how">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker">教师怎么用</span>
+          <h2 class="section-title">降低的是组织成本，不是教学标准</h2>
+          <p class="section-subtitle">火种节是一个微信小程序。教师开通"行动官"权限后即可发起活动，无需安装、无需复杂准备。</p>
+        </div>
+        <div class="flow-grid fade-in">
+          <div class="flow-card">
+            <span class="flow-card__tag">课前</span>
+            <h3 class="flow-card__title">几乎零准备</h3>
+            <ul class="flow-card__list">
+              <li>在微信小程序里创建一场火种节活动</li>
+              <li>设置活动时间、规则，生成参与二维码</li>
+              <li>无需写教案——9 个里程碑就是现成流程</li>
+            </ul>
+          </div>
+          <div class="flow-card">
+            <span class="flow-card__tag">课中</span>
+            <h3 class="flow-card__title">软件引导，教师做教练</h3>
+            <ul class="flow-card__list">
+              <li>学生提交创意、投票、组队，软件自动推进</li>
+              <li>按里程碑逐步引导，流程不会失控</li>
+              <li>教师专注于观察、点评和启发，回到引导者角色</li>
+            </ul>
+          </div>
+          <div class="flow-card">
+            <span class="flow-card__tag">课后</span>
+            <h3 class="flow-card__title">留下可见的成果</h3>
+            <ul class="flow-card__list">
+              <li>每个团队的项目、原型、路演都有记录</li>
+              <li>沉淀为课程实践成果，可用于教学总结</li>
+              <li>复盘环节帮助学生把经验转化为方法</li>
+            </ul>
+          </div>
+        </div>
+        <p class="flow-note fade-in">教师始终是课堂的设计者、引导者与评价者——火种节让你更容易组织一场高质量的实践课。</p>
+      </div>
+    </section>
+
+    <!-- ====== 5. 规模验证 ====== -->
+    <section class="section proof-band">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker">规模验证</span>
+          <h2 class="section-title">经过多校、多场景的教学验证</h2>
+          <p class="section-subtitle">火种节自 2019 年发布以来，持续在全国高校的真实课堂中运行。</p>
+        </div>
+        <div class="proof-grid fade-in">
+          <div class="proof-cell">
+            <div class="proof-cell__num">2019</div>
+            <div class="proof-cell__label">发布于校园VC全球峰会</div>
+          </div>
+          <div class="proof-cell">
+            <div class="proof-cell__num">上百所</div>
+            <div class="proof-cell__label">高校在用</div>
+          </div>
+          <div class="proof-cell">
+            <div class="proof-cell__num">2,600+</div>
+            <div class="proof-cell__label">已开展火种节场次</div>
+          </div>
+          <div class="proof-cell">
+            <div class="proof-cell__num">19万+</div>
+            <div class="proof-cell__label">累计学生人次</div>
+          </div>
+          <div class="proof-cell">
+            <div class="proof-cell__num">近2,000</div>
+            <div class="proof-cell__label">名教师行动官</div>
+          </div>
+        </div>
+        <p class="proof-foot fade-in">数据来源：创业教育智慧系统管理后台 · 截至 2026 年。</p>
+      </div>
+    </section>
+
+    <!-- ====== 6. 代表案例 ====== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker">代表案例</span>
+          <h2 class="section-title">从一节课，到一所学校的创新事件</h2>
+          <p class="section-subtitle">同一套方法论，既能支撑普通课堂的小型实践，也能放大为院系级、校级的创新活动。</p>
+        </div>
+        <div class="case-list">
+          <div class="case-card fade-in">
+            <div class="case-card__media">
+              <img src="../assets/huozhong/chatgpt-event.webp" alt="ChatGPT 火种节现场合影" loading="lazy" />
+            </div>
+            <div class="case-card__body">
+              <span class="case-card__type">旗舰活动 · 放大型</span>
+              <h3 class="case-card__title">ChatGPT 火种节</h3>
+              <p class="case-card__desc">校园VC 与清华 x-lab 联合主办的放大型火种节。在标准火种节流程基础上，加入创业导师与投资机构嘉宾给项目真实反馈，48 小时孵化 AI 大模型相关早期项目，15 支团队同台路演。这是火种节在"软件之上"叠加社会资源、让学生短时间内体验真实创业环境的形态。</p>
+              <p class="case-card__meta">校园VC × 清华 x-lab · 48 小时 · 15 支团队</p>
+            </div>
+          </div>
+          <div class="case-card case-card--flip fade-in">
+            <div class="case-card__body">
+              <span class="case-card__type">旗舰活动 · 放大型</span>
+              <h3 class="case-card__title">艺创火种节</h3>
+              <p class="case-card__desc">在北京三里屯举办的 2 天放大型火种节，主题"AI 生命"，融合艺术创意与科技创新。学生来自全国多所高校，近十位产业、投资、高校导师轮值辅导，6 支团队完成从创意到路演的全过程。它展示了火种节方法论在不同学科主题下的适配能力。</p>
+              <p class="case-card__meta">北京三里屯 · 2 天 · 主题"AI 生命"</p>
+            </div>
+            <div class="case-card__media">
+              <img src="../assets/huozhong/yichuang-event.webp" alt="艺创火种节路演现场" loading="lazy" />
+            </div>
+          </div>
+          <div class="case-card fade-in">
+            <div class="case-card__media">
+              <img src="../assets/gallery/huozhong-02.webp" alt="河北美术学院火种节课堂现场" loading="lazy" />
+            </div>
+            <div class="case-card__body">
+              <span class="case-card__type">校级活动 · 软件依托型</span>
+              <h3 class="case-card__title">河北美术学院首届火种节</h3>
+              <p class="case-card__desc">2025 年 12 月，河北美术学院在《创新创业基础》课程中开展首届火种节双创实践活动。以"3 小时体验极速创业、点亮心中的火种"为核心，跨多场累计达近万人规模，并特邀国赛评委到场点评。一所学校用同一个软件，把火种节办成了全校性的创新教育事件。</p>
+              <p class="case-card__meta">河北美术学院 · 2025 年 12 月 · 近万人规模</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 7. AI 演进 ====== -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker">面向未来的课堂</span>
+          <h2 class="section-title">火种节正在演进 AI 能力</h2>
+        </div>
+        <div class="ai-card fade-in">
+          <h3 class="ai-card__title">让 AI 成为教学支持，而不是替代教师</h3>
+          <p style="color: rgba(255,255,255,0.82); line-height: 1.8; margin: 0;">随着软件能力的扩展，火种节正在引入 AI 功能，帮助教师减轻过程指导压力、让学生在项目推进中获得更及时的反馈。</p>
+          <div class="ai-card__feats">
+            <div class="ai-feat">
+              <div class="ai-feat__name">AI 项目反馈</div>
+              <div class="ai-feat__desc">把团队的项目资料交给 AI，生成一段简短反馈，供教师参考，帮助快速了解每个项目的状态。</div>
+            </div>
+            <div class="ai-feat">
+              <div class="ai-feat__name">AI 引导启发</div>
+              <div class="ai-feat__desc">在里程碑环节中，学生可以向 AI 提问，获得启发式引导，把创意一步步想得更清楚。</div>
+            </div>
+          </div>
+          <p class="ai-card__note">教师依然是课堂的设计者与评价者——AI 承担的是过程性的辅助，最终的点评、引导与价值判断仍然由教师完成。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 7.5 创业教育智慧系统 ====== -->
+    <section class="section edu-band">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker" style="color: var(--color-brand-hover);">更大的平台</span>
+          <h2 class="section-title">火种节，是创业教育智慧系统的一部分</h2>
+          <p class="section-subtitle">火种节主要通过微信小程序开展；而面向教师的管理与更多教学工具，都在网页端 edu.xiaoyuanvc.com。</p>
+        </div>
+        <div class="edu-wrap fade-in">
+          <div class="edu-shot">
+            <img src="../assets/huozhong/edu-dashboard.webp" alt="校园VC 创业教育智慧系统管理后台" loading="lazy" />
+          </div>
+          <div>
+            <p class="edu-intro">火种节给学生的是一个微信小程序，扫码即用；给教师的，是网页端的一整套管理控制平台——开通行动官、创建活动、查看学生成果数据，都在这里完成。除了火种节，网页端还为教师提供另外两个教学工具。</p>
+            <div class="edu-modules">
+              <div class="edu-module edu-module--active">
+                <div class="edu-module__name">火种节<span class="edu-module__badge">本页主角</span></div>
+                <div class="edu-module__desc">3 小时极速创业体验。学生用微信小程序参与，教师在网页端开通行动官、管理活动与成果。</div>
+              </div>
+              <div class="edu-module">
+                <div class="edu-module__name">教之宝</div>
+                <div class="edu-module__desc">让老师在课堂上增加互动性的实用小工具，随时发起、即时收集学生反馈。</div>
+              </div>
+              <div class="edu-module">
+                <div class="edu-module__name">闯关课</div>
+                <div class="edu-module__desc">让老师自定义类似火种节这种游戏闯关型的教学管理软件，按自己的课程设计关卡。</div>
+              </div>
+            </div>
+            <div class="edu-cta">
+              <a href="https://edu.xiaoyuanvc.com/" target="_blank" rel="noopener" class="btn btn-primary">访问创业教育智慧系统 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 8. FAQ ====== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="kicker">常见问题</span>
+          <h2 class="section-title">教师最关心的几个问题</h2>
+        </div>
+        <div class="faq-list fade-in">
+          <details class="faq-item">
+            <summary>学生需要会编程吗？</summary>
+            <div class="faq-item__answer">不需要。火种节训练的是从想法到原型验证的方法，原型可以用手绘、用 PPT、用 AI 工具表达，不依赖代码。零编程基础的学生同样能完整走完 9 个里程碑。</div>
+          </details>
+          <details class="faq-item">
+            <summary>一场火种节需要多少人、多长时间？</summary>
+            <div class="faq-item__answer">课堂版只需 3 小时，一个班级即可开展。也可以放大为院系级、校级活动，参与规模从几十人到上万人不等。</div>
+          </details>
+          <details class="faq-item">
+            <summary>教师需要做哪些准备？</summary>
+            <div class="faq-item__answer">几乎零准备。学校开通后，教师以行动官身份在微信小程序里按 9 个里程碑引导课堂即可，流程由软件自动推进，教师专注于点评与引导。</div>
+          </details>
+          <details class="faq-item">
+            <summary>学校如何开通火种节？</summary>
+            <div class="faq-item__answer">学校购买创业教育智慧系统的年度服务，指定一名管理员为本校教师开通行动官权限。行动官数量不限，每位行动官都可在服务期内创建火种节活动。</div>
+          </details>
+          <details class="faq-item">
+            <summary>火种节适合放进哪些课程？</summary>
+            <div class="faq-item__answer">创新创业基础课、专业导论课、双创实践课、创业训练营、新生入学教育等都适用。它是一个可复制的实践教学单元，可嵌入现有课程，也可独立开展。</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 9. CTA ====== -->
+    <section class="section cta-band" id="contact">
+      <div class="container">
+        <div class="fade-in">
+          <h2 class="cta-band__title">把火种节带进你的课堂</h2>
+          <p class="cta-band__desc">无论是先在一个班里试一节课，还是为全校开通行动官，我们都可以一起规划。联系校园VC，开启第一场火种节。</p>
+          <div class="cta-band__actions">
+            <a href="https://edu.xiaoyuanvc.com/" target="_blank" rel="noopener" class="btn btn-primary">访问创业教育智慧系统 →</a>
+            <a href="../index.html#contact" class="btn-outline-white">联系我们 · 申请开通</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====== Footer ====== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__logo">
+          <img src="../assets/logo-white.png" alt="校园VC Logo" width="113" height="56" />
+        </div>
+        <p class="footer__slogan">10年推动100万大学生创业</p>
+        <nav class="footer__nav">
+          <a href="../index.html">首页</a>
+          <a href="../student.html">我是学生</a>
+          <a href="../teacher.html">我是教师</a>
+          <a href="../resources/">资源中心</a>
+          <a href="../index.html#contact">联系我们</a>
+        </nav>
+        <div class="footer__divider"></div>
+        <div class="footer__bottom">
+          <div class="footer__filing">
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">京ICP备2021017602号</a>
+          </div>
+          <p class="footer__copyright">© 2026 校园VC. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../main.js"></script>
+</body>
+</html>

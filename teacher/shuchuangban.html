@@ -1,0 +1,1258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https: data:; media-src 'self' https:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com; form-action 'self'; upgrade-insecure-requests"
+  />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <title>数创班 · 大学生数字创业实战课 | 校园VC 教师中心</title>
+  <meta name="description" content="数创班是面向高校学生的6周数字创业实战课，已运行10期、覆盖上百所高校。学生6周产出6项硬核成果，老师全程观摩，学校形成可申报教改与双创竞赛的教学成果。院校整体采购，1000元/学生。" />
+  <link rel="canonical" href="https://xiaoyuanvc.com/teacher/shuchuangban" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:site_name" content="校园VC" />
+  <meta property="og:title" content="数创班 · 大学生数字创业实战课 | 校园VC 教师中心" />
+  <meta property="og:description" content="6周数字创业实战课，学生产出6项硬核成果，老师全程观摩，学校形成可申报的双创教学成果。已运行10期，覆盖上百所高校。" />
+  <meta property="og:image" content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png" />
+  <meta property="og:url" content="https://xiaoyuanvc.com/teacher/shuchuangban" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="数创班 · 大学生数字创业实战课 | 校园VC 教师中心" />
+  <meta name="twitter:description" content="6周数字创业实战课，学生产出6项硬核成果，老师全程观摩，学校形成可申报的双创教学成果。" />
+  <meta name="twitter:image" content="https://xiaoyuanvc.com/assets/hero-illustration-ghibli.png" />
+  <link rel="icon" href="../assets/favicon.ico" />
+  <link rel="stylesheet" href="../assets/fonts/inter.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ===== 页面 Hero — 深空蓝 ===== */
+    .page-hero {
+      background: var(--color-bg-dark);
+      padding: 7rem 0 5rem;
+      color: #fff;
+    }
+    .page-hero__inner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .page-hero__eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 1.25rem;
+    }
+    .page-hero__title {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    .page-hero__hook {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 1rem;
+    }
+    .page-hero__desc {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.75;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+    .page-hero__actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-outline-white {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      border-radius: var(--radius-sm);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #fff;
+      background: transparent;
+      text-decoration: none;
+      transition: border-color var(--duration-fast), background var(--duration-fast);
+    }
+    .btn-outline-white:hover {
+      border-color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    /* ===== 证据条 ===== */
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .proof-tile {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border-right: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .proof-tile:last-child { border-right: none; }
+    .proof-tile__number {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--color-brand);
+      margin-bottom: 0.35rem;
+    }
+    .proof-tile__label {
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+
+    /* ===== 痛点卡片 ===== */
+    .pain-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      max-width: 920px;
+      margin: 2.5rem auto 0;
+    }
+    .pain-block__col h3 {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding-bottom: 0.625rem;
+      border-bottom: 2px solid var(--color-brand);
+      display: inline-block;
+    }
+    .pain-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .pain-list li {
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .pain-list strong {
+      display: block;
+      font-size: 0.9375rem;
+      margin-bottom: 0.25rem;
+    }
+    .pain-list span {
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ===== MICGV 方法论 ===== */
+    .micgv-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+    .micgv-node {
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .micgv-node__letter {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--color-brand);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .micgv-node__name { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .micgv-node__en {
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+
+    /* ===== 6 课成果卡 ===== */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .course-card {
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-fast) var(--ease-out);
+    }
+    .course-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .course-card__head {
+      display: flex;
+      align-items: baseline;
+      gap: 0.625rem;
+      margin-bottom: 0.75rem;
+    }
+    .course-card__num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-brand);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .course-card__stage {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+    .course-card__title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      margin-bottom: 0.625rem;
+      line-height: 1.35;
+    }
+    .course-card__desc {
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+    .course-card__output {
+      background: var(--color-brand-light);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.875rem;
+    }
+    .course-card__output-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--color-brand);
+      margin-bottom: 0.2rem;
+    }
+    .course-card__output-text {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 1.45;
+    }
+
+    /* ===== 通用卡片网格（理由 / 价值） ===== */
+    .reason-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .reason-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .reason-card__num {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--color-brand);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .reason-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .reason-card__desc {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ===== 学校 / 老师分工清单 ===== */
+    .split-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+    .split-2col h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 0;
+    }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--color-text-primary);
+      line-height: 1.5;
+    }
+    .check-list li::before {
+      content: '✓';
+      color: var(--color-accent-green);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.05em;
+    }
+
+    /* ===== 创始人 ===== */
+    .founder-card {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 2.5rem;
+      align-items: center;
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      margin-top: 2rem;
+    }
+    .founder-card__photo {
+      width: 220px;
+      height: 220px;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      background: var(--color-brand-light);
+    }
+    .founder-card__name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .founder-card__role {
+      font-size: 0.9375rem;
+      color: var(--color-brand);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .founder-card__bio {
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+    }
+    .founder-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .founder-tags span {
+      font-size: 0.75rem;
+      background: var(--color-brand-light);
+      color: var(--color-brand);
+      font-weight: 600;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+    }
+
+    /* ===== 合作院校墙 ===== */
+    .school-tier { margin-top: 2rem; }
+    .school-tier__label {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--color-text-tertiary);
+      margin-bottom: 0.75rem;
+    }
+    .school-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.625rem;
+    }
+    .school-chips span {
+      font-size: 0.875rem;
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.875rem;
+      color: var(--color-text-primary);
+    }
+    .school-chips span.is-key {
+      border-color: var(--color-brand);
+      color: var(--color-brand);
+      font-weight: 600;
+    }
+
+    /* ===== 学员成果证据 ===== */
+    .testimonial-feature {
+      background: var(--gradient-brand);
+      border-radius: var(--radius-xl);
+      padding: 2.75rem 3rem;
+      color: #fff;
+      margin-top: 1rem;
+    }
+    .testimonial-feature__quote {
+      font-size: 1.1875rem;
+      font-weight: 600;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .testimonial-feature__meta {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .testimonial-feature__meta strong { color: #fff; }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .evidence-card {
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .evidence-card__quote {
+      font-size: 0.9375rem;
+      color: var(--color-text-primary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .evidence-card__quote::before {
+      content: '「';
+      color: var(--color-brand);
+      font-weight: 700;
+    }
+    .evidence-card__quote::after {
+      content: '」';
+      color: var(--color-brand);
+      font-weight: 700;
+    }
+    .evidence-card__meta {
+      font-size: 0.8125rem;
+      color: var(--color-text-tertiary);
+      font-weight: 600;
+    }
+    .evidence-card__meta strong { color: var(--color-text-primary); }
+
+    /* 成果物留图位 */
+    .gallery-placeholder {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .gallery-slot {
+      aspect-ratio: 4 / 3;
+      border: 1.5px dashed rgba(37, 99, 235, 0.35);
+      border-radius: var(--radius-md);
+      background: var(--color-brand-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      gap: 0.35rem;
+    }
+    .gallery-slot__icon { font-size: 1.5rem; }
+    .gallery-slot__title { font-size: 0.875rem; font-weight: 700; color: var(--color-brand); }
+    .gallery-slot__hint { font-size: 0.75rem; color: var(--color-text-tertiary); }
+
+    /* ===== 采购说明 ===== */
+    .pricing-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-brand);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      max-width: 760px;
+      margin: 2.5rem auto 0;
+      box-shadow: var(--shadow-md);
+    }
+    .pricing-card__price {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--color-brand);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .pricing-card__price small {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+    .pricing-card__sub {
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-divider {
+      height: 1px;
+      background: rgba(0, 0, 0, 0.06);
+      margin: 1.5rem 0;
+    }
+
+    /* 采购流程 */
+    .process-flow {
+      display: flex;
+      align-items: flex-start;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      margin-top: 2.5rem;
+    }
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-width: 130px;
+      flex: 1;
+      padding: 0 0.5rem;
+    }
+    .process-step__num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--color-brand);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      flex-shrink: 0;
+    }
+    .process-step__name {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 0.25rem;
+    }
+    .process-step__desc {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+    .process-arrow {
+      font-size: 1.25rem;
+      color: rgba(0, 0, 0, 0.2);
+      padding-top: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ===== FAQ ===== */
+    .faq-list {
+      max-width: 800px;
+      margin: 2.5rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .faq-item {
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .faq-item__q {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .faq-item__a {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ===== 末尾 CTA ===== */
+    .contact-box {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .contact-box img {
+      width: 200px;
+      border-radius: var(--radius-md);
+      margin: 0 auto 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ===== 导航深色英雄适配 ===== */
+    body.has-dark-hero .nav {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: saturate(180%) blur(10px);
+      -webkit-backdrop-filter: saturate(180%) blur(10px);
+    }
+    body.has-dark-hero .nav__link { color: rgba(255, 255, 255, 0.85); }
+    body.has-dark-hero .nav__link.active { color: #fff; }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 900px) {
+      .course-grid,
+      .reason-grid { grid-template-columns: 1fr; }
+      .micgv-row { grid-template-columns: repeat(2, 1fr); }
+      .proof-strip { grid-template-columns: repeat(2, 1fr); }
+      .pain-block,
+      .split-2col { grid-template-columns: 1fr; gap: 2rem; }
+      .founder-card { grid-template-columns: 1fr; text-align: center; }
+      .founder-card__photo { margin: 0 auto; }
+      .founder-tags { justify-content: center; }
+      .evidence-grid,
+      .gallery-placeholder { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .testimonial-feature { padding: 2rem 1.5rem; }
+      .pricing-card { padding: 1.75rem; }
+      .process-flow { flex-direction: column; align-items: center; gap: 1rem; }
+      .process-arrow { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transform: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "数创班 · 大学生数字创业实战课",
+      "description": "数创班是面向高校学生的6周数字创业实战课，学生用AI工具完成从认知、洞察、创造、增长到价值的完整创业闭环，6周产出6项硬核成果。已运行10期，覆盖上百所高校，由院校创业学院整体采购。",
+      "provider": {
+        "@type": "Organization",
+        "name": "校园VC",
+        "url": "https://xiaoyuanvc.com/"
+      },
+      "educationalLevel": "大学",
+      "inLanguage": "zh-CN",
+      "teaches": "数字创业、AI产品开发、商业模式设计、融资路演",
+      "audience": {
+        "@type": "EducationalAudience",
+        "educationalRole": "高校创业学院与双创教师"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "Online",
+        "courseWorkload": "P6W"
+      },
+      "applicationContact": {
+        "@type": "ContactPoint",
+        "contactType": "院校合作咨询",
+        "description": "添加殷教授的助教老师微信，获取完整课程大纲与院校采购方案"
+      }
+    }
+  </script>
+</head>
+<body class="has-dark-hero">
+
+  <!-- ====== Navigation ====== -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <img src="../assets/logo-color.png" alt="校园VC Logo" width="81" height="40" />
+      </a>
+      <button class="nav__hamburger" id="navHamburger" aria-label="打开导航菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__menu" id="navMenu">
+        <div class="nav__links">
+          <a href="../index.html" class="nav__link">首页</a>
+          <div class="nav__item nav__item--dropdown">
+            <a href="../student.html" class="nav__link">我是学生<span class="nav__caret" aria-hidden="true">▾</span></a>
+            <div class="nav__submenu" role="menu">
+              <a class="nav__submenu-link" href="../learn/digital-startup/" role="menuitem">数创教程</a>
+              <a class="nav__submenu-link" href="../learn/crypto-vc/" role="menuitem">加密教程</a>
+            </div>
+          </div>
+          <div class="nav__item nav__item--dropdown">
+            <a href="../teacher.html" class="nav__link active">我是教师<span class="nav__caret" aria-hidden="true">▾</span></a>
+            <div class="nav__submenu" role="menu">
+              <a class="nav__submenu-link" href="shuchuangban.html" role="menuitem">数创班</a>
+              <a class="nav__submenu-link" href="huozhong.html" role="menuitem">火种节</a>
+            </div>
+          </div>
+          <a href="../resources/" class="nav__link">资源中心</a>
+          <a href="../index.html#founder" class="nav__link">团队介绍</a>
+          <a href="../index.html#contact" class="nav__link">联系我们</a>
+        </div>
+      </div>
+      <div class="nav__overlay" id="navOverlay"></div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ====== Hero ====== -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero__inner fade-in">
+          <div class="page-hero__eyebrow">校园VC · 教师中心 · 数创班</div>
+          <h1 class="page-hero__title">数创班<br>大学生数字创业实战课</h1>
+          <p class="page-hero__hook">6 周，让学生做出可参赛、可路演的 AI 创业项目</p>
+          <p class="page-hero__desc">数创班是面向高校学生的 6 周数字创业实战课。学生用 AI 工具完成从认知到融资的完整创业闭环，每周产出一项硬核成果；老师全程观摩；学校形成可申报教改与双创竞赛的教学成果。</p>
+          <div class="page-hero__actions">
+            <a href="#contact" class="btn btn-primary">获取课程大纲与院校采购方案 →</a>
+            <a href="#course" class="btn-outline-white">看 6 周产出什么</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 证据条 ====== -->
+    <section class="section">
+      <div class="container">
+        <div class="proof-strip fade-in">
+          <div class="proof-tile">
+            <div class="proof-tile__number">10 期</div>
+            <div class="proof-tile__label">数创班已连续运行，每学期迭代</div>
+          </div>
+          <div class="proof-tile">
+            <div class="proof-tile__number">上百所</div>
+            <div class="proof-tile__label">高校学生参加过数创班</div>
+          </div>
+          <div class="proof-tile">
+            <div class="proof-tile__number">1000+</div>
+            <div class="proof-tile__label">学员完成数字创业从 0 到 1</div>
+          </div>
+          <div class="proof-tile">
+            <div class="proof-tile__number">6 项</div>
+            <div class="proof-tile__label">每位学生 6 周产出 6 项硬核成果</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 痛点共鸣 ====== -->
+    <section class="section section--alt" id="why">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">为什么高校需要数创班</h2>
+          <p class="section-subtitle">国务院《人工智能+行动意见》落地之际，创业教育正面临学生与教学两端的断层。</p>
+        </div>
+        <div class="pain-block fade-in">
+          <div class="pain-block__col">
+            <h3>学生端的困境</h3>
+            <ul class="pain-list">
+              <li>
+                <strong>空心病</strong>
+                <span>不知道想做什么，对专业和未来缺少方向感。</span>
+              </li>
+              <li>
+                <strong>成长慢</strong>
+                <span>课堂学到的多是理论，缺少能真正动手做出东西的训练。</span>
+              </li>
+              <li>
+                <strong>就业难</strong>
+                <span>毕业时简历上没有作品，缺少进入产业的真实能力。</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pain-block__col">
+            <h3>教学端的困境</h3>
+            <ul class="pain-list">
+              <li>
+                <strong>课堂与产业脱节</strong>
+                <span>创业课内容更新慢，跟不上 AI 重塑各行业的真实节奏。</span>
+              </li>
+              <li>
+                <strong>学生纸上谈兵</strong>
+                <span>一学期讲完，学生连一个产品原型都没做出来过。</span>
+              </li>
+              <li>
+                <strong>教学成果难沉淀</strong>
+                <span>年度汇报、双创评审、教改申报，缺少能展示的学生作品。</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 课程方案 ====== -->
+    <section class="section" id="course">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">课程方案：MICGV 数字创业方法论</h2>
+          <p class="section-subtitle">数创班摒弃传统知识点讲解，独创一套从认知到价值的数字创业方法论——学习过程即是创新过程。</p>
+        </div>
+
+        <!-- MICGV 五阶段 -->
+        <div class="micgv-row fade-in">
+          <div class="micgv-node">
+            <div class="micgv-node__letter">M</div>
+            <div class="micgv-node__name">认知</div>
+            <div class="micgv-node__en">Mindset</div>
+          </div>
+          <div class="micgv-node">
+            <div class="micgv-node__letter">I</div>
+            <div class="micgv-node__name">洞察</div>
+            <div class="micgv-node__en">Insight</div>
+          </div>
+          <div class="micgv-node">
+            <div class="micgv-node__letter">C</div>
+            <div class="micgv-node__name">创造</div>
+            <div class="micgv-node__en">Creation</div>
+          </div>
+          <div class="micgv-node">
+            <div class="micgv-node__letter">G</div>
+            <div class="micgv-node__name">增长</div>
+            <div class="micgv-node__en">Growth</div>
+          </div>
+          <div class="micgv-node">
+            <div class="micgv-node__letter">V</div>
+            <div class="micgv-node__name">价值</div>
+            <div class="micgv-node__en">Value</div>
+          </div>
+        </div>
+
+        <!-- 6 课成果 -->
+        <div class="section-header fade-in" style="margin-top: 4rem;">
+          <h3 class="section-title" style="font-size: 1.5rem;">6 课，6 项硬核产出</h3>
+          <p class="section-subtitle">每周二晚直播 + 录播回放。每一课都设实战课题，课程结束即拥有完整项目成果。</p>
+        </div>
+        <div class="course-grid fade-in">
+          <div class="course-card">
+            <div class="course-card__head">
+              <span class="course-card__num">1</span>
+              <span class="course-card__stage">认知 Mindset</span>
+            </div>
+            <div class="course-card__title">时代认知 —— 人工智能+的数智基石</div>
+            <p class="course-card__desc">借助豆包、扣子等 AI 工具，明确自己在智能经济浪潮中的创业方向。</p>
+            <div class="course-card__output">
+              <div class="course-card__output-label">核心产出</div>
+              <div class="course-card__output-text">一份《我的人工智能+行动蓝图》</div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-card__head">
+              <span class="course-card__num">2</span>
+              <span class="course-card__stage">洞察 Insight</span>
+            </div>
+            <div class="course-card__title">机会洞察 —— AI 驱动的市场与产品创新</div>
+            <p class="course-card__desc">用 Gemini 生成产品设计文档，用 AI Studio 生成产品 MVP 原型。</p>
+            <div class="course-card__output">
+              <div class="course-card__output-label">核心产出</div>
+              <div class="course-card__output-text">一份《创新产品定义书 PRD》</div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-card__head">
+              <span class="course-card__num">3</span>
+              <span class="course-card__stage">创造 Creation</span>
+            </div>
+            <div class="course-card__title">数智赋能 —— 智能体开发与数字资产构建</div>
+            <p class="course-card__desc">借助 Claude、Codex 等工具，开发承载核心工作流的 AI 智能体。</p>
+            <div class="course-card__output">
+              <div class="course-card__output-label">核心产出</div>
+              <div class="course-card__output-text">一个"专属 AI 员工"或一套"数字资产方案"</div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-card__head">
+              <span class="course-card__num">4</span>
+              <span class="course-card__stage">增长 Growth</span>
+            </div>
+            <div class="course-card__title">全域增长 —— 算法时代的社媒营销与社群运营</div>
+            <p class="course-card__desc">指挥 AI 个人助理 OpenClaw，设计并执行一整套全域增长方案。</p>
+            <div class="course-card__output">
+              <div class="course-card__output-label">核心产出</div>
+              <div class="course-card__output-text">一份《全域增长作战地图》</div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-card__head">
+              <span class="course-card__num">5</span>
+              <span class="course-card__stage">价值 Value</span>
+            </div>
+            <div class="course-card__title">价值实现 —— 用财务的工作量证明升级打怪</div>
+            <p class="course-card__desc">理解融资逻辑，明确如何讲好故事、规划可执行的融资步骤。</p>
+            <div class="course-card__output">
+              <div class="course-card__output-label">核心产出</div>
+              <div class="course-card__output-text">一份"符合投资人标准"的《商业计划书》</div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-card__head">
+              <span class="course-card__num">6</span>
+              <span class="course-card__stage">收官 Demo Day</span>
+            </div>
+            <div class="course-card__title">最终路演 —— 创业者与创投家的思想碰撞</div>
+            <p class="course-card__desc">带领团队进行项目路演，接受顶级投资人与产业专家的点评和资源对接。</p>
+            <div class="course-card__output">
+              <div class="course-card__output-label">核心产出</div>
+              <div class="course-card__output-text">一场"链接真实资本"的项目路演</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 学校与老师能得到什么 ====== -->
+    <section class="section section--alt" id="value">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">学校与老师能得到什么</h2>
+          <p class="section-subtitle">数创班不只是让学生受益——它为学院沉淀可汇报、可申报、可复用的教学成果。</p>
+        </div>
+
+        <div class="reason-grid fade-in">
+          <div class="reason-card">
+            <div class="reason-card__num">01</div>
+            <div class="reason-card__title">可参赛的项目成果</div>
+            <div class="reason-card__desc">学生带走可演示的 AI 产品原型、商业计划书与路演材料，可直接对接"挑战杯""互联网+"等双创赛事。</div>
+          </div>
+          <div class="reason-card">
+            <div class="reason-card__num">02</div>
+            <div class="reason-card__title">可申报的教学成果</div>
+            <div class="reason-card__desc">课程产出的教学材料与学生作品，可用于申报教改项目、一流课程与教学成果奖，紧扣"人工智能+"国家战略。</div>
+          </div>
+          <div class="reason-card">
+            <div class="reason-card__num">03</div>
+            <div class="reason-card__title">可复用的师资赋能</div>
+            <div class="reason-card__desc">老师全程观摩殷建松教授的实战教学，看见实践教学与学术教学的差距，把一线业界做法带回自己的课堂。</div>
+          </div>
+        </div>
+
+        <div class="split-2col fade-in">
+          <div>
+            <h3>学校得到什么</h3>
+            <ul class="check-list">
+              <li>殷建松教授全程在线直播亲授 6 周课程</li>
+              <li>每位学生一套 AI 产品原型与项目成果</li>
+              <li>每周阶段性作业与点评记录</li>
+              <li>Demo Day 路演的现场组织方式</li>
+              <li>可直接用于双创汇报与教改申报的成果材料包</li>
+              <li>团队与个人项目成果汇编 PDF</li>
+            </ul>
+          </div>
+          <div>
+            <h3>老师怎么参与</h3>
+            <ul class="check-list">
+              <li>校内招生组织、按 5 人一组分团队</li>
+              <li>课堂承接：提供线上连接或物理空间</li>
+              <li>过程督促与作业提醒</li>
+              <li>第 6 周 Demo Day 评审</li>
+              <li>校内成果展示与汇报</li>
+              <li>无需自己备课——全程观摩，低成本获取前沿教学法</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 信任背书 ====== -->
+    <section class="section" id="trust">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">由谁来交付</h2>
+          <p class="section-subtitle">数创班由资深创投实践者亲授，已在上百所高校验证。</p>
+        </div>
+
+        <!-- 创始人 -->
+        <div class="founder-card fade-in">
+          <img class="founder-card__photo" src="../assets/founder-jason.png" alt="校园VC 创始人 殷建松" />
+          <div>
+            <div class="founder-card__name">殷建松（Jason）</div>
+            <div class="founder-card__role">校园VC 创始人 · 数创班主讲</div>
+            <p class="founder-card__bio">殷建松长期从事大学生创业教育，提出"10 年推动 100 万大学生创业"的承诺。他把清华、北大及外企的产业经验，转化为可复制的数字创业教学方法，让没有编程基础的学生也能用 AI 做出自己的产品。</p>
+            <div class="founder-tags">
+              <span>清华 x-lab 创业导师</span>
+              <span>北大研究生院投资导师</span>
+              <span>前微软 Windows 产品经理</span>
+              <span>《从零到英雄》作者</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 合作院校墙 -->
+        <div class="section-header fade-in" style="margin-top: 4rem;">
+          <h3 class="section-title" style="font-size: 1.5rem;">已走进的高校</h3>
+          <p class="section-subtitle">从研究型大学到地方应用型院校、高职——同一套方法论，适配不同层次的学生。</p>
+        </div>
+        <div class="fade-in">
+          <div class="school-tier">
+            <div class="school-tier__label">研究型与重点高校</div>
+            <div class="school-chips">
+              <span class="is-key">清华大学</span>
+              <span class="is-key">北京大学</span>
+              <span class="is-key">对外经济贸易大学</span>
+              <span class="is-key">北京邮电大学</span>
+              <span class="is-key">北京航空航天大学</span>
+              <span class="is-key">北京理工大学</span>
+              <span class="is-key">中央财经大学</span>
+            </div>
+          </div>
+          <div class="school-tier">
+            <div class="school-tier__label">地方本科与应用型院校</div>
+            <div class="school-chips">
+              <span>广西财经学院</span>
+              <span>贵州师范大学</span>
+              <span>湖南工业大学</span>
+              <span>温州理工学院</span>
+              <span>武汉商学院</span>
+              <span>河北大学</span>
+              <span>内蒙古农业大学</span>
+              <span>临沂大学</span>
+              <span>沈阳理工大学</span>
+              <span>佳木斯大学</span>
+              <span>广西民族大学</span>
+              <span>乐山师范学院</span>
+            </div>
+          </div>
+          <div class="school-tier">
+            <div class="school-tier__label">高职与其他院校</div>
+            <div class="school-chips">
+              <span>浙江金融职业学院</span>
+              <span>武汉职业技术学院</span>
+              <span>扬州工业职业技术学院</span>
+              <span>天津中德应用技术大学</span>
+              <span>山东女子学院</span>
+              <span>青岛滨海学院</span>
+              <span>广州理工学院</span>
+              <span>吉利学院</span>
+            </div>
+          </div>
+          <p style="font-size: 0.8125rem; color: var(--color-text-tertiary); margin-top: 1.25rem;">以上为部分合作院校。数创班已运行 10 期，累计上百所高校学生参加。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 学员成果证据 ====== -->
+    <section class="section section--alt" id="outcomes">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">学员与院校的真实反馈</h2>
+          <p class="section-subtitle">不是好评堆砌——是带着学校、专业与项目结果的真实声音。</p>
+        </div>
+
+        <!-- 教师 + 获奖案例 -->
+        <div class="testimonial-feature fade-in">
+          <p class="testimonial-feature__quote">这次数创班效果非常好，两个项目都有了不同形式的成果。"暖心桥"上周获得"青创杯"校赛（挑战杯培育）一等奖，也是唯一的大一项目；"书舟"项目已经把智能体的模式和技术运用到其他省赛项目中。如果有机会，我们会继续积极参与校园VC 的活动和学习。</p>
+          <p class="testimonial-feature__meta"><strong>浙江金融职业学院 · 朱老师</strong> ｜ 带队教师反馈</p>
+        </div>
+
+        <!-- 学员证据卡 -->
+        <div class="evidence-grid fade-in">
+          <div class="evidence-card">
+            <p class="evidence-card__quote">以前我从未想过普通人可以拥有创造智能体的机会，上完课之后着实使我眼前一亮。课程从机会洞察、数字产品开发到营销增长与融资法则层层递进，让我系统掌握了数创核心逻辑。</p>
+            <p class="evidence-card__meta"><strong>佳木斯大学</strong> ｜ 第九期学员</p>
+          </div>
+          <div class="evidence-card">
+            <p class="evidence-card__quote">数创班让我与不同专业的同学碰撞灵感、攻克难题，既锤炼了数字技能与商业思维，也学会了沟通整合。它帮我摆脱了"空心病"，明晰了发展方向。</p>
+            <p class="evidence-card__meta"><strong>沈阳理工大学</strong> ｜ 学员</p>
+          </div>
+          <div class="evidence-card">
+            <p class="evidence-card__quote">这套从认知、洞察、创造、增长到价值的"数字创业方法论"，让我真正获得了一套属于自己的、可落地的数字创业方法论——这是对我最有价值的部分。</p>
+            <p class="evidence-card__meta"><strong>广西民族大学</strong> ｜ 学员</p>
+          </div>
+          <div class="evidence-card">
+            <p class="evidence-card__quote">最初我以为数字创业只是"写代码做产品"，六周课程彻底刷新了认知。如今我带着商业计划书与 AI 原型前行，焦虑已化为底气。</p>
+            <p class="evidence-card__meta"><strong>青岛滨海学院</strong> ｜ 学员</p>
+          </div>
+        </div>
+
+        <!-- 成果物留图位 -->
+        <div class="section-header fade-in" style="margin-top: 3.5rem;">
+          <h3 class="section-title" style="font-size: 1.5rem;">学员产出物</h3>
+          <p class="section-subtitle">课程结束时，每位学生都有可展示、可核验的真实作品。</p>
+        </div>
+        <!-- TODO: 替换为真实学员产出截图（PRD / 路演 PPT / 获奖证书等），删除占位 div 改用 <img> -->
+        <div class="gallery-placeholder fade-in">
+          <div class="gallery-slot">
+            <div class="gallery-slot__icon">📄</div>
+            <div class="gallery-slot__title">创新产品定义书 PRD</div>
+            <div class="gallery-slot__hint">成果截图位 · 待补充</div>
+          </div>
+          <div class="gallery-slot">
+            <div class="gallery-slot__icon">🎤</div>
+            <div class="gallery-slot__title">项目路演 PPT</div>
+            <div class="gallery-slot__hint">成果截图位 · 待补充</div>
+          </div>
+          <div class="gallery-slot">
+            <div class="gallery-slot__icon">🏅</div>
+            <div class="gallery-slot__title">双创竞赛获奖证书</div>
+            <div class="gallery-slot__hint">成果截图位 · 待补充</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 采购说明 ====== -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">院校采购方式</h2>
+          <p class="section-subtitle">由学校创业学院整体采购，规则清晰、流程合规。</p>
+        </div>
+
+        <div class="pricing-card fade-in">
+          <div class="pricing-card__price">1000 元 <small>/ 学生</small></div>
+          <p class="pricing-card__sub">由各校创业学院在院内选拔在校创业大学生（可以没有项目）报名，校方统一支付学费。</p>
+          <ul class="check-list">
+            <li>报名人数最少 5 人、最多 20 人，且须为 5 的倍数（按 5 人一组分团队）</li>
+            <li>校方统一采购，提供正式合同与对公发票，符合高校双创、教研经费使用规范</li>
+            <li>教学形式：线上直播 + 录播回放 + 团队排行榜 + 项目实战</li>
+            <li>每学期开设一期，每周二晚 8:00–9:00 直播，共 6 课</li>
+          </ul>
+          <div class="pricing-divider"></div>
+          <p style="font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.7;">想了解下一期开班时间、完整课程大纲与院校采购方案，请通过页面下方方式联系我们。</p>
+        </div>
+
+        <!-- 采购流程 -->
+        <div class="section-header fade-in" style="margin-top: 4rem;">
+          <h3 class="section-title" style="font-size: 1.5rem;">合作流程</h3>
+        </div>
+        <div class="process-flow fade-in">
+          <div class="process-step">
+            <div class="process-step__num">1</div>
+            <div class="process-step__name">联系咨询</div>
+            <div class="process-step__desc">添加助教老师微信，说明学校与课程情况</div>
+          </div>
+          <div class="process-arrow">→</div>
+          <div class="process-step">
+            <div class="process-step__num">2</div>
+            <div class="process-step__name">方案沟通</div>
+            <div class="process-step__desc">获取课程大纲与采购方案，确认开班期次</div>
+          </div>
+          <div class="process-arrow">→</div>
+          <div class="process-step">
+            <div class="process-step__num">3</div>
+            <div class="process-step__name">签约采购</div>
+            <div class="process-step__desc">签订合同、校方付费、开具发票</div>
+          </div>
+          <div class="process-arrow">→</div>
+          <div class="process-step">
+            <div class="process-step__num">4</div>
+            <div class="process-step__name">校内招生</div>
+            <div class="process-step__desc">院内选拔学员、按 5 人一组分团队</div>
+          </div>
+          <div class="process-arrow">→</div>
+          <div class="process-step">
+            <div class="process-step__num">5</div>
+            <div class="process-step__name">开课交付</div>
+            <div class="process-step__desc">6 周课程 + Demo Day + 成果材料包</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== FAQ ====== -->
+    <section class="section section--alt" id="faq">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">常见问题</h2>
+        </div>
+        <div class="faq-list fade-in">
+          <div class="faq-item">
+            <div class="faq-item__q">学生没有创业项目、没有编程基础，能上吗？</div>
+            <div class="faq-item__a">可以。数创班不要求学生先有项目，也不要求会编程——课程的核心就是带学生用 AI 工具，从零做出自己的数字产品。报名时学生"可以没有项目"。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-item__q">老师需要投入多少精力？要自己备课吗？</div>
+            <div class="faq-item__a">不需要自己备课。核心课程由殷建松教授全程直播亲授。老师的工作主要是校内招生组织、过程督促、Demo Day 评审与校内成果汇报，并全程观摩学习这套教学方法。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-item__q">费用能开发票、走学校经费报销吗？</div>
+            <div class="faq-item__a">可以。数创班由校方整体采购，提供正式合同与对公发票，符合高校双创项目经费、教研经费的使用与报销规范。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-item__q">多少人才能开班？怎么收费？</div>
+            <div class="faq-item__a">1000 元 / 学生。报名人数最少 5 人、最多 20 人，且须为 5 的倍数——因为课程按 5 人一组分团队进行项目实战。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-item__q">课程是线上还是线下？</div>
+            <div class="faq-item__a">线上为主：每周二晚直播授课，配套录播回放、团队排行榜与项目实战。学校可组织学生集中观看，也可让学生各自在线参与。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-item__q">课程成果能用于哪些场景？</div>
+            <div class="faq-item__a">学生产出的 AI 产品原型、商业计划书与路演材料，可用于"挑战杯""互联网+"等双创竞赛；课程的教学材料与学生作品，可用于学院申报教改项目、一流课程与教学成果奖。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 末尾 CTA / 联系 ====== -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">获取课程大纲与院校采购方案</h2>
+          <p class="section-subtitle">添加殷教授的助教老师微信，告诉我们你的学校和课程情况，我们会发送完整课程大纲与采购方案。</p>
+        </div>
+        <div class="contact-box fade-in">
+          <img src="../assets/qrcode/wechat-assistant.png" alt="殷教授的助教老师 微信二维码" />
+          <p style="font-size: 0.9375rem; color: var(--color-text-secondary); font-weight: 500;">殷教授的助教老师</p>
+          <p style="font-size: 0.875rem; color: var(--color-text-tertiary); margin-top: 0.25rem;">扫码添加好友即可</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__logo">
+          <img src="../assets/logo-white.png" alt="校园VC Logo" width="113" height="56" />
+        </div>
+        <p class="footer__slogan">10年推动100万大学生创业</p>
+        <nav class="footer__nav">
+          <a href="../index.html">首页</a>
+          <a href="../student.html">我是学生</a>
+          <a href="../teacher.html">我是教师</a>
+          <a href="../resources/">资源中心</a>
+          <a href="../index.html#contact">联系我们</a>
+        </nav>
+        <div class="footer__divider"></div>
+        <div class="footer__bottom">
+          <div class="footer__filing">
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">京ICP备2021017602号</a>
+          </div>
+          <p class="footer__copyright">© 2026 校园VC. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../main.js"></script>
+</body>
+</html>
