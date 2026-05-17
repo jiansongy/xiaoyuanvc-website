@@ -134,15 +134,6 @@
         border-radius: var(--radius-lg);
         border: 1px solid rgba(0, 0, 0, 0.06);
         box-shadow: var(--shadow-sm);
-        text-decoration: none;
-        color: var(--color-text-primary);
-        transition: transform var(--duration-normal) var(--ease-out),
-                    box-shadow var(--duration-normal) var(--ease-out);
-      }
-
-      .audience-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-md);
         color: var(--color-text-primary);
       }
 
@@ -194,14 +185,112 @@
         margin: 0;
       }
 
-      .audience-card__cta {
-        display: inline-block;
-        font-size: 0.9375rem;
+      /* 分组链接区 */
+      .audience-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .audience-group__title {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--color-text-tertiary);
+      }
+
+      .audience-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .audience-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.875rem;
         font-weight: 600;
+        color: var(--color-text-secondary);
+        background: rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        text-decoration: none;
+        transition: background var(--duration-fast) var(--ease-out),
+                    color var(--duration-fast) var(--ease-out),
+                    border-color var(--duration-fast) var(--ease-out);
+      }
+
+      .audience-card--student .audience-chip:hover {
+        background: var(--color-brand-light);
         color: var(--color-brand);
-        margin-top: 0.5rem;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        border-color: var(--color-brand-light);
+      }
+
+      .audience-card--teacher .audience-chip:hover {
+        background: rgba(245, 158, 11, 0.14);
+        color: var(--color-accent-gold);
+        border-color: rgba(245, 158, 11, 0.24);
+      }
+
+      .audience-chip__icon {
+        font-size: 0.9375rem;
+        line-height: 1;
+      }
+
+      /* 教师背书数据 2x2 */
+      .audience-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem 1rem;
+        padding: 1rem 1.1rem;
+        background: rgba(245, 158, 11, 0.07);
+        border-radius: var(--radius-md);
+      }
+
+      .audience-stat__num {
+        font-size: 1.0625rem;
+        font-weight: 700;
+        color: var(--color-text-primary);
+      }
+
+      .audience-stat__label {
+        font-size: 0.8125rem;
+        color: var(--color-text-tertiary);
+        margin-top: 0.1rem;
+      }
+
+      /* 主 CTA 按钮 */
+      .audience-card__cta {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1rem;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        border-radius: var(--radius-md);
+        transition: transform var(--duration-fast) var(--ease-out),
+                    box-shadow var(--duration-fast) var(--ease-out),
+                    filter var(--duration-fast) var(--ease-out);
+      }
+
+      .audience-card--student .audience-card__cta {
+        background: var(--color-brand);
+      }
+
+      .audience-card--teacher .audience-card__cta {
+        background: var(--color-accent-gold);
+      }
+
+      .audience-card__cta:hover {
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+        filter: brightness(1.05);
       }
 
       @media (max-width: 900px) {
@@ -514,7 +603,7 @@
           <div class="audience-grid audience-grid--dual fade-in">
 
             <!-- 我是学生 -->
-            <a href="student.html" class="audience-card audience-card--student">
+            <div class="audience-card audience-card--student">
               <div class="audience-card__icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
@@ -523,12 +612,37 @@
               </div>
               <div class="audience-card__label">大学生</div>
               <h3 class="audience-card__title">我是学生</h3>
-              <p class="audience-card__desc">6 周做出第一个 AI 创业项目，两个免费教程：数创班和加密创投营，两个收费社群：大创社群和 CSS 社群。</p>
-              <span class="audience-card__cta">进入学生中心 →</span>
-            </a>
+              <p class="audience-card__desc">从两门免费自学教程起步，做出你的第一个 AI 产品；想要同伴和答疑，再加入付费社群。</p>
+
+              <div class="audience-group">
+                <div class="audience-group__title">免费教程</div>
+                <div class="audience-chips">
+                  <a href="/learn/digital-startup/" class="audience-chip"><span class="audience-chip__icon" aria-hidden="true">📘</span>数字创业教程</a>
+                  <a href="/learn/crypto-vc/" class="audience-chip"><span class="audience-chip__icon" aria-hidden="true">📗</span>加密创投教程</a>
+                </div>
+              </div>
+
+              <div class="audience-group">
+                <div class="audience-group__title">付费社群</div>
+                <div class="audience-chips">
+                  <a href="student.html#community" class="audience-chip"><span class="audience-chip__icon" aria-hidden="true">🚀</span>大创社群</a>
+                  <a href="https://css.xiaoyuanvc.com" target="_blank" rel="noopener" class="audience-chip"><span class="audience-chip__icon" aria-hidden="true">🔐</span>CSS 社群</a>
+                </div>
+              </div>
+
+              <div class="audience-group">
+                <div class="audience-group__title">听播客</div>
+                <div class="audience-chips">
+                  <a href="https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e" target="_blank" rel="noopener" class="audience-chip"><span class="audience-chip__icon" aria-hidden="true">🎧</span>CSS</a>
+                  <a href="https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab" target="_blank" rel="noopener" class="audience-chip"><span class="audience-chip__icon" aria-hidden="true">🎧</span>校园VC</a>
+                </div>
+              </div>
+
+              <a href="student.html" class="audience-card__cta">进入学生中心 →</a>
+            </div>
 
             <!-- 我是教师 -->
-            <a href="teacher.html" class="audience-card audience-card--teacher">
+            <div class="audience-card audience-card--teacher">
               <div class="audience-card__icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect width="18" height="18" x="3" y="3" rx="2" />
@@ -538,9 +652,37 @@
               </div>
               <div class="audience-card__label">高校教师 / 创业学院</div>
               <h3 class="audience-card__title">我是教师</h3>
-              <p class="audience-card__desc">数创班的学生能做出 AI 原型和路演成果的 6 周实战课。老师全程观摩真实课堂，学校拿到可汇报的创新创业成果。</p>
-              <span class="audience-card__cta">查看合作方案 →</span>
-            </a>
+              <p class="audience-card__desc">面向高校创业学院的一套体系——从一场赛事到一门实战课，让学生做出可参赛、可汇报的 AI 创业成果。</p>
+
+              <div class="audience-stats">
+                <div class="audience-stat">
+                  <div class="audience-stat__num">清华 x-lab</div>
+                  <div class="audience-stat__label">发源地</div>
+                </div>
+                <div class="audience-stat">
+                  <div class="audience-stat__num">10 期</div>
+                  <div class="audience-stat__label">数创班已办</div>
+                </div>
+                <div class="audience-stat">
+                  <div class="audience-stat__num">上百所</div>
+                  <div class="audience-stat__label">高校参与</div>
+                </div>
+                <div class="audience-stat">
+                  <div class="audience-stat__num">19 万+</div>
+                  <div class="audience-stat__label">火种节师生</div>
+                </div>
+              </div>
+
+              <div class="audience-group">
+                <div class="audience-group__title">核心项目</div>
+                <div class="audience-chips">
+                  <a href="teacher/huozhong.html" class="audience-chip"><span class="audience-chip__icon" aria-hidden="true">🔥</span>火种节</a>
+                  <a href="teacher/shuchuangban.html" class="audience-chip"><span class="audience-chip__icon" aria-hidden="true">🚀</span>数创班</a>
+                </div>
+              </div>
+
+              <a href="teacher.html" class="audience-card__cta">查看合作方案 →</a>
+            </div>
 
           </div>
         </div>
