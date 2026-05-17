@@ -254,6 +254,95 @@
       margin: 0.5rem 0 0;
     }
 
+    /* 播客推荐区 */
+    .podcast-block {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .podcast-platform {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 1rem 1.25rem;
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.25rem;
+    }
+    .podcast-platform__logo {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+    .podcast-platform__name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--color-text-primary);
+    }
+    .podcast-platform__hint {
+      font-size: 0.8rem;
+      color: var(--color-text-secondary);
+      margin: 0.15rem 0 0;
+      line-height: 1.5;
+    }
+    .podcast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .podcast-card {
+      display: flex;
+      gap: 1rem;
+      padding: 1.25rem;
+      background: var(--color-bg-card);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      color: var(--color-text-primary);
+      transition: transform var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-fast) var(--ease-out);
+    }
+    .podcast-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      color: var(--color-text-primary);
+    }
+    .podcast-card__cover {
+      width: 88px;
+      height: 88px;
+      border-radius: var(--radius-md);
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    .podcast-card__body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .podcast-card__title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .podcast-card__desc {
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+      flex: 1;
+    }
+    .podcast-card__cta {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-brand);
+      margin-top: 0.25rem;
+    }
+
     /* 底部 CTA 横条（浅色） */
     .bottom-cta-bar {
       background: var(--color-bg-secondary);
@@ -333,7 +422,7 @@
     }
 
     @media (max-width: 768px) {
-      .course-grid, .community-grid { grid-template-columns: 1fr; }
+      .course-grid, .community-grid, .podcast-grid { grid-template-columns: 1fr; }
     }
 
     body.has-dark-hero .nav {
@@ -587,6 +676,48 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 第四部分：播客推荐 ====== -->
+    <section class="section section--alt" id="podcasts">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">课余时间，去小宇宙听一线的声音</h2>
+          <p class="section-subtitle">小宇宙是国内最好的播客 App——节目丰富、鲜活、免费，对大学生来说是一座被低估的「声音大学」，非常推荐。</p>
+        </div>
+
+        <div class="podcast-block fade-in">
+          <div class="podcast-platform">
+            <img class="podcast-platform__logo" src="assets/podcast/xiaoyuzhou-logo.png" alt="小宇宙 App 图标" width="44" height="44" loading="lazy" />
+            <div>
+              <p class="podcast-platform__name">小宇宙 App</p>
+              <p class="podcast-platform__hint">已经在用小宇宙的同学，推荐订阅校园VC 的两档节目：</p>
+            </div>
+          </div>
+
+          <div class="podcast-grid">
+
+            <a href="https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e" target="_blank" rel="noopener" class="podcast-card">
+              <img class="podcast-card__cover" src="assets/podcast/css-cover.png" alt="CSS 播客封面" width="88" height="88" loading="lazy" />
+              <div class="podcast-card__body">
+                <h3 class="podcast-card__title">CSS</h3>
+                <p class="podcast-card__desc">校园VC 旗下的 Web3 创客频道，以访谈加密行业的创投者为主。</p>
+                <span class="podcast-card__cta">在小宇宙收听 →</span>
+              </div>
+            </a>
+
+            <a href="https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab" target="_blank" rel="noopener" class="podcast-card">
+              <img class="podcast-card__cover" src="assets/podcast/xiaoyuanvc-cover.png" alt="校园VC 播客封面" width="88" height="88" loading="lazy" />
+              <div class="podcast-card__body">
+                <h3 class="podcast-card__title">校园VC</h3>
+                <p class="podcast-card__desc">殷建松老师亲自上阵，回答创业者一个个真实而具体的问题。</p>
+                <span class="podcast-card__cta">在小宇宙收听 →</span>
+              </div>
+            </a>
+
+          </div>
         </div>
       </div>
     </section>
