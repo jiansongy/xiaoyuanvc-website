@@ -287,10 +287,15 @@
     }
     .app-shot {
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .app-shot img {
       width: 100%;
-      max-width: 300px;
+      max-width: min(100%, 300px);
+      height: clamp(460px, 48vw, 600px);
+      object-fit: contain;
       border-radius: var(--radius-lg);
       border: 1px solid var(--color-border);
       box-shadow: var(--shadow-md);
@@ -997,7 +1002,7 @@
             <p class="app-shot__cap"><strong>小程序首页</strong><br>活动库、项目库、创建活动一目了然，教师与学生在同一个入口协作。</p>
           </div>
           <div class="app-shot">
-            <img src="../assets/huozhong/ui-milestones.webp" alt="火种节小程序项目详情·九大环节界面" loading="lazy" />
+            <img src="../assets/huozhong/ui-milestones-20260517.webp" alt="火种节小程序项目详情·九大环节界面" loading="lazy" />
             <p class="app-shot__cap"><strong>项目详情 · 九大环节</strong><br>每个环节都标注目标与产出，学生上传成果即点亮里程碑，完成九项得 90 分。</p>
           </div>
         </div>
@@ -1084,7 +1089,7 @@
       <div class="container">
         <div class="section-header fade-in">
           <span class="kicker">代表案例</span>
-          <h2 class="section-title">从一节课，到一所学校的创新事件</h2>
+          <h2 class="section-title">从一节课，到一所学校的创客马拉松</h2>
           <p class="section-subtitle">同一套方法论，既能支撑普通课堂的小型实践，也能放大为院系级、校级的创新活动。</p>
         </div>
         <div class="case-list">
