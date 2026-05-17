@@ -614,8 +614,10 @@
       backdrop-filter: saturate(180%) blur(10px);
       -webkit-backdrop-filter: saturate(180%) blur(10px);
     }
-    body.has-dark-hero .nav__link { color: rgba(255, 255, 255, 0.85); }
-    body.has-dark-hero .nav__link.active { color: #fff; }
+    @media (min-width: 769px) {
+      body.has-dark-hero .nav__link { color: rgba(255, 255, 255, 0.85); }
+      body.has-dark-hero .nav__link.active { color: #fff; }
+    }
 
     /* ===== 响应式 ===== */
     @media (max-width: 900px) {
