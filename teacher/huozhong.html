@@ -297,7 +297,7 @@
     }
     .app-shot__cap {
       margin: 1rem auto 0;
-      max-width: 320px;
+      max-width: 300px;
       font-size: 0.88rem;
       color: var(--color-text-secondary);
       line-height: 1.7;
@@ -618,6 +618,48 @@
       gap: 1rem;
       justify-content: center;
       flex-wrap: wrap;
+    }
+    .wechat-cta {
+      max-width: 520px;
+      margin: 0 auto 1.75rem;
+      background: rgba(7, 193, 96, 0.12);
+      border: 1px solid rgba(7, 193, 96, 0.45);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+    }
+    .wechat-cta__label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #07c160;
+      text-transform: uppercase;
+      margin: 0 0 0.85rem;
+    }
+    .wechat-cta__bar {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: #fff;
+      border-radius: 999px;
+      padding: 0.7rem 1.1rem;
+      color: #181818;
+      font-size: 1.02rem;
+      font-weight: 700;
+    }
+    .wechat-cta__bar svg {
+      flex-shrink: 0;
+    }
+    .wechat-cta__bar mark {
+      background: rgba(7, 193, 96, 0.18);
+      color: #07920f;
+      border-radius: 4px;
+      padding: 0 0.25rem;
+    }
+    .wechat-cta__hint {
+      font-size: 0.86rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0.85rem 0 0;
+      line-height: 1.65;
     }
 
     /* ===== 响应式 ===== */
@@ -1057,15 +1099,15 @@
               <p class="case-card__meta">校园VC × 清华 x-lab · 48 小时 · 15 支团队</p>
             </div>
           </div>
-          <div class="case-card case-card--flip fade-in">
+          <div class="case-card fade-in">
+            <div class="case-card__media">
+              <img src="../assets/huozhong/yichuang-event.webp" alt="艺创火种节路演现场" loading="lazy" />
+            </div>
             <div class="case-card__body">
               <span class="case-card__type">旗舰活动 · 放大型</span>
               <h3 class="case-card__title">艺创火种节</h3>
               <p class="case-card__desc">在北京三里屯举办的 2 天放大型火种节，主题"AI 生命"，融合艺术创意与科技创新。学生来自全国多所高校，近十位产业、投资、高校导师轮值辅导，6 支团队完成从创意到路演的全过程。它展示了火种节方法论在不同学科主题下的适配能力。</p>
               <p class="case-card__meta">北京三里屯 · 2 天 · 主题"AI 生命"</p>
-            </div>
-            <div class="case-card__media">
-              <img src="../assets/huozhong/yichuang-event.webp" alt="艺创火种节路演现场" loading="lazy" />
             </div>
           </div>
           <div class="case-card fade-in">
@@ -1181,7 +1223,19 @@
       <div class="container">
         <div class="fade-in">
           <h2 class="cta-band__title">把火种节带进你的课堂</h2>
-          <p class="cta-band__desc">无论是先在一个班里试一节课，还是为全校开通行动官，我们都可以一起规划。联系校园VC，开启第一场火种节。</p>
+          <p class="cta-band__desc">想先亲自体验一下？最快的方式只有一步——在微信里搜一下"火种节"。</p>
+          <div class="wechat-cta">
+            <p class="wechat-cta__label">最快上手方式</p>
+            <div class="wechat-cta__bar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07c160" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.5" y2="16.5" />
+              </svg>
+              <span>在微信中搜索 <mark>火种节</mark>，打开小程序</span>
+            </div>
+            <p class="wechat-cta__hint">无需下载、点开即用，扫一眼就能体验完整的九大环节流程。</p>
+          </div>
+          <p class="cta-band__desc" style="margin-bottom: 1.5rem;">想为一个班、一个院系或全校开通行动官？我们可以一起规划。</p>
           <div class="cta-band__actions">
             <a href="https://edu.xiaoyuanvc.com/" target="_blank" rel="noopener" class="btn btn-primary">访问创业教育智慧系统 →</a>
             <a href="../index.html#contact" class="btn-outline-white">联系我们 · 申请开通</a>
