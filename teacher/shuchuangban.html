@@ -487,6 +487,31 @@
     .gallery-slot__title { font-size: 0.875rem; font-weight: 700; color: var(--color-brand); }
     .gallery-slot__hint { font-size: 0.75rem; color: var(--color-text-tertiary); }
 
+    /* 成果物图片卡 */
+    .gallery-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+    .gallery-card__img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: top;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      background: var(--color-bg-card);
+    }
+    .gallery-card__caption {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--color-brand);
+    }
+
     /* ===== 采购说明 ===== */
     .pricing-card {
       background: var(--color-bg-card);
@@ -1097,23 +1122,19 @@
           <h3 class="section-title" style="font-size: 1.5rem;">学员产出物</h3>
           <p class="section-subtitle">课程结束时，每位学生都有可展示、可核验的真实作品。</p>
         </div>
-        <!-- TODO: 替换为真实学员产出截图（PRD / 路演 PPT / 获奖证书等），删除占位 div 改用 <img> -->
         <div class="gallery-placeholder fade-in">
-          <div class="gallery-slot">
-            <div class="gallery-slot__icon">📄</div>
-            <div class="gallery-slot__title">创新产品定义书 PRD</div>
-            <div class="gallery-slot__hint">成果截图位 · 待补充</div>
-          </div>
-          <div class="gallery-slot">
-            <div class="gallery-slot__icon">🎤</div>
-            <div class="gallery-slot__title">项目路演 PPT</div>
-            <div class="gallery-slot__hint">成果截图位 · 待补充</div>
-          </div>
-          <div class="gallery-slot">
-            <div class="gallery-slot__icon">🏅</div>
-            <div class="gallery-slot__title">双创竞赛获奖证书</div>
-            <div class="gallery-slot__hint">成果截图位 · 待补充</div>
-          </div>
+          <figure class="gallery-card">
+            <img class="gallery-card__img" src="../assets/prd.png" alt="学员产出的创新产品定义书 PRD" loading="lazy" />
+            <figcaption class="gallery-card__caption"><span>📄</span>创新产品定义书 PRD</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img class="gallery-card__img" src="../assets/ppt.png" alt="学员产出的项目路演 PPT" loading="lazy" />
+            <figcaption class="gallery-card__caption"><span>🎤</span>项目路演 PPT</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img class="gallery-card__img" src="../assets/sys.png" alt="校园VC 学习系统界面" loading="lazy" />
+            <figcaption class="gallery-card__caption"><span>💻</span>校园VC 学习系统</figcaption>
+          </figure>
         </div>
       </div>
     </section>
