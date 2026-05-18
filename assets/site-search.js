@@ -29,10 +29,14 @@
 
   function loadIndex() {
     if (!indexPromise) {
-      indexPromise = fetch(INDEX_URL)
+      indexPromise = fetch(INDEX_URL, { cache: "no-store" })
         .then(function (res) {
           if (!res.ok) throw new Error("Search index request failed");
-          return res.json();
+          return res.text();
+        })
+        .then(function (text) {
+          if (!text || !text.trim()) throw new Error("Empty search index");
+          return JSON.parse(text);
         })
         .then(function (data) {
           return data.entries || [];
@@ -125,8 +129,11 @@
         render(search(entries, query), query);
       })
       .catch(function () {
-        elements.results.innerHTML =
-          '<p class="site-search__empty">搜索索引暂时不可用。</p>';
+        render([], query);
+        if (elements.results) {
+          elements.results.innerHTML =
+            '<p class="site-search__empty">搜索索引暂时不可用，稍后再试。</p>';
+        }
       });
   }
 

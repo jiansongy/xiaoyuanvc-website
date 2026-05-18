@@ -75,6 +75,29 @@
       flex-wrap: wrap;
     }
 
+    /* 教程背景介绍 */
+    .courses-origin {
+      max-width: 860px;
+      margin: 0 auto var(--space-xl);
+      padding: 1.5rem 1.75rem;
+      background: var(--color-brand-light);
+      border-radius: var(--radius-lg);
+      border-left: 4px solid var(--color-brand);
+    }
+    .courses-origin p {
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+    .courses-origin p + p {
+      margin-top: 0.75rem;
+    }
+    .courses-origin a {
+      color: var(--color-brand);
+      font-weight: 600;
+    }
+
     /* 课程卡片 */
     .course-grid {
       display: grid;
@@ -545,6 +568,15 @@
         <div class="section-header fade-in">
           <h2 class="section-title">两门免费教程，自学起步</h2>
           <p class="section-subtitle">主题不同：数创教程偏 AI 创业，加密教程偏 Web3 创投。每节课的小节根据飞书最新课件持续更新。</p>
+        </div>
+
+        <div class="courses-origin fade-in">
+          <p>
+            这两门教程的内容，分别来自校园VC 的两个 6 周线上训练营——<a href="/teacher/shuchuangban">数创班</a>和加密创投营。每一期训练营结束后，我们都会把最新的课件内容整理成公开教程，免费开源给所有同学。
+          </p>
+          <p>
+            你可以按自己的节奏自学，也欢迎在社群里结对共学。如果你对教程内容有任何意见和反馈，欢迎告诉我们——我们想和同学们一起，把它们打磨成中国最好的 AI 与 Crypto 新人创业与投资课程。
+          </p>
         </div>
 
         <div class="course-grid fade-in">

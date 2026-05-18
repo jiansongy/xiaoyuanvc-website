@@ -6,7 +6,10 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
 const HOSTNAME = "https://xiaoyuanvc.com";
-const OUTPUT = path.join(DIST, "assets", "site-search-index.json");
+const OUTPUTS = [
+  path.join(ROOT, "assets", "site-search-index.json"),
+  path.join(DIST, "assets", "site-search-index.json"),
+];
 
 const IGNORE_DIRS = new Set([
   "assets",
@@ -135,12 +138,19 @@ function main() {
     .filter(Boolean)
     .sort((a, b) => a.url.localeCompare(b.url, "zh-CN"));
 
-  fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
-  fs.writeFileSync(
-    OUTPUT,
-    `${JSON.stringify({ generatedAt: new Date().toISOString(), entries })}\n`,
+  const payload = `${JSON.stringify({
+    generatedAt: new Date().toISOString(),
+    entries,
+  })}\n`;
+
+  for (const output of OUTPUTS) {
+    fs.mkdirSync(path.dirname(output), { recursive: true });
+    fs.writeFileSync(output, payload);
+  }
+
+  console.log(
+    `Built search index: ${entries.length} pages -> ${OUTPUTS.join(", ")}`,
   );
-  console.log(`Built search index: ${entries.length} pages -> ${OUTPUT}`);
 }
 
 main();
