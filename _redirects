@@ -18,6 +18,7 @@
 
 # 页面 canonical 统一为无扩展名 URL，保留旧 .html 入口
 /student.html /student 301
+/dachuang.html /dachuang 301
 /teacher.html /teacher 301
 /teacher/:slug.html /teacher/:slug 301
 
