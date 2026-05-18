@@ -6,10 +6,11 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
 const HOSTNAME = "https://xiaoyuanvc.com";
-const OUTPUTS = [
-  path.join(ROOT, "assets", "site-search-index.json"),
-  path.join(DIST, "assets", "site-search-index.json"),
-];
+const OUTPUTS = [path.join(DIST, "assets", "site-search-index.json")];
+
+if (process.env.WRITE_ROOT_SEARCH_INDEX === "1") {
+  OUTPUTS.unshift(path.join(ROOT, "assets", "site-search-index.json"));
+}
 
 const IGNORE_DIRS = new Set([
   "assets",
