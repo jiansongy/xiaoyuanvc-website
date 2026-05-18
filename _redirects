@@ -12,12 +12,20 @@
 
 # 兼容旧分享链接：如果有人记得 /resources.html（preview 期间路径），跳到资源中心
 /resources.html /resources/ 301
+/resources/podcast.html /resources/ 301
+/resources/podcast /resources/ 301
+/resources/:slug.html /resources/:slug 301
+
+# 页面 canonical 统一为无扩展名 URL，保留旧 .html 入口
+/student.html /student 301
+/teacher.html /teacher 301
+/teacher/:slug.html /teacher/:slug 301
 
 # /learn/ 是 VitePress 子站根，但落地页本身不展示，访客统一跳到学生中心两张课程卡
 # 子路径如 /learn/crypto-vc/* /learn/digital-startup/* 由静态文件服务，不会被这两条匹配
-/learn /student.html#courses 301
-/learn/ /student.html#courses 301
+/learn /student#courses 301
+/learn/ /student#courses 301
 
 # 数创班单页已从根目录迁入教师中心子树 /teacher/
-/shuchuangban.html /teacher/shuchuangban.html 301
-/shuchuangban /teacher/shuchuangban.html 301
+/shuchuangban.html /teacher/shuchuangban 301
+/shuchuangban /teacher/shuchuangban 301

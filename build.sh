@@ -42,9 +42,13 @@ else
 fi
 npx vitepress build docs
 
-echo "==> [4/4] 拷贝 VitePress 产物到 dist/learn/"
+echo "==> [4/5] 拷贝 VitePress 产物到 dist/learn/"
 mkdir -p "$DIST/learn"
 cp -R "$LEARN_SRC/docs/.vitepress/dist/." "$DIST/learn/"
+
+echo "==> [5/5] 生成全站搜索索引并注入搜索脚本"
+node "$ROOT/scripts/build-search-index.js"
+node "$ROOT/scripts/inject-site-search.js"
 
 echo ""
 echo "✅ 构建完成"

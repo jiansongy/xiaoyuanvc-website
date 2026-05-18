@@ -102,7 +102,7 @@ onMounted(() => {
             <div class="nav__links">
               <a class="nav__link" href="/">首页</a>
               <div class="nav__item nav__item--dropdown">
-                <a class="nav__link" href="/student.html">
+                <a class="nav__link" href="/student">
                   我是学生<span class="nav__caret" aria-hidden="true">▾</span>
                 </a>
                 <div class="nav__submenu" role="menu">
@@ -118,7 +118,7 @@ onMounted(() => {
                   >加密教程</a>
                 </div>
               </div>
-              <a class="nav__link" href="/teacher.html">我是教师</a>
+              <a class="nav__link" href="/teacher">我是教师</a>
               <a class="nav__link" href="/resources/">资源中心</a>
               <a class="nav__link" href="/#founder">团队介绍</a>
               <a class="nav__link" href="/#contact">联系我们</a>
