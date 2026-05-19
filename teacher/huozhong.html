@@ -425,42 +425,6 @@
       color: var(--color-text-primary);
     }
 
-    /* ===== 规模验证 ===== */
-    .proof-band {
-      background: var(--color-bg-secondary);
-    }
-    .proof-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1rem;
-      margin-top: 2.5rem;
-    }
-    .proof-cell {
-      background: var(--color-bg-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 1.5rem 0.75rem;
-      text-align: center;
-    }
-    .proof-cell__num {
-      font-size: clamp(1.4rem, 3vw, 1.85rem);
-      font-weight: 800;
-      color: var(--color-brand);
-      line-height: 1.1;
-    }
-    .proof-cell__label {
-      font-size: 0.82rem;
-      color: var(--color-text-secondary);
-      margin-top: 0.4rem;
-      line-height: 1.5;
-    }
-    .proof-foot {
-      margin-top: 1.75rem;
-      text-align: center;
-      font-size: 0.875rem;
-      color: var(--color-text-tertiary);
-    }
-
     /* ===== 案例 ===== */
     .case-list {
       display: flex;
@@ -667,6 +631,121 @@
       line-height: 1.65;
     }
 
+    /* ===== 资料下载组件 ===== */
+    .docs-group {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 720px;
+    }
+    .docs-group__label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0 0 0.25rem;
+    }
+    .docs-group__label span {
+      font-weight: 400;
+      color: var(--color-text-tertiary);
+    }
+    .doc-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1.2rem;
+      text-decoration: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .doc-row:hover {
+      border-color: var(--color-brand);
+      background: var(--color-bg-secondary);
+    }
+    .doc-row__icon {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+    .doc-row__icon--pdf { background: #e2483d; }
+    .doc-row__icon--ppt { background: #e07b29; }
+    .doc-row__body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .doc-row__name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+    .doc-row__desc {
+      font-size: 0.82rem;
+      color: var(--color-text-secondary);
+      margin: 0.2rem 0 0;
+      line-height: 1.5;
+    }
+    .doc-row__size {
+      flex-shrink: 0;
+      font-size: 0.78rem;
+      color: var(--color-text-tertiary);
+    }
+    .doc-row__btn {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--color-bg-secondary);
+      color: var(--color-brand);
+    }
+    .doc-row:hover .doc-row__btn {
+      background: var(--color-brand);
+      color: #fff;
+    }
+    /* 深色背景上的下载条（创业教育智慧系统板块） */
+    .docs-group--dark .docs-group__label {
+      color: rgba(255, 255, 255, 0.92);
+    }
+    .docs-group--dark .docs-group__label span {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .docs-group--dark .doc-row {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    .docs-group--dark .doc-row:hover {
+      border-color: var(--color-brand-hover);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .docs-group--dark .doc-row__name {
+      color: #fff;
+    }
+    .docs-group--dark .doc-row__desc {
+      color: rgba(255, 255, 255, 0.62);
+    }
+    .docs-group--dark .doc-row__size {
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .docs-group--dark .doc-row__btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
     /* ===== 响应式 ===== */
     @media (max-width: 900px) {
       .method-wrap {
@@ -676,9 +755,6 @@
       .milestones,
       .flow-grid {
         grid-template-columns: 1fr 1fr;
-      }
-      .proof-grid {
-        grid-template-columns: repeat(3, 1fr);
       }
       .ai-card__feats {
         grid-template-columns: 1fr;
@@ -703,11 +779,15 @@
       .flow-grid {
         grid-template-columns: 1fr;
       }
-      .proof-grid {
-        grid-template-columns: 1fr 1fr;
-      }
       .app-showcase {
         grid-template-columns: 1fr;
+      }
+      .doc-row {
+        gap: 0.8rem;
+        padding: 0.85rem 1rem;
+      }
+      .doc-row__size {
+        display: none;
       }
       .ai-card {
         padding: 2rem 1.5rem;
@@ -767,26 +847,10 @@
         },
         {
           "@type": "Question",
-          "name": "教师需要做哪些准备？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "几乎零准备。学校开通后，教师以行动官身份在微信小程序里按9个里程碑引导课堂即可，流程由软件自动推进，教师专注于点评与引导。"
-          }
-        },
-        {
-          "@type": "Question",
           "name": "学校如何开通火种节？",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "学校购买创业教育智慧系统的年度服务，指定一名管理员为本校教师开通行动官权限，行动官数量不限，每位行动官都可在服务期内创建火种节活动。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "火种节适合放进哪些课程？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "创新创业基础课、专业导论课、双创实践课、创业训练营、新生入学教育等都适用。它是一个可复制的实践教学单元，可嵌入现有课程，也可独立开展。"
           }
         }
       ]
@@ -920,8 +984,7 @@
             </div>
           </div>
           <p class="method-claim">
-            火种节把以上方法论融合为一条<strong>可执行的学习路径</strong>。学生不是"听一节创业课"，而是<strong>走一遍创业过程</strong>——三小时里完整经历从一个想法，到产品原型，再到市场验证的全过程，相当于一次浓缩的 mini 版创业。<br /><br />
-            对教师而言，这意味着课堂的每一步都有方法支撑，<strong>过程可控、成果可预期</strong>。
+            火种节把以上方法论融合为一条<strong>可执行的学习路径</strong>：学生不是"听一节创业课"，而是<strong>走一遍创业过程</strong>——三小时完整经历从想法到原型、再到市场验证的全程。对教师而言，课堂的每一步都有方法支撑，<strong>过程可控、成果可预期</strong>。
           </p>
         </div>
       </div>
@@ -1048,50 +1111,46 @@
           </div>
         </div>
         <p class="flow-note fade-in">教师始终是课堂的设计者、引导者与评价者——火种节让你更容易组织一场高质量的实践课。</p>
+
+        <div class="docs-group fade-in" style="margin-left: auto; margin-right: auto;">
+          <p class="docs-group__label">开课资料 <span>· 适合第一次开火种节的老师</span></p>
+          <a class="doc-row" href="../assets/downloads/huozhong-handbook.pdf" download="火种节用户手册.pdf">
+            <span class="doc-row__icon doc-row__icon--pdf" aria-hidden="true">PDF</span>
+            <span class="doc-row__body">
+              <span class="doc-row__name">火种节用户手册</span>
+              <span class="doc-row__desc">从开通行动官到课堂引导的完整说明，第一次开课照着做即可。</span>
+            </span>
+            <span class="doc-row__size">PDF · 3.7&nbsp;MB</span>
+            <span class="doc-row__btn" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 21h14" />
+              </svg>
+            </span>
+          </a>
+          <a class="doc-row" href="../assets/downloads/huozhong-guide-deck.pptx" download="火种节引导PPT.pptx">
+            <span class="doc-row__icon doc-row__icon--ppt" aria-hidden="true">PPT</span>
+            <span class="doc-row__body">
+              <span class="doc-row__name">火种节引导 PPT</span>
+              <span class="doc-row__desc">即拿即用的课堂引导课件，9 个里程碑逐页对应，可直接投屏。</span>
+            </span>
+            <span class="doc-row__size">PPTX · 6.0&nbsp;MB</span>
+            <span class="doc-row__btn" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 21h14" />
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- ====== 5. 规模验证 ====== -->
-    <section class="section proof-band">
-      <div class="container">
-        <div class="section-header fade-in">
-          <span class="kicker">规模验证</span>
-          <h2 class="section-title">经过多校、多场景的教学验证</h2>
-          <p class="section-subtitle">火种节自 2019 年发布以来，持续在全国高校的真实课堂中运行。</p>
-        </div>
-        <div class="proof-grid fade-in">
-          <div class="proof-cell">
-            <div class="proof-cell__num">2019</div>
-            <div class="proof-cell__label">发布于校园VC全球峰会</div>
-          </div>
-          <div class="proof-cell">
-            <div class="proof-cell__num">上百所</div>
-            <div class="proof-cell__label">高校在用</div>
-          </div>
-          <div class="proof-cell">
-            <div class="proof-cell__num">2,600+</div>
-            <div class="proof-cell__label">已开展火种节场次</div>
-          </div>
-          <div class="proof-cell">
-            <div class="proof-cell__num">19万+</div>
-            <div class="proof-cell__label">累计学生人次</div>
-          </div>
-          <div class="proof-cell">
-            <div class="proof-cell__num">近2,000</div>
-            <div class="proof-cell__label">名教师行动官</div>
-          </div>
-        </div>
-        <p class="proof-foot fade-in">数据来源：创业教育智慧系统管理后台 · 截至 2026 年。</p>
-      </div>
-    </section>
-
-    <!-- ====== 6. 代表案例 ====== -->
+    <!-- ====== 5. 代表案例 ====== -->
     <section class="section">
       <div class="container">
         <div class="section-header fade-in">
           <span class="kicker">代表案例</span>
           <h2 class="section-title">从一节课，到一所学校的创客马拉松</h2>
-          <p class="section-subtitle">同一套方法论，既能支撑普通课堂的小型实践，也能放大为院系级、校级的创新活动。</p>
+          <p class="section-subtitle">火种节自 2019 年发布以来持续在全国高校运行——同一套方法论，既能支撑普通课堂的小型实践，也能放大为院系级、校级的创新活动。</p>
         </div>
         <div class="case-list">
           <div class="case-card fade-in">
@@ -1101,7 +1160,7 @@
             <div class="case-card__body">
               <span class="case-card__type">旗舰活动 · 放大型</span>
               <h3 class="case-card__title">ChatGPT 火种节</h3>
-              <p class="case-card__desc">校园VC 与清华 x-lab 联合主办的放大型火种节。在标准火种节流程基础上，加入创业导师与投资机构嘉宾给项目真实反馈，48 小时孵化 AI 大模型相关早期项目，15 支团队同台路演。这是火种节在"软件之上"叠加社会资源、让学生短时间内体验真实创业环境的形态。</p>
+              <p class="case-card__desc">校园VC 与清华 x-lab 联合主办的放大型火种节。在标准流程之上加入创业导师与投资机构嘉宾给项目真实反馈，48 小时孵化 AI 大模型早期项目，15 支团队同台路演——火种节叠加社会资源、让学生体验真实创业环境的形态。</p>
               <p class="case-card__meta">校园VC × 清华 x-lab · 48 小时 · 15 支团队</p>
             </div>
           </div>
@@ -1112,7 +1171,7 @@
             <div class="case-card__body">
               <span class="case-card__type">旗舰活动 · 放大型</span>
               <h3 class="case-card__title">艺创火种节</h3>
-              <p class="case-card__desc">在北京三里屯举办的 2 天放大型火种节，主题"AI 生命"，融合艺术创意与科技创新。学生来自全国多所高校，近十位产业、投资、高校导师轮值辅导，6 支团队完成从创意到路演的全过程。它展示了火种节方法论在不同学科主题下的适配能力。</p>
+              <p class="case-card__desc">在北京三里屯举办的 2 天放大型火种节，主题"AI 生命"，融合艺术创意与科技创新。学生来自全国多所高校，近十位产业、投资、高校导师轮值辅导，6 支团队完成从创意到路演的全程——展示了方法论在不同学科主题下的适配能力。</p>
               <p class="case-card__meta">北京三里屯 · 2 天 · 主题"AI 生命"</p>
             </div>
           </div>
@@ -1123,7 +1182,7 @@
             <div class="case-card__body">
               <span class="case-card__type">校级活动 · 软件依托型</span>
               <h3 class="case-card__title">河北美术学院首届火种节</h3>
-              <p class="case-card__desc">2025 年 12 月，河北美术学院在《创新创业基础》课程中开展首届火种节双创实践活动。以"3 小时体验极速创业、点亮心中的火种"为核心，跨多场累计达近万人规模，并特邀国赛评委到场点评。一所学校用同一个软件，把火种节办成了全校性的创新教育事件。</p>
+              <p class="case-card__desc">2025 年 12 月，河北美术学院在《创新创业基础》课程中开展首届火种节，以"3 小时体验极速创业"为核心，跨多场累计近万人规模，并特邀国赛评委到场点评——一所学校把火种节办成了全校性的创新教育事件。</p>
               <p class="case-card__meta">河北美术学院 · 2025 年 12 月 · 近万人规模</p>
             </div>
           </div>
@@ -1140,7 +1199,6 @@
         </div>
         <div class="ai-card fade-in">
           <h3 class="ai-card__title">让 AI 成为教学支持，而不是替代教师</h3>
-          <p style="color: rgba(255,255,255,0.82); line-height: 1.8; margin: 0;">随着软件能力的扩展，火种节正在引入 AI 功能，帮助教师减轻过程指导压力、让学生在项目推进中获得更及时的反馈。</p>
           <div class="ai-card__feats">
             <div class="ai-feat">
               <div class="ai-feat__name">AI 项目反馈</div>
@@ -1187,6 +1245,22 @@
             <div class="edu-cta">
               <a href="https://edu.xiaoyuanvc.com/" target="_blank" rel="noopener" class="btn btn-primary">访问创业教育智慧系统 →</a>
             </div>
+            <div class="docs-group docs-group--dark fade-in">
+              <p class="docs-group__label">后台使用手册 <span>· 行动官如何管理活动与成果</span></p>
+              <a class="doc-row" href="../assets/downloads/edu-system-manual.pdf" download="EDU用户手册.pdf">
+                <span class="doc-row__icon doc-row__icon--pdf" aria-hidden="true">PDF</span>
+                <span class="doc-row__body">
+                  <span class="doc-row__name">创业教育智慧系统用户手册</span>
+                  <span class="doc-row__desc">网页后台操作指南：开通行动官、创建活动、查看学生成果数据。</span>
+                </span>
+                <span class="doc-row__size">PDF · 0.5&nbsp;MB</span>
+                <span class="doc-row__btn" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v12" /><path d="m7 11 5 5 5-5" /><path d="M5 21h14" />
+                  </svg>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -1209,16 +1283,8 @@
             <div class="faq-item__answer">课堂版只需 3 小时，一个班级即可开展。也可以放大为院系级、校级活动，参与规模从几十人到上万人不等。</div>
           </details>
           <details class="faq-item">
-            <summary>教师需要做哪些准备？</summary>
-            <div class="faq-item__answer">几乎零准备。学校开通后，教师以行动官身份在微信小程序里按 9 个里程碑引导课堂即可，流程由软件自动推进，教师专注于点评与引导。</div>
-          </details>
-          <details class="faq-item">
             <summary>学校如何开通火种节？</summary>
             <div class="faq-item__answer">学校购买创业教育智慧系统的年度服务，指定一名管理员为本校教师开通行动官权限。行动官数量不限，每位行动官都可在服务期内创建火种节活动。</div>
-          </details>
-          <details class="faq-item">
-            <summary>火种节适合放进哪些课程？</summary>
-            <div class="faq-item__answer">创新创业基础课、专业导论课、双创实践课、创业训练营、新生入学教育等都适用。它是一个可复制的实践教学单元，可嵌入现有课程，也可独立开展。</div>
           </details>
         </div>
       </div>
