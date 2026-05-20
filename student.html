@@ -444,8 +444,270 @@
       background: rgba(255,255,255,0.08);
     }
 
+    /* 方向卡 */
+    .directions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .direction-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      padding: 2.25rem 2rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--color-text-primary);
+      transition: transform var(--duration-fast), box-shadow var(--duration-fast);
+      position: relative;
+    }
+    .direction-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      color: var(--color-text-primary);
+    }
+    .direction-card--scb { border-top: 4px solid var(--color-accent-purple); }
+    .direction-card--css { border-top: 4px solid var(--color-accent-gold); }
+    .direction-card__eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+    .direction-card--scb .direction-card__eyebrow { color: var(--color-accent-purple); }
+    .direction-card--css .direction-card__eyebrow { color: var(--color-accent-gold); }
+    .direction-card__title {
+      font-size: 1.625rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin: 0;
+    }
+    .direction-card__desc {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .direction-card__products {
+      list-style: none;
+      padding: 1rem 0;
+      margin: 0;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .direction-card__products li {
+      font-size: 0.875rem;
+      color: var(--color-text-primary);
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .direction-card__products li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--color-brand);
+      font-weight: 700;
+    }
+    .direction-card__cta {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-brand);
+      margin-top: auto;
+    }
+
+    /* 数创路径 */
+    .scb-products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .scb-product-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--color-text-primary);
+      transition: transform var(--duration-fast), box-shadow var(--duration-fast);
+    }
+    .scb-product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      color: var(--color-text-primary);
+    }
+    .scb-product-card--feature {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, var(--color-brand-light) 0%, #f3e8ff 100%);
+      border: none;
+    }
+    .scb-product-card--feature .scb-product-card__services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 1.5rem;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 768px) {
+      .scb-product-card--feature .scb-product-card__services { grid-template-columns: 1fr; }
+    }
+    .scb-product-card__icon {
+      font-size: 1.75rem;
+      line-height: 1;
+    }
+    .scb-product-card__badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(139, 92, 246, 0.12);
+      color: var(--color-accent-purple);
+      align-self: flex-start;
+    }
+    .scb-product-card__title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .scb-product-card__desc {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .scb-product-card__services {
+      list-style: none;
+      margin: 0.5rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .scb-product-card__services li {
+      font-size: 0.8125rem;
+      color: var(--color-text-primary);
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .scb-product-card__services li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-accent-purple);
+      font-weight: 700;
+    }
+    .scb-product-card__cta {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-brand);
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* CSS 4 步阶梯 */
+    .css-ladder {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .step-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      padding: 1.5rem 1.25rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--color-text-primary);
+      transition: transform var(--duration-fast), box-shadow var(--duration-fast);
+      position: relative;
+    }
+    .step-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      color: var(--color-text-primary);
+    }
+    .step-card--camp {
+      background: linear-gradient(135deg, #fef3c7 0%, #fff 100%);
+      border: 2px solid var(--color-accent-gold);
+    }
+    .step-card__step {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--color-accent-gold);
+    }
+    .step-card__icon {
+      font-size: 1.75rem;
+      line-height: 1;
+      margin: 0.25rem 0;
+    }
+    .step-card__title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .step-card__price {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-accent-gold);
+    }
+    .step-card--camp .step-card__price { color: var(--color-accent-gold); }
+    .step-card__desc {
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .step-card__cta {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-brand);
+      margin-top: 0.25rem;
+    }
+    .step-card--camp .step-card__cta { color: var(--color-accent-gold); }
+    .step-card__badge {
+      position: absolute;
+      top: -10px;
+      right: 12px;
+      background: var(--color-accent-gold);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+    }
+
+    @media (max-width: 1024px) {
+      .css-ladder { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 768px) {
       .course-grid, .community-grid, .podcast-grid { grid-template-columns: 1fr; }
+      .directions-grid, .scb-products { grid-template-columns: 1fr; }
+      .scb-product-card--feature { grid-column: span 1; }
+      .css-ladder { grid-template-columns: 1fr; }
     }
 
     body.has-dark-hero .nav {
@@ -523,9 +785,8 @@
           <div class="nav__item nav__item--dropdown">
             <a href="/student" class="nav__link active">我是学生<span class="nav__caret" aria-hidden="true">▾</span></a>
             <div class="nav__submenu" role="menu">
-              <a class="nav__submenu-link" href="learn/digital-startup/" role="menuitem">数创教程</a>
-              <a class="nav__submenu-link" href="learn/crypto-vc/" role="menuitem">加密教程</a>
-              <a class="nav__submenu-link" href="/dachuang" role="menuitem">大创社群</a>
+              <a class="nav__submenu-link" href="/student#scb" role="menuitem">数创方向</a>
+              <a class="nav__submenu-link" href="/student#css" role="menuitem">加密方向</a>
             </div>
           </div>
           <div class="nav__item nav__item--dropdown">
@@ -551,112 +812,149 @@
       <div class="container">
         <div class="page-hero__inner fade-in">
           <div class="page-hero__eyebrow">校园VC · 学生中心</div>
-          <h1 class="page-hero__title">做出你的<br>第一个 AI 产品</h1>
+          <h1 class="page-hero__title">在校园找到<br>创业的起点</h1>
           <p class="page-hero__subtitle">寻找改变世界的疯子</p>
-          <p class="page-hero__desc">两门自学教程 + 两个付费社群 + 两个小宇宙播客</p>
+          <p class="page-hero__desc">选择你的方向：数创创业 或 加密创投</p>
           <div class="page-hero__actions">
-            <a href="#courses" class="btn btn-primary">看第一课 →</a>
-            <a href="#community" class="btn-outline-white">加入社群</a>
+            <a href="#directions" class="btn btn-primary">找我的方向 →</a>
+            <a href="/css/camp-3/" class="btn-outline-white">看加密创投营 7 月开营</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ====== 第一部分：两门免费教程 ====== -->
-    <section class="section" id="courses">
+    <!-- ====== Section 1：先选方向 ====== -->
+    <section class="section" id="directions">
       <div class="container">
         <div class="section-header fade-in">
-          <h2 class="section-title">两门免费教程，自学起步</h2>
-          <p class="section-subtitle">主题不同：数创教程偏 AI 创业，加密教程偏 Web3 创投。每节课的小节根据飞书最新课件持续更新。</p>
+          <h2 class="section-title">先选方向，再看产品</h2>
+          <p class="section-subtitle">校园VC 学生端分两个方向：数创（general 创业）和加密 CSS。先想清楚你要去哪。</p>
         </div>
 
-        <div class="courses-origin fade-in">
-          <p>
-            这两门教程的内容，分别来自校园VC 的两个 6 周线上训练营——<a href="/teacher/shuchuangban">数创班</a>和加密创投营。每一期训练营结束后，我们都会把最新的课件内容整理成公开教程，免费开源给所有同学。
-          </p>
-          <p>
-            你可以按自己的节奏自学，也欢迎在社群里结对共学。如果你对教程内容有任何意见和反馈，欢迎告诉我们——我们想和同学们一起，把它们打磨成中国最好的 AI 与 Crypto 新人创业与投资课程。
-          </p>
-        </div>
-
-        <div class="course-grid fade-in">
-
-          <!-- 数创教程 -->
-          <a href="/learn/digital-startup/" class="course-card course-card--scb" id="scb">
-            <span class="course-card__badge">AI 创业方向</span>
-            <h3 class="course-card__title">数字创业教程</h3>
-            <p class="course-card__desc">
-              基于校园VC给各高校提供的"数创班"，以创新创业的商科内容和 AI 智能体的创业实战为主线，从零打造一个 AI 创业项目。
-            </p>
-            <div class="course-card__path">🎯 认知 → 洞察 → 开发 → 营销 → 融资</div>
-            <ul class="course-card__meta-list">
-              <li>👤 适合：想用 AI 做产品的大学生</li>
-              <li>🎁 学完产出：能独立设计、原型、推广一个 AI 产品</li>
-              <li>💰 完全免费 · 推荐先学这门</li>
+        <div class="directions-grid fade-in">
+          <a href="#scb" class="direction-card direction-card--scb">
+            <span class="direction-card__eyebrow">方向 1 · 数创（general 创业）</span>
+            <h3 class="direction-card__title">数创：从 AI 产品到创业社群</h3>
+            <p class="direction-card__desc">想用 AI 做产品、参与城市线下创业社群、与同行长期同行的同学方向。</p>
+            <ul class="direction-card__products">
+              <li>数创教程（免费）</li>
+              <li>大创社群（¥499/年起，含创享会·开放日·火种节·校园VC 播客提问权）</li>
+              <li>数创班（B2B 高校合作 · 学生通道需大创会员）</li>
             </ul>
-            <span class="course-card__cta">开始学习 →</span>
+            <span class="direction-card__cta">查看数创方向 →</span>
           </a>
 
-          <!-- 加密教程 -->
-          <a href="/learn/crypto-vc/" class="course-card course-card--crypto" id="crypto">
-            <span class="course-card__badge">Web3 创投方向</span>
-            <h3 class="course-card__title">加密创投教程</h3>
-            <p class="course-card__desc">
-              基于校园VC的 CSS（Crypto Startup School）6 年积累的加密创投领域的深厚资源，结合最新全球产业动向，帮助新人快速成为加密货币的创业者和投资者。
-            </p>
-            <div class="course-card__path">🎯 公链 → 实务 → 金融 → 文化 → 创新</div>
-            <ul class="course-card__meta-list">
-              <li>👤 适合：对 Web3 创投感兴趣的大学生</li>
-              <li>🎁 学完产出：能看懂赛道、机会和行动路径</li>
-              <li>💰 完全免费 · 学完数创教程后推荐</li>
+          <a href="#css" class="direction-card direction-card--css">
+            <span class="direction-card__eyebrow">方向 2 · 加密 CSS</span>
+            <h3 class="direction-card__title">加密：进入 Web3 创投行业</h3>
+            <p class="direction-card__desc">想在 Web3 做创投、产品或就业，从听播客建立认知到完成 6 周训练营。</p>
+            <ul class="direction-card__products">
+              <li>CSS 播客（免费）</li>
+              <li>加密教程（免费）</li>
+              <li>CSS 社群（¥99/年）</li>
+              <li>加密创投营（¥999/期 · 第三期 7 月开营）</li>
             </ul>
-            <span class="course-card__cta">开始学习 →</span>
+            <span class="direction-card__cta">查看加密方向 →</span>
           </a>
-
         </div>
       </div>
     </section>
 
-    <!-- ====== 第二部分：两个社群 ====== -->
-    <section class="section section--alt" id="community">
+    <!-- ====== Section 2：数创成长路径 ====== -->
+    <section class="section section--alt" id="scb">
       <div class="container">
         <div class="section-header fade-in">
-          <h2 class="section-title">除了自学教程，加入付费社群</h2>
-          <p class="section-subtitle">一个人可以走得很快，但一群人才会走得很远——社群让你不再感到孤独。</p>
+          <h2 class="section-title">数创方向：从教程起步，到大创社群同行</h2>
+          <p class="section-subtitle">数创以"通识创业 + AI 产品实战"为主线。免费教程让你起步，大创社群让你长期不孤独。</p>
         </div>
 
-        <div class="community-grid fade-in">
-
-          <div class="community-card community-card--dachuang">
-            <div class="community-card__icon">🚀</div>
-            <h3 class="community-card__title">大创社群 · ¥499 / 年起</h3>
-            <p class="community-card__desc">
-              大学生创业主题的微信群，以群内交流、在线答疑和各城市线下专属活动为特色。
-            </p>
-            <ul class="community-card__list">
-              <li>群内交流：AI 工具与真实案例日常分享</li>
-              <li>在线答疑：导师定期答疑、同学互助</li>
-              <li>线下活动：各城市专属聚会、路演与组队</li>
+        <div class="scb-products fade-in">
+          <div class="scb-product-card scb-product-card--feature">
+            <span class="scb-product-card__icon">🚀</span>
+            <span class="scb-product-card__badge" style="background: rgba(245,158,11,0.16); color: var(--color-accent-gold);">¥499/年起 · 数创主推</span>
+            <h3 class="scb-product-card__title">大创社群</h3>
+            <p class="scb-product-card__desc">大学生创业的通识社群，4 项核心服务：</p>
+            <ul class="scb-product-card__services">
+              <li><strong>微信群 + 问答</strong>：日常交流，会员问题会被选入校园VC 播客公开答疑</li>
+              <li><strong>创享会</strong>：每月线上的创业者分享会</li>
+              <li><strong>开放日</strong>：各城市的线下聚会活动</li>
+              <li><strong>全球峰会 / 火种节</strong>：年度大型创业盛会</li>
             </ul>
-            <p class="community-card__fit">👤 适合：对大学生创业感兴趣的同学</p>
-            <a href="/dachuang" class="btn btn-primary" style="align-self:flex-start;">了解大创社群 →</a>
+            <a href="/dachuang" class="btn btn-primary" style="align-self: flex-start; margin-top: 0.75rem;">了解大创社群 →</a>
           </div>
 
-          <div class="community-card community-card--css">
-            <div class="community-card__icon">🔐</div>
-            <h3 class="community-card__title">CSS 社群 · ¥99 / 年</h3>
-            <p class="community-card__desc">
-              Crypto Startup School 加密创投社群，以帮助新人进入加密货币（Web3）行业做创投为特色。
-            </p>
-            <ul class="community-card__list">
-              <li>CSS 播客：小宇宙 Web3 创投精选</li>
-              <li>加密创投小程序：行业数据与机会跟踪</li>
-              <li>专属微信群：新人入门 + 同行交流</li>
-            </ul>
-            <p class="community-card__fit">👤 适合：想进 Web3 行业做创投的新人</p>
-            <a href="https://css.xiaoyuanvc.com" target="_blank" rel="noopener" class="btn btn-secondary" style="align-self:flex-start;">了解 CSS →</a>
-          </div>
+          <a href="/learn/digital-startup/" class="scb-product-card">
+            <span class="scb-product-card__icon">📘</span>
+            <span class="scb-product-card__badge">免费 · 自学起步</span>
+            <h3 class="scb-product-card__title">数创教程</h3>
+            <p class="scb-product-card__desc">最近一期数创班课件的对外开源版。从认知到融资，6 周路径打磨你的第一个 AI 产品。</p>
+            <span class="scb-product-card__cta">开始学习 →</span>
+          </a>
 
+          <a href="/teacher/shuchuangban" class="scb-product-card">
+            <span class="scb-product-card__icon">🎓</span>
+            <span class="scb-product-card__badge">高校合作 · 学生通道</span>
+            <h3 class="scb-product-card__title">数创班</h3>
+            <p class="scb-product-card__desc">每学期一期的 6 周线上创业实战课。主要给高校创业学院，学生通道需先加入大创社群。</p>
+            <span class="scb-product-card__cta">了解数创班 →</span>
+          </a>
+
+          <a href="https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab" target="_blank" rel="noopener" class="scb-product-card">
+            <span class="scb-product-card__icon">🎧</span>
+            <span class="scb-product-card__badge">免费收听 · 会员可提问</span>
+            <h3 class="scb-product-card__title">校园VC 播客</h3>
+            <p class="scb-product-card__desc">殷建松回答创业者具体问题的电台节目。答疑内容在小宇宙免费公开，提问权属大创社群会员。</p>
+            <span class="scb-product-card__cta">去小宇宙收听 →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== Section 3：加密 CSS 4 步阶梯 ====== -->
+    <section class="section" id="css">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">加密 CSS：从听播客到 6 周训练营</h2>
+          <p class="section-subtitle">CSS（Crypto Startup School）= 5 年沉淀的加密创投成长路径。4 件套从 0 元到 ¥999，每一步都是下一步的承接。</p>
+        </div>
+
+        <div class="css-ladder fade-in">
+          <a href="https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e" target="_blank" rel="noopener" class="step-card">
+            <div class="step-card__step">第 1 步</div>
+            <div class="step-card__icon">🎙️</div>
+            <h3 class="step-card__title">CSS 播客</h3>
+            <div class="step-card__price" style="color: var(--color-text-tertiary);">免费 · 200 期访谈</div>
+            <p class="step-card__desc">5 年访谈近 200 位一线 Web3 创投者，先用 30 分钟感受这个行业是什么。</p>
+            <span class="step-card__cta">去小宇宙收听 →</span>
+          </a>
+
+          <a href="/learn/crypto-vc/" class="step-card">
+            <div class="step-card__step">第 2 步</div>
+            <div class="step-card__icon">📗</div>
+            <h3 class="step-card__title">加密教程</h3>
+            <div class="step-card__price" style="color: var(--color-text-tertiary);">免费 · 29 课时</div>
+            <p class="step-card__desc">第二期加密创投营完整课件的开源版。系统建立 Web3 行业认知与基础工具能力。</p>
+            <span class="step-card__cta">开始学习 →</span>
+          </a>
+
+          <a href="https://css.xiaoyuanvc.com" target="_blank" rel="noopener" class="step-card">
+            <div class="step-card__step">第 3 步</div>
+            <div class="step-card__icon">🔐</div>
+            <h3 class="step-card__title">CSS 社群</h3>
+            <div class="step-card__price" style="color: var(--color-brand);">¥99/年</div>
+            <p class="step-card__desc">招聘职位 + 加密日报 + AI 简历助手 + 新人入门微信群。在小程序与同行持续交流。</p>
+            <span class="step-card__cta">了解 CSS 社群 →</span>
+          </a>
+
+          <a href="/css/camp-3/" class="step-card step-card--camp">
+            <span class="step-card__badge">7 月开营</span>
+            <div class="step-card__step">第 4 步</div>
+            <div class="step-card__icon">🏕️</div>
+            <h3 class="step-card__title">加密创投营</h3>
+            <div class="step-card__price">¥999/期 · 6 周</div>
+            <p class="step-card__desc">五栋楼框架 + 第 6 周成果汇报。第三期 2026 年 7 月开营，限招 30 人。</p>
+            <span class="step-card__cta">查看第三期详情 →</span>
+          </a>
         </div>
       </div>
     </section>
@@ -713,57 +1011,15 @@
       </div>
     </section>
 
-    <!-- ====== 第四部分：播客推荐 ====== -->
-    <section class="section section--alt" id="podcasts">
-      <div class="container">
-        <div class="section-header fade-in">
-          <h2 class="section-title">课余时间，去小宇宙听一线的声音</h2>
-          <p class="section-subtitle">小宇宙是国内最好的播客 App——节目丰富、鲜活、免费，对大学生来说是一座被低估的「声音大学」，非常推荐。</p>
-        </div>
-
-        <div class="podcast-block fade-in">
-          <div class="podcast-platform">
-            <img class="podcast-platform__logo" src="assets/podcast/xiaoyuzhou-logo.png" alt="小宇宙 App 图标" width="44" height="44" loading="lazy" />
-            <div>
-              <p class="podcast-platform__name">小宇宙 App</p>
-              <p class="podcast-platform__hint">已经在用小宇宙的同学，推荐订阅校园VC 的两档节目：</p>
-            </div>
-          </div>
-
-          <div class="podcast-grid">
-
-            <a href="https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e" target="_blank" rel="noopener" class="podcast-card">
-              <img class="podcast-card__cover" src="assets/podcast/css-cover.png" alt="CSS 播客封面" width="88" height="88" loading="lazy" />
-              <div class="podcast-card__body">
-                <h3 class="podcast-card__title">CSS</h3>
-                <p class="podcast-card__desc">校园VC 旗下的 Web3 创客频道，以访谈加密行业的创投者为主。</p>
-                <span class="podcast-card__cta">在小宇宙收听 →</span>
-              </div>
-            </a>
-
-            <a href="https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab" target="_blank" rel="noopener" class="podcast-card">
-              <img class="podcast-card__cover" src="assets/podcast/xiaoyuanvc-cover.png" alt="校园VC 播客封面" width="88" height="88" loading="lazy" />
-              <div class="podcast-card__body">
-                <h3 class="podcast-card__title">校园VC</h3>
-                <p class="podcast-card__desc">殷建松老师亲自上阵，回答创业者一个个真实而具体的问题。</p>
-                <span class="podcast-card__cta">在小宇宙收听 →</span>
-              </div>
-            </a>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- 底部 CTA -->
     <section class="bottom-cta-bar">
       <div class="container">
         <h2 class="bottom-cta-bar__title">三个动作，今天就能开始</h2>
         <p class="bottom-cta-bar__desc">大学时代是人生最被低估的创业窗口期，从一个小动作开始。</p>
         <div class="bottom-cta-bar__actions">
-          <a href="#courses" class="btn btn-primary">看第一课 →</a>
-          <a href="https://www.xiaoyuzhoufm.com/podcast/618929e0633ec15a3b46145e" target="_blank" rel="noopener" class="btn-outline-white">听 CSS 播客</a>
-          <a href="https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab" target="_blank" rel="noopener" class="btn-outline-white">听校园VC 播客</a>
+          <a href="/learn/digital-startup/" class="btn btn-primary">看数创第一课 →</a>
+          <a href="/learn/crypto-vc/" class="btn-outline-white">看加密第一课</a>
+          <a href="/css/camp-3/" class="btn-outline-white">看加密创投营详情</a>
         </div>
         <div class="bottom-cta-bar__qr" id="join-group">
           <img src="assets/qrcode/wechat-assistant.png" alt="殷教授的助教老师 微信二维码" loading="lazy" width="312" height="292" />

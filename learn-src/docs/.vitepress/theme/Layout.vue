@@ -108,14 +108,14 @@ onMounted(() => {
                 <div class="nav__submenu" role="menu">
                   <a
                     class="nav__submenu-link"
-                    href="/learn/digital-startup/"
+                    href="/student#scb"
                     role="menuitem"
-                  >数创教程</a>
+                  >数创方向</a>
                   <a
                     class="nav__submenu-link"
-                    href="/learn/crypto-vc/"
+                    href="/student#css"
                     role="menuitem"
-                  >加密教程</a>
+                  >加密方向</a>
                 </div>
               </div>
               <a class="nav__link" href="/teacher">我是教师</a>
