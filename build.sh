@@ -28,6 +28,7 @@ echo "==> [2/4] 复制主站静态资源到 dist/"
     --exclude="./node_modules" \
     --exclude="./.git" \
     --exclude="./.obsidian" \
+    --exclude="./functions" \
     --exclude="./learn-src" \
     --exclude="./build.sh" \
     --exclude="./.DS_Store" \
