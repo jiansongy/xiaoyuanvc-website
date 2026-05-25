@@ -47,11 +47,11 @@ MetaMask 所体现的加密原教旨主义，对普通用户来说有**三大挑
 
 | 课程                                                                                   | 内容                                                     |
 | -------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| [2.1 交易所使用：币安开户与入金](/learn/crypto-vc/start/exchanges/)                | 了解交易所行业格局，学会在币安开户和入金                 |
-| [2.2 钱包基础：私钥与助记词](/learn/crypto-vc/start/wallet-basics/)                | 理解热钱包与冷钱包的区别，掌握私钥和助记词的安全管理     |
-| [2.3 区块链安全与防骗](/learn/crypto-vc/start/security-basics/)                    | 学习"零信任、持续验证"原则，识别币圈常见骗局             |
-| [2.4 投资心态管理与风险控制](/learn/crypto-vc/start/risk-management/)              | 建立正确的投资心态，学会风险分散和止损策略               |
-| [2.5 加密工具推荐与 RSA 学习法](/learn/crypto-vc/start/tools-and-learning-method/) | 掌握 CoinGecko 等实用工具，学会 Read-Search-Ask 学习方法 |
+| [2.1 交易所使用：币安开户与入金](/crypto-vc/start/exchanges/)                | 了解交易所行业格局，学会在币安开户和入金                 |
+| [2.2 钱包基础：私钥与助记词](/crypto-vc/start/wallet-basics/)                | 理解热钱包与冷钱包的区别，掌握私钥和助记词的安全管理     |
+| [2.3 区块链安全与防骗](/crypto-vc/start/security-basics/)                    | 学习"零信任、持续验证"原则，识别币圈常见骗局             |
+| [2.4 投资心态管理与风险控制](/crypto-vc/start/risk-management/)              | 建立正确的投资心态，学会风险分散和止损策略               |
+| [2.5 加密工具推荐与 RSA 学习法](/crypto-vc/start/tools-and-learning-method/) | 掌握 CoinGecko 等实用工具，学会 Read-Search-Ask 学习方法 |
 
 ## 核心问题
 
@@ -67,7 +67,7 @@ MetaMask 所体现的加密原教旨主义，对普通用户来说有**三大挑
 本章 5 节课是最"实战"的部分。建议边学边做——开一个交易所账户、创建钱包、完成一笔小额交易。就像学驾驶一样，看再多理论不如实际上路。但请务必从小金额开始试水。
 :::
 
-[开始学习：交易所使用——币安开户与入金 →](/learn/crypto-vc/start/exchanges/)
+[开始学习：交易所使用——币安开户与入金 →](/crypto-vc/start/exchanges/)
 
 ---
 

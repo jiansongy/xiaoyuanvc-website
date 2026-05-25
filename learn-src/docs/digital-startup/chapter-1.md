@@ -179,7 +179,7 @@ order: 1
 
 ![](/images/digital-startup/chapter-1/9.png)
 
-1. **Daily**：我每天上午在飞书中，让<text underline="true">**龙虾（OpenClaw）**</text>调用日报技能，来生成在校园VC官网上的每日[数创日报](https%3A%2F%2Fxiaoyuanvc.com%2Fassets%2Fdaily%2Fscb-daily-latest.png)和每日[加密日报](https%3A%2F%2Fxiaoyuanvc.com%2Fassets%2Fdaily%2Fcss-daily-latest.png)的新闻图片，很多用户已经养成了每天浏览这些日报笔记图、快速获取信息的习惯。
+1. **Daily**：我每天上午在飞书中，让<text underline="true">**龙虾（OpenClaw）**</text>调用日报技能，来生成在校园VC官网上的每日[数创日报](https://xiaoyuanvc.com/assets/daily/scb-daily-latest.png)和每日[加密日报](https://xiaoyuanvc.com/assets/daily/css-daily-latest.png)的新闻图片，很多用户已经养成了每天浏览这些日报笔记图、快速获取信息的习惯。
 
 ![](/images/digital-startup/chapter-1/10.png)
 

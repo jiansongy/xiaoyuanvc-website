@@ -46,12 +46,12 @@ dateModified: "2026-03-04"
 
 | 课程                                                                             | 内容                                                                    |
 | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| [4.1 NFT：数字所有权](/learn/crypto-vc/advanced/nft-digital-ownership/)      | 理解 NFT 的本质是"可被彻底拥有的数字化收藏品"，了解 CryptoPunks 和 BAYC |
-| [4.2 链游与 GameFi](/learn/crypto-vc/advanced/gamefi/)                       | 认识游戏与加密货币的结合方式，了解 Play-to-Earn 模式                    |
-| [4.3 Memecoin 文化与注意力经济](/learn/crypto-vc/advanced/memecoin-culture/) | 理解迷因币为什么是加密货币中唯一真正的 mass adoption 产品               |
-| [4.4 Pump.fun 与 Meme 发射台](/learn/crypto-vc/advanced/pump-fun/)           | 动手体验一键发币的全过程，理解发射台机制                                |
-| [4.5 KOL 可信度评估](/learn/crypto-vc/advanced/kol-evaluation/)              | 学会辨别优质 KOL，掌握评估可信度的方法论                                |
-| [4.6 RWA 代币化：现实资产上链](/learn/crypto-vc/advanced/rwa-tokenization/)  | 理解如何将房产、债券等现实资产放到区块链上                              |
+| [4.1 NFT：数字所有权](/crypto-vc/advanced/nft-digital-ownership/)      | 理解 NFT 的本质是"可被彻底拥有的数字化收藏品"，了解 CryptoPunks 和 BAYC |
+| [4.2 链游与 GameFi](/crypto-vc/advanced/gamefi/)                       | 认识游戏与加密货币的结合方式，了解 Play-to-Earn 模式                    |
+| [4.3 Memecoin 文化与注意力经济](/crypto-vc/advanced/memecoin-culture/) | 理解迷因币为什么是加密货币中唯一真正的 mass adoption 产品               |
+| [4.4 Pump.fun 与 Meme 发射台](/crypto-vc/advanced/pump-fun/)           | 动手体验一键发币的全过程，理解发射台机制                                |
+| [4.5 KOL 可信度评估](/crypto-vc/advanced/kol-evaluation/)              | 学会辨别优质 KOL，掌握评估可信度的方法论                                |
+| [4.6 RWA 代币化：现实资产上链](/crypto-vc/advanced/rwa-tokenization/)  | 理解如何将房产、债券等现实资产放到区块链上                              |
 
 ## 核心问题
 
@@ -67,7 +67,7 @@ dateModified: "2026-03-04"
 本章内容最具争议性，也最有趣。建议保持开放心态——别急着否定也别急着入场。理解注意力资产的底层逻辑后，再做自己的判断。记住：迷因币最难做，因为你不可能计划一场伟大。
 :::
 
-[开始学习：NFT——数字所有权 →](/learn/crypto-vc/advanced/nft-digital-ownership/)
+[开始学习：NFT——数字所有权 →](/crypto-vc/advanced/nft-digital-ownership/)
 
 ---
 

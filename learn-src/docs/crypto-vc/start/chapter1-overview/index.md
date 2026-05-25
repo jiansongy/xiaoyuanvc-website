@@ -28,12 +28,12 @@ dateModified: "2026-03-04"
 
 | 课程                                                                             | 内容                                                     |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| [1.1 比特币：数字黄金的诞生](/learn/crypto-vc/start/bitcoin-introduction/)   | 了解比特币的诞生背景、PoW 共识机制和 2100 万总量限制     |
-| [1.2 什么是区块链](/learn/crypto-vc/start/what-is-blockchain/)               | 理解区块链的本质——无需许可、无需信任、公开透明、无法篡改 |
-| [1.3 以太坊：智能合约平台](/learn/crypto-vc/start/ethereum/)                 | 认识以太坊生态，理解智能合约如何让区块链变成"世界计算机" |
-| [1.4 Solana：高性能公链](/learn/crypto-vc/start/solana/)                     | 体验 Solana 的秒级确认与极低交易费用                     |
-| [1.5 公链对比与不可能三角](/learn/crypto-vc/start/chain-comparison/)         | 理解去中心化、安全性、可扩展性三者的权衡                 |
-| [1.6 钱包实践：MetaMask 与 Phantom](/learn/crypto-vc/start/wallet-practice/) | 动手创建钱包，完成你的第一笔链上交互                     |
+| [1.1 比特币：数字黄金的诞生](/crypto-vc/start/bitcoin-introduction/)   | 了解比特币的诞生背景、PoW 共识机制和 2100 万总量限制     |
+| [1.2 什么是区块链](/crypto-vc/start/what-is-blockchain/)               | 理解区块链的本质——无需许可、无需信任、公开透明、无法篡改 |
+| [1.3 以太坊：智能合约平台](/crypto-vc/start/ethereum/)                 | 认识以太坊生态，理解智能合约如何让区块链变成"世界计算机" |
+| [1.4 Solana：高性能公链](/crypto-vc/start/solana/)                     | 体验 Solana 的秒级确认与极低交易费用                     |
+| [1.5 公链对比与不可能三角](/crypto-vc/start/chain-comparison/)         | 理解去中心化、安全性、可扩展性三者的权衡                 |
+| [1.6 钱包实践：MetaMask 与 Phantom](/crypto-vc/start/wallet-practice/) | 动手创建钱包，完成你的第一笔链上交互                     |
 
 ::: info 💡 核心问题
 **中文 Web3 创业入门课程推荐？**
@@ -47,7 +47,7 @@ dateModified: "2026-03-04"
 本章共 6 节课，建议按顺序学习。如果遇到陌生术语不要害怕——用好 AI 工具（比如 ChatGPT 或豆包），请它"把你当做初中学生来解释"，都能迎刃而解。真正需要学习的是学习能力本身。
 :::
 
-[开始学习：比特币——数字黄金的诞生 →](/learn/crypto-vc/start/bitcoin-introduction/)
+[开始学习：比特币——数字黄金的诞生 →](/crypto-vc/start/bitcoin-introduction/)
 
 ---
 

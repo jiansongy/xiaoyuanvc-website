@@ -49,7 +49,7 @@ PMF 是 <text underline="true">**Product Market Fit**</text>（产品市场契�
 
 当你的**创业假设**（客户、痛点、方式、竞争对手和差异化）都得到验证了，你的产品才和市场相契合（Product Market Fit，简称「PMF」），也有人把它比喻成为“Click”，就像你把两块乐高积木，咔嗒一声按在一起。
 
-增长黑客 [Sean Ellis](https%3A%2F%2Fwww.seanellis.me%2F) 发现了，衡量产品/市场契合度（PMF）的一个领先指标：只需问用户“**如果你不能再使用该产品，你会有什么感受**”，并衡量回答“<text color="red" bgcolor="light-yellow">**非常失望**</text>”的百分比。
+增长黑客 [Sean Ellis](https://www.seanellis.me/) 发现了，衡量产品/市场契合度（PMF）的一个领先指标：只需问用户“**如果你不能再使用该产品，你会有什么感受**”，并衡量回答“<text color="red" bgcolor="light-yellow">**非常失望**</text>”的百分比。
 
 在对近 100 家初创公司进行基准测试后，Sean Ellis 发现产品/市场契合度的神奇数字是 **40%**。也就是说，如果你倒闭了，有超过40%用户感到非常失望的话，你就找到了电灯开关。（详见 <https://pmfsurvey.com/>）。
 
@@ -94,13 +94,13 @@ https://www.dedao.cn/course/detail?id=wpAkQqxR0EoV7OQsMbVgnMzdLBlmar
 
 ## 产品经理面试题
 
-[知群](https://izhiqun.com)的马力说：通过考察你的思维方式的面试来筛选应聘者，比如
+知群的马力说：通过考察你的思维方式的面试来筛选应聘者，比如
 
 1. <text underline="true">3.05米高的卡车，如何过3米高的山洞？</text>
 1. 一根针掉在大海里，怎么捞起来？
 1. 下水道井盖，为什么是圆的？
 
-做产品经理借助思维模型，来做类似的深度思考，推荐[100个产品设计框架](https%3A%2F%2Fpmframe.works%2F)。
+做产品经理借助思维模型，来做类似的深度思考，推荐[100个产品设计框架](https://pmframe.works/)。
 
 ## 需求分析的Y模型
 
@@ -129,7 +129,7 @@ Y模型就是这句话的具体操作方法。Y模型概念中：“1”是用�
 
 ![](/images/digital-startup/chapter-3/9.png)
 
-RICE 是一套由 [Intercom](https%3A%2F%2Fwww.intercom.com%2F) 公司的量化决策工具，旨在通过四个指标，对不同的创业想法、产品功能或市场策略进行客观排序。它通过科学计算，帮助创业者将有限的资源，投入到价值最高的项目中，减少“拍脑袋”决策。
+RICE 是一套由 [Intercom](https://www.intercom.com/) 公司的量化决策工具，旨在通过四个指标，对不同的创业想法、产品功能或市场策略进行客观排序。它通过科学计算，帮助创业者将有限的资源，投入到价值最高的项目中，减少“拍脑袋”决策。
 
 ### 四大维度解析
 
@@ -142,7 +142,7 @@ RICE 是一套由 [Intercom](https%3A%2F%2Fwww.intercom.com%2F) 公司的量化�
 
 # 头脑风暴工具
 
-推荐经常使用[ Brainstorming 技能](https%3A%2F%2Fgithub.com%2Fobra%2Fsuperpowers%2Fblob%2Fmain%2Fskills%2Fbrainstorming%2FSKILL.md)，**让 AI 采访自己**，把模糊想法给清晰化。该技能来自开源库 <https://github.com/obra/superpowers>。
+推荐经常使用[ Brainstorming 技能](https://github.com/obra/superpowers/blob/main/skills/brainstorming/SKILL.md)，**让 AI 采访自己**，把模糊想法给清晰化。该技能来自开源库 <https://github.com/obra/superpowers>。
 
 因为 AI 编程智能体的执行力实在是太强了，我们往往还没想好，它就已经不管三七二十一做出来了。所以在编程之前先把想做什么梳理清楚，比任何时候都重要！
 
@@ -178,7 +178,7 @@ RICE 是一套由 [Intercom](https%3A%2F%2Fwww.intercom.com%2F) 公司的量化�
 
 ![](/images/digital-startup/chapter-3/11.png)
 
-上面介绍的脑暴技能，通过 Markdown 文件，提供了头脑风暴的最佳实践做法，需要通过 AI 编程智能体消耗 Token（中文称为词元，是解析内容的最小单位）跑起来。因此我们初步入门 [Claude code](https%3A%2F%2Fclaude.com%2Fproduct%2Fclaude-code) 这一类的编程智能体。
+上面介绍的脑暴技能，通过 Markdown 文件，提供了头脑风暴的最佳实践做法，需要通过 AI 编程智能体消耗 Token（中文称为词元，是解析内容的最小单位）跑起来。因此我们初步入门 [Claude code](https://claude.com/product/claude-code) 这一类的编程智能体。
 
 大模型相当于发动机，编程智能体相当于汽车（是由发动机驱动的系统），而技能是这辆车所运载的东西。
 
@@ -237,7 +237,7 @@ Node.js + 阿里镜像 + 智谱 API 是目前国内环境下成功率高且对�
 
 #### 第一步：安装 Node.js (推荐 LTS 即长期支持版本)
 
-1. Windows: 从 [Node.js 官网](https%3A%2F%2Fnodejs.org%2Fzh-cn) 下载 .msi 安装包。Windows 的安装，多一个前置步骤：你需要先装Git for Windows，可以从[这个网站](https%3A%2F%2Fgit-scm.com%2Finstall%2Fwindows)下载和安装。
+1. Windows: 从 [Node.js 官网](https://nodejs.org/zh-cn) 下载 .msi 安装包。Windows 的安装，多一个前置步骤：你需要先装Git for Windows，可以从[这个网站](https://git-scm.com/install/windows)下载和安装。
 1. macOS: 如果有 Homebrew，执行 brew install node；如果没有，同样使用 Node 官网 .pkg 安装包。
 1. 运行 Node 安装包，按缺省选项安装好即可。
 
@@ -266,7 +266,7 @@ npm install -g @anthropic-ai/claude-code --registry=https://registry.npmmirror.c
 
 进去之后，创建或者复制一个 API Key，后面配置时会用到。
 
-详情可以参考 OpenCode 的[相关文档](https%3A%2F%2Flearnopencode.com%2F1-start%2F04c-zhipu.html)。
+详情可以参考 OpenCode 的[相关文档](https://learnopencode.com/1-start/04c-zhipu.html)。
 
 ### 三、把 Claude Code 接到智谱 GLM
 
@@ -348,7 +348,7 @@ https://open.bigmodel.cn/api/anthropic
 
 另外，使用腾讯 CodeBuddy 命令行工具（CLI：Command Line Interface）也能初步体验下编程智能体。
 
-[CodeBuddy Code](https%3A%2F%2Fwww.codebuddy.cn%2Fcli%2F) 可通过 npm 一键安装，但需先确保本机已安装 Node 和 Git 等基础环境。本质上它和 Claude code 是一回事，而且已内置了智谱的大脑，能让你感受到在终端中超能力的乐趣。
+[CodeBuddy Code](https://www.codebuddy.cn/cli/) 可通过 npm 一键安装，但需先确保本机已安装 Node 和 Git 等基础环境。本质上它和 Claude code 是一回事，而且已内置了智谱的大脑，能让你感受到在终端中超能力的乐趣。
 
 ![](/images/digital-startup/chapter-3/17.png)
 

@@ -44,12 +44,12 @@ dateModified: "2026-03-04"
 
 | 课程                                                                                       | 内容                                                   |
 | ------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
-| [3.1 稳定币基础与市场格局](/learn/crypto-vc/advanced/stablecoin-basics/)               | 理解 USDT、USDC、DAI 的区别，认识稳定币的"集装箱效应"  |
-| [3.2 生息稳定币与 GENIUS 法案](/learn/crypto-vc/advanced/yield-stablecoin/)            | 了解稳定币如何产生收益，以及 GENIUS 法案的深远影响     |
-| [3.3 机构采用、ETF 与传统金融通道](/learn/crypto-vc/advanced/etf-traditional-finance/) | 理解比特币 ETF 如何让传统投资者合规参与加密市场        |
-| [3.4 DeFi 基础与智能合约](/learn/crypto-vc/advanced/defi-basics/)                      | 学习智能合约的工作原理，了解 DeFi 的"乐高积木"可组合性 |
-| [3.5 Uniswap 实践：去中心化交易](/learn/crypto-vc/advanced/uniswap-practice/)          | 动手在 Uniswap 上完成代币兑换，理解 AMM 自动做市商机制 |
-| [3.6 HyperLiquid：永续合约交易所](/learn/crypto-vc/advanced/hyperliquid/)              | 认识"中性交易所"概念，了解永续合约和杠杆交易的基本逻辑 |
+| [3.1 稳定币基础与市场格局](/crypto-vc/advanced/stablecoin-basics/)               | 理解 USDT、USDC、DAI 的区别，认识稳定币的"集装箱效应"  |
+| [3.2 生息稳定币与 GENIUS 法案](/crypto-vc/advanced/yield-stablecoin/)            | 了解稳定币如何产生收益，以及 GENIUS 法案的深远影响     |
+| [3.3 机构采用、ETF 与传统金融通道](/crypto-vc/advanced/etf-traditional-finance/) | 理解比特币 ETF 如何让传统投资者合规参与加密市场        |
+| [3.4 DeFi 基础与智能合约](/crypto-vc/advanced/defi-basics/)                      | 学习智能合约的工作原理，了解 DeFi 的"乐高积木"可组合性 |
+| [3.5 Uniswap 实践：去中心化交易](/crypto-vc/advanced/uniswap-practice/)          | 动手在 Uniswap 上完成代币兑换，理解 AMM 自动做市商机制 |
+| [3.6 HyperLiquid：永续合约交易所](/crypto-vc/advanced/hyperliquid/)              | 认识"中性交易所"概念，了解永续合约和杠杆交易的基本逻辑 |
 
 ## 核心问题
 
@@ -65,7 +65,7 @@ dateModified: "2026-03-04"
 本章是内容最"硬核"的一课，涉及大量金融概念。建议结合实际操作来理解——比如在 Uniswap 测试网上做一笔换币，比读十遍理论都管用。如果你对低技术方案更感兴趣，可以先重点关注 3.1 和 3.3（稳定币和 ETF）。
 :::
 
-[开始学习：稳定币基础与市场格局 →](/learn/crypto-vc/advanced/stablecoin-basics/)
+[开始学习：稳定币基础与市场格局 →](/crypto-vc/advanced/stablecoin-basics/)
 
 ---
 

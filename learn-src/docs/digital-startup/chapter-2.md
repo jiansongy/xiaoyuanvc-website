@@ -52,7 +52,7 @@ order: 2
 
 ## 第二节 效果逻辑，五大原则
 
-“先行动后反思”的[**效果逻辑**](https%3A%2F%2Feffectuation.org%2F)**，**告诉我们“不管黑猫白猫抓到老鼠就是好猫的”**。**
+“先行动后反思”的[**效果逻辑**](https://effectuation.org/)**，**告诉我们“不管黑猫白猫抓到老鼠就是好猫的”**。**
 
 它就像金庸的武功秘籍，指导我们创业早期，“<text color="red" bgcolor="light-yellow">不断找人去聊事</text>”**：做事看效果，效果好就加大做。**
 
@@ -66,7 +66,7 @@ order: 2
 
 ## 第三节 精益创业，五个阶段
 
-[Eric Ries](https%3A%2F%2Fx.com%2Fericries) 提出了经典的精益创业理论，强调“开发、测量、学习”的循环。而精益创业专家 [Ash Maurya](https%3A%2F%2Fleanspark.ai%2F) 在推广“**演示-销售-构建**”的循环，本质是“先卖后产”，因为真实客户的预购订单，是对市场需求最好的验证。
+[Eric Ries](https://x.com/ericries) 提出了经典的精益创业理论，强调“开发、测量、学习”的循环。而精益创业专家 [Ash Maurya](https://leanspark.ai/) 在推广“**演示-销售-构建**”的循环，本质是“先卖后产”，因为真实客户的预购订单，是对市场需求最好的验证。
 
 <whiteboard token="HCxVwaaluhODGWbG0kqcarMFnad" width="624" height="217"/>
 
@@ -111,7 +111,7 @@ order: 2
 
 如果<text underline="true">同时追两只鸭子，就一只鸭子也抓不住</text>。一定是先解决当前阶段的挑战，再去解决下一阶段的挑战。
 
-若想深入学习如何去验证每个阶段的关键假设，推荐[一堂创业课](https%3A%2F%2Fyitang.top%2F)，告诉他们CEO 许楚：你是殷老师推荐去的。
+若想深入学习如何去验证每个阶段的关键假设，推荐[一堂创业课](https://yitang.top/)，告诉他们CEO 许楚：你是殷老师推荐去的。
 
 ![](/images/digital-startup/chapter-2/4.png)
 
@@ -119,7 +119,7 @@ order: 2
 
 ## 1、极简创业方法论
 
-美国创业者拉文吉亚，写了一本创业方法书《[小而美](https%3A%2F%2Fbook.douban.com%2Fsubject%2F36280425%2F)》，同时也开源了[小而美的极简创业方法论技能](https://github.com/slavingia/skills)。他认为创业不是先造产品找市场，而是在你真正理解的关系网里，靠手工反复兑现价值、收取费用、提炼流程。软件化和规模化，是后面才发生的；坚持先收钱再写代码。
+美国创业者拉文吉亚，写了一本创业方法书《[小而美](https://book.douban.com/subject/36280425/)》，同时也开源了[小而美的极简创业方法论技能](https://github.com/slavingia/skills)。他认为创业不是先造产品找市场，而是在你真正理解的关系网里，靠手工反复兑现价值、收取费用、提炼流程。软件化和规模化，是后面才发生的；坚持先收钱再写代码。
 
 但这套开源技能，对没有编程智能体（比如 Claude code）的用户是运行不了的。因此我给大家一个挑战：请把这个小而美的方法论，开发成为一个“互动工具”，放到校园VC官网或你的云服务器上，提供 SaaS（软件即服务）。
 
@@ -216,7 +216,7 @@ order: 2
 
 ## 3、腾讯 CodeBuddy
 
-国内类似谷歌的无代码开发工具也很多，比如可以用腾讯公司的 [CodeBuddy](https%3A%2F%2Fwww.codebuddy.cn%2F) 或者字节公司的 [Trae](https%3A%2F%2Fwww.trae.ai%2F) 等。用国产工具的好处是：网络访问不受限，但 AI 能力较弱，而且技术栈不够主流。它适合编程初学者尝试使用。下面我们用 CodeBuddy 做一个详细说明。
+国内类似谷歌的无代码开发工具也很多，比如可以用腾讯公司的 [CodeBuddy](https://www.codebuddy.cn/) 或者字节公司的 [Trae](https://www.trae.ai/) 等。用国产工具的好处是：网络访问不受限，但 AI 能力较弱，而且技术栈不够主流。它适合编程初学者尝试使用。下面我们用 CodeBuddy 做一个详细说明。
 
 ![](/images/digital-startup/chapter-2/10.png)
 

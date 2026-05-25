@@ -30,12 +30,12 @@ dateModified: "2026-03-04"
 
 | 课程                                                                          | 内容                                                   |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------ |
-| [5.1 预测市场：Polymarket](/learn/crypto-vc/advanced/polymarket/)         | 理解去中心化预测市场如何通过"众包智慧"预测未来事件     |
-| [5.2 AI 代理革命](/learn/crypto-vc/advanced/ai-agents/)                   | 了解 AI Agent 如何与加密货币结合，探索自主决策的智能体 |
-| [5.3 DePIN：去中心化物理基础设施](/learn/crypto-vc/advanced/depin/)       | 认识如何用区块链激励网络来建设真实世界的基础设施       |
-| [5.4 Nof1 量化交易](/learn/crypto-vc/advanced/nof1-quantitative-trading/) | 了解 AI 端到端炒币的实验——用盈亏的客观结果 PK 最强大脑 |
-| [5.5 AI 工具与研究方法](/learn/crypto-vc/advanced/ai-tools/)              | 掌握 AI 研究工具，学会用 AI 辅助加密货币投研           |
-| [5.6 毕业项目与学习路线](/learn/crypto-vc/advanced/graduation-project/)   | 制定个人学习路线，完成从学习者到实践者的转变           |
+| [5.1 预测市场：Polymarket](/crypto-vc/advanced/polymarket/)         | 理解去中心化预测市场如何通过"众包智慧"预测未来事件     |
+| [5.2 AI 代理革命](/crypto-vc/advanced/ai-agents/)                   | 了解 AI Agent 如何与加密货币结合，探索自主决策的智能体 |
+| [5.3 DePIN：去中心化物理基础设施](/crypto-vc/advanced/depin/)       | 认识如何用区块链激励网络来建设真实世界的基础设施       |
+| [5.4 Nof1 量化交易](/crypto-vc/advanced/nof1-quantitative-trading/) | 了解 AI 端到端炒币的实验——用盈亏的客观结果 PK 最强大脑 |
+| [5.5 AI 工具与研究方法](/crypto-vc/advanced/ai-tools/)              | 掌握 AI 研究工具，学会用 AI 辅助加密货币投研           |
+| [5.6 毕业项目与学习路线](/crypto-vc/advanced/graduation-project/)   | 制定个人学习路线，完成从学习者到实践者的转变           |
 
 ## 关键概念速查
 
@@ -63,7 +63,7 @@ dateModified: "2026-03-04"
 本章内容是最"前沿"的，很多项目还在早期阶段。建议抱着探索的心态来学——不必急于投资，重要的是理解这些创新背后的逻辑和趋势。学完之后，建议选择一个你最感兴趣的方向深入研究。
 :::
 
-[开始学习：预测市场——Polymarket →](/learn/crypto-vc/advanced/polymarket/)
+[开始学习：预测市场——Polymarket →](/crypto-vc/advanced/polymarket/)
 
 ---
 

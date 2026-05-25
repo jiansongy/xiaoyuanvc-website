@@ -168,7 +168,7 @@ Surf AI是加密研究副驾驶，可以快速汇总多维度数据。
 Xhunt AI V2是Solana memecoin早期发现工具，展示了AI代理在项目筛选中的应用。
 
 **操作**
-1. 访问 https://xhunt.app/
+1. 访问类似的 KOL/项目分析工具（原文示例 Xhunt 已下线，可使用 Kaito、Cookie.fun 等替代）
 2. 连接Phantom钱包
 3. 查看Live Token Tracker
 4. 解读置信度评分（HIGH/MEDIUM/LOW）

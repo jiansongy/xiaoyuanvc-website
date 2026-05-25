@@ -29,7 +29,7 @@ order: 5
 
 风险投资是给创业公司提供股权资金并期待以此盈利的财务公司。
 
-如果你想深入了解这个风险投资行业，推荐阅读美国硅谷《[风险投资史](https%3A%2F%2Fbook.douban.com%2Fsubject%2F36171394%2F)》和《[中国风险投资史](https%3A%2F%2Fbook.douban.com%2Fsubject%2F37852019%2F)》
+如果你想深入了解这个风险投资行业，推荐阅读美国硅谷《[风险投资史](https://book.douban.com/subject/36171394/)》和《[中国风险投资史](https://book.douban.com/subject/37852019/)》
 
 <grid cols="2">
 
@@ -132,7 +132,7 @@ order: 5
 
 天使投资是极早期风险投资，其成功概率很低。
 
-《[超级天使投资](https%3A%2F%2Fbook.douban.com%2Fsubject%2F26378772%2F)》一书说：“必须投资**20个项目**，才有机会成功1个项目”。
+《[超级天使投资](https://book.douban.com/subject/26378772/)》一书说：“必须投资**20个项目**，才有机会成功1个项目”。
 
 ## 真相 1：大多数项目会失败，投资人知道这一点
 
