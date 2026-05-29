@@ -27,6 +27,10 @@
 /learn /student#courses 301
 /learn/ /student#courses 301
 
+# /t/{teacher_slug} 工作坊 H5（学生扫码端）
+/t/assets/* /t/assets/:splat 200
+/t/index.html /t/index.html 200
+
 # 数创班单页已从根目录迁入教师中心子树 /teacher/
 /shuchuangban.html /teacher/shuchuangban 301
 /shuchuangban /teacher/shuchuangban 301
