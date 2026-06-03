@@ -310,6 +310,14 @@
     .app-shot__cap strong {
       color: var(--color-text-primary);
     }
+    .app-showcase--single {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+    .app-showcase--single .app-shot img {
+      max-width: min(100%, 880px);
+      height: auto;
+    }
 
     /* ===== 创业教育智慧系统 ===== */
     .edu-band {
@@ -906,7 +914,7 @@
           <p class="page-hero__desc">它把谷歌设计冲刺的方法论压缩进一节课，让学生完整经历一次从想法到原型验证的创业闭环。教师只需以"行动官"身份开启，软件负责引导全程。</p>
           <div class="page-hero__actions">
             <a href="#how" class="btn btn-primary">看教师怎么用 →</a>
-            <a href="#contact" class="btn-outline-white">申请开通行动官</a>
+            <a href="/#contact" class="btn-outline-white">申请开通行动官</a>
           </div>
         </div>
         <div class="hero-stats fade-in">
@@ -1059,14 +1067,9 @@
           <h2 class="section-title">一个微信小程序，把九大环节装进口袋</h2>
           <p class="section-subtitle">学生扫码即用，无需下载。每完成一个环节，里程碑图标自动点亮——进度看得见，课堂有节奏。</p>
         </div>
-        <div class="app-showcase fade-in">
+        <div class="app-showcase app-showcase--single fade-in">
           <div class="app-shot">
-            <img src="../assets/huozhong/ui-home.webp" alt="火种节微信小程序首页" loading="lazy" />
-            <p class="app-shot__cap"><strong>小程序首页</strong><br>活动库、项目库、创建活动一目了然，教师与学生在同一个入口协作。</p>
-          </div>
-          <div class="app-shot">
-            <img src="../assets/huozhong/ui-milestones-20260517.webp" alt="火种节小程序项目详情·九大环节界面" loading="lazy" />
-            <p class="app-shot__cap"><strong>项目详情 · 九大环节</strong><br>每个环节都标注目标与产出，学生上传成果即点亮里程碑，完成九项得 90 分。</p>
+            <img src="../assets/huozhong/ui-overview.webp" alt="火种节微信小程序界面预览：扫码开启、首页活动库项目库、项目详情九大环节" loading="lazy" />
           </div>
         </div>
       </div>
@@ -1285,32 +1288,6 @@
             <summary>学校如何开通火种节？</summary>
             <div class="faq-item__answer">学校购买创业教育智慧系统的年度服务，指定一名管理员为本校教师开通行动官权限。行动官数量不限，每位行动官都可在服务期内创建火种节活动。</div>
           </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== 9. CTA ====== -->
-    <section class="section cta-band" id="contact">
-      <div class="container">
-        <div class="fade-in">
-          <h2 class="cta-band__title">把火种节带进你的课堂</h2>
-          <p class="cta-band__desc">想先亲自体验一下？最快的方式只有一步——在微信里搜一下"火种节"。</p>
-          <div class="wechat-cta">
-            <p class="wechat-cta__label">最快上手方式</p>
-            <div class="wechat-cta__bar">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07c160" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" />
-                <line x1="21" y1="21" x2="16.5" y2="16.5" />
-              </svg>
-              <span>在微信中搜索 <mark>火种节</mark>，打开小程序</span>
-            </div>
-            <p class="wechat-cta__hint">无需下载、点开即用，扫一眼就能体验完整的九大环节流程。</p>
-          </div>
-          <p class="cta-band__desc" style="margin-bottom: 1.5rem;">想为一个班、一个院系或全校开通行动官？我们可以一起规划。</p>
-          <div class="cta-band__actions">
-            <a href="https://edu.xiaoyuanvc.com/" target="_blank" rel="noopener" class="btn btn-primary">访问创业教育智慧系统 →</a>
-            <a href="/#contact" class="btn-outline-white">联系我们 · 申请开通</a>
-          </div>
         </div>
       </div>
     </section>
