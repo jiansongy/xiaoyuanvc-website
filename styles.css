@@ -690,6 +690,7 @@ body.site-search-lock {
 
 .hero__actions {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-md);
 }
 

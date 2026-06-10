@@ -156,8 +156,10 @@
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag("js", new Date());
-      gtag("config", "G-LP5EB2HW33");
+      if (!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname)) {
+        gtag("js", new Date());
+        gtag("config", "G-LP5EB2HW33");
+      }
     </script>
   </head>
   <body>
@@ -696,23 +698,32 @@
     <!-- CTA Banner -->
     <section class="cta-banner">
       <div class="cta-banner__inner">
-        <h2 class="cta-banner__heading">准备好参加下一场黑客松了吗？</h2>
+        <h2 class="cta-banner__heading">把黑客松热情变成下一步行动</h2>
         <p class="cta-banner__text">
-          校园VC 学习站提供 63 课完全免费的数字创业课程，从产品思维到 AI
-          工具实战，帮你在黑客松中脱颖而出。
+          学生可以先补产品和 AI 原型能力，老师可以把黑客松式协作搬进课堂。校园VC
+          提供免费教程、自测工具和 3 小时课堂版火种节。
         </p>
         <div class="cta-banner__actions">
           <a
-            href="https://xiaoyuanvc.com/learn/"
-            target="_blank"
-            rel="noopener"
+            href="/learn/digital-startup/"
             class="cta-banner__btn cta-banner__btn--primary"
-            >免费开始学习</a
+            data-analytics="hackathon_cta"
+            data-analytics-label="digital-startup"
+            >学 AI 创业教程</a
           >
           <a
-            href="https://xiaoyuanvc.com/#contact"
+            href="/resources/rate-your-idea"
             class="cta-banner__btn cta-banner__btn--secondary"
-            >加入校园VC社群</a
+            data-analytics="hackathon_cta"
+            data-analytics-label="rate-your-idea"
+            >评估我的项目想法</a
+          >
+          <a
+            href="/teacher/huozhong"
+            class="cta-banner__btn cta-banner__btn--secondary"
+            data-analytics="hackathon_cta"
+            data-analytics-label="huozhong"
+            >了解课堂版火种节</a
           >
         </div>
       </div>

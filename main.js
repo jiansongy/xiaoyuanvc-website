@@ -8,6 +8,7 @@
 
   function initAnalytics() {
     if (typeof window.gtag === "function") return;
+    if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname)) return;
 
     window.dataLayer = window.dataLayer || [];
     window.gtag = function gtag() {
@@ -308,6 +309,13 @@
 
       var href = link.getAttribute("href") || "";
       var label = eventLabel(link);
+
+      if (link.hasAttribute("data-analytics")) {
+        gtag("event", link.getAttribute("data-analytics"), {
+          link_label: link.getAttribute("data-analytics-label") || label,
+          link_url: href,
+        });
+      }
 
       // /learn/ student center — most important conversion (same-domain after migration)
       if (href.indexOf("/learn/") !== -1) {

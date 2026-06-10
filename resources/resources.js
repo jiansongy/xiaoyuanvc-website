@@ -33,6 +33,18 @@
     }
   }
 
+  document.addEventListener("click", function (event) {
+    var target = event.target.closest("[data-analytics]");
+    if (!target || typeof window.gtag !== "function") return;
+
+    window.gtag("event", target.getAttribute("data-analytics"), {
+      link_label:
+        target.getAttribute("data-analytics-label") ||
+        target.textContent.trim(),
+      link_url: target.getAttribute("href") || "",
+    });
+  });
+
   // ============================================
   // Module 2: Podcast card renderer
   // ============================================
