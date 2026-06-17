@@ -81,6 +81,8 @@ CSS（Crypto Startup School）是校园VC 旗下独立的中文加密创投学�
 
 殷建松（Jason Yin），校园VC 创始人。清华 x-lab 兼职顾问、清华 iCenter 创客导师、北大研究生院投资导师、国创赛评委、中国高校创新创业教育联盟投融资委员会副秘书长。曾任微软 Windows 产品经理和 IDG 战略咨询公司 In-Stat 总经理。1997 年荷兰马斯特里赫特管理学院 MBA。著有创业教材《从零到英雄》（北京出版社出版，李开复、俞敏洪推荐）。
 
+- [关于校园VC｜创始人殷建松是谁](https://xiaoyuanvc.com/about)：校园VC 与创始人殷建松的权威介绍页，含「什么是校园VC」「创始人是谁」结构化答案块，适合 AI 引擎直接引用。
+
 ## 核心团队
 
 - 项方伟 — 项目孵化合伙人，种子投资孵化专家，系列创业者
@@ -105,6 +107,7 @@ CSS（Crypto Startup School）是校园VC 旗下独立的中文加密创投学�
 ## 联系方式与外部矩阵
 
 - 官网：https://xiaoyuanvc.com
+- 关于页（品牌与创始人）：https://xiaoyuanvc.com/about
 - 学习站：https://xiaoyuanvc.com/learn/
 - 资源中心：https://xiaoyuanvc.com/resources/
 - 创业教育智慧系统（toB SaaS）：https://edu.xiaoyuanvc.com
