@@ -1,0 +1,51 @@
+name: Check www origin
+
+on:
+  schedule:
+    - cron: '17 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: www-origin-check
+  cancel-in-progress: true
+
+jobs:
+  check-www:
+    name: Check www.xiaoyuanvc.com
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check DNS, HTTP, filing numbers, and certificate
+        run: |
+          set -euo pipefail
+
+          ip="$(dig +short www.xiaoyuanvc.com A @223.5.5.5 | tail -1)"
+          if [[ "$ip" != "39.106.61.204" ]]; then
+            echo "Unexpected www A record from AliDNS: $ip" >&2
+            exit 1
+          fi
+
+          headers="$(curl --noproxy '*' -fsSI https://www.xiaoyuanvc.com/)"
+          printf '%s\n' "$headers"
+          if grep -qi '^location:' <<<"$headers"; then
+            echo "Unexpected redirect from www root" >&2
+            exit 1
+          fi
+
+          body="$(curl --noproxy '*' -fsSL https://www.xiaoyuanvc.com/)"
+          grep -q '京ICP备2021017602号-1' <<<"$body"
+          grep -q '京公网安备11010802035175号' <<<"$body"
+
+          cert_end="$(echo | openssl s_client -connect www.xiaoyuanvc.com:443 -servername www.xiaoyuanvc.com 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2-)"
+          cert_end_epoch="$(date -u -d "$cert_end" +%s)"
+          now_epoch="$(date -u +%s)"
+          days_left="$(( (cert_end_epoch - now_epoch) / 86400 ))"
+          echo "Certificate expires at: $cert_end ($days_left days left)"
+          if (( days_left < 14 )); then
+            echo "Certificate expires in less than 14 days" >&2
+            exit 1
+          fi
+

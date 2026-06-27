@@ -1,0 +1,110 @@
+name: Deploy www origin
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: www-origin
+  cancel-in-progress: false
+
+jobs:
+  sync-www:
+    name: Sync www.xiaoyuanvc.com
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+      ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+      ALIYUN_INSTANCE_ID: ${{ secrets.ALIYUN_INSTANCE_ID }}
+      ALIYUN_REGION_ID: ${{ vars.ALIYUN_REGION_ID }}
+    steps:
+      - name: Install Alibaba Cloud CLI
+        run: |
+          set -euo pipefail
+          /bin/bash -c "$(curl -fsSL https://aliyuncli.alicdn.com/install.sh)"
+          aliyun version
+
+      - name: Configure Alibaba Cloud credentials
+        run: |
+          set -euo pipefail
+          : "${ALIYUN_ACCESS_KEY_ID:?Missing secret ALIYUN_ACCESS_KEY_ID}"
+          : "${ALIYUN_ACCESS_KEY_SECRET:?Missing secret ALIYUN_ACCESS_KEY_SECRET}"
+          : "${ALIYUN_INSTANCE_ID:?Missing secret ALIYUN_INSTANCE_ID}"
+          REGION="${ALIYUN_REGION_ID:-cn-beijing}"
+          aliyun configure set \
+            --profile default \
+            --mode AK \
+            --region "$REGION" \
+            --access-key-id "$ALIYUN_ACCESS_KEY_ID" \
+            --access-key-secret "$ALIYUN_ACCESS_KEY_SECRET"
+          aliyun plugin install --names swas-open
+
+      - name: Trigger www sync via Command Assistant
+        id: run_command
+        run: |
+          set -euo pipefail
+          REGION="${ALIYUN_REGION_ID:-cn-beijing}"
+          COMMAND_CONTENT='set -euo pipefail
+          /usr/local/bin/xyvc-sync.sh'
+          response="$(aliyun swas-open RunCommand \
+            --RegionId "$REGION" \
+            --InstanceId "$ALIYUN_INSTANCE_ID" \
+            --Name "xyvc-sync-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --Type RunShellScript \
+            --WorkingUser root \
+            --Timeout 900 \
+            --CommandContent "$COMMAND_CONTENT" \
+            --output json)"
+          echo "$response"
+          invoke_id="$(jq -r '.InvokeId // empty' <<<"$response")"
+          if [[ -z "$invoke_id" ]]; then
+            echo "RunCommand did not return InvokeId" >&2
+            exit 1
+          fi
+          echo "invoke_id=$invoke_id" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for Command Assistant result
+        run: |
+          set -euo pipefail
+          REGION="${ALIYUN_REGION_ID:-cn-beijing}"
+          invoke_id="${{ steps.run_command.outputs.invoke_id }}"
+          for _ in $(seq 1 90); do
+            response="$(aliyun swas-open DescribeInvocationResult \
+              --RegionId "$REGION" \
+              --InstanceId "$ALIYUN_INSTANCE_ID" \
+              --InvokeId "$invoke_id" \
+              --output json || true)"
+            status="$(jq -r '.InvocationResult.InvocationStatus // empty' <<<"$response")"
+            record_status="$(jq -r '.InvocationResult.InvokeRecordStatus // empty' <<<"$response")"
+            exit_code="$(jq -r '.InvocationResult.ExitCode // empty' <<<"$response")"
+            output_b64="$(jq -r '.InvocationResult.Output // empty' <<<"$response")"
+
+            if [[ -n "$output_b64" && "$output_b64" != "null" ]]; then
+              printf '%s' "$output_b64" | base64 -d || true
+              echo
+            fi
+
+            if [[ "$status" == "Success" && "$exit_code" == "0" ]]; then
+              exit 0
+            fi
+
+            case "$status:$record_status" in
+              Pending:*|Running:*|*:Running|"":"")
+                sleep 10
+                ;;
+              *)
+                echo "Command Assistant failed: status=$status record_status=$record_status exit_code=$exit_code" >&2
+                echo "$response" >&2
+                exit 1
+                ;;
+            esac
+          done
+
+          echo "Timed out waiting for Command Assistant result" >&2
+          exit 1

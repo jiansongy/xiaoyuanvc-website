@@ -19,6 +19,7 @@ assets/hero-illustration-sketch.png
 # Internal docs (not published) — root XYVC/docs/ only; learn-src/docs/ is the VitePress source and must be tracked
 /docs/*
 !/docs/CONTENT_UPDATE.md
+!/docs/ICP_COMPLIANCE_OPS.md
 
 # Environment secrets
 .env
