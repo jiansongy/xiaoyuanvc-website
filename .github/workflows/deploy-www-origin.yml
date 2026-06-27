@@ -59,8 +59,7 @@ jobs:
             --Type RunShellScript \
             --WorkingUser root \
             --Timeout 900 \
-            --CommandContent "$COMMAND_CONTENT" \
-            --output json)"
+            --CommandContent "$COMMAND_CONTENT")"
           echo "$response"
           invoke_id="$(jq -r '.InvokeId // empty' <<<"$response")"
           if [[ -z "$invoke_id" ]]; then
@@ -78,8 +77,7 @@ jobs:
             response="$(aliyun swas-open DescribeInvocationResult \
               --RegionId "$REGION" \
               --InstanceId "$ALIYUN_INSTANCE_ID" \
-              --InvokeId "$invoke_id" \
-              --output json || true)"
+              --InvokeId "$invoke_id" || true)"
             status="$(jq -r '.InvocationResult.InvocationStatus // empty' <<<"$response")"
             record_status="$(jq -r '.InvocationResult.InvokeRecordStatus // empty' <<<"$response")"
             exit_code="$(jq -r '.InvocationResult.ExitCode // empty' <<<"$response")"
