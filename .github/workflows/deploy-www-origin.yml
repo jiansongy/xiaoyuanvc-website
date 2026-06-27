@@ -43,7 +43,7 @@ jobs:
             --region "$REGION" \
             --access-key-id "$ALIYUN_ACCESS_KEY_ID" \
             --access-key-secret "$ALIYUN_ACCESS_KEY_SECRET"
-          aliyun plugin install --names swas-open
+          aliyun plugin install --names aliyun-cli-swas-open
 
       - name: Trigger www sync via Command Assistant
         id: run_command
@@ -52,14 +52,15 @@ jobs:
           REGION="${ALIYUN_REGION_ID:-cn-beijing}"
           COMMAND_CONTENT='set -euo pipefail
           /usr/local/bin/xyvc-sync.sh'
-          response="$(aliyun swas-open RunCommand \
-            --RegionId "$REGION" \
-            --InstanceId "$ALIYUN_INSTANCE_ID" \
-            --Name "xyvc-sync-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
-            --Type RunShellScript \
-            --WorkingUser root \
-            --Timeout 900 \
-            --CommandContent "$COMMAND_CONTENT")"
+          response="$(aliyun swas-open run-command \
+            --region "$REGION" \
+            --biz-region-id "$REGION" \
+            --instance-id "$ALIYUN_INSTANCE_ID" \
+            --name "xyvc-sync-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --type RunShellScript \
+            --working-user root \
+            --timeout 900 \
+            --command-content "$COMMAND_CONTENT")"
           echo "$response"
           invoke_id="$(jq -r '.InvokeId // empty' <<<"$response")"
           if [[ -z "$invoke_id" ]]; then
@@ -74,10 +75,11 @@ jobs:
           REGION="${ALIYUN_REGION_ID:-cn-beijing}"
           invoke_id="${{ steps.run_command.outputs.invoke_id }}"
           for _ in $(seq 1 90); do
-            response="$(aliyun swas-open DescribeInvocationResult \
-              --RegionId "$REGION" \
-              --InstanceId "$ALIYUN_INSTANCE_ID" \
-              --InvokeId "$invoke_id" || true)"
+            response="$(aliyun swas-open describe-invocation-result \
+              --region "$REGION" \
+              --biz-region-id "$REGION" \
+              --instance-id "$ALIYUN_INSTANCE_ID" \
+              --invoke-id "$invoke_id" || true)"
             status="$(jq -r '.InvocationResult.InvocationStatus // empty' <<<"$response")"
             record_status="$(jq -r '.InvocationResult.InvokeRecordStatus // empty' <<<"$response")"
             exit_code="$(jq -r '.InvocationResult.ExitCode // empty' <<<"$response")"
