@@ -73,6 +73,14 @@ Recommended checks:
 - Keyword monitor: response body contains `京ICP备2021017602号-1`.
 - Certificate monitor: alert at least 14 days before expiry.
 
+Current UptimeRobot monitors:
+
+- `803386136`: HTTP/S monitor for `https://www.xiaoyuanvc.com/`, 5-minute interval, email alert to `jiansongy@gmail.com`.
+- `803386144`: keyword monitor for `京ICP备2021017602号-1`, alerts when the keyword is missing.
+- `803386146`: keyword monitor for `京公网安备11010802035175号`, alerts when the keyword is missing.
+
+UptimeRobot SSL and domain expiry checks are locked behind a paid plan on the current account. The GitHub daily workflow remains the no-cost certificate expiry check.
+
 Existing certbot renewal remains the first line of defense. The monitor is only the alarm.
 
 ## Manual Verification
