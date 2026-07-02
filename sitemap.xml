@@ -43,6 +43,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+      <url>
+        <loc>https://xiaoyuanvc.com/resources/ai-entrepreneurship-programs-comparison</loc>
+        <lastmod>2026-07-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+      </url>
+      <url>
+        <loc>https://xiaoyuanvc.com/resources/yc-startup-school-chinese-alternative</loc>
+        <lastmod>2026-07-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+      </url>
     <loc>https://xiaoyuanvc.com/resources/ai-startup-roadmap</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
