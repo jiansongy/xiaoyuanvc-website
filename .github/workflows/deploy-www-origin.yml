@@ -43,7 +43,17 @@ jobs:
             --region "$REGION" \
             --access-key-id "$ALIYUN_ACCESS_KEY_ID" \
             --access-key-secret "$ALIYUN_ACCESS_KEY_SECRET"
-          aliyun plugin install --names aliyun-cli-swas-open
+          for attempt in {1..4}; do
+            if aliyun plugin install --names aliyun-cli-swas-open; then
+              break
+            fi
+            if [[ "$attempt" -eq 4 ]]; then
+              echo "Plugin installation failed after 4 attempts" >&2
+              exit 1
+            fi
+            echo "Retrying plugin installation ($attempt/3)..." >&2
+            sleep 5
+          done
 
       - name: Trigger www sync via Command Assistant
         id: run_command
