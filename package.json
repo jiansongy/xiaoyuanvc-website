@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "bash build.sh",
-    "test:t-workshop": "playwright test tests/t-workshop.spec.mjs"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.60.0",
-    "wrangler": "^4.50.0"
+    "build": "bash build.sh"
   }
 }

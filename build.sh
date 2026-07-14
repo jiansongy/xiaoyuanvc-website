@@ -27,7 +27,13 @@ echo "==> [2/4] 复制主站静态资源到 dist/"
     --exclude="./dist" \
     --exclude="./node_modules" \
     --exclude="./.git" \
+    --exclude="./.omc" \
+    --exclude="./.omx" \
+    --exclude="*/.omc" \
+    --exclude="*/.omx" \
     --exclude="./.obsidian" \
+    --exclude="./.wrangler" \
+    --exclude="./test-results" \
     --exclude="./functions" \
     --exclude="./learn-src" \
     --exclude="./build.sh" \

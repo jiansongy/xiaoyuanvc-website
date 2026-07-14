@@ -10,12 +10,6 @@
   # 主站 HTML 没有 eval/Function 调用，加上不增加实际攻击面。
   # cloudflareinsights 是 CF Pages 自动注入的访问统计 beacon。
 
-/t/demo
-  Content-Type: text/html; charset=utf-8
-
-/t/wangming
-  Content-Type: text/html; charset=utf-8
-
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 

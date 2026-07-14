@@ -8,7 +8,6 @@ const SCRIPT = '<script src="/assets/site-search.js" defer></script>';
 
 function walk(dir, files = []) {
   for (const name of fs.readdirSync(dir)) {
-    if (name === "t") continue;
     const file = path.join(dir, name);
     const stat = fs.statSync(file);
     if (stat.isDirectory()) walk(file, files);

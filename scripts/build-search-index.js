@@ -21,7 +21,6 @@ const IGNORE_DIRS = new Set([
   ".git",
   ".omc",
   ".omx",
-  "t",
 ]);
 
 const TYPE_BY_PATH = [

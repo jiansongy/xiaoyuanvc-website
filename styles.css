@@ -1142,12 +1142,6 @@ body.site-search-lock {
   gap: var(--space-lg);
 }
 
-/* 特约导师：仅两位，按核心团队卡片宽度居中 */
-.team__grid--featured {
-  grid-template-columns: repeat(2, calc((100% - var(--space-lg) * 3) / 4));
-  justify-content: center;
-}
-
 .team-card {
   background: var(--color-bg-card);
   border-radius: var(--radius-lg);

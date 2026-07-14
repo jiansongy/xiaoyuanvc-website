@@ -20,6 +20,8 @@
 /student.html /student 301
 /dachuang.html /dachuang 301
 /teacher.html /teacher 301
+/teacher/workshop /teacher 301
+/teacher/workshop.html /teacher 301
 /teacher/:slug.html /teacher/:slug 301
 
 # 教程站旧根路径兼容：改版后统一挂到 /learn/，避免旧链接命中 VitePress 404
@@ -36,10 +38,6 @@
 # 子路径如 /learn/crypto-vc/* /learn/digital-startup/* 由静态文件服务，不会被这两条匹配
 /learn /student#courses 301
 /learn/ /student#courses 301
-
-# /t/{teacher_slug} 工作坊 H5（学生扫码端）
-/t/assets/* /t/assets/:splat 200
-/t/index.html /t/index.html 200
 
 # 数创班单页已从根目录迁入教师中心子树 /teacher/
 /shuchuangban.html /teacher/shuchuangban 301
