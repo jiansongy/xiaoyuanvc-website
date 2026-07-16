@@ -1137,9 +1137,15 @@ body.site-search-lock {
 
 /* --- Team Section --- */
 .team__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-lg);
+}
+
+.team__grid .team-card {
+  flex: 0 0 calc(25% - 18px);
+  max-width: calc(25% - 18px);
 }
 
 .team-card {
@@ -1684,8 +1690,9 @@ body.site-search-lock {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .team__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .team__grid .team-card {
+    flex: 0 0 calc(50% - 12px);
+    max-width: calc(50% - 12px);
   }
 
   .gallery__grid {
@@ -1930,8 +1937,9 @@ body.site-search-lock {
   }
 
   /* Team mobile */
-  .team__grid {
-    grid-template-columns: 1fr;
+  .team__grid .team-card {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 
   /* Testimonials mobile */
