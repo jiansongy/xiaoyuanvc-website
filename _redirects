@@ -42,3 +42,6 @@
 # 数创班单页已从根目录迁入教师中心子树 /teacher/
 /shuchuangban.html /teacher/shuchuangban 301
 /shuchuangban /teacher/shuchuangban 301
+
+# 媒体报道页 canonical 统一
+/about/media.html /about/media 301
