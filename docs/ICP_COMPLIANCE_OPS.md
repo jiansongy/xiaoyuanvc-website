@@ -13,11 +13,21 @@ This repo publishes two origins:
 
 It does not use SSH. Public TCP 22 can stay closed. The workflow calls Alibaba Cloud Simple Application Server Command Assistant `RunCommand`, then polls `DescribeInvocationResult` until the server-side command exits successfully.
 
-The server command is:
+The workflow downloads the versioned deployment script from the exact pushed commit and runs it with
+`XYVC_GITHUB_SHA` set to that commit:
 
 ```bash
-/usr/local/bin/xyvc-sync.sh
+scripts/xyvc-sync.sh
 ```
+
+The script snapshots the current server state, downloads that exact source archive, runs `bash build.sh`,
+validates the complete `dist/` tree and filing numbers, then swaps `/var/www/xiaoyuanvc`. A failed
+post-swap local smoke test restores the previous release.
+
+The nginx root is currently a directory rather than a release symlink. Its same-filesystem swap uses two
+renames and can create a sub-second gap between the old and new directory names. Converting the existing
+production root to a symlink would widen the migration risk, so this workflow accepts that bounded gap and
+immediately verifies the local and public origins.
 
 Required GitHub repository secrets:
 
@@ -70,6 +80,8 @@ This repo also has `.github/workflows/check-www-origin.yml`, a daily GitHub Acti
 Recommended checks:
 
 - HTTPS URL monitor: `https://www.xiaoyuanvc.com/`, expect HTTP 200.
+- Course monitor: `https://www.xiaoyuanvc.com/learn/crypto-vc/`, expect HTTP 200 and `加密创投教程`.
+- Course monitor: `https://www.xiaoyuanvc.com/learn/digital-startup/`, expect HTTP 200 and `数字创业教程`.
 - Keyword monitor: response body contains `京ICP备2021017602号-1`.
 - Certificate monitor: alert at least 14 days before expiry.
 
@@ -89,6 +101,8 @@ Existing certbot renewal remains the first line of defense. The monitor is only 
 dig +short www.xiaoyuanvc.com A @223.5.5.5
 curl --noproxy '*' -sI https://www.xiaoyuanvc.com/ | grep -i '^location'
 curl --noproxy '*' -s https://www.xiaoyuanvc.com/ | grep -oE '京ICP备2021017602号-1|京公网安备11010802035175号'
+curl --noproxy '*' -fsS https://www.xiaoyuanvc.com/learn/crypto-vc/ | grep -F '加密创投教程'
+curl --noproxy '*' -fsS https://www.xiaoyuanvc.com/learn/digital-startup/ | grep -F '数字创业教程'
 echo | openssl s_client -connect www.xiaoyuanvc.com:443 -servername www.xiaoyuanvc.com 2>/dev/null | openssl x509 -noout -issuer -dates
 ```
 
@@ -96,5 +110,6 @@ Expected:
 
 - `www` resolves to `39.106.61.204`.
 - No cross-host redirect from `https://www.xiaoyuanvc.com/`.
+- Both `/learn/` course entry points return HTTP 200 with their expected page markers.
 - Both ICP and public security filing numbers are present.
 - Certificate issuer is Let's Encrypt and expiry is not near.
