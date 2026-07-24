@@ -19,6 +19,15 @@ grep -Fq 'XYVC_GITHUB_SHA' "$SYNC"
 grep -Fq -- "--noproxy '*'" "$SYNC"
 grep -Fq 'LIVE_MOVED=1' "$SYNC"
 grep -Fq 'PRESERVE_RELEASE=1' "$SYNC"
+grep -Fq 'v22.23.1' "$SYNC"
+grep -Fq 'node-${NODE_VERSION}-linux-${node_arch}.tar.gz' "$SYNC"
+grep -Fq '7a8cb04b4a1df4eaf432125324b81b29a088e73570a23259a8de1c65d07fc129' "$SYNC"
+grep -Fq '543fa39e57d4c07855939459a323f4deb9a79dd1bb45e6e99458b0f2de10db8d' "$SYNC"
+grep -Fq 'sha256sum -c' "$SYNC"
+if grep -Fq 'XYVC_NODE_VERSION' "$SYNC"; then
+  echo "Node version must not be overridden from the server environment." >&2
+  exit 1
+fi
 
 grep -Fq 'scripts/xyvc-sync.sh' "$DEPLOY"
 grep -Fq 'https://www.xiaoyuanvc.com/learn/crypto-vc/' "$DEPLOY"
