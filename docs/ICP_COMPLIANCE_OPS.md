@@ -24,6 +24,11 @@ The script snapshots the current server state, downloads that exact source archi
 validates the complete `dist/` tree and filing numbers, then swaps `/var/www/xiaoyuanvc`. A failed
 post-swap local smoke test restores the previous release.
 
+The server does not require a global Node.js installation. Each run downloads the pinned Node.js 22 LTS
+binary into the temporary work directory, verifies it against the architecture-specific SHA-256 digest
+pinned in `scripts/xyvc-sync.sh`, prepends that temporary binary directory to `PATH`, and removes it during
+cleanup.
+
 The nginx root is currently a directory rather than a release symlink. Its same-filesystem swap uses two
 renames and can create a sub-second gap between the old and new directory names. Converting the existing
 production root to a symlink would widen the migration risk, so this workflow accepts that bounded gap and

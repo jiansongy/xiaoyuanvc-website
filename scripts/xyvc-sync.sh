@@ -7,6 +7,7 @@ GITHUB_SHA="${XYVC_GITHUB_SHA:?XYVC_GITHUB_SHA is required}"
 LIVE_ROOT="/var/www/xiaoyuanvc"
 DEPLOY_PARENT="/var/www"
 MIN_FREE_KB=1048576
+NODE_VERSION="v22.23.1"
 
 if [[ ! "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]; then
   echo "XYVC_GITHUB_SHA must be a 40-character lowercase commit SHA." >&2
@@ -87,12 +88,14 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "[1/7] Snapshot current server state"
+echo "[1/8] Snapshot current server state"
 docker ps || true
 npm list -g --depth=0 || true
 systemctl list-units --type=service --state=running --no-pager || true
-node --version
-npm --version
+cat /etc/os-release || true
+ldd --version 2>&1 | head -1 || true
+node --version || true
+npm --version || true
 df -Pk "$DEPLOY_PARENT"
 
 available_kb="$(df -Pk "$DEPLOY_PARENT" | awk 'NR == 2 { print $4 }')"
@@ -106,7 +109,35 @@ if [[ ! -d "$LIVE_ROOT" ]]; then
   exit 1
 fi
 
-echo "[2/7] Download exact source SHA: $GITHUB_SHA"
+echo "[2/8] Provision temporary Node.js $NODE_VERSION"
+case "$(uname -m)" in
+  x86_64)
+    node_arch="x64"
+    node_sha256="7a8cb04b4a1df4eaf432125324b81b29a088e73570a23259a8de1c65d07fc129"
+    ;;
+  aarch64|arm64)
+    node_arch="arm64"
+    node_sha256="543fa39e57d4c07855939459a323f4deb9a79dd1bb45e6e99458b0f2de10db8d"
+    ;;
+  *)
+    echo "Unsupported server architecture: $(uname -m)" >&2
+    exit 1
+    ;;
+esac
+
+node_archive="node-${NODE_VERSION}-linux-${node_arch}.tar.gz"
+node_base_url="https://nodejs.org/dist/${NODE_VERSION}"
+curl -fsSL "$node_base_url/$node_archive" -o "$WORK_DIR/$node_archive"
+(
+  cd "$WORK_DIR"
+  printf '%s  %s\n' "$node_sha256" "$node_archive" | sha256sum -c -
+  tar -xzf "$node_archive"
+)
+export PATH="$WORK_DIR/node-${NODE_VERSION}-linux-${node_arch}/bin:$PATH"
+node --version
+npm --version
+
+echo "[3/8] Download exact source SHA: $GITHUB_SHA"
 archive="$WORK_DIR/source.tar.gz"
 source_parent="$WORK_DIR/source"
 mkdir -p "$source_parent"
@@ -121,13 +152,13 @@ if [[ -z "$source_dir" || ! -f "$source_dir/build.sh" || ! -f "$source_dir/learn
   exit 1
 fi
 
-echo "[3/7] Build complete dist tree"
+echo "[4/8] Build complete dist tree"
 (
   cd "$source_dir"
   bash build.sh
 )
 
-echo "[4/7] Validate build output"
+echo "[5/8] Validate build output"
 required_files=(
   "dist/index.html"
   "dist/learn/crypto-vc/index.html"
@@ -147,14 +178,14 @@ cp -a "$source_dir/dist/." "$RELEASE_DIR/"
 release_file_count="$(find "$RELEASE_DIR" -type f | wc -l | tr -d ' ')"
 echo "Prepared $release_file_count files for release."
 
-echo "[5/7] Replace nginx document root"
+echo "[6/8] Replace nginx document root"
 mv "$LIVE_ROOT" "$BACKUP_DIR"
 LIVE_MOVED=1
 mv "$RELEASE_DIR" "$LIVE_ROOT"
 LIVE_MOVED=0
 SWAPPED=1
 
-echo "[6/7] Verify local nginx origin"
+echo "[7/8] Verify local nginx origin"
 origin=(curl --noproxy '*' --silent --show-error --resolve www.xiaoyuanvc.com:443:127.0.0.1)
 
 verify_page() {
@@ -182,7 +213,7 @@ if [[ "$missing_status" != "404" ]]; then
   exit 1
 fi
 
-echo "[7/7] Finalize release"
+echo "[8/8] Finalize release"
 SWAPPED=0
 remove_managed_tree "$BACKUP_DIR"
 echo "DONE-SYNC SHA=$GITHUB_SHA FILES=$release_file_count"
