@@ -28,16 +28,30 @@ jobs:
             exit 1
           fi
 
-          headers="$(curl --noproxy '*' -fsSI https://www.xiaoyuanvc.com/)"
-          printf '%s\n' "$headers"
-          if grep -qi '^location:' <<<"$headers"; then
-            echo "Unexpected redirect from www root" >&2
-            exit 1
-          fi
+          verify_origin_page() {
+            local url="$1"
+            local marker="$2"
+            local body headers status
+            body="$(mktemp)"
+            headers="$(mktemp)"
+            status="$(curl --noproxy '*' -sS --max-redirs 0 -D "$headers" -o "$body" -w '%{http_code}' "$url")"
+            if [[ "$status" != "200" ]]; then
+              echo "Expected HTTP 200 for $url, got $status." >&2
+              exit 1
+            fi
+            if grep -Fqi 'location:' "$headers"; then
+              echo "Unexpected redirect for $url." >&2
+              exit 1
+            fi
+            grep -Fqi 'server: nginx' "$headers"
+            grep -Fq "$marker" "$body"
+            rm -f "$body" "$headers"
+          }
 
-          body="$(curl --noproxy '*' -fsSL https://www.xiaoyuanvc.com/)"
-          grep -q '京ICP备2021017602号-1' <<<"$body"
-          grep -q '京公网安备11010802035175号' <<<"$body"
+          verify_origin_page "https://www.xiaoyuanvc.com/" "京ICP备2021017602号-1"
+          verify_origin_page "https://www.xiaoyuanvc.com/" "京公网安备11010802035175号"
+          verify_origin_page "https://www.xiaoyuanvc.com/learn/crypto-vc/" "加密创投教程"
+          verify_origin_page "https://www.xiaoyuanvc.com/learn/digital-startup/" "数字创业教程"
 
           cert_end="$(echo | openssl s_client -connect www.xiaoyuanvc.com:443 -servername www.xiaoyuanvc.com 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2-)"
           cert_end_epoch="$(date -u -d "$cert_end" +%s)"
@@ -48,4 +62,3 @@ jobs:
             echo "Certificate expires in less than 14 days" >&2
             exit 1
           fi
-
