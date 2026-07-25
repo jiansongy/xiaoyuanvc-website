@@ -17,6 +17,8 @@
 /resources/:slug.html /resources/:slug 301
 
 # 页面 canonical 统一为无扩展名 URL，保留旧 .html 入口
+/about.html /about 301
+/about/ /about 301
 /student.html /student 301
 /dachuang.html /dachuang 301
 /teacher.html /teacher 301
