@@ -22,7 +22,17 @@ jobs:
         run: |
           set -euo pipefail
 
-          ip="$(dig +short www.xiaoyuanvc.com A @223.5.5.5 | tail -1)"
+          ip=""
+          for attempt in {1..3}; do
+            ip="$(dig +time=3 +tries=1 +short www.xiaoyuanvc.com A @223.5.5.5 | tail -1 || true)"
+            if [[ -n "$ip" ]]; then
+              break
+            fi
+            echo "DNS lookup returned no A record (attempt $attempt/3)." >&2
+            if [[ "$attempt" -lt 3 ]]; then
+              sleep 2
+            fi
+          done
           if [[ "$ip" != "39.106.61.204" ]]; then
             echo "Unexpected www A record from AliDNS: $ip" >&2
             exit 1
