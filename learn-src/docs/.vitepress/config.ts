@@ -34,6 +34,7 @@ function addJsonLd(head: HeadConfig[], data: Record<string, unknown>) {
 
 export default defineConfig({
   base: BASE,
+  cleanUrls: true,
   ignoreDeadLinks: true,
   title: "校园VC教程站",
   description:
@@ -61,6 +62,9 @@ export default defineConfig({
 
   transformHead({ pageData, siteData }) {
     const head: HeadConfig[] = [];
+    if (pageData.relativePath === "404.md") {
+      return [["meta", { name: "robots", content: "noindex, nofollow" }]];
+    }
     const canonicalUrl = toCanonical(pageData.relativePath);
     const title =
       pageData.frontmatter.title || pageData.title || siteData.title;

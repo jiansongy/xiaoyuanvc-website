@@ -16,6 +16,10 @@
 /resources/podcast /resources/ 301
 /resources/:slug.html /resources/:slug 301
 
+# 第三期招生已结束，旧链接统一承接到加密方向常驻入口
+/css/camp-3 /student#css 301
+/css/camp-3/ /student#css 301
+
 # 页面 canonical 统一为无扩展名 URL，保留旧 .html 入口
 /about.html /about 301
 /about/ /about 301
@@ -36,10 +40,10 @@
 /crypto-vc/:slug.html /learn/crypto-vc/:slug 301
 /crypto-vc/* /learn/crypto-vc/:splat 301
 
-# /learn/ 是 VitePress 子站根，但落地页本身不展示，访客统一跳到学生中心两张课程卡
+# /learn/ 是 VitePress 子站根，但落地页本身不展示，访客统一进入数字创业教程
 # 子路径如 /learn/crypto-vc/* /learn/digital-startup/* 由静态文件服务，不会被这两条匹配
-/learn /student#courses 301
-/learn/ /student#courses 301
+/learn /learn/digital-startup/ 301
+/learn/ /learn/digital-startup/ 301
 
 # 数创班单页已从根目录迁入教师中心子树 /teacher/
 /shuchuangban.html /teacher/shuchuangban 301

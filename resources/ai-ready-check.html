@@ -1222,6 +1222,9 @@
               <span aria-hidden="true">&#x1F916;</span> 1 次 AI 诊断
               &nbsp;|&nbsp; <span aria-hidden="true">&#x1F4CA;</span> 可打印 PDF
             </div>
+            <p style="margin: 0 0 14px; text-align: center; font-size: 13px">
+              想先了解方法？<a href="./ai-employee-interview-guide" style="color: var(--blue-dark); font-weight: 600">阅读 AI 员工面试完整指南</a>
+            </p>
             <button
               class="btn btn-primary btn-full"
               id="startBtn"
@@ -1914,7 +1917,7 @@
         function buildNextToolSection() {
           var cards = [
             {
-              href: "./ai-opportunity.html",
+              href: "./ai-opportunity",
               title: "去 AI 创业机会探索器，扩一轮相邻机会",
               desc: "如果你已经知道自己哪些环节最值得 AI 提效，下一步可以看同赛道还有哪些更值得切入的痛点。",
               bg: "#eff6ff",
@@ -1925,7 +1928,7 @@
 
           if (isHardTechContext()) {
             cards.push({
-              href: "./hard-tech-check.html",
+              href: "./hard-tech-check",
               title: "去硬科技创业自检，看转化断点",
               desc: "如果你现在做的是科研或技术项目，下一步更该判断成果转化、团队和验证路径是否真的站得住。",
               bg: "#fff7ed",
@@ -1934,7 +1937,7 @@
             });
           } else if (String(S.projectContextNote || "").trim()) {
             cards.push({
-              href: "./rate-your-idea.html",
+              href: "./rate-your-idea",
               title: "去学生创业自检，判断这个方向靠不靠谱",
               desc: "当你已经有具体项目背景时，下一步要看验证力、执行力和商业判断，而不是只看提效。",
               bg: "#f0fdf4",
@@ -1943,7 +1946,7 @@
             });
           } else {
             cards.push({
-              href: "./find-your-idea.html",
+              href: "./find-your-idea",
               title: "先去发现你的创业想法，把方向说清楚",
               desc: "如果你只是知道自己很忙，但项目方向还模糊，先把用户、问题和切口说清楚，再回来做 AI 提效更稳。",
               bg: "#f5f3ff",

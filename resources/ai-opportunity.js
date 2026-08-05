@@ -341,7 +341,7 @@
   function buildNextToolSectionHtml() {
     var cards = [
       {
-        href: "./ai-ready-check.html",
+        href: "./ai-ready-check",
         title: "去 AI 员工面试，把执行动作落到真实工具",
         desc: "如果这个机会你已经想试，下一步应该拆出最耗时的工作环节，看看先让哪些 AI 员工上岗。",
         bg: "#eff6ff",
@@ -352,7 +352,7 @@
 
     if (state.mode === "student") {
       cards.push({
-        href: "./rate-your-idea.html",
+        href: "./rate-your-idea",
         title: "去学生创业自检，判断这个方向是否站得住",
         desc: "你已经看到一个明确痛点，下一步要验证它是不是值得投入，而不是只停在“感觉不错”。",
         bg: "#f0fdf4",
@@ -361,7 +361,7 @@
       });
     } else {
       cards.push({
-        href: "./find-your-idea.html",
+        href: "./find-your-idea",
         title: "去发现你的创业想法，把更多方向收敛成切口",
         desc: "如果你在课堂或项目里想继续扩展方向，可以把今天看到的痛点带过去，再做一轮聚焦。",
         bg: "#f5f3ff",

@@ -16,11 +16,11 @@ ROOT="$(cd "$(dirname "$0")" && pwd)"
 DIST="$ROOT/dist"
 LEARN_SRC="$ROOT/learn-src"
 
-echo "==> [1/4] 清理 dist/"
+echo "==> [1/7] 清理 dist/"
 rm -rf "$DIST"
 mkdir -p "$DIST"
 
-echo "==> [2/4] 复制主站静态资源到 dist/"
+echo "==> [2/7] 复制主站静态资源到 dist/"
 # 用 tar 流复制并排除大目录与构建产物；保留隐藏文件（_redirects、_headers、.cloudflare 等）
 # CF Pages 容器没有 rsync，tar 更通用。
 ( cd "$ROOT" && tar -cf - \
@@ -40,7 +40,7 @@ echo "==> [2/4] 复制主站静态资源到 dist/"
     --exclude="./.DS_Store" \
     . ) | ( cd "$DIST" && tar -xf - )
 
-echo "==> [3/4] 构建 VitePress 子站 (learn-src)"
+echo "==> [3/7] 构建 VitePress 子站 (learn-src)"
 cd "$LEARN_SRC"
 if [ -f package-lock.json ]; then
   npm ci
@@ -49,13 +49,19 @@ else
 fi
 npx vitepress build docs
 
-echo "==> [4/5] 拷贝 VitePress 产物到 dist/learn/"
+echo "==> [4/7] 拷贝 VitePress 产物到 dist/learn/"
 mkdir -p "$DIST/learn"
 cp -R "$LEARN_SRC/docs/.vitepress/dist/." "$DIST/learn/"
 
-echo "==> [5/5] 生成全站搜索索引并注入搜索脚本"
+echo "==> [5/7] 从 canonical/noindex 生成 sitemap"
+node "$ROOT/scripts/generate-sitemap.mjs" "$DIST"
+
+echo "==> [6/7] 生成全站搜索索引并注入搜索脚本"
 node "$ROOT/scripts/build-search-index.js"
 node "$ROOT/scripts/inject-site-search.js"
+
+echo "==> [7/7] 验证 SEO 结构与构建产物"
+node "$ROOT/scripts/test-seo-structure.mjs"
 
 echo ""
 echo "✅ 构建完成"
