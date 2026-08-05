@@ -30,7 +30,7 @@ if grep -Fq 'XYVC_NODE_VERSION' "$SYNC"; then
 fi
 
 grep -Fq 'scripts/xyvc-sync.sh' "$DEPLOY"
-grep -Fq 'uses: actions/checkout@v4' "$DEPLOY"
+grep -Fq 'uses: actions/checkout@v6' "$DEPLOY"
 grep -Fq 'gzip -c scripts/xyvc-sync.sh' "$DEPLOY"
 grep -Fq "base64 -d | gzip -d" "$DEPLOY"
 if grep -Fq 'raw.githubusercontent.com' "$DEPLOY"; then

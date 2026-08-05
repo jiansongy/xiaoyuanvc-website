@@ -24,7 +24,7 @@ jobs:
       ALIYUN_INSTANCE_ID: ${{ secrets.ALIYUN_INSTANCE_ID }}
       ALIYUN_REGION_ID: ${{ vars.ALIYUN_REGION_ID }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install Alibaba Cloud CLI
         run: |
