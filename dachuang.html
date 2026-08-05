@@ -259,6 +259,28 @@
       font-weight: 700;
     }
 
+    /* 社群相册 */
+    .dachuang-gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .dachuang-gallery__item {
+      aspect-ratio: 4 / 3;
+      margin: 0;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+    .dachuang-gallery__item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     /* 加入流程 */
     .steps {
       max-width: 720px;
@@ -491,9 +513,11 @@
       .fit-grid { grid-template-columns: 1fr; }
       .value-grid { grid-template-columns: 1fr; }
       .price-grid { grid-template-columns: 1fr 1fr; }
+      .dachuang-gallery__grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 480px) {
       .price-grid { grid-template-columns: 1fr; }
+      .dachuang-gallery__grid { grid-template-columns: 1fr; }
     }
 
     body.has-dark-hero .nav {
@@ -608,7 +632,7 @@
       <div class="container">
         <div class="page-hero__inner fade-in">
           <p class="page-hero__eyebrow">校园VC · 大创社群</p>
-          <h1 class="page-hero__title">一个人摸索太慢，<br>找一群同频的人一起做</h1>
+          <h1 class="page-hero__title">一个人摸索太慢，<br>找一群同频的人一起干</h1>
           <p class="page-hero__subtitle">以创业为名，以同学为义</p>
           <p class="page-hero__desc">
             大创社群是校园VC 面向大学生创业者的互助社群。它帮真正想做事的同学找到方向、对接资源、找到伙伴——从一个人闷头摸索，变成一群人一起试错。
@@ -739,6 +763,26 @@
               <li>还没想清楚自己要不要开始，可以先听听课程</li>
             </ul>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 社群相册 ====== -->
+    <section class="section" id="dachuang-gallery">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">大创社群活动现场</h2>
+        </div>
+        <div class="dachuang-gallery__grid fade-in">
+          <figure class="dachuang-gallery__item"><img src="assets/大创1.jpg" alt="校园VC 大创社群成员活动合影" loading="lazy" /></figure>
+          <figure class="dachuang-gallery__item"><img src="assets/大创2.jpg" alt="校园VC 大创社群成员参加创新活动合影" loading="lazy" /></figure>
+          <figure class="dachuang-gallery__item"><img src="assets/大创3.jpg" alt="校园VC 大创社群成员参加创业活动合影" loading="lazy" /></figure>
+          <figure class="dachuang-gallery__item"><img src="assets/大创4.jpg" alt="校园VC 大创社群成员参加青年活动合影" loading="lazy" /></figure>
+          <figure class="dachuang-gallery__item"><img src="assets/大创5.jpg" alt="校园VC 大创社群成员线下聚会合影" loading="lazy" /></figure>
+          <figure class="dachuang-gallery__item"><img src="assets/大创6.jpg" alt="校园VC 大创社群成员参加行业活动合影" loading="lazy" /></figure>
+          <figure class="dachuang-gallery__item"><img src="assets/大创7.jpg" alt="校园VC 大创社群成员参加交流活动合影" loading="lazy" /></figure>
+          <figure class="dachuang-gallery__item"><img src="assets/大创8.jpg" alt="校园VC 大创社群成员圆桌交流现场" loading="lazy" /></figure>
+          <figure class="dachuang-gallery__item"><img src="assets/大创9.jpg" alt="校园VC 大创社群成员参加年度活动合影" loading="lazy" /></figure>
         </div>
       </div>
     </section>
