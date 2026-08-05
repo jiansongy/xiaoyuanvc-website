@@ -30,6 +30,13 @@ if grep -Fq 'XYVC_NODE_VERSION' "$SYNC"; then
 fi
 
 grep -Fq 'scripts/xyvc-sync.sh' "$DEPLOY"
+grep -Fq 'uses: actions/checkout@v4' "$DEPLOY"
+grep -Fq 'gzip -c scripts/xyvc-sync.sh' "$DEPLOY"
+grep -Fq "base64 -d | gzip -d" "$DEPLOY"
+if grep -Fq 'raw.githubusercontent.com' "$DEPLOY"; then
+  echo "Deployment must not fetch its bootstrap script from raw.githubusercontent.com." >&2
+  exit 1
+fi
 grep -Fq 'https://www.xiaoyuanvc.com/learn/crypto-vc/' "$DEPLOY"
 grep -Fq 'https://www.xiaoyuanvc.com/learn/digital-startup/' "$DEPLOY"
 grep -Fq "grep -Fqi 'server: nginx'" "$DEPLOY"

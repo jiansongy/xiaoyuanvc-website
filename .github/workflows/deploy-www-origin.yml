@@ -24,6 +24,8 @@ jobs:
       ALIYUN_INSTANCE_ID: ${{ secrets.ALIYUN_INSTANCE_ID }}
       ALIYUN_REGION_ID: ${{ vars.ALIYUN_REGION_ID }}
     steps:
+      - uses: actions/checkout@v4
+
       - name: Install Alibaba Cloud CLI
         run: |
           set -euo pipefail
@@ -60,7 +62,7 @@ jobs:
         run: |
           set -euo pipefail
           REGION="${ALIYUN_REGION_ID:-cn-beijing}"
-          SYNC_SCRIPT_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/scripts/xyvc-sync.sh"
+          SYNC_SCRIPT_B64="$(gzip -c scripts/xyvc-sync.sh | base64 -w0)"
           COMMAND_CONTENT="$(cat <<EOF
           set -euo pipefail
           sync_script=\$(mktemp /tmp/xyvc-sync-command.XXXXXX)
@@ -68,7 +70,7 @@ jobs:
             rm -f "\$sync_script"
           }
           trap cleanup EXIT
-          curl -fsSL "$SYNC_SCRIPT_URL" -o "\$sync_script"
+          printf '%s' "$SYNC_SCRIPT_B64" | base64 -d | gzip -d > "\$sync_script"
           bash -n "\$sync_script"
           XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_REPOSITORY="$GITHUB_REPOSITORY" bash "\$sync_script"
           EOF
