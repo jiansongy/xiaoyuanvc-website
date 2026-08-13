@@ -33,6 +33,45 @@ assert.deepEqual(
 );
 
 const courseSource = expectedPages.map(read).join("\n");
+
+const faithfulChapters = [
+  {
+    file: "learn-src/docs/crypto-vc/start/chapter1-overview/index.md",
+    minBytes: 18000,
+    topics: ["教学设计", "比特币", "区块链的数据结构", "以太坊", "加密工具推荐", "太多陌生术语", "建议从做 KOL 起步"],
+  },
+  {
+    file: "learn-src/docs/crypto-vc/start/chapter2-overview/index.md",
+    minBytes: 22000,
+    topics: ["实务的重要性", "币安的创业故事", "加密钱包基础入门", "钱包的全生命周期安全", "币圈常见骗局", "囤比特币的指标"],
+  },
+  {
+    file: "learn-src/docs/crypto-vc/advanced/chapter3-overview/index.md",
+    minBytes: 10000,
+    topics: ["从“数字货币”到“可编程产权”", "一笔完整的交易是如何走的", "DAPP生态分类图", "CROPS使命", "一笔二层交易到底怎么走"],
+  },
+  {
+    file: "learn-src/docs/crypto-vc/advanced/chapter4-overview/index.md",
+    minBytes: 18000,
+    topics: ["Stablecoin", "DeFi 行业地图", "简化版 AMM 智能合约", "Uniswap", "RWA", "bStocks", "OpenSea"],
+  },
+  {
+    file: "learn-src/docs/crypto-vc/advanced/chapter5-overview/index.md",
+    minBytes: 20000,
+    topics: ["HyperLiquid", "预测市场的工作原理", "Polymarket", "问答环节", "Bittensor", "九本推荐阅读书", "Top10 概念"],
+  },
+];
+for (const chapter of faithfulChapters) {
+  const source = read(chapter.file);
+  assert.ok(
+    Buffer.byteLength(source) >= chapter.minBytes,
+    `${chapter.file} 正文过短，未达到忠实迁移下限 ${chapter.minBytes} 字节`,
+  );
+  for (const topic of chapter.topics) {
+    assert.ok(source.includes(topic), `${chapter.file} 缺少原课件主题：${topic}`);
+  }
+}
+
 assert.doesNotMatch(
   courseSource,
   /作业|学员|评语|总分|截止日期|学习报告|结业证书|优秀学员证书|顾曼|范心怡|段岳[崧菘]|刘桐|邢维灵|第三期|每周三晚上|课程周期/,
