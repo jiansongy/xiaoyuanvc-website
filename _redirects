@@ -40,6 +40,66 @@
 /crypto-vc/:slug.html /learn/crypto-vc/:slug 301
 /crypto-vc/* /learn/crypto-vc/:splat 301
 
+# 加密教程由 29 个细分课时收敛为五个完整章节；保留旧收藏与搜索入口
+/learn/crypto-vc/start/bitcoin-introduction /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/bitcoin-introduction/ /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/what-is-blockchain /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/what-is-blockchain/ /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/ethereum /learn/crypto-vc/advanced/chapter3-overview/ 301
+/learn/crypto-vc/start/ethereum/ /learn/crypto-vc/advanced/chapter3-overview/ 301
+/learn/crypto-vc/start/solana /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/solana/ /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/chain-comparison /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/chain-comparison/ /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/wallet-practice /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/wallet-practice/ /learn/crypto-vc/start/chapter1-overview/ 301
+/learn/crypto-vc/start/exchanges /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/exchanges/ /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/wallet-basics /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/wallet-basics/ /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/security-basics /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/security-basics/ /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/risk-management /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/risk-management/ /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/tools-and-learning-method /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/start/tools-and-learning-method/ /learn/crypto-vc/start/chapter2-overview/ 301
+/learn/crypto-vc/advanced/stablecoin-basics /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/stablecoin-basics/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/yield-stablecoin /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/yield-stablecoin/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/etf-traditional-finance /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/etf-traditional-finance/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/defi-basics /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/defi-basics/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/uniswap-practice /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/uniswap-practice/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/hyperliquid /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/hyperliquid/ /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/nft-digital-ownership /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/nft-digital-ownership/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/gamefi /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/gamefi/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/memecoin-culture /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/memecoin-culture/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/pump-fun /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/pump-fun/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/kol-evaluation /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/kol-evaluation/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/rwa-tokenization /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/rwa-tokenization/ /learn/crypto-vc/advanced/chapter4-overview/ 301
+/learn/crypto-vc/advanced/polymarket /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/polymarket/ /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/ai-agents /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/ai-agents/ /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/depin /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/depin/ /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/nof1-quantitative-trading /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/nof1-quantitative-trading/ /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/ai-tools /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/ai-tools/ /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/graduation-project /learn/crypto-vc/advanced/chapter5-overview/ 301
+/learn/crypto-vc/advanced/graduation-project/ /learn/crypto-vc/advanced/chapter5-overview/ 301
+
 # /learn/ 是 VitePress 子站根，但落地页本身不展示，访客统一进入数字创业教程
 # 子路径如 /learn/crypto-vc/* /learn/digital-startup/* 由静态文件服务，不会被这两条匹配
 /learn /learn/digital-startup/ 301

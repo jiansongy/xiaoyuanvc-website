@@ -26,10 +26,12 @@ check("第三期招生旧地址永久跳转到加密方向", () => {
   assert.match(redirects, /^\/css\/camp-3\/ \/student#css 301$/m);
 });
 
-check("教程不再保留第三期价格与开营日期", () => {
+check("加密教程已更新为五章新版且不含旧招生信息", () => {
   const cryptoIndex = read("learn-src/docs/crypto-vc/index.md");
   assert.doesNotMatch(cryptoIndex, /css\/camp-3|¥999|第三期 7 月开营/);
-  assert.match(cryptoIndex, /加密创投营.*不定期开班/);
+  assert.match(cryptoIndex, /公链与区块链基础/);
+  assert.match(cryptoIndex, /Perp DEX、预测市场与 Crypto AI/);
+  assert.doesNotMatch(cryptoIndex, /29\s*课/);
 });
 
 const metadata = [
@@ -204,7 +206,7 @@ if (!existsSync(join(root, "dist/index.html"))) {
     const sitemap = read("dist/sitemap.xml");
     const actual = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]));
     assert.deepEqual(actual, expected);
-    assert.ok(actual.size >= 77, `预期至少 77 条，实际 ${actual.size} 条`);
+    assert.ok(actual.size >= 46, `预期至少 46 条，实际 ${actual.size} 条`);
     assert.ok(actual.has("https://xiaoyuanvc.com/resources/ai-employee-interview-guide"));
     assert.ok(![...actual].some((url) => url.includes("camp-3")));
     assert.doesNotMatch(sitemap, /<lastmod>/);

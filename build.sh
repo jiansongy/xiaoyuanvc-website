@@ -61,6 +61,7 @@ node "$ROOT/scripts/build-search-index.js"
 node "$ROOT/scripts/inject-site-search.js"
 
 echo "==> [7/7] 验证 SEO 结构与构建产物"
+node "$ROOT/scripts/test-crypto-course-refresh.mjs"
 node "$ROOT/scripts/test-seo-structure.mjs"
 
 echo ""

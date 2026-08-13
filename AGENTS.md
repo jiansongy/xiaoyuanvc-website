@@ -1,5 +1,12 @@
 # Repository Guidance
 
+## Build and Site Conventions
+
+- Run `npm run build` for the production build; Cloudflare Pages deploys `dist/` from `main`.
+- Keep user-facing copy in Chinese and preserve `lang="zh-CN"`.
+- Use GA4 measurement ID `G-LP5EB2HW33`.
+- New animations must respect `prefers-reduced-motion`; verify affected UI at 375px width.
+
 ## Publishing
 
 When the user asks to push, publish, deploy, or put the site online from this repository, use:

@@ -139,18 +139,18 @@ export default defineConfig({
         "@id": `${HOSTNAME}/#course-crypto`,
         name: "加密创投教程",
         description:
-          "面向大学生的加密货币与区块链投资教程，涵盖公链基础、实务操作、DeFi金融、NFT文化、AI创新五大模块，共5章29课。",
+          "面向大学生的加密货币与区块链教程，五章覆盖公链、实务安全、以太坊、链上金融与前沿创新。",
         provider: { "@type": "EducationalOrganization", name: "校园VC" },
         author: { "@id": `${HOSTNAME}/#founder` },
         inLanguage: "zh-CN",
         isAccessibleForFree: true,
         educationalLevel: "大学生",
-        numberOfCredits: 29,
+        numberOfCredits: 5,
         url: `${HOSTNAME}${BASE}crypto-vc/start/chapter1-overview/`,
         hasCourseInstance: {
           "@type": "CourseInstance",
           courseMode: "online",
-          courseWorkload: "P29L",
+          courseWorkload: "P5L",
         },
       });
       addJsonLd(head, {
@@ -208,21 +208,21 @@ export default defineConfig({
           : `${HOSTNAME}/#course-digital`,
         name: isCrypto ? "加密创投教程" : "数字创业教程",
         description: isCrypto
-          ? "面向大学生的加密货币与区块链投资教程，涵盖公链基础、实务操作、DeFi金融、NFT文化、AI创新五大模块，共5章29课。"
+          ? "面向大学生的加密货币与区块链教程，五章覆盖公链、实务安全、以太坊、链上金融与前沿创新。"
           : "面向大学生的数字创业系统课程，涵盖创业认知、机会洞察、产品开发、营销增长、融资致胜五大模块，共5章34课。",
         provider: { "@type": "EducationalOrganization", name: "校园VC" },
         author: { "@id": `${HOSTNAME}/#founder` },
         inLanguage: "zh-CN",
         isAccessibleForFree: true,
         educationalLevel: "大学生",
-        numberOfCredits: isCrypto ? 29 : 34,
+        numberOfCredits: isCrypto ? 5 : 34,
         url: isCrypto
           ? `${HOSTNAME}${BASE}crypto-vc/start/chapter1-overview/`
           : `${HOSTNAME}${BASE}digital-startup/`,
         hasCourseInstance: {
           "@type": "CourseInstance",
           courseMode: "online",
-          courseWorkload: isCrypto ? "P29L" : "P34L",
+          courseWorkload: isCrypto ? "P5L" : "P34L",
         },
       });
     }
@@ -300,168 +300,32 @@ export default defineConfig({
     sidebar: {
       "/crypto-vc/": [
         {
-          text: "第一章：公链基础篇",
+          text: "新版加密创投教程",
           collapsed: false,
           items: [
             {
-              text: "📋 第一章概述",
+              text: "教程总览",
+              link: "/crypto-vc/",
+            },
+            {
+              text: "第一章：公链与区块链基础",
               link: "/crypto-vc/start/chapter1-overview/",
             },
             {
-              text: "1.1 比特币：数字黄金的诞生",
-              link: "/crypto-vc/start/bitcoin-introduction/",
-            },
-            {
-              text: "1.2 什么是区块链",
-              link: "/crypto-vc/start/what-is-blockchain/",
-            },
-            {
-              text: "1.3 以太坊：智能合约平台",
-              link: "/crypto-vc/start/ethereum/",
-            },
-            {
-              text: "1.4 Solana：高性能公链",
-              link: "/crypto-vc/start/solana/",
-            },
-            {
-              text: "1.5 公链对比与不可能三角",
-              link: "/crypto-vc/start/chain-comparison/",
-            },
-            {
-              text: "1.6 钱包实践：MetaMask与Phantom",
-              link: "/crypto-vc/start/wallet-practice/",
-            },
-          ],
-        },
-        {
-          text: "第二章：实务操作篇",
-          collapsed: true,
-          items: [
-            {
-              text: "📋 第二章概述",
+              text: "第二章：实务、钱包与安全",
               link: "/crypto-vc/start/chapter2-overview/",
             },
             {
-              text: "2.1 交易所使用：币安开户与入金",
-              link: "/crypto-vc/start/exchanges/",
-            },
-            {
-              text: "2.2 钱包基础：私钥与助记词",
-              link: "/crypto-vc/start/wallet-basics/",
-            },
-            {
-              text: "2.3 区块链安全与防骗",
-              link: "/crypto-vc/start/security-basics/",
-            },
-            {
-              text: "2.4 投资心态管理与风险控制",
-              link: "/crypto-vc/start/risk-management/",
-            },
-            {
-              text: "2.5 加密工具推荐与RSA学习法",
-              link: "/crypto-vc/start/tools-and-learning-method/",
-            },
-          ],
-        },
-        {
-          text: "第三章：金融篇",
-          collapsed: true,
-          items: [
-            {
-              text: "📋 第三章概述",
+              text: "第三章：以太坊与二层网络",
               link: "/crypto-vc/advanced/chapter3-overview/",
             },
             {
-              text: "3.1 稳定币基础与市场格局",
-              link: "/crypto-vc/advanced/stablecoin-basics/",
-            },
-            {
-              text: "3.2 生息稳定币与GENIUS法案",
-              link: "/crypto-vc/advanced/yield-stablecoin/",
-            },
-            {
-              text: "3.3 机构采用、ETF与传统金融通道",
-              link: "/crypto-vc/advanced/etf-traditional-finance/",
-            },
-            {
-              text: "3.4 DeFi基础与智能合约",
-              link: "/crypto-vc/advanced/defi-basics/",
-            },
-            {
-              text: "3.5 Uniswap实践：去中心化交易",
-              link: "/crypto-vc/advanced/uniswap-practice/",
-            },
-            {
-              text: "3.6 HyperLiquid：永续合约交易所",
-              link: "/crypto-vc/advanced/hyperliquid/",
-            },
-          ],
-        },
-        {
-          text: "第四章：文化篇",
-          collapsed: true,
-          items: [
-            {
-              text: "📋 第四章概述",
+              text: "第四章：稳定币、DeFi、RWA 与 NFT",
               link: "/crypto-vc/advanced/chapter4-overview/",
             },
             {
-              text: "4.1 NFT：数字所有权",
-              link: "/crypto-vc/advanced/nft-digital-ownership/",
-            },
-            {
-              text: "4.2 链游与GameFi",
-              link: "/crypto-vc/advanced/gamefi/",
-            },
-            {
-              text: "4.3 Memecoin文化与注意力经济",
-              link: "/crypto-vc/advanced/memecoin-culture/",
-            },
-            {
-              text: "4.4 Pump.fun与Meme发射台",
-              link: "/crypto-vc/advanced/pump-fun/",
-            },
-            {
-              text: "4.5 KOL可信度评估",
-              link: "/crypto-vc/advanced/kol-evaluation/",
-            },
-            {
-              text: "4.6 RWA代币化：现实资产上链",
-              link: "/crypto-vc/advanced/rwa-tokenization/",
-            },
-          ],
-        },
-        {
-          text: "第五章：创新篇",
-          collapsed: true,
-          items: [
-            {
-              text: "📋 第五章概述",
+              text: "第五章：Perp DEX、预测市场与 Crypto AI",
               link: "/crypto-vc/advanced/chapter5-overview/",
-            },
-            {
-              text: "5.1 预测市场：Polymarket",
-              link: "/crypto-vc/advanced/polymarket/",
-            },
-            {
-              text: "5.2 AI代理革命",
-              link: "/crypto-vc/advanced/ai-agents/",
-            },
-            {
-              text: "5.3 DePIN：去中心化物理基础设施",
-              link: "/crypto-vc/advanced/depin/",
-            },
-            {
-              text: "5.4 Nof1量化交易",
-              link: "/crypto-vc/advanced/nof1-quantitative-trading/",
-            },
-            {
-              text: "5.5 AI工具与研究方法",
-              link: "/crypto-vc/advanced/ai-tools/",
-            },
-            {
-              text: "5.6 毕业项目与学习路线",
-              link: "/crypto-vc/advanced/graduation-project/",
             },
           ],
         },
