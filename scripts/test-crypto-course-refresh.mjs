@@ -82,11 +82,11 @@ const expectedIllustrations = [
   ["learn-src/docs/crypto-vc/start/chapter2-overview/index.md", "chapter-2", 9],
   ["learn-src/docs/crypto-vc/advanced/chapter3-overview/index.md", "chapter-3", 3],
   ["learn-src/docs/crypto-vc/advanced/chapter4-overview/index.md", "chapter-4", 10],
-  ["learn-src/docs/crypto-vc/advanced/chapter5-overview/index.md", "chapter-5", 4],
+  ["learn-src/docs/crypto-vc/advanced/chapter5-overview/index.md", "chapter-5", 5],
 ];
 for (const [file, imageDirectory, expectedCount] of expectedIllustrations) {
   const source = read(file);
-  assert.doesNotMatch(source, /^> \*\*图示说明：\*\*/m, `${file} 仍用可见文字代替插图`);
+  assert.doesNotMatch(source, /^\s*>\s+\*\*图示说明：\*\*/m, `${file} 仍用可见文字代替插图`);
   const imageReferences = [...source.matchAll(
     new RegExp(`!\\[[^\\]]+\\]\\((/images/crypto-vc/${imageDirectory}/\\d{2}\\.webp)\\)`, "g"),
   )].map((match) => match[1]);
