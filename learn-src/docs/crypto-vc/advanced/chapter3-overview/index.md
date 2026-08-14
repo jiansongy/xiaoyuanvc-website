@@ -53,7 +53,7 @@ tags: ["以太坊","智能合约","DApp","Layer 2","CROPS"]
 | 开发者生态 | 较小 | 庞大且活跃 |
 | 升级 | 罕见 | 频繁且迭代 |
 
-（对比表格来自：https://ethereum.org/zh/ethereum-vs-bitcoin/）
+（对比表格来自：[Ethereum.org 的以太坊与比特币对比](https://ethereum.org/zh/ethereum-vs-bitcoin/)）
 
 ## 以太坊的基础概念
 

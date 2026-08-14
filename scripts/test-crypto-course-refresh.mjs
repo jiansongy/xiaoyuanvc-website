@@ -33,6 +33,11 @@ assert.deepEqual(
 );
 
 const courseSource = expectedPages.map(read).join("\n");
+assert.doesNotMatch(
+  courseSource,
+  /https?:\/\/[^\s<>()\]]*[，；：）]/,
+  "加密教程裸网址不得吞入后续中文标点或正文",
+);
 
 const faithfulChapters = [
   {

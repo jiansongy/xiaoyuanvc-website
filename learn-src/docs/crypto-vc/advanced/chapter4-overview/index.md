@@ -76,7 +76,7 @@ DeFi 是用一系列的金融服务，替代传统的金融行业，包括银行
 
 DeFi 的主要类别分别是跨链桥、借贷、质押、交易等。其特点是：无需登录到各种服务中，只要你用自己的加密钱包（比如 MetaMask）登录后，就可以进行操作，而且各种操作可以任意组合，这就是DeFi乐高积木化的含义。
 
-https://defillama.com/categories：
+[DeFiLlama 分类数据](https://defillama.com/categories)：
 
 > **图示说明：** 图片展示了DeFi各类别的TVL（总锁定价值）数据。上方折线图呈现了2018年至今不同类别TVL的变化趋势，如Bridge、Lending、Liquid Staking等类别。下方表格列出前五大类别，包括Bridge、Lending、Liquid Staking、RWA、Dexs，分别有协议数量、联合TVL、1d/7d/1m TVL变化、联合24h收入及描述。该图与上下文紧密相关，直观呈现了DeFi各类别的规模情况。
 
@@ -253,7 +253,7 @@ NFT 独特的“数字所有权”，PDF 却不具有。因为 PDF 可以随意�
 
 你可以把任何一个 NFT 的图片，复制到自己的电脑或者手机里随意使用，但这只是美女的一张照片而已，你并没有得到美女的心（数字所有权）。**数字所有权，代表着：信念、稀缺性、社交货币**。
 
-### NFT 交易市场 OpenSea（https://opensea.io/）
+### NFT 交易市场 [OpenSea](https://opensea.io/)
 
 > **图示说明：** 图片展示的是OpenSea平台界面。左侧大图显示艺术家mendezmendez的NFT作品“ENTROPY”，下方有价格、交易量等信息。右侧列出多个NFT收藏品，如Non Playable Character、PitBoys等，显示其价格、涨跌幅等数据。底部“Trending Tokens”板块展示了热门代币，如pipirate、What If等，有涨跌幅图表。该图与上文介绍OpenSea平台相呼应，直观呈现了平台上的NFT作品及交易情况。
 

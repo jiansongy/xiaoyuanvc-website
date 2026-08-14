@@ -15,7 +15,7 @@ tags: ["比特币","公链","区块链","以太坊","Web3"]
 
 加密货币之所以难入门，是因为它涉及到各方面，比如计算机科学、网络技术、全球政治经济、金融市场、投资理财、以及各国政策管制等，纠缠不清且时刻变化。
 
-以行业新闻为例，每天在律动电报订阅群（https://t.me/BlockBeats_App）发布的消息上百条，目不暇接。
+以行业新闻为例，每天在[律动电报订阅群](https://t.me/BlockBeats_App)发布的消息上百条，目不暇接。
 
 更为严重的是，这领域中骗子特别多，多到你无法想象的地步，所以坚持“**零信任、持续验证、 做好自己的研究 DYOR（Do Your Own Research）**”。这领域安全性的重要性，我们会在第二课中详细介绍。
 
@@ -37,7 +37,7 @@ tags: ["比特币","公链","区块链","以太坊","Web3"]
 
 ## 公链的定义
 
-公链（Public Blockchain）是一种完全开放、去中心化的区块链网络，任何人都可以自由加入、读取数据、发送交易，并参与共识过程，而无需获得许可。其核心特征包括去中心化、开放性、透明性和不可篡改性。https://www.blockchain.com/explorer/assets/btc，能看到比特币的公链在不断增长之中：
+公链（Public Blockchain）是一种完全开放、去中心化的区块链网络，任何人都可以自由加入、读取数据、发送交易，并参与共识过程，而无需获得许可。其核心特征包括去中心化、开放性、透明性和不可篡改性。[Blockchain.com 比特币浏览器](https://www.blockchain.com/explorer/assets/btc)，能看到比特币的公链在不断增长之中：
 
 > **图示说明：** 这张图片展示的是比特币公链的相关数据页面，页面中标注出的“公链”字样搭配红色箭头，指向页面中一系列带有不同编号的区块内容，这些区块代表公链上陆续生成的区块。页面还显示了比特币的当前价格为64,551.23美元，同时呈现了对应的价格走势曲线图，下方还标注了相关的市场数值，整体是区块链平台中关于比特币公链的信息展示界面。
 
@@ -74,9 +74,9 @@ tags: ["比特币","公链","区块链","以太坊","Web3"]
   - 6月19日：Mt.Gox （门头沟）交易所被黑客攻击，比特币价格暴跌
 - **人物**：
 
-  - **中本聪**：bitcoin.org，https://nakamotoinstitute.org/，神秘创始人；
-  - **Jameson Lopp**：https://x.com/lopp，比特币安全业者，整理了资源库：https://lopp.net/bitcoin-information.html；
-  - **Michael Saylor**：https://x.com/saylor，推动 MicroStrategy （现改名为 Strategy）持币，推动比特币主流化。截至2025年底，Strategy已持有65万枚 BTC，是全球最大的企业持币方（DAT）。
+  - **中本聪**：bitcoin.org，[Nakamoto Institute](https://nakamotoinstitute.org/)，神秘创始人；
+  - **Jameson Lopp**：[Jameson Lopp 的 X](https://x.com/lopp)，比特币安全业者，整理了 [Bitcoin Information 资源库](https://lopp.net/bitcoin-information.html)；
+  - **Michael Saylor**：[Michael Saylor 的 X](https://x.com/saylor)，推动 MicroStrategy （现改名为 Strategy）持币，推动比特币主流化。截至2025年底，Strategy已持有65万枚 BTC，是全球最大的企业持币方（DAT）。
 - **当前挑战**：
 
   - **安全预算**：矿工是否有足够经济激励去保证比特币安全。2025年11月链上手续费仅\$487万（2019年12月以来最低），但区块补贴仍可支撑至2050年左右。
@@ -164,8 +164,8 @@ tags: ["比特币","公链","区块链","以太坊","Web3"]
   - 2022–2025：完成 Merge → Dencun → Pectra 等系列升级。2025年8月 ETH 创历史新高\$4,946，但年末回落至约\$3000，全年下跌约11%。
 - **人物**：
 
-  - **Vitalik Buterin**：https://x.com/VitalikButerin，创始灵魂；
-  - **Joseph Lubin**：https://x.com/ethereumjoseph，ConsenSys 创办人，SharpLink（以太坊 Strategy）主席。
+  - **Vitalik Buterin**：[Vitalik Buterin 的 X](https://x.com/VitalikButerin)，创始灵魂；
+  - **Joseph Lubin**：[Joseph Lubin 的 X](https://x.com/ethereumjoseph)，ConsenSys 创办人，SharpLink（以太坊 Strategy）主席。
 - **当前挑战**：
 
   - 一层网络的主导权竞争。以太坊L1费用份额已降至17%，排名第四，面临 Solana 等激烈竞争。
