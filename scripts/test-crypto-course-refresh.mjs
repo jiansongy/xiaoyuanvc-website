@@ -42,12 +42,12 @@ assert.doesNotMatch(
 const faithfulChapters = [
   {
     file: "learn-src/docs/crypto-vc/start/chapter1-overview/index.md",
-    minBytes: 18000,
+    minBytes: 12000,
     topics: ["教学设计", "比特币", "区块链的数据结构", "以太坊", "加密工具推荐", "太多陌生术语", "建议从做 KOL 起步"],
   },
   {
     file: "learn-src/docs/crypto-vc/start/chapter2-overview/index.md",
-    minBytes: 22000,
+    minBytes: 19000,
     topics: ["实务的重要性", "币安的创业故事", "加密钱包基础入门", "钱包的全生命周期安全", "币圈常见骗局", "囤比特币的指标"],
   },
   {
@@ -57,12 +57,12 @@ const faithfulChapters = [
   },
   {
     file: "learn-src/docs/crypto-vc/advanced/chapter4-overview/index.md",
-    minBytes: 18000,
+    minBytes: 15000,
     topics: ["Stablecoin", "DeFi 行业地图", "简化版 AMM 智能合约", "Uniswap", "RWA", "bStocks", "OpenSea"],
   },
   {
     file: "learn-src/docs/crypto-vc/advanced/chapter5-overview/index.md",
-    minBytes: 20000,
+    minBytes: 19000,
     topics: ["HyperLiquid", "预测市场的工作原理", "Polymarket", "问答环节", "Bittensor", "九本推荐阅读书", "Top10 概念"],
   },
 ];
@@ -74,6 +74,26 @@ for (const chapter of faithfulChapters) {
   );
   for (const topic of chapter.topics) {
     assert.ok(source.includes(topic), `${chapter.file} 缺少原课件主题：${topic}`);
+  }
+}
+
+const expectedIllustrations = [
+  ["learn-src/docs/crypto-vc/start/chapter1-overview/index.md", "chapter-1", 11],
+  ["learn-src/docs/crypto-vc/start/chapter2-overview/index.md", "chapter-2", 9],
+  ["learn-src/docs/crypto-vc/advanced/chapter3-overview/index.md", "chapter-3", 3],
+  ["learn-src/docs/crypto-vc/advanced/chapter4-overview/index.md", "chapter-4", 10],
+  ["learn-src/docs/crypto-vc/advanced/chapter5-overview/index.md", "chapter-5", 4],
+];
+for (const [file, imageDirectory, expectedCount] of expectedIllustrations) {
+  const source = read(file);
+  assert.doesNotMatch(source, /^> \*\*图示说明：\*\*/m, `${file} 仍用可见文字代替插图`);
+  const imageReferences = [...source.matchAll(
+    new RegExp(`!\\[[^\\]]+\\]\\((/images/crypto-vc/${imageDirectory}/\\d{2}\\.webp)\\)`, "g"),
+  )].map((match) => match[1]);
+  assert.equal(imageReferences.length, expectedCount, `${file} 应包含 ${expectedCount} 张本地插图`);
+  for (const imageReference of imageReferences) {
+    const imagePath = join(root, "learn-src/docs/public", imageReference);
+    assert.ok(statSync(imagePath).size > 1024, `${imageReference} 图片缺失或文件过小`);
   }
 }
 

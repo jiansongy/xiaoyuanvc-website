@@ -64,7 +64,7 @@ tags: ["以太坊","智能合约","DApp","Layer 2","CROPS"]
 
 我们想亲眼看到以太坊的公开账本的区块生产流水线，推荐访问：[Etherscan网站](https://etherscan.io/)。
 
-> **图示说明：** 图片展示的是Etherscan网站界面，可查看以太坊区块链信息。上方显示ETH价格为1,905.22美元，Gas费用为0.042 Gwei。下方有“Transactions”“Transaction History”“Latest Blocks”“Latest Transactions”等板块，如“Transactions”板块显示交易数量为3,635.19 M，每秒交易数为16.1 TPS；“Latest Blocks”板块显示最新区块信息，如区块高度25635431，创建者为Titan Builder等。该图与上文推荐访问Etherscan网站查看以太坊公开账本区块生产流水线的内容相关。
+![Etherscan网站界面，可查看以太坊区块链信息](/images/crypto-vc/chapter-3/01.webp)
 
 ## 一笔完整的交易是如何走的
 
@@ -103,11 +103,11 @@ tags: ["以太坊","智能合约","DApp","Layer 2","CROPS"]
 
 以太坊基金会官网上列了一个应用分类图：https://ethereum.org/zh/apps/
 
-> **图示说明：** 图片展示了以太坊的DAPP生态分类图。分为DeFi、收藏品、社交、游戏、跨链桥、生产力、隐私、DAO八大类别。DeFi允许用户借贷、借款、交易并从加密货币资产中赚取利息；收藏品是独一无二且无法复制的数字资产；社交允许用户与他人建立联系并分享内容；游戏允许用户玩游戏并赚取奖励；跨链桥允许用户在不同网络之间跨链转移资产；生产力旨在帮助用户提高工作效率；隐私允许用户保持私密性；DAO允许用户治理和创建去中心化自治组织。
+![以太坊的DAPP生态分类图](/images/crypto-vc/chapter-3/02.webp)
 
 DappRadar提供了一个所有（以太坊等所有公链都有）去中心化应用的热点图：https://dappradar.com/heatmap
 
-> **图示说明：** 图片是DappRadar提供的所有公链去中心化应用热点图，展示了Top 100项目的市场资本规模，以24小时价格变化为依据，颜色代表价格变化。图中以不同颜色块呈现各项目，如RAIN、LINK、DAI、USDT等，部分项目有数字标识，如LINK +1.08%。该图与文档中介绍的以太坊DAPP生态分类图相呼应，直观呈现了以太坊生态中各应用的市场表现情况。
+![DappRadar提供的所有公链去中心化应用热点图，展示了Top 100项目的市场资本规模，以2](/images/crypto-vc/chapter-3/03.webp)
 
 ## 以太坊基金会的CROPS使命
 

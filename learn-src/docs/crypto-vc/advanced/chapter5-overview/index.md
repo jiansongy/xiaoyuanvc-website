@@ -21,13 +21,13 @@ https://www.coingecko.com/en/exchanges/derivatives/decentralized
 
 Perp DEX 中第一名 HyperLiquid 是学习重点。
 
-> **图示说明：** 图片展示了CoinGecko网站上关于Perpetual DEXs（永续衍生品交易所）的数据。标题为“Perpetual DEXs”，显示总永续DEX交易量为209亿美元，24小时内下降4.25%。下方有四个标签，其中“Perp DEXs”被绿色高亮显示。表格中，Hyperliquid (Futures)交易所以106.606亿美元的结算量、86.4568亿美元的24小时交易量和389个永续合约位列榜首。该图片与上下文介绍的Perp DEX中HyperLiquid是学习重点的内容相契合，直观呈现了Hyperliquid的相关数据。
+![CoinGecko网站上关于Perpetual DEXs（永续衍生品交易所）的数据](/images/crypto-vc/chapter-5/01.webp)
 
 ### HyperLiquid 是什么？
 
 https://app.hyperliquid.xyz/trade
 
-> **图示说明：** 这张图片展示的是HyperLiquid去中心化永续合约交易所的交易界面。界面左侧是BTC-USDC交易对的K线走势图，附带资金费率和成交量相关数据，走势区域有明确的价格变动幅度及对应涨跌标识。界面右侧分为订单簿、交易操作区等模块，订单簿清晰显示不同价格档位的买卖挂单数量，交易区提供“Buy / Long”“Sell / Short”等操作选项，界面顶部设有Deposit等功能入口，整体呈现出该交易平台的实时交易数据与操作功能界面，对应文档中介绍的去中心化永续合约交易所HyperLiquid的实际界面形式。
+![HyperLiquid去中心化永续合约交易所的交易界面](/images/crypto-vc/chapter-5/02.webp)
 
 - 先理解什么是“DEX”（去中心化交易所）
 
@@ -140,7 +140,7 @@ Hyperliquid 近期大量增加股票、黄金、原油、外汇等非币圈资�
 
 https://polymarket.com/
 
-> **图示说明：** 这张图片展示了Polymarket平台的界面，该平台是一个可以对各类事件结果进行预测的市场。界面中呈现了多个预测项目，每项项目都标注了预测事件、参与预测的投票选择以及对应比例，比如“Largest IPO by market cap in 2026?”“Tesla和SpaceX merger officially announced by...?”等不同主题的预测。每个预测项还标明了时间范围，并有“Yes”“No”两种选项，搭配对应票数和占比，整体界面用于用户参与预测下注，契合文档中Polymarket“万事皆可赌”的相关定位，且上方有平台网址入口及功能入口标识。
+![Polymarket平台的界面，该平台是一个可以对各类事件结果进行预测的市场](/images/crypto-vc/chapter-5/03.webp)
 
 - **Polymarket 简介**
 
@@ -231,7 +231,7 @@ Crypto AI，就是尝试用区块链、Token 和开放市场，重新组织 AI �
 
 https://www.bittensor.com/
 
-> **图示说明：** 图片展示的是Bittensor官网首页。上方有“ABOUT”“WHITEPAPER”“DOCS”“DISCORD”“WALLET”“EXPLORE”等导航栏选项。画面中央是一个由线条和点构成的几何图形，呈现出一种网络结构感。该图片与文档中介绍Bittensor的内容相关，直观呈现了Bittensor官网的界面样式，帮助读者了解其网站布局。
+![Bittensor官网首页](/images/crypto-vc/chapter-5/04.webp)
 
 **Bittensor 是一个让不同的人竞争生产 AI 资源，并按照贡献获得 Token 奖励的开放市场。**Bittensor 官方现在把这些 AI 资源称为 **Digital Commodities（数字商品）**。这些商品可以是：AI 推理、GPU 算力、数据、模型、搜索、存储、预测、Agent 服务等。创始人是：https://x.com/const_reborn
 
