@@ -1,113 +1,80 @@
-/**
- * GLM API 代理 — Vercel Serverless Function (Node.js)
- *
- * 环境变量（在 Vercel Dashboard 设置）：
- *   GLM_API_KEY  智谱 GLM API 密钥
- */
+"use strict";
 
-const DEFAULT_ALLOWED_ORIGINS = [
-  "https://xiaoyuanvc.com",
-  "http://localhost:8080",
-  "http://127.0.0.1:8080",
-];
+const { Readable } = require("stream");
 
-const ALLOWED_ORIGINS = (
-  process.env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS.join(",")
-)
-  .split(",")
-  .map((item) => item.trim())
-  .filter(Boolean);
+const {
+  DEFAULT_FALLBACK_MODEL,
+  DEFAULT_MODEL,
+  GLM_URL,
+  UPSTREAM_TIMEOUT_MS,
+  buildGLMPayload,
+} = require("../lib/glm");
+const {
+  applyCors,
+  handlePreflight,
+  readJsonBody,
+  sendJson,
+} = require("../lib/http");
+const {
+  TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
+} = require("../lib/data-store");
+const {
+  scoreStudentStartupSelfCheck,
+} = require("../lib/student-startup-self-check");
 
-const GLM_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions";
-const UPSTREAM_TIMEOUT_MS = 55000;
-
-module.exports = async function handler(req, res) {
-  const origin = req.headers["origin"] || "";
-  const corsOrigin = ALLOWED_ORIGINS.includes(origin)
-    ? origin
-    : ALLOWED_ORIGINS[0];
-
-  res.setHeader("Access-Control-Allow-Origin", corsOrigin);
-  res.setHeader("Vary", "Origin");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-  if (req.method === "OPTIONS") {
-    res.status(204).end();
-    return;
-  }
-
-  if (req.method === "HEAD") {
-    res.status(200).end();
-    return;
-  }
-
-  if (req.method === "GET") {
-    res.status(200).json({
-      ok: true,
-      service: "glm-proxy",
-      model: "glm-4.5-air",
-      hasApiKey: Boolean(process.env.GLM_API_KEY),
-      allowedOrigins: ALLOWED_ORIGINS,
-      now: new Date().toISOString(),
-    });
-    return;
-  }
-
-  if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
-    return;
-  }
-
-  const apiKey = process.env.GLM_API_KEY;
-  if (!apiKey) {
-    res.status(500).json({ error: "Server misconfiguration" });
-    return;
-  }
-
-  let body = req.body;
-  if (typeof body === "string") {
-    try {
-      body = JSON.parse(body);
-    } catch {
-      res.status(400).json({ error: "Invalid JSON" });
-      return;
-    }
-  }
-  if (!body) {
-    res.status(400).json({ error: "Empty body" });
-    return;
-  }
-
-  // 强制使用 glm-4.5-air，防止客户端指定昂贵模型
-  body.model = "glm-4.5-air";
-
-  let upstream;
+async function fetchGLM(body, model, apiKey) {
   const ctrl = new AbortController();
-  const timer = setTimeout(() => {
+  const timer = setTimeout(function () {
     ctrl.abort(new Error("Upstream timeout"));
   }, UPSTREAM_TIMEOUT_MS);
+
   try {
-    upstream = await fetch(GLM_URL, {
+    return await fetch(GLM_URL, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: "Bearer " + apiKey,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(buildGLMPayload(body, model)),
       signal: ctrl.signal,
     });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function isRetryableStatus(statusCode) {
+  return statusCode !== 401 && statusCode !== 403;
+}
+
+async function forwardChatCompletion(body, apiKey, res) {
+  let upstream;
+  let selectedModel = DEFAULT_MODEL;
+
+  try {
+    upstream = await fetchGLM(body, selectedModel, apiKey);
+
+    if (
+      !upstream.ok &&
+      DEFAULT_FALLBACK_MODEL &&
+      DEFAULT_FALLBACK_MODEL !== selectedModel &&
+      isRetryableStatus(upstream.status)
+    ) {
+      if (upstream.body) {
+        await upstream.body.cancel().catch(function () {});
+      }
+      selectedModel = DEFAULT_FALLBACK_MODEL;
+      upstream = await fetchGLM(body, selectedModel, apiKey);
+    }
   } catch (err) {
     const isTimeout =
       err && (err.name === "AbortError" || /timeout/i.test(err.message || ""));
-    res.status(isTimeout ? 504 : 502).json({
+    sendJson(res, isTimeout ? 504 : 502, {
       error: isTimeout
         ? "GLM 响应超时，请重试"
         : "无法连接 GLM API：" + err.message,
     });
     return;
-  } finally {
-    clearTimeout(timer);
   }
 
   res.status(upstream.status);
@@ -116,11 +83,10 @@ module.exports = async function handler(req, res) {
     upstream.headers.get("content-type") || "application/json",
   );
   res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("X-GLM-Model", selectedModel);
 
-  // 流式转发
-  const { Readable } = require("stream");
   try {
-    await new Promise((resolve, reject) => {
+    await new Promise(function (resolve, reject) {
       const readable = upstream.body ? Readable.fromWeb(upstream.body) : null;
       if (!readable) {
         reject(new Error("Upstream body is empty"));
@@ -133,7 +99,77 @@ module.exports = async function handler(req, res) {
     });
   } catch (err) {
     if (!res.headersSent) {
-      res.status(502).json({ error: "流式转发失败：" + err.message });
+      sendJson(res, 502, { error: "流式转发失败：" + err.message });
     }
   }
+}
+
+module.exports = async function handler(req, res) {
+  const cors = applyCors(req, res);
+
+  if (handlePreflight(req, res)) {
+    return;
+  }
+
+  if (req.method === "GET") {
+    sendJson(res, 200, {
+      ok: true,
+      service: "glm-proxy",
+      model: DEFAULT_MODEL,
+      fallbackModel: DEFAULT_FALLBACK_MODEL,
+      hasApiKey: Boolean(process.env.GLM_API_KEY),
+      allowedOrigins: cors.allowedOrigins,
+      endpoints: ["/api/glm-proxy"],
+      now: new Date().toISOString(),
+    });
+    return;
+  }
+
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Method not allowed" });
+    return;
+  }
+
+  let body;
+  try {
+    body = readJsonBody(req);
+  } catch (err) {
+    sendJson(res, 400, { error: "Invalid JSON" });
+    return;
+  }
+
+  if (!body || !Object.keys(body).length) {
+    sendJson(res, 400, { error: "Empty body" });
+    return;
+  }
+
+  if (body.toolId) {
+    if (body.toolId !== TOOL_ID_STUDENT_STARTUP_SELF_CHECK) {
+      sendJson(res, 400, { error: "Unknown toolId" });
+      return;
+    }
+
+    try {
+      const result = await scoreStudentStartupSelfCheck(body);
+      sendJson(res, 200, result);
+    } catch (err) {
+      sendJson(res, 400, {
+        ok: false,
+        error: err.message || "学生创业自检执行失败",
+      });
+    }
+    return;
+  }
+
+  const apiKey = process.env.GLM_API_KEY;
+  if (!apiKey) {
+    sendJson(res, 500, { error: "Server misconfiguration" });
+    return;
+  }
+
+  await forwardChatCompletion(body, apiKey, res);
 };
+
+module.exports.fetchGLM = fetchGLM;
+module.exports.forwardChatCompletion = forwardChatCompletion;
+module.exports.isRetryableStatus = isRetryableStatus;

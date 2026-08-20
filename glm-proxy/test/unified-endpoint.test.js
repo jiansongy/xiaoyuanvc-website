@@ -1,0 +1,44 @@
+"use strict";
+
+const test = require("node:test");
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const proxyRoot = path.resolve(__dirname, "..");
+const siteRoot = path.resolve(proxyRoot, "..");
+
+test("Vercel exposes only the unified GLM function", function () {
+  const apiFiles = fs
+    .readdirSync(path.join(proxyRoot, "api"))
+    .filter(function (name) {
+      return name.endsWith(".js");
+    })
+    .sort();
+  const vercelConfig = JSON.parse(
+    fs.readFileSync(path.join(proxyRoot, "vercel.json"), "utf8"),
+  );
+
+  assert.deepEqual(apiFiles, ["glm-proxy.js"]);
+  assert.deepEqual(Object.keys(vercelConfig.functions), ["api/glm-proxy.js"]);
+});
+
+test("all five AI tools use the unified endpoint and no client selects a model", function () {
+  const resourceFiles = [
+    "find-your-idea.html",
+    "find-what-you-want.html",
+    "hard-tech-check.html",
+    "ai-ready-check.html",
+    "rate-your-idea.html",
+  ];
+
+  for (const name of resourceFiles) {
+    const source = fs.readFileSync(
+      path.join(siteRoot, "resources", name),
+      "utf8",
+    );
+    assert.match(source, /https:\/\/api\.xiaoyuanvc\.com\/api\/glm-proxy/);
+    assert.doesNotMatch(source, /api\/student-startup-self-check/);
+    assert.doesNotMatch(source, /model:\s*["']glm-/);
+  }
+});

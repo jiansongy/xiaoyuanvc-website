@@ -1,9 +1,28 @@
 "use strict";
 
 const GLM_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions";
-const DEFAULT_MODEL = process.env.GLM_MODEL || "glm-4.5-air";
-const DEFAULT_FALLBACK_MODEL = process.env.GLM_FALLBACK_MODEL || "glm-4-flash";
+const DEFAULT_MODEL = process.env.GLM_MODEL || "glm-5.3";
+const DEFAULT_FALLBACK_MODEL =
+  process.env.GLM_FALLBACK_MODEL || "glm-4.5-air";
+const DEFAULT_MAX_TOKENS = 4096;
 const UPSTREAM_TIMEOUT_MS = 55000;
+
+function buildGLMPayload(payload, model) {
+  const nextPayload = Object.assign({}, payload, {
+    model: model || DEFAULT_MODEL,
+    max_tokens: DEFAULT_MAX_TOKENS,
+  });
+
+  if (nextPayload.model === "glm-5.3") {
+    nextPayload.thinking = { type: "enabled" };
+    nextPayload.reasoning_effort = "low";
+  } else {
+    delete nextPayload.thinking;
+    delete nextPayload.reasoning_effort;
+  }
+
+  return nextPayload;
+}
 
 function extractTextFromCompletion(json) {
   return (
@@ -113,7 +132,7 @@ async function callStructuredGLM(options) {
 
     try {
       const json = await callGLM(
-        Object.assign({}, payload, { model: attempt.model }),
+        buildGLMPayload(payload, attempt.model),
       );
       rawText = extractTextFromCompletion(json) || "";
       const parsed = JSON.parse(extractJsonBlock(rawText));
@@ -156,7 +175,11 @@ async function callStructuredGLM(options) {
 
 module.exports = {
   DEFAULT_FALLBACK_MODEL,
+  DEFAULT_MAX_TOKENS,
   DEFAULT_MODEL,
+  GLM_URL,
+  UPSTREAM_TIMEOUT_MS,
+  buildGLMPayload,
   callGLM,
   callStructuredGLM,
   extractJsonBlock,

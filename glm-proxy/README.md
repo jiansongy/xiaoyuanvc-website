@@ -11,11 +11,8 @@ Goal:
 - `GET /api/glm-proxy`
   - health check
 - `POST /api/glm-proxy`
-  - forwards requests to GLM
-- `GET /api/student-startup-self-check`
-  - health check
-- `POST /api/student-startup-self-check`
-  - runs the student startup self-check backend
+  - forwards regular `messages` requests to GLM
+  - routes `toolId: "student-startup-self-check"` to the self-check backend
   - applies unified data schema normalization
   - uses double-layer scoring with heuristic rules + AI reasoning
   - returns structured history snapshots and action mapping
@@ -27,6 +24,10 @@ Goal:
 
 ## Optional Environment Variables
 
+- `GLM_MODEL`
+  - primary model; defaults to `glm-5.3`
+- `GLM_FALLBACK_MODEL`
+  - fallback model; defaults to `glm-4.5-air`
 - `ALLOWED_ORIGINS`
   - comma-separated list
   - example:
@@ -60,7 +61,8 @@ Expected response shape:
 {
   "ok": true,
   "service": "glm-proxy",
-  "model": "glm-4-flash",
+  "model": "glm-5.3",
+  "fallbackModel": "glm-4.5-air",
   "hasApiKey": true
 }
 ```
@@ -73,8 +75,18 @@ curl -X POST https://api.xiaoyuanvc.com/api/glm-proxy \
   -d '{"messages":[{"role":"user","content":"用一句话介绍校园VC"}],"stream":false}'
 ```
 
+Student startup self-check:
+
+```bash
+curl -X POST https://api.xiaoyuanvc.com/api/glm-proxy \
+  -H 'Content-Type: application/json' \
+  -d '{"toolId":"student-startup-self-check","toolState":{"draftData":{"product":"一个帮助大学生管理课程任务和截止日期的智能学习工具"}}}'
+```
+
 ## Notes
 
-- The proxy forces model `glm-4-flash`
+- The server selects the model; clients do not send model names
+- GLM-5.3 uses enabled thinking with low reasoning effort and a 4096-token cap
+- Failed primary requests can fall back to `glm-4.5-air` before output starts
 - CORS is restricted to the configured allowed origins
 - Custom domain is strongly preferred over `*.vercel.app`
