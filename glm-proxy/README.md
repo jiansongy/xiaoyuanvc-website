@@ -27,7 +27,7 @@ Goal:
 - `GLM_MODEL`
   - primary model; defaults to `glm-5.3`
 - `GLM_FALLBACK_MODEL`
-  - fallback model; defaults to `glm-4.5-air`
+  - fallback model; defaults to `glm-4.7-flashx`
 - `ALLOWED_ORIGINS`
   - comma-separated list
   - example:
@@ -62,7 +62,7 @@ Expected response shape:
   "ok": true,
   "service": "glm-proxy",
   "model": "glm-5.3",
-  "fallbackModel": "glm-4.5-air",
+  "fallbackModel": "glm-4.7-flashx",
   "hasApiKey": true
 }
 ```
@@ -88,7 +88,7 @@ curl -X POST https://api.xiaoyuanvc.com/api/glm-proxy \
 - The server selects the model; clients do not send model names
 - GLM-5.3 uses enabled thinking with low reasoning effort and a 4096-token cap
 - Transient status, connection, or pre-output body failures can fall back to
-  `glm-4.5-air`
+  `glm-4.7-flashx`
 - One 55-second deadline covers generic connection and body streaming; the
   self-check shares one 52-second deadline across analysis, retries, fallback,
   and optional history recalibration

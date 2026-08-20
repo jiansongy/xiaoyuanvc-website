@@ -3,7 +3,7 @@
 const GLM_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions";
 const DEFAULT_MODEL = process.env.GLM_MODEL || "glm-5.3";
 const DEFAULT_FALLBACK_MODEL =
-  process.env.GLM_FALLBACK_MODEL || "glm-4.5-air";
+  process.env.GLM_FALLBACK_MODEL || "glm-4.7-flashx";
 const DEFAULT_MAX_TOKENS = 4096;
 const UPSTREAM_TIMEOUT_MS = 55000;
 const STRUCTURED_ATTEMPT_TIMEOUTS = [32000, 10000, 10000];

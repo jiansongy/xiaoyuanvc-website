@@ -79,7 +79,7 @@ test("health check reports the unified GLM-5.3 configuration", async function ()
   assert.equal(response.statusCode, 200);
   assert.equal(body.service, "glm-proxy");
   assert.equal(body.model, "glm-5.3");
-  assert.equal(body.fallbackModel, "glm-4.5-air");
+  assert.equal(body.fallbackModel, "glm-4.7-flashx");
   assert.deepEqual(body.endpoints, ["/api/glm-proxy"]);
 });
 
@@ -149,7 +149,7 @@ test("generic requests fall back before output starts when GLM-5.3 is unavailabl
     });
 
     assert.equal(response.statusCode, 200);
-    assert.deepEqual(models, ["glm-5.3", "glm-4.5-air"]);
+    assert.deepEqual(models, ["glm-5.3", "glm-4.7-flashx"]);
   } finally {
     global.fetch = originalFetch;
   }
@@ -184,7 +184,7 @@ test("generic requests fall back when the primary connection fails", async funct
     });
 
     assert.equal(response.statusCode, 200);
-    assert.deepEqual(models, ["glm-5.3", "glm-4.5-air"]);
+    assert.deepEqual(models, ["glm-5.3", "glm-4.7-flashx"]);
   } finally {
     global.fetch = originalFetch;
   }
@@ -226,7 +226,7 @@ test("generic requests fall back when the primary body fails before output", asy
     });
 
     assert.equal(response.statusCode, 200);
-    assert.deepEqual(models, ["glm-5.3", "glm-4.5-air"]);
+    assert.deepEqual(models, ["glm-5.3", "glm-4.7-flashx"]);
   } finally {
     global.fetch = originalFetch;
   }

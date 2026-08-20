@@ -58,6 +58,46 @@ test("structured retries leave time inside the Vercel request deadline", functio
   );
 });
 
+test("structured requests use GLM-4.7-FlashX after primary retries fail", async function () {
+  const originalFetch = global.fetch;
+  const originalApiKey = process.env.GLM_API_KEY;
+  const models = [];
+  process.env.GLM_API_KEY = "test-api-key";
+  global.fetch = async function (_url, options) {
+    const payload = JSON.parse(options.body);
+    models.push(payload.model);
+    if (models.length < 3) {
+      return new Response(JSON.stringify({ error: { message: "unavailable" } }), {
+        status: 503,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    return new Response(
+      JSON.stringify({
+        choices: [{ message: { content: '{"ok":true}' } }],
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  };
+
+  try {
+    const result = await callStructuredGLM({
+      messages: [{ role: "user", content: "测试" }],
+    });
+
+    assert.deepEqual(models, ["glm-5.3", "glm-5.3", "glm-4.7-flashx"]);
+    assert.equal(result.model, "glm-4.7-flashx");
+    assert.equal(result.usedFallbackModel, true);
+  } finally {
+    global.fetch = originalFetch;
+    if (typeof originalApiKey === "undefined") {
+      delete process.env.GLM_API_KEY;
+    } else {
+      process.env.GLM_API_KEY = originalApiKey;
+    }
+  }
+});
+
 test("structured calls stop immediately after the shared deadline", async function () {
   const originalFetch = global.fetch;
   const originalApiKey = process.env.GLM_API_KEY;

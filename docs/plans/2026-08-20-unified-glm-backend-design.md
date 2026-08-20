@@ -17,7 +17,7 @@
 ## 模型配置
 
 - `GLM_MODEL`：主模型，默认 `glm-5.3`。
-- `GLM_FALLBACK_MODEL`：回退模型，默认 `glm-4.5-air`。
+- `GLM_FALLBACK_MODEL`：回退模型，默认 `glm-4.7-flashx`。
 - GLM-5.3 请求显式设置 `thinking.type: "enabled"`、`reasoning_effort: "low"`，并限制输出长度。
 - 主模型在开始输出前失败时允许回退；流式响应已经开始后不重复请求。
 - 普通请求的连接和响应体共用 55 秒总时限；一次结构化评分的主分析、重试、模型回退和历史校准共用 52 秒总时限，剩余不足 10 秒时跳过可选的历史校准。
