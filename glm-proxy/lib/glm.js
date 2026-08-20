@@ -17,6 +17,9 @@ function buildGLMPayload(payload, model) {
   if (nextPayload.model === "glm-5.3") {
     nextPayload.thinking = { type: "enabled" };
     nextPayload.reasoning_effort = "low";
+  } else if (nextPayload.model === "glm-4.7-flashx") {
+    nextPayload.thinking = { type: "disabled" };
+    delete nextPayload.reasoning_effort;
   } else {
     delete nextPayload.thinking;
     delete nextPayload.reasoning_effort;

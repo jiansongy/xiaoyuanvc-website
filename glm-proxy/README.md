@@ -87,6 +87,8 @@ curl -X POST https://api.xiaoyuanvc.com/api/glm-proxy \
 
 - The server selects the model; clients do not send model names
 - GLM-5.3 uses enabled thinking with low reasoning effort and a 4096-token cap
+- GLM-4.7-FlashX fallback disables thinking to keep recovery within its
+  10-second attempt budget
 - Transient status, connection, or pre-output body failures can fall back to
   `glm-4.7-flashx`
 - One 55-second deadline covers generic connection and body streaming; the

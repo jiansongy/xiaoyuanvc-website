@@ -6,6 +6,7 @@ const assert = require("node:assert/strict");
 const {
   STRUCTURED_ATTEMPT_TIMEOUTS,
   UPSTREAM_TIMEOUT_MS,
+  buildGLMPayload,
   callGLM,
   callStructuredGLM,
 } = require("../lib/glm");
@@ -56,6 +57,20 @@ test("structured retries leave time inside the Vercel request deadline", functio
       return sum + value;
     }, 0) < UPSTREAM_TIMEOUT_MS,
   );
+});
+
+test("GLM-4.7-FlashX fallback disables thinking to stay within its deadline", function () {
+  const payload = buildGLMPayload(
+    {
+      messages: [{ role: "user", content: "测试" }],
+      thinking: { type: "enabled" },
+      reasoning_effort: "high",
+    },
+    "glm-4.7-flashx",
+  );
+
+  assert.deepEqual(payload.thinking, { type: "disabled" });
+  assert.equal("reasoning_effort" in payload, false);
 });
 
 test("structured requests use GLM-4.7-FlashX after primary retries fail", async function () {
