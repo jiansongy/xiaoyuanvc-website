@@ -1,0 +1,40 @@
+# 统一 GLM 后端设计
+
+## 目标
+
+将官网互动工具从同一 Vercel 项目中的两个 Serverless Function 入口收敛为一个：`/api/glm-proxy`。保持现有五个工具的用户体验和返回数据结构不变，并为 GLM-5.3 统一模型配置。
+
+## 接口设计
+
+- `GET /api/glm-proxy`：返回服务、当前主模型、回退模型和 API Key 配置状态。
+- `POST /api/glm-proxy`：
+  - 请求包含 `toolId: "student-startup-self-check"` 时，调用创业自检评分逻辑并返回现有结构化结果。
+  - 其他请求按现有 Chat Completions 代理处理，支持流式和非流式输出。
+- 删除 `/api/student-startup-self-check` 函数及其 Vercel 配置；创业自检前端改用统一入口。
+
+显式 `toolId` 路由比按字段猜测请求类型更稳定，也比通用 RPC 层更简单。
+
+## 模型配置
+
+- `GLM_MODEL`：主模型，默认 `glm-5.3`。
+- `GLM_FALLBACK_MODEL`：回退模型，默认 `glm-4.5-air`。
+- GLM-5.3 请求显式设置 `thinking.type: "enabled"`、`reasoning_effort: "low"`，并限制输出长度。
+- 主模型在开始输出前失败时允许回退；流式响应已经开始后不重复请求。
+
+## 代码结构
+
+唯一的 Vercel 函数负责 CORS、方法校验和请求分发。评分、数据存储、GLM 调用和 HTTP 工具继续放在 `lib/` 中，作为同一后端的内部模块，不暴露第二个公网入口。
+
+## 错误处理
+
+- 无效 JSON、空请求和未知 `toolId` 返回 400。
+- 缺少 API Key 返回 500，但不暴露密钥。
+- 上游连接失败或超时分别返回 502/504。
+- 结构化评分保持现有人工规则降级和模型回退行为。
+
+## 验证
+
+- 测试先覆盖统一入口的普通对话路由、创业评分路由、未知工具、健康检查和模型参数。
+- 删除旧入口后，测试 Vercel 配置只声明一个函数。
+- 运行 `npm test`、站点生产构建和 `git diff --check`。
+- 上线前在 Vercel 预览环境使用真实 Key 验证 GLM-5.3 权限、响应时间、流式输出、JSON 解析和回退行为；本次本地实现不直接发布生产。
