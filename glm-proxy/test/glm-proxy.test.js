@@ -2,6 +2,7 @@
 
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const { EventEmitter } = require("node:events");
 const { PassThrough } = require("node:stream");
 
 const handler = require("../api/glm-proxy");
@@ -372,5 +373,81 @@ test("all POST routes fail clearly when the API key is missing", async function 
     assert.equal(body.error, "Server misconfiguration");
   } finally {
     process.env.GLM_API_KEY = savedApiKey;
+  }
+});
+
+test("stream backpressure stops immediately when the client disconnects", async function () {
+  const res = new EventEmitter();
+  res.status = function () {
+    return res;
+  };
+  res.setHeader = function () {};
+  res.write = function () {
+    return false;
+  };
+  res.end = function () {};
+
+  const upstream = new Response("first chunk", {
+    status: 200,
+    headers: { "Content-Type": "text/plain" },
+  });
+  const piping = handler.pipeUpstream(upstream, "glm-5.3", res);
+  setImmediate(function () {
+    res.emit("close");
+  });
+
+  await assert.rejects(
+    Promise.race([
+      piping,
+      new Promise(function (_resolve, reject) {
+        setTimeout(function () {
+          reject(new Error("backpressure wait did not stop"));
+        }, 100);
+      }),
+    ]),
+    /Client disconnected/,
+  );
+});
+
+test("an already disconnected client does not wait, fall back, or write a response", async function () {
+  const originalFetch = global.fetch;
+  const models = [];
+  const res = new EventEmitter();
+  let ended = false;
+  res.destroyed = true;
+  res.writableEnded = false;
+  res.headersSent = false;
+  res.status = function () {
+    return res;
+  };
+  res.setHeader = function () {};
+  res.write = function () {
+    return false;
+  };
+  res.end = function () {
+    ended = true;
+  };
+  global.fetch = async function (_url, options) {
+    models.push(JSON.parse(options.body).model);
+    return new Response("buffered chunk", {
+      status: 200,
+      headers: { "Content-Type": "text/plain" },
+    });
+  };
+
+  try {
+    await Promise.race([
+      handler.forwardChatCompletion({ messages: [] }, "test-api-key", res),
+      new Promise(function (_resolve, reject) {
+        setTimeout(function () {
+          reject(new Error("already disconnected request did not stop"));
+        }, 100);
+      }),
+    ]);
+
+    assert.deepEqual(models, ["glm-5.3"]);
+    assert.equal(ended, false);
+  } finally {
+    global.fetch = originalFetch;
   }
 });

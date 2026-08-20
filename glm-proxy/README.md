@@ -89,7 +89,9 @@ curl -X POST https://api.xiaoyuanvc.com/api/glm-proxy \
 - GLM-5.3 uses enabled thinking with low reasoning effort and a 4096-token cap
 - Transient status, connection, or pre-output body failures can fall back to
   `glm-4.5-air`
-- One 55-second deadline covers connection and body streaming; structured
-  attempts use bounded sub-deadlines within that budget
+- One 55-second deadline covers generic connection and body streaming; the
+  self-check shares one 52-second deadline across analysis, retries, fallback,
+  and optional history recalibration
+- History recalibration is skipped when less than 10 seconds remain
 - CORS is restricted to the configured allowed origins
 - Custom domain is strongly preferred over `*.vercel.app`

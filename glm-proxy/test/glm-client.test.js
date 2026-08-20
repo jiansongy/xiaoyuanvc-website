@@ -7,6 +7,7 @@ const {
   STRUCTURED_ATTEMPT_TIMEOUTS,
   UPSTREAM_TIMEOUT_MS,
   callGLM,
+  callStructuredGLM,
 } = require("../lib/glm");
 
 test("GLM timeout remains active while the response body is read", async function () {
@@ -55,4 +56,33 @@ test("structured retries leave time inside the Vercel request deadline", functio
       return sum + value;
     }, 0) < UPSTREAM_TIMEOUT_MS,
   );
+});
+
+test("structured calls stop immediately after the shared deadline", async function () {
+  const originalFetch = global.fetch;
+  const originalApiKey = process.env.GLM_API_KEY;
+  let fetchCalls = 0;
+  process.env.GLM_API_KEY = "test-api-key";
+  global.fetch = async function () {
+    fetchCalls += 1;
+    throw new Error("fetch should not run after deadline");
+  };
+
+  try {
+    await assert.rejects(
+      callStructuredGLM({
+        deadlineAt: Date.now() - 1,
+        messages: [{ role: "user", content: "测试" }],
+      }),
+      /GLM 响应超时/,
+    );
+    assert.equal(fetchCalls, 0);
+  } finally {
+    global.fetch = originalFetch;
+    if (typeof originalApiKey === "undefined") {
+      delete process.env.GLM_API_KEY;
+    } else {
+      process.env.GLM_API_KEY = originalApiKey;
+    }
+  }
 });

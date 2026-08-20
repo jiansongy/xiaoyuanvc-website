@@ -21,6 +21,8 @@ const DIMENSIONS = [
 ];
 
 const ACTION_LIBRARY_VERSION = 1;
+const SCORING_DEADLINE_MS = 52000;
+const MIN_RECALIBRATION_BUDGET_MS = 10000;
 const ACTIONS_BY_ID = ACTION_LIBRARY.reduce(function (acc, item) {
   acc[item.actionId] = item;
   return acc;
@@ -690,6 +692,17 @@ async function maybeRecalibrateWithHistory(options) {
     };
   }
 
+  if (options.deadlineAt - Date.now() < MIN_RECALIBRATION_BUDGET_MS) {
+    return {
+      recalibrated: false,
+      reusedPreviousScores: false,
+      inputSimilarity: similarity,
+      comparedVersionId: latestHistory.versionId,
+      reasoning: options.reasoning,
+      finalDimensionScores: options.finalDimensionScores,
+    };
+  }
+
   const recalibrationMessages = [
     {
       role: "system",
@@ -712,6 +725,7 @@ async function maybeRecalibrateWithHistory(options) {
   ];
 
   const recalibrated = await callStructuredGLM({
+    deadlineAt: options.deadlineAt,
     messages: recalibrationMessages,
     temperature: 0.1,
   });
@@ -990,6 +1004,7 @@ function buildFallbackResult(snapshot, heuristicLayer, latestHistory) {
 }
 
 async function scoreStudentStartupSelfCheck(payload) {
+  const deadlineAt = Date.now() + SCORING_DEADLINE_MS;
   const workspace = buildToolWorkspace(
     Object.assign({}, payload, {
       toolId: TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
@@ -1006,6 +1021,7 @@ async function scoreStudentStartupSelfCheck(payload) {
   let result;
   try {
     const reasoningResponse = await callStructuredGLM({
+      deadlineAt: deadlineAt,
       messages: buildReasoningMessages(snapshot, snapshot.mode),
       temperature: 0.2,
     });
@@ -1017,6 +1033,7 @@ async function scoreStudentStartupSelfCheck(payload) {
     );
 
     const recalibration = await maybeRecalibrateWithHistory({
+      deadlineAt: deadlineAt,
       latestHistory: latestHistory,
       snapshot: snapshot,
       heuristicScores: heuristicLayer.dimensionScores,

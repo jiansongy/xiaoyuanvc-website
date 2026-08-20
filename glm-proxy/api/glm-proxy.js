@@ -1,7 +1,6 @@
 "use strict";
 
 const { Readable } = require("stream");
-const { once } = require("events");
 
 const {
   DEFAULT_FALLBACK_MODEL,
@@ -55,6 +54,41 @@ function setUpstreamHeaders(res, upstream, selectedModel) {
   res.setHeader("X-GLM-Model", selectedModel);
 }
 
+function waitForDrainOrClose(res) {
+  return new Promise(function (resolve, reject) {
+    if (res.destroyed || res.writableEnded) {
+      const error = new Error("Client disconnected");
+      error.code = "CLIENT_DISCONNECTED";
+      reject(error);
+      return;
+    }
+
+    const cleanup = function () {
+      res.removeListener("drain", onDrain);
+      res.removeListener("close", onClose);
+      res.removeListener("error", onError);
+    };
+    const onDrain = function () {
+      cleanup();
+      resolve();
+    };
+    const onClose = function () {
+      cleanup();
+      const error = new Error("Client disconnected");
+      error.code = "CLIENT_DISCONNECTED";
+      reject(error);
+    };
+    const onError = function (error) {
+      cleanup();
+      reject(error);
+    };
+
+    res.once("drain", onDrain);
+    res.once("close", onClose);
+    res.once("error", onError);
+  });
+}
+
 async function pipeUpstream(upstream, selectedModel, res) {
   const readable = upstream.body ? Readable.fromWeb(upstream.body) : null;
   if (!readable) {
@@ -72,7 +106,7 @@ async function pipeUpstream(upstream, selectedModel, res) {
         started = true;
       }
       if (!res.write(chunk)) {
-        await once(res, "drain");
+        await waitForDrainOrClose(res);
       }
     }
 
@@ -92,6 +126,14 @@ async function pipeUpstream(upstream, selectedModel, res) {
 function isTimeoutError(err) {
   return Boolean(
     err && (err.name === "AbortError" || /timeout|aborted/i.test(err.message || "")),
+  );
+}
+
+function isClientDisconnectError(err) {
+  return Boolean(
+    err &&
+      (err.code === "CLIENT_DISCONNECTED" ||
+        /client disconnected/i.test(err.message || "")),
   );
 }
 
@@ -121,7 +163,10 @@ async function forwardChatCompletion(body, apiKey, res) {
       try {
         upstream = await fetchGLM(body, selectedModel, apiKey, ctrl.signal);
       } catch (err) {
-        if (canFallback && !isTimeoutError(err)) {
+        const clientDisconnected =
+          isClientDisconnectError(err) ||
+          isClientDisconnectError(ctrl.signal.reason);
+        if (canFallback && !isTimeoutError(err) && !clientDisconnected) {
           continue;
         }
         throw err;
@@ -138,13 +183,28 @@ async function forwardChatCompletion(body, apiKey, res) {
         await pipeUpstream(upstream, selectedModel, res);
         return;
       } catch (err) {
-        if (canFallback && err.beforeOutput && !isTimeoutError(err)) {
+        const clientDisconnected =
+          isClientDisconnectError(err) ||
+          isClientDisconnectError(ctrl.signal.reason);
+        if (
+          canFallback &&
+          err.beforeOutput &&
+          !isTimeoutError(err) &&
+          !clientDisconnected
+        ) {
           continue;
         }
         throw err;
       }
     }
   } catch (err) {
+    if (
+      isClientDisconnectError(err) ||
+      isClientDisconnectError(ctrl.signal.reason) ||
+      res.destroyed
+    ) {
+      return;
+    }
     if (res.headersSent) {
       res.destroy(err);
       return;

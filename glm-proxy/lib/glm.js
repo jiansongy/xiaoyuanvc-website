@@ -126,6 +126,12 @@ async function callStructuredGLM(options) {
   const attemptLog = [];
   const retryModel = payload.model;
   const fallbackModel = options.fallbackModel || DEFAULT_FALLBACK_MODEL;
+  const deadlineAt = Number.isFinite(options.deadlineAt)
+    ? options.deadlineAt
+    : Date.now() +
+      STRUCTURED_ATTEMPT_TIMEOUTS.reduce(function (sum, value) {
+        return sum + value;
+      }, 0);
   const sequence = [
     {
       model: payload.model,
@@ -150,10 +156,15 @@ async function callStructuredGLM(options) {
       continue;
     }
 
+    const remainingMs = deadlineAt - Date.now();
+    if (remainingMs <= 0) {
+      throw new Error("GLM 响应超时");
+    }
+
     try {
       const json = await callGLM(
         buildGLMPayload(payload, attempt.model),
-        attempt.timeoutMs,
+        Math.min(attempt.timeoutMs, remainingMs),
       );
       rawText = extractTextFromCompletion(json) || "";
       const parsed = JSON.parse(extractJsonBlock(rawText));

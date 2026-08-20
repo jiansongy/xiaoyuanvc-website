@@ -55,3 +55,13 @@ test("the self-check page sends its tool id at the top level", function () {
   assert.ok(requestBuilder, "buildRequestPayload should exist");
   assert.match(requestBuilder[1], /toolId:\s*TOOL_ID/);
 });
+
+test("self-check scoring shares one deadline across analysis and recalibration", function () {
+  const source = fs.readFileSync(
+    path.join(proxyRoot, "lib", "student-startup-self-check.js"),
+    "utf8",
+  );
+
+  assert.match(source, /const deadlineAt = Date\.now\(\) \+ SCORING_DEADLINE_MS/);
+  assert.equal((source.match(/deadlineAt:\s*deadlineAt/g) || []).length, 2);
+});
