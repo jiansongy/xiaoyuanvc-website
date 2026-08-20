@@ -65,3 +65,18 @@ test("self-check scoring shares one deadline across analysis and recalibration",
   assert.match(source, /const deadlineAt = Date\.now\(\) \+ SCORING_DEADLINE_MS/);
   assert.equal((source.match(/deadlineAt:\s*deadlineAt/g) || []).length, 2);
 });
+
+test("self-check runtime dependencies stay inside the Vercel project", function () {
+  const modulePath = path.join(
+    proxyRoot,
+    "lib",
+    "student-startup-self-check.js",
+  );
+  const source = fs.readFileSync(modulePath, "utf8");
+  const match = source.match(/require\("([^"]*action-library\.json)"\)/);
+
+  assert.ok(match, "the action library import should exist");
+  const dependencyPath = path.resolve(path.dirname(modulePath), match[1]);
+  assert.equal(dependencyPath.startsWith(proxyRoot + path.sep), true);
+  assert.equal(fs.existsSync(dependencyPath), true);
+});

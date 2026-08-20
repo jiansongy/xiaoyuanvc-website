@@ -1,6 +1,6 @@
 "use strict";
 
-const ACTION_LIBRARY = require("../../src/data/action-library.json");
+const ACTION_LIBRARY = require("./action-library.json");
 
 const {
   TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
