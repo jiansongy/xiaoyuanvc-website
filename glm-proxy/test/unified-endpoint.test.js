@@ -42,3 +42,16 @@ test("all five AI tools use the unified endpoint and no client selects a model",
     assert.doesNotMatch(source, /model:\s*["']glm-/);
   }
 });
+
+test("the self-check page sends its tool id at the top level", function () {
+  const source = fs.readFileSync(
+    path.join(siteRoot, "resources", "rate-your-idea.html"),
+    "utf8",
+  );
+  const requestBuilder = source.match(
+    /function buildRequestPayload\(\)\s*\{([\s\S]*?)\n\s*\}/,
+  );
+
+  assert.ok(requestBuilder, "buildRequestPayload should exist");
+  assert.match(requestBuilder[1], /toolId:\s*TOOL_ID/);
+});

@@ -2087,6 +2087,7 @@
 
         function buildRequestPayload() {
           return {
+            toolId: TOOL_ID,
             userProfile: clone(S.userProfile),
             toolState: clone(S.toolState),
             toolHistory: clone(S.toolHistory),

@@ -154,6 +154,110 @@ test("generic requests fall back before output starts when GLM-5.3 is unavailabl
   }
 });
 
+test("generic requests fall back when the primary connection fails", async function () {
+  const originalFetch = global.fetch;
+  const models = [];
+  global.fetch = async function (_url, options) {
+    const payload = JSON.parse(options.body);
+    models.push(payload.model);
+    if (models.length === 1) {
+      throw new Error("primary connection failed");
+    }
+    return new Response(
+      JSON.stringify({
+        choices: [{ message: { role: "assistant", content: "回退成功" } }],
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  };
+
+  try {
+    const response = await invoke({
+      body: {
+        messages: [{ role: "user", content: "你好" }],
+        stream: false,
+      },
+    });
+
+    assert.equal(response.statusCode, 200);
+    assert.deepEqual(models, ["glm-5.3", "glm-4.5-air"]);
+  } finally {
+    global.fetch = originalFetch;
+  }
+});
+
+test("generic requests fall back when the primary body fails before output", async function () {
+  const originalFetch = global.fetch;
+  const models = [];
+  global.fetch = async function (_url, options) {
+    const payload = JSON.parse(options.body);
+    models.push(payload.model);
+    if (models.length === 1) {
+      return new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.error(new Error("primary body failed"));
+          },
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      );
+    }
+    return new Response(
+      JSON.stringify({
+        choices: [{ message: { role: "assistant", content: "回退成功" } }],
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  };
+
+  try {
+    const response = await invoke({
+      body: {
+        messages: [{ role: "user", content: "你好" }],
+        stream: false,
+      },
+    });
+
+    assert.equal(response.statusCode, 200);
+    assert.deepEqual(models, ["glm-5.3", "glm-4.5-air"]);
+  } finally {
+    global.fetch = originalFetch;
+  }
+});
+
+test("malformed requests do not trigger a fallback request", async function () {
+  const originalFetch = global.fetch;
+  const models = [];
+  global.fetch = async function (_url, options) {
+    const payload = JSON.parse(options.body);
+    models.push(payload.model);
+    return new Response(JSON.stringify({ error: { message: "bad request" } }), {
+      status: 422,
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+
+  try {
+    const response = await invoke({
+      body: {
+        messages: [{ role: "user", content: "你好" }],
+        stream: false,
+      },
+    });
+
+    assert.equal(response.statusCode, 422);
+    assert.deepEqual(models, ["glm-5.3"]);
+  } finally {
+    global.fetch = originalFetch;
+  }
+});
+
 test("student startup self-check is routed through the unified endpoint", async function () {
   const originalFetch = global.fetch;
   global.fetch = async function () {
@@ -244,5 +348,29 @@ test("unknown tool ids are rejected instead of forwarded upstream", async functi
     assert.equal(body.error, "Unknown toolId");
   } finally {
     global.fetch = originalFetch;
+  }
+});
+
+test("all POST routes fail clearly when the API key is missing", async function () {
+  const savedApiKey = process.env.GLM_API_KEY;
+  delete process.env.GLM_API_KEY;
+
+  try {
+    const response = await invoke({
+      body: {
+        toolId: "student-startup-self-check",
+        toolState: {
+          draftData: {
+            product: "做一个帮助大学生管理课程任务和截止日期的智能学习工具",
+          },
+        },
+      },
+    });
+    const body = JSON.parse(response.body);
+
+    assert.equal(response.statusCode, 500);
+    assert.equal(body.error, "Server misconfiguration");
+  } finally {
+    process.env.GLM_API_KEY = savedApiKey;
   }
 });

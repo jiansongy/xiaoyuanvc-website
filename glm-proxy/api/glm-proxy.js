@@ -1,6 +1,7 @@
 "use strict";
 
 const { Readable } = require("stream");
+const { once } = require("events");
 
 const {
   DEFAULT_FALLBACK_MODEL,
@@ -22,61 +23,29 @@ const {
   scoreStudentStartupSelfCheck,
 } = require("../lib/student-startup-self-check");
 
-async function fetchGLM(body, model, apiKey) {
-  const ctrl = new AbortController();
-  const timer = setTimeout(function () {
-    ctrl.abort(new Error("Upstream timeout"));
-  }, UPSTREAM_TIMEOUT_MS);
-
-  try {
-    return await fetch(GLM_URL, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + apiKey,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(buildGLMPayload(body, model)),
-      signal: ctrl.signal,
-    });
-  } finally {
-    clearTimeout(timer);
-  }
+async function fetchGLM(body, model, apiKey, signal) {
+  return fetch(GLM_URL, {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + apiKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(buildGLMPayload(body, model)),
+    signal: signal,
+  });
 }
 
 function isRetryableStatus(statusCode) {
-  return statusCode !== 401 && statusCode !== 403;
+  return (
+    statusCode === 404 ||
+    statusCode === 408 ||
+    statusCode === 425 ||
+    statusCode === 429 ||
+    statusCode >= 500
+  );
 }
 
-async function forwardChatCompletion(body, apiKey, res) {
-  let upstream;
-  let selectedModel = DEFAULT_MODEL;
-
-  try {
-    upstream = await fetchGLM(body, selectedModel, apiKey);
-
-    if (
-      !upstream.ok &&
-      DEFAULT_FALLBACK_MODEL &&
-      DEFAULT_FALLBACK_MODEL !== selectedModel &&
-      isRetryableStatus(upstream.status)
-    ) {
-      if (upstream.body) {
-        await upstream.body.cancel().catch(function () {});
-      }
-      selectedModel = DEFAULT_FALLBACK_MODEL;
-      upstream = await fetchGLM(body, selectedModel, apiKey);
-    }
-  } catch (err) {
-    const isTimeout =
-      err && (err.name === "AbortError" || /timeout/i.test(err.message || ""));
-    sendJson(res, isTimeout ? 504 : 502, {
-      error: isTimeout
-        ? "GLM 响应超时，请重试"
-        : "无法连接 GLM API：" + err.message,
-    });
-    return;
-  }
-
+function setUpstreamHeaders(res, upstream, selectedModel) {
   res.status(upstream.status);
   res.setHeader(
     "Content-Type",
@@ -84,23 +53,111 @@ async function forwardChatCompletion(body, apiKey, res) {
   );
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("X-GLM-Model", selectedModel);
+}
+
+async function pipeUpstream(upstream, selectedModel, res) {
+  const readable = upstream.body ? Readable.fromWeb(upstream.body) : null;
+  if (!readable) {
+    const error = new Error("Upstream body is empty");
+    error.beforeOutput = true;
+    throw error;
+  }
+
+  let started = false;
 
   try {
-    await new Promise(function (resolve, reject) {
-      const readable = upstream.body ? Readable.fromWeb(upstream.body) : null;
-      if (!readable) {
-        reject(new Error("Upstream body is empty"));
-        return;
+    for await (const chunk of readable) {
+      if (!started) {
+        setUpstreamHeaders(res, upstream, selectedModel);
+        started = true;
       }
-      readable.on("error", reject);
-      res.on("error", reject);
-      res.on("finish", resolve);
-      readable.pipe(res);
-    });
-  } catch (err) {
-    if (!res.headersSent) {
-      sendJson(res, 502, { error: "流式转发失败：" + err.message });
+      if (!res.write(chunk)) {
+        await once(res, "drain");
+      }
     }
+
+    if (!started) {
+      const error = new Error("Upstream body is empty");
+      error.beforeOutput = true;
+      throw error;
+    }
+
+    res.end();
+  } catch (err) {
+    err.beforeOutput = !started;
+    throw err;
+  }
+}
+
+function isTimeoutError(err) {
+  return Boolean(
+    err && (err.name === "AbortError" || /timeout|aborted/i.test(err.message || "")),
+  );
+}
+
+async function forwardChatCompletion(body, apiKey, res) {
+  const models = [DEFAULT_MODEL];
+  if (DEFAULT_FALLBACK_MODEL && DEFAULT_FALLBACK_MODEL !== DEFAULT_MODEL) {
+    models.push(DEFAULT_FALLBACK_MODEL);
+  }
+
+  const ctrl = new AbortController();
+  const timer = setTimeout(function () {
+    ctrl.abort(new Error("Upstream timeout"));
+  }, UPSTREAM_TIMEOUT_MS);
+  const abortOnClose = function () {
+    if (!res.writableEnded) {
+      ctrl.abort(new Error("Client disconnected"));
+    }
+  };
+  res.on("close", abortOnClose);
+
+  try {
+    for (let index = 0; index < models.length; index++) {
+      const selectedModel = models[index];
+      const canFallback = index < models.length - 1;
+      let upstream;
+
+      try {
+        upstream = await fetchGLM(body, selectedModel, apiKey, ctrl.signal);
+      } catch (err) {
+        if (canFallback && !isTimeoutError(err)) {
+          continue;
+        }
+        throw err;
+      }
+
+      if (!upstream.ok && canFallback && isRetryableStatus(upstream.status)) {
+        if (upstream.body) {
+          await upstream.body.cancel().catch(function () {});
+        }
+        continue;
+      }
+
+      try {
+        await pipeUpstream(upstream, selectedModel, res);
+        return;
+      } catch (err) {
+        if (canFallback && err.beforeOutput && !isTimeoutError(err)) {
+          continue;
+        }
+        throw err;
+      }
+    }
+  } catch (err) {
+    if (res.headersSent) {
+      res.destroy(err);
+      return;
+    }
+    const isTimeout = isTimeoutError(err);
+    sendJson(res, isTimeout ? 504 : 502, {
+      error: isTimeout
+        ? "GLM 响应超时，请重试"
+        : "无法连接 GLM API：" + err.message,
+    });
+  } finally {
+    clearTimeout(timer);
+    res.removeListener("close", abortOnClose);
   }
 }
 
@@ -143,6 +200,12 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  const apiKey = process.env.GLM_API_KEY;
+  if (!apiKey) {
+    sendJson(res, 500, { error: "Server misconfiguration" });
+    return;
+  }
+
   if (body.toolId) {
     if (body.toolId !== TOOL_ID_STUDENT_STARTUP_SELF_CHECK) {
       sendJson(res, 400, { error: "Unknown toolId" });
@@ -161,15 +224,10 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const apiKey = process.env.GLM_API_KEY;
-  if (!apiKey) {
-    sendJson(res, 500, { error: "Server misconfiguration" });
-    return;
-  }
-
   await forwardChatCompletion(body, apiKey, res);
 };
 
 module.exports.fetchGLM = fetchGLM;
 module.exports.forwardChatCompletion = forwardChatCompletion;
 module.exports.isRetryableStatus = isRetryableStatus;
+module.exports.pipeUpstream = pipeUpstream;

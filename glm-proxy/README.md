@@ -87,6 +87,9 @@ curl -X POST https://api.xiaoyuanvc.com/api/glm-proxy \
 
 - The server selects the model; clients do not send model names
 - GLM-5.3 uses enabled thinking with low reasoning effort and a 4096-token cap
-- Failed primary requests can fall back to `glm-4.5-air` before output starts
+- Transient status, connection, or pre-output body failures can fall back to
+  `glm-4.5-air`
+- One 55-second deadline covers connection and body streaming; structured
+  attempts use bounded sub-deadlines within that budget
 - CORS is restricted to the configured allowed origins
 - Custom domain is strongly preferred over `*.vercel.app`

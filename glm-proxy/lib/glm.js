@@ -6,6 +6,7 @@ const DEFAULT_FALLBACK_MODEL =
   process.env.GLM_FALLBACK_MODEL || "glm-4.5-air";
 const DEFAULT_MAX_TOKENS = 4096;
 const UPSTREAM_TIMEOUT_MS = 55000;
+const STRUCTURED_ATTEMPT_TIMEOUTS = [32000, 10000, 10000];
 
 function buildGLMPayload(payload, model) {
   const nextPayload = Object.assign({}, payload, {
@@ -53,7 +54,7 @@ function extractJsonBlock(text) {
   throw new Error("模型未返回合法 JSON");
 }
 
-async function callGLM(payload) {
+async function callGLM(payload, timeoutMs) {
   const apiKey = process.env.GLM_API_KEY;
   if (!apiKey) {
     throw new Error("缺少 GLM_API_KEY");
@@ -62,9 +63,10 @@ async function callGLM(payload) {
   const ctrl = new AbortController();
   const timer = setTimeout(function () {
     ctrl.abort();
-  }, UPSTREAM_TIMEOUT_MS);
+  }, timeoutMs || UPSTREAM_TIMEOUT_MS);
 
   let upstream;
+  let json;
   try {
     upstream = await fetch(GLM_URL, {
       method: "POST",
@@ -75,19 +77,28 @@ async function callGLM(payload) {
       body: JSON.stringify(payload),
       signal: ctrl.signal,
     });
+    try {
+      json = await upstream.json();
+    } catch (err) {
+      const isTimeout =
+        err && (err.name === "AbortError" || /timeout|aborted/i.test(err.message || ""));
+      if (isTimeout) {
+        throw err;
+      }
+      throw new Error("GLM 返回了不可解析的响应");
+    }
   } catch (err) {
     const isTimeout =
-      err && (err.name === "AbortError" || /timeout/i.test(err.message || ""));
-    throw new Error(isTimeout ? "GLM 响应超时" : "GLM 请求失败: " + err.message);
+      err && (err.name === "AbortError" || /timeout|aborted/i.test(err.message || ""));
+    if (isTimeout) {
+      throw new Error("GLM 响应超时");
+    }
+    if (err && err.message === "GLM 返回了不可解析的响应") {
+      throw err;
+    }
+    throw new Error("GLM 请求失败: " + err.message);
   } finally {
     clearTimeout(timer);
-  }
-
-  let json;
-  try {
-    json = await upstream.json();
-  } catch (err) {
-    throw new Error("GLM 返回了不可解析的响应");
   }
 
   if (!upstream.ok) {
@@ -116,12 +127,21 @@ async function callStructuredGLM(options) {
   const retryModel = payload.model;
   const fallbackModel = options.fallbackModel || DEFAULT_FALLBACK_MODEL;
   const sequence = [
-    { model: payload.model, stage: "primary" },
-    { model: retryModel, stage: "retry" },
+    {
+      model: payload.model,
+      stage: "primary",
+      timeoutMs: STRUCTURED_ATTEMPT_TIMEOUTS[0],
+    },
+    {
+      model: retryModel,
+      stage: "retry",
+      timeoutMs: STRUCTURED_ATTEMPT_TIMEOUTS[1],
+    },
     {
       model:
         fallbackModel && fallbackModel !== retryModel ? fallbackModel : null,
       stage: "fallback_model",
+      timeoutMs: STRUCTURED_ATTEMPT_TIMEOUTS[2],
     },
   ];
 
@@ -133,6 +153,7 @@ async function callStructuredGLM(options) {
     try {
       const json = await callGLM(
         buildGLMPayload(payload, attempt.model),
+        attempt.timeoutMs,
       );
       rawText = extractTextFromCompletion(json) || "";
       const parsed = JSON.parse(extractJsonBlock(rawText));
@@ -178,6 +199,7 @@ module.exports = {
   DEFAULT_MAX_TOKENS,
   DEFAULT_MODEL,
   GLM_URL,
+  STRUCTURED_ATTEMPT_TIMEOUTS,
   UPSTREAM_TIMEOUT_MS,
   buildGLMPayload,
   callGLM,
