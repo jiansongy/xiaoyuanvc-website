@@ -710,6 +710,24 @@
       max-width: 1100px;
       margin: 0 auto;
     }
+    .resource-group__heading {
+      grid-column: 1 / -1;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary, #64748b);
+      margin: 0.5rem 0 0.25rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--color-border, rgba(0,0,0,0.08));
+    }
+    .resource-grid > .resource-group__heading:first-child {
+      margin-top: 0;
+    }
+    .resource-card--feature {
+      border: 1px solid var(--color-accent-purple, #7c3aed);
+      background: linear-gradient(135deg, rgba(139,92,246,0.07), rgba(0,0,0,0));
+    }
     .resource-card {
       background: var(--color-bg-card);
       border-radius: var(--radius-md);
@@ -871,32 +889,32 @@
         {
           "@type": "ListItem",
           "position": 4,
+          "name": "创业教练",
+          "url": "https://xiaoyuanvc.com/resources/entrecoach"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
           "name": "发现你的创业想法",
           "url": "https://xiaoyuanvc.com/resources/find-your-idea"
         },
         {
           "@type": "ListItem",
-          "position": 5,
+          "position": 6,
           "name": "如何找到想做的事",
           "url": "https://xiaoyuanvc.com/resources/find-what-you-want"
         },
         {
           "@type": "ListItem",
-          "position": 6,
+          "position": 7,
           "name": "学生创业自检",
           "url": "https://xiaoyuanvc.com/resources/rate-your-idea"
         },
         {
           "@type": "ListItem",
-          "position": 7,
+          "position": 8,
           "name": "硬科技创业自检",
           "url": "https://xiaoyuanvc.com/resources/hard-tech-check"
-        },
-        {
-          "@type": "ListItem",
-          "position": 8,
-          "name": "AI 员工面试",
-          "url": "https://xiaoyuanvc.com/resources/ai-ready-check"
         },
         {
           "@type": "ListItem",
@@ -981,12 +999,6 @@
           "position": 22,
           "name": "大学生创业想法如何验证市场需求",
           "url": "https://xiaoyuanvc.com/resources/how-to-validate-demand"
-        },
-        {
-          "@type": "ListItem",
-          "position": 23,
-          "name": "AI员工面试：6分钟找到最适合你的3个AI员工",
-          "url": "https://xiaoyuanvc.com/resources/ai-employee-interview-guide"
         }
       ]
     }
@@ -1137,6 +1149,23 @@
 
       <div class="resource-grid fade-in">
 
+        <div class="resource-group__heading">🚩 不知道从哪开始？让创业教练带你走</div>
+        <a href="entrecoach" class="resource-card resource-card--feature">
+          <div class="resource-card__meta">
+            <span class="type-badge type-badge--tool">互动工具</span>
+            <span class="resource-card__date">2026-08-23</span>
+          </div>
+          <h3 class="resource-card__title">创业教练</h3>
+          <p class="resource-card__excerpt">
+            AI-first 创业教练：沿火种节 9 关（组队→复盘）带你把一个想法走成可验证的项目。AI 先给出草稿，你只需判断接受 / 在此基础上修改 / 换一版，全程写下你的探索记录。
+          </p>
+          <div class="resource-card__tags">
+            <span class="topic-tag">全程带跑</span>
+            <span class="topic-tag">火种节</span>
+          </div>
+        </a>
+
+        <div class="resource-group__heading">🔁 总览 &amp; 回看</div>
         <a href="tools-presentation" class="resource-card">
           <div class="resource-card__meta">
             <span class="type-badge type-badge--tool">互动工具</span>
@@ -1169,21 +1198,7 @@
           </div>
         </a>
 
-        <a href="find-your-idea" class="resource-card">
-          <div class="resource-card__meta">
-            <span class="type-badge type-badge--tool">互动工具</span>
-            <span class="resource-card__date">2026-03-02</span>
-          </div>
-          <h3 class="resource-card__title">发现你的创业想法</h3>
-          <p class="resource-card__excerpt">
-            基于 Ali Abdaal 的创业定位框架，通过 6 个步骤从零发现你真正适合做的创业方向。AI 教练在关键节点给出个性化反馈，免费使用，无需注册。
-          </p>
-          <div class="resource-card__tags">
-            <span class="topic-tag">数字创业</span>
-            <span class="topic-tag">创业想法</span>
-          </div>
-        </a>
-
+        <div class="resource-group__heading">① 自我认知 · 找到想做的事</div>
         <a href="find-what-you-want" class="resource-card">
           <div class="resource-card__meta">
             <span class="type-badge type-badge--tool">互动工具</span>
@@ -1199,6 +1214,39 @@
           </div>
         </a>
 
+        <div class="resource-group__heading">② 发现想法 &amp; 扫描机会</div>
+        <a href="find-your-idea" class="resource-card">
+          <div class="resource-card__meta">
+            <span class="type-badge type-badge--tool">互动工具</span>
+            <span class="resource-card__date">2026-03-02</span>
+          </div>
+          <h3 class="resource-card__title">发现你的创业想法</h3>
+          <p class="resource-card__excerpt">
+            基于 Ali Abdaal 的创业定位框架，通过 6 个步骤从零发现你真正适合做的创业方向。AI 教练在关键节点给出个性化反馈，免费使用，无需注册。
+          </p>
+          <div class="resource-card__tags">
+            <span class="topic-tag">数字创业</span>
+            <span class="topic-tag">创业想法</span>
+          </div>
+        </a>
+
+        <a href="ai-opportunity" class="resource-card">
+          <div class="resource-card__meta">
+            <span class="type-badge type-badge--tool">互动工具</span>
+            <span class="resource-card__date">2026-03-25</span>
+          </div>
+          <h3 class="resource-card__title">AI 创业机会探索器</h3>
+          <p class="resource-card__excerpt">
+            探索 12 个中国行业的 AI 创业机会。选行业、看痛点、找 AI 解法、获取 7 天验证路径。支持学生/教师双模式，免费使用。
+          </p>
+          <div class="resource-card__tags">
+            <span class="topic-tag">AI创业</span>
+            <span class="topic-tag">行业分析</span>
+            <span class="topic-tag">创业验证</span>
+          </div>
+        </a>
+
+        <div class="resource-group__heading">③ 评估想法 &amp; 定义需求</div>
         <a href="rate-your-idea" class="resource-card">
           <div class="resource-card__meta">
             <span class="type-badge type-badge--tool">互动工具</span>
@@ -1226,37 +1274,6 @@
           <div class="resource-card__tags">
             <span class="topic-tag">数字创业</span>
             <span class="topic-tag">硬科技转化</span>
-          </div>
-        </a>
-
-        <a href="ai-ready-check" class="resource-card">
-          <div class="resource-card__meta">
-            <span class="type-badge type-badge--tool">互动工具</span>
-            <span class="resource-card__date">2026-03-16</span>
-          </div>
-          <h3 class="resource-card__title">AI 员工面试</h3>
-          <p class="resource-card__excerpt">
-            6 分钟面试你的 AI 员工候选人。AI 帮你匹配 3 位最能帮到日常工作的 AI 员工，附带上岗指南、优先级排序和 7 天试用计划，可打印 PDF。
-          </p>
-          <div class="resource-card__tags">
-            <span class="topic-tag">AI创业</span>
-            <span class="topic-tag">AI提效</span>
-          </div>
-        </a>
-
-        <a href="ai-opportunity" class="resource-card">
-          <div class="resource-card__meta">
-            <span class="type-badge type-badge--tool">互动工具</span>
-            <span class="resource-card__date">2026-03-25</span>
-          </div>
-          <h3 class="resource-card__title">AI 创业机会探索器</h3>
-          <p class="resource-card__excerpt">
-            探索 12 个中国行业的 AI 创业机会。选行业、看痛点、找 AI 解法、获取 7 天验证路径。支持学生/教师双模式，免费使用。
-          </p>
-          <div class="resource-card__tags">
-            <span class="topic-tag">AI创业</span>
-            <span class="topic-tag">行业分析</span>
-            <span class="topic-tag">创业验证</span>
           </div>
         </a>
 
@@ -1297,10 +1314,6 @@
           <a href="ai-era-entrepreneurship-skills" class="article-list__item">
             <h3 class="article-list__title">AI 时代大学生应该学什么创业技能？先学这 5 项</h3>
             <span class="article-list__meta"><span class="article-list__tag">AI创业</span>2026-03-12</span>
-          </a>
-          <a href="ai-employee-interview-guide" class="article-list__item">
-            <h3 class="article-list__title">AI员工面试：6分钟找到最适合你的3个AI员工</h3>
-            <span class="article-list__meta"><span class="article-list__tag">AI提效</span>2026-03-17</span>
           </a>
         </div>
 

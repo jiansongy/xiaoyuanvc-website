@@ -341,12 +341,12 @@
   function buildNextToolSectionHtml() {
     var cards = [
       {
-        href: "./ai-ready-check",
-        title: "去 AI 员工面试，把执行动作落到真实工具",
-        desc: "如果这个机会你已经想试，下一步应该拆出最耗时的工作环节，看看先让哪些 AI 员工上岗。",
-        bg: "#eff6ff",
-        border: "#bfdbfe",
-        color: "#1d4ed8",
+        href: "./entrecoach",
+        title: "交给创业教练，沿火种节把机会走成项目",
+        desc: "如果这个机会你想认真试，交给教练带你按火种节 9 关一步步验证、原型、路演。",
+        bg: "#f3e8ff",
+        border: "#d8b4fe",
+        color: "#6d28d9",
       },
     ];
 

@@ -1,0 +1,1565 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>创业教练 · 火种节9步闯关 | 校园VC</title>
+    <meta name="description" content="AI 创业教练：用火种节 9 个里程碑（组队→复盘）带你把一个想法走成可验证的创业项目，AI 先给草稿，你只需判断接受 / 在此基础上修改 / 换一版。" />
+    <link rel="canonical" href="https://xiaoyuanvc.com/resources/entrecoach" />
+    <link rel="icon" href="../assets/favicon.ico" />
+
+    <!-- GA4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LP5EB2HW33");
+    </script>
+
+    <!-- 共享数据层：统一的工具草稿/历史/快照（我的探索记录 依赖它） -->
+    <script src="./tool-context.js"></script>
+
+    <style>
+      :root {
+        --green: #4caf50;
+        --green-dark: #388e3c;
+        --green-light: #e8f5e9;
+        --navy: #1a1a2e;
+        --gray: #6b7280;
+        --beige: #faf8f4;
+        --white: #ffffff;
+        --red: #ef4444;
+        --yellow: #f59e0b;
+        --blue: #3b82f6;
+        --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.07);
+        --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: #edf4ed;
+        color: var(--navy);
+        min-height: 100vh;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      button { font-family: inherit; }
+
+      /* ── Header ── */
+      .header {
+        background: var(--green);
+        color: #fff;
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 30;
+      }
+      .header .logo { font-weight: 800; font-size: 16px; white-space: nowrap; }
+      .header .title { font-size: 16px; font-weight: 700; }
+      .header .sub { font-size: 12px; opacity: 0.85; }
+      .header .spacer { flex: 1; }
+      .header .btn-artifacts {
+        background: rgba(255,255,255,0.16);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.4);
+        border-radius: 8px;
+        padding: 6px 12px;
+        cursor: pointer;
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.15s;
+      }
+      .header .btn-artifacts:hover { background: rgba(255,255,255,0.28); }
+
+      /* ── Layout ── */
+      .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 60px; }
+
+      /* ── Progress ── */
+      .progress-card {
+        background: #fff;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        padding: 16px 18px;
+        margin-bottom: 16px;
+      }
+      .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+      .progress-label { font-weight: 700; font-size: 14px; }
+      .progress-count { color: var(--gray); font-size: 13px; }
+      .progress-bar { height: 8px; background: #e5e7eb; border-radius: 99px; overflow: hidden; }
+      .progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width 0.4s ease; }
+      .progress-nav { display: flex; gap: 6px; margin-top: 12px; }
+      .pstep {
+        flex: 1;
+        height: 30px;
+        min-width: 28px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        background: #f3f4f6;
+        color: #9ca3af;
+        transition: all 0.15s;
+      }
+      .pstep.done { background: var(--green-light); color: var(--green-dark); border-color: #b7dfb8; }
+      .pstep.done:hover { background: #d7efd8; }
+      .pstep.cur { background: var(--green); color: #fff; border-color: var(--green); }
+      .pstep.locked { cursor: not-allowed; opacity: 0.45; }
+      .pstep:disabled { cursor: not-allowed; }
+
+      /* ── Milestone card ── */
+      .card {
+        background: #fff;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        padding: 22px 20px;
+        margin-bottom: 16px;
+      }
+      .m-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+      .m-badge {
+        background: var(--green-light);
+        color: var(--green-dark);
+        font-weight: 700;
+        font-size: 12px;
+        border-radius: 6px;
+        padding: 2px 8px;
+      }
+      .m-name { font-size: 19px; font-weight: 800; }
+      .m-ability { color: var(--gray); font-size: 13px; }
+      .m-goal { color: #374151; margin-bottom: 12px; font-size: 14px; }
+      .m-review {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: #eef2ff;
+        border: 1px solid #c7d2fe;
+        color: #3730a3;
+        border-radius: var(--radius-sm);
+        padding: 8px 12px;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+      .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 6px; }
+      .field-a.is-done { border-left-color: var(--green); background: #f0fdf4; }
+      .m-hecd {
+        background: #fefce8;
+        border: 1px solid #fde68a;
+        color: #854d0e;
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        font-size: 13px;
+        margin-bottom: 14px;
+      }
+
+      /* ── Artifact fields ── */
+      .field { margin-bottom: 14px; }
+      .field-q { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+      .field-a {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        font-size: 14px;
+        color: #1f2937;
+        min-height: 42px;
+      }
+      .field-a.is-ai { border-left: 3px solid var(--blue); }
+      .field-a.is-draft { border-left: 3px dashed var(--yellow); }
+      /* ── 统一语义块样式（作用于任意容器，视觉一致）── */
+      .field-a p, .a-markdown p { margin: 0 0 6px; }
+      .field-a p:last-child, .a-markdown p:last-child { margin-bottom: 0; }
+      .field-a strong, .a-markdown strong { font-weight: 700; }
+      .field-a code, .a-markdown code {
+        background: #eef2ff;
+        border-radius: 4px;
+        padding: 1px 4px;
+        font-size: 13px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      .blk-list { margin: 6px 0 10px; padding-left: 24px; }
+      .blk-list li { margin: 5px 0; line-height: 1.55; }
+      .blk-title { margin: 10px 0 6px; font-size: 15px; }
+      .blk-para { margin: 0 0 6px; }
+      /* kv 键值卡：标签加粗 + 分段，是【关键词】/“已知：”的标准化呈现 */
+      .blk-kv {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-left: 3px solid var(--blue);
+        border-radius: 6px;
+        padding: 8px 10px;
+        margin: 6px 0 8px;
+        line-height: 1.55;
+      }
+      .blk-kv-head { font-weight: 700; color: #1f2937; }
+      .blk-kv-rest { color: #374151; }
+      .blk-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 6px 0 10px;
+        font-size: 13px;
+        font-variant-numeric: tabular-nums;
+      }
+      .blk-table th, .blk-table td {
+        border: 1px solid #e5e7eb;
+        padding: 6px 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      .blk-table th { background: #eef2ff; font-weight: 700; }
+      .blk-table tbody tr:nth-child(even) { background: #f9fafb; }
+      .blk-table tbody tr:hover { background: #f3f4f6; }
+      .ec-chip {
+        display: inline-block;
+        background: #fff;
+        border: 1px solid #d1d5db;
+        border-radius: 999px;
+        padding: 3px 12px;
+        margin: 3px 4px 3px 0;
+        font-size: 13px;
+        color: #374151;
+      }
+
+      /* ── Buttons ── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border: none;
+        border-radius: var(--radius-sm);
+        padding: 10px 18px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+      .btn-primary { background: var(--green); color: #fff; }
+      .btn-primary:hover:not(:disabled) { background: var(--green-dark); }
+      .btn-outline { background: #fff; color: var(--navy); border: 1px solid #d1d5db; }
+      .btn-outline:hover:not(:disabled) { background: #f9fafb; }
+      .btn-ghost { background: transparent; color: var(--gray); }
+      .btn-ghost:hover:not(:disabled) { color: var(--navy); }
+
+      .choices { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+      .choices .btn { flex: 1; min-width: 108px; }
+      .btn-accept { background: var(--green); color: #fff; }
+      .btn-accept:hover:not(:disabled) { background: var(--green-dark); }
+      .btn-modify { background: #fff; color: var(--navy); border: 1px solid #d1d5db; }
+      .btn-disagree { background: #fff; color: var(--red); border: 1px solid #fca5a5; }
+      .choices-hint {
+        font-size: 12px;
+        color: #9ca3af;
+        text-align: center;
+        margin-top: 8px;
+        line-height: 1.5;
+      }
+
+      /* ── Compose (modify input) ── */
+      .compose { margin-top: 14px; border-top: 1px dashed #e5e7eb; padding-top: 14px; }
+      .compose textarea {
+        width: 100%;
+        min-height: 90px;
+        border: 1px solid #d1d5db;
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        font-size: 14px;
+        font-family: inherit;
+        resize: vertical;
+      }
+      .compose textarea:focus { outline: 2px solid var(--green); border-color: transparent; }
+
+      /* ── State line ── */
+      .state-line { text-align: center; color: var(--gray); padding: 24px 0; font-size: 14px; }
+      .state-line .spinner {
+        display: inline-block;
+        width: 16px; height: 16px;
+        border: 2px solid #d1d5db;
+        border-top-color: var(--green);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        vertical-align: -3px;
+        margin-right: 8px;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) {
+        .spinner { animation: none; }
+        .drawer { transition: none; }
+        .progress-fill { transition: none; }
+        .a-chev { transition: none; }
+      }
+
+      /* ── Welcome ── */
+      .welcome { text-align: center; padding: 20px 4px; }
+      .welcome h2 { font-size: 22px; margin-bottom: 8px; }
+      .welcome p { color: var(--gray); margin-bottom: 18px; font-size: 14px; }
+      .welcome .idea-input {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        font-size: 15px;
+        font-family: inherit;
+        margin-bottom: 14px;
+      }
+      .welcome .idea-input:focus { outline: 2px solid var(--green); border-color: transparent; }
+
+      /* ── Artifact drawer ── */
+      .drawer-scrim {
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.3);
+        z-index: 40;
+        display: none;
+      }
+      .drawer-scrim.open { display: block; }
+      .drawer {
+        position: fixed; top: 0; right: 0; bottom: 0;
+        width: min(440px, 92vw);
+        background: #fff;
+        z-index: 50;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: transform 0.25s ease;
+      }
+      .drawer.open { transform: translateX(0); }
+      .drawer-head {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 16px 18px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .drawer-title { font-weight: 700; font-size: 15px; }
+      .drawer-close {
+        background: none; border: none; cursor: pointer;
+        color: var(--gray); font-size: 20px; line-height: 1;
+      }
+      .drawer-body { flex: 1; overflow-y: auto; padding: 12px 16px 24px; }
+      .a-proj { margin-bottom: 16px; }
+      .a-proj-name { font-weight: 700; font-size: 14px; }
+      .a-proj-meta { color: var(--gray); font-size: 12px; margin: 2px 0 8px; }
+      .a-card { border: 1px solid #e5e7eb; border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+      .a-card-head {
+        width: 100%; background: none; border: none; cursor: pointer;
+        text-align: left; display: flex; align-items: center; gap: 8px;
+        padding: 9px 12px; font-size: 13px;
+      }
+      .a-card-head:hover { background: #f9fafb; }
+      .a-card-head:disabled { cursor: default; color: var(--gray); }
+      .a-idx { color: var(--gray); font-size: 11px; flex: none; }
+      .a-title { flex: 1; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .a-badge {
+        color: var(--gray); border: 1px solid #e5e7eb;
+        border-radius: 99px; padding: 0 7px; font-size: 10px; flex: none;
+      }
+      .a-chev { color: var(--gray); font-size: 10px; transition: transform 0.12s; flex: none; }
+      .a-chev.open { transform: rotate(90deg); }
+      .a-body { border-top: 1px solid #e5e7eb; padding: 12px 14px; }
+      .a-reward { color: #4b5563; font-size: 12px; margin-bottom: 10px; }
+      .a-markdown { font-size: 13px; line-height: 1.7; white-space: pre-wrap; color: #1f2937; }
+      .drawer-empty { text-align: center; color: var(--gray); padding: 40px 0; font-size: 13px; }
+
+      /* ── Toast ── */
+      .toast {
+        position: fixed; left: 50%; bottom: 28px;
+        transform: translateX(-50%) translateY(80px);
+        background: var(--navy); color: #fff;
+        padding: 10px 18px; border-radius: 8px;
+        font-size: 13px; z-index: 60;
+        opacity: 0; transition: all 0.25s ease;
+        pointer-events: none;
+      }
+      .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+      .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 20px; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <span class="logo">校园VC</span>
+      <div>
+        <div class="title">创业教练</div>
+        <div class="sub">火种节 9 步闯关 · AI 先给草稿，你来做判断</div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn-artifacts" id="artifactsBtn">📇 成果卡</button>
+    </div>
+
+    <div class="wrap">
+      <div class="progress-card" id="progressCard" style="display:none;">
+        <div class="progress-top">
+          <span class="progress-label" id="progressLabel">第 1 关 · 组队</span>
+          <span class="progress-count" id="progressCount">0/9</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="progress-nav" id="progressNav"></div>
+      </div>
+      <div id="app"></div>
+      <div class="footer-note">
+        进度保存在本浏览器 · 由 GLM 驱动草稿生成 · 火种节方法论来源 xiaoyuanvc.com/teacher/huozhong<br>
+        <button class="btn btn-ghost btn-sm" id="hardResetBtn" style="margin-top:8px;">🔄 重置本工具（清空进度并彻底刷新）</button>
+      </div>
+    </div>
+
+    <!-- 成果卡抽屉 -->
+    <div class="drawer-scrim" id="drawerScrim"></div>
+    <aside class="drawer" id="drawer">
+      <div class="drawer-head">
+        <span class="drawer-title">成果卡 · 火种节进度</span>
+        <button class="drawer-close" id="drawerClose" aria-label="关闭">✕</button>
+      </div>
+      <div class="drawer-body" id="drawerBody"></div>
+    </aside>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+   * 配置（从 entrecoach-mvp/config 内嵌，保证纯前端无依赖）
+   * ============================================================ */
+  var MILESTONES = [
+    { id: "M1", name: "组队", ability: "团队协作", goal: "形成一个能一起行动的创业小队，并把最初想法压缩成一句话。", entrecomp: ["working_with_others", "mobilising_others"], coachMode: "milestone" },
+    { id: "M2", name: "理解需求", ability: "用户洞察", goal: "先理解用户，而不是急着想产品；把客户、痛点和场景展开。", entrecomp: ["spotting_opportunities", "learning_through_experience"], coachMode: "hybrid" },
+    { id: "M3", name: "定义需求", ability: "问题定义", goal: "从发散出的需求中做取舍，确定这轮创业最值得解决的一个目标需求。", entrecomp: ["spotting_opportunities", "valuing_ideas", "coping_uncertainty_ambiguity_risk"], coachMode: "hybrid" },
+    { id: "M4", name: "发散方案", ability: "创意生成", goal: "暂时推迟判断，通过快速发散得到足够多、足够不同的解决方案。", entrecomp: ["creativity", "taking_initiative"], coachMode: "milestone" },
+    { id: "M5", name: "决定方案", ability: "团队决策", goal: "用明确标准做取舍，而不是选团队里声音最大的人的方案。", entrecomp: ["valuing_ideas", "coping_uncertainty_ambiguity_risk", "working_with_others"], coachMode: "hybrid" },
+    { id: "M6", name: "制作原型", ability: "原型表达", goal: "把抽象想法变成别人一看就能体验和反馈的东西。", entrecomp: ["taking_initiative", "mobilising_resources", "planning_management"], coachMode: "milestone" },
+    { id: "M7", name: "验证原型", ability: "用户验证", goal: "让真实用户体验原型，用观察和反馈检验关键假设。", entrecomp: ["learning_through_experience", "coping_uncertainty_ambiguity_risk", "spotting_opportunities"], coachMode: "hecd" },
+    { id: "M8", name: "路演", ability: "公开表达", goal: "用极短时间让别人听懂问题、方案和价值，并接受公开选择。", entrecomp: ["mobilising_others", "vision", "self_awareness_self_efficacy"], coachMode: "milestone" },
+    { id: "M9", name: "复盘", ability: "反思迭代", goal: "把一次创业体验转化成可以迁移到下一次创业的能力。", entrecomp: ["learning_through_experience", "self_awareness_self_efficacy", "motivation_perseverance"], coachMode: "milestone" }
+  ];
+
+  var FORMS = [
+    { milestoneId: "M1", fields: [
+      { id: "team_name", question: "你们的队名是什么？", hint: "没有也没关系，AI 可以先起一个临时名字。" },
+      { id: "team_roles", question: "团队有哪些成员/角色？", hint: "快速体验时可用 CEO/用户研究/产品原型 这样的角色占位。" },
+      { id: "one_line_idea", question: "一句话创业想法是什么？", hint: "格式：帮助【谁】解决【什么问题】，通过【大致方式】。" }
+    ]},
+    { milestoneId: "M2", fields: [
+      { id: "candidate_needs", question: "列出 3 组候选的「客户画像 + 痛点 + 场景」。", hint: "AI 可以基于项目想法先提出 3 组假设，必须标成待验证。" },
+      { id: "known_vs_assumed", question: "哪些是已知事实，哪些只是团队猜测？", hint: "没有真实访谈时，AI 应明确写「目前均为假设」。" }
+    ]},
+    { milestoneId: "M3", fields: [
+      { id: "target_customer", question: "这一轮最聚焦的目标客户是谁？", hint: "尽量具体到身份、阶段或行为特征。" },
+      { id: "core_problem", question: "他们最核心、最值得解决的问题是什么？", hint: "写用户的问题，不要写你的产品功能。" },
+      { id: "key_scenario", question: "这个问题通常发生在什么具体场景？", hint: "描述触发时刻，例如第一次投简历前、选课时、付款前。" },
+      { id: "selection_reason", question: "为什么优先选择这个需求？", hint: "快速体验可依据严重度、频率、可触达性和与项目方向匹配度做初步判断。" },
+      { id: "problem_statement", question: "用一句话写出问题定义。", hint: "格式：【谁】在【场景】因为【原因/障碍】，很难【完成某目标】。" }
+    ]},
+    { milestoneId: "M4", fields: [
+      { id: "crazy8", question: "围绕已定义需求，给出 8 个明显不同的解决方案。", hint: "快速体验时允许 AI 代做第一轮疯狂小八，但要保留差异。" }
+    ]},
+    { milestoneId: "M5", fields: [
+      { id: "solution_matrix", question: "比较候选方案的用户价值与可实现性。", hint: "AI 可先给 1-5 分的暂定评分，并说明这是推测。" },
+      { id: "chosen_solution", question: "本轮决定做哪个方案？为什么？", hint: "优先选可快速做原型并验证关键假设的方案。" },
+      { id: "key_risk", question: "这个方案最危险的关键假设是什么？", hint: "写成可被真实证据推翻的一句话。" }
+    ]},
+    { milestoneId: "M6", fields: [
+      { id: "prototype_scope", question: "最小原型需要展示哪些核心内容？", hint: "只保留能验证关键假设的部分。" },
+      { id: "prototype_script", question: "用户如何一步步体验这个原型？", hint: "写 3-5 步即可。" },
+      { id: "validation_target", question: "这个原型最想验证什么？", hint: "明确一个核心假设。" }
+    ]},
+    { milestoneId: "M7", fields: [
+      { id: "test_users", question: "准备让哪 3 类/3 名用户来体验？", hint: "快速体验可写计划对象；没有真的测试时不能写成真实结果。" },
+      { id: "test_tasks", question: "让用户完成什么任务？观察什么行为？", hint: "优先观察是否理解、是否完成、是否愿意继续/付费等行为。" },
+      { id: "feedback_summary", question: "原型验证结果是什么？", hint: "若尚未真实验证，AI 只能生成「模拟示例」，不得记为真实证据。" },
+      { id: "hecd_decision", question: "拿到这些真实反馈后，下一步打算怎么做？", hint: "没有真实测试时写「先不急着决定」。" }
+    ]},
+    { milestoneId: "M8", fields: [
+      { id: "pitch", question: "生成一个 1 分钟路演稿。", hint: "结构：用户问题 → 方案 → 原型 → 证据 → 下一步。" },
+      { id: "ask", question: "希望听众/投资人做什么？", hint: "例如投票、试用、介绍用户、加入团队。" }
+    ]},
+    { milestoneId: "M9", fields: [
+      { id: "changed_belief", question: "什么证据改变了我们原来的想法？", hint: "没有真实证据时说明本轮主要是流程演练。" },
+      { id: "effective_method", question: "这轮最有效的方法是什么？", hint: "提炼一个可复用动作。" },
+      { id: "next_round", question: "如果再做一轮，下一步最应该改变什么？", hint: "只选一个最高杠杆行动。" }
+    ]}
+  ];
+
+  var EXPERIENCE = [
+    { milestoneId: "M1", artifactName: "创业战队卡", reward: "你已经把一个模糊想法变成了一支可以行动的创业小队。", hecdCue: "现在不用想太多：这句话想法先当作一个还没被验证的猜测，后面我们会一步步看它成不成立。", artifactFields: [["team_name","队名"],["team_roles","成员 / 角色"],["one_line_idea","一句话创业想法"]] },
+    { milestoneId: "M2", artifactName: "用户机会地图", reward: "你已经从「我想做什么」切换到「用户可能需要什么」。", hecdCue: "先问自己一句：哪些是我们真的知道的事实，哪些只是我们的猜测？我们凭什么相信？", artifactFields: [["candidate_needs","候选机会"],["known_vs_assumed","已知事实 vs 待验证假设"]] },
+    { milestoneId: "M3", artifactName: "问题定义卡", reward: "你已经把一堆可能的问题，收敛成了这轮最值得解决的一个问题。", hecdCue: "这个问题定义还只是我们的判断。想一个能推翻它的证据：如果出现什么情况，就说明我们搞错了？", artifactFields: [["target_customer","目标客户"],["core_problem","核心问题"],["key_scenario","关键场景"],["selection_reason","为什么优先"],["problem_statement","一句话问题定义"]] },
+    { milestoneId: "M4", artifactName: "Crazy 8 创意板", reward: "你已经把一个问题变成了多个可选择的解决方向，而不是被第一个点子绑住。", hecdCue: "先别急着选：这 8 个方案都还没被验证，每个背后都藏着一个「用户为什么会需要它」的问题。", artifactFields: [["crazy8","8 个明显不同的方案"]] },
+    { milestoneId: "M5", artifactName: "创新矩阵 + Winner", reward: "你已经从「点子很多」走到了「为什么这一个最值得先做」。", hecdCue: "选出来的方案不是终点，而是下一关要去验证的猜测。想清楚：其中最不靠谱、最需要证明的一条是什么？", artifactFields: [["solution_matrix","创新矩阵"],["chosen_solution","Winner 方案"],["key_risk","最高风险假设"]] },
+    { milestoneId: "M6", artifactName: "最小原型蓝图", reward: "你已经把抽象点子压缩成一个别人能看、点、试的最小体验。", hecdCue: "做原型的目的是拿到真实反馈，不是做得好看。想清楚：这个原型到底要证明或推翻什么？", artifactFields: [["prototype_scope","最小原型范围"],["prototype_script","用户体验脚本"],["validation_target","要验证的关键假设"]] },
+    { milestoneId: "M7", artifactName: "验证证据地图", reward: "你开始让真实世界决定方向，而不是让团队内部意见决定方向。", hecdCue: "让真实用户来说话：如果反馈印证了我们的猜测，就继续；如果推翻了，就调整；发现和预期相反，是好消息，不是失败。", artifactFields: [["test_users","测试对象"],["test_tasks","测试任务与观察点"],["feedback_summary","真实反馈 / 模拟示例"],["hecd_decision","下一步决定"]] },
+    { milestoneId: "M8", artifactName: "1 分钟路演卡", reward: "你已经把项目压缩成别人一分钟能听懂、能选择是否支持的故事。", hecdCue: "路演时的投票、追问、试用意愿，都是真实反馈；掌声不算数。", artifactFields: [["pitch","1 分钟 Pitch"],["ask","明确 Ask"]] },
+    { milestoneId: "M9", artifactName: "创业能力成长报告", reward: "你已经把一次创业过程沉淀成下一次可以复用的方法和能力。", hecdCue: "回头看看这一路：我们最开始相信了什么？哪些真实反馈改变了想法？出现了什么出乎意料的事？最后决定了什么？", artifactFields: [["changed_belief","被证据改变的认知"],["effective_method","最有效的方法"],["next_round","下一轮最高杠杆行动"]] }
+  ];
+
+  var ENTRECOMP_NAMES = {
+    spotting_opportunities: "发现机会",
+    creativity: "创造力",
+    vision: "愿景",
+    valuing_ideas: "评价创意价值",
+    ethical_sustainable_thinking: "伦理与可持续思维",
+    self_awareness_self_efficacy: "自我认识与自我效能",
+    motivation_perseverance: "动机与坚持",
+    mobilising_resources: "调动资源",
+    financial_economic_literacy: "金融与经济素养",
+    mobilising_others: "动员他人",
+    taking_initiative: "主动行动",
+    planning_management: "规划与管理",
+    coping_uncertainty_ambiguity_risk: "应对不确定、模糊与风险",
+    working_with_others: "与他人合作",
+    learning_through_experience: "从经验中学习"
+  };
+
+  /* ============================================================
+   * 存储
+   * ============================================================ */
+  var STORAGE_KEY = "xyvc-entrecoach-v1";
+  var TOOL_ID = "entrecoach";
+  var API_CANDIDATES = [
+    "https://api.xiaoyuanvc.com/api/glm-proxy"
+  ];
+
+  function createState() {
+    return {
+      toolId: TOOL_ID,
+      stage: "welcome",          // welcome | coaching | finished
+      idea: "",
+      milestoneIndex: 0,         // 0..8
+      artifacts: {},             // milestoneId -> { title, reward, content, kind, acceptedAt }
+      answers: {},               // milestoneId -> { fieldId: text }
+      drafts: {},                // milestoneId -> { fieldId: text }
+      hypotheses: [],            // { id, statement, status, importance, uncertainty }
+      evidence: [],              // { id, hypothesisId, summary, verdict, source }
+      decisions: [],             // { hypothesisId, decision, rationale }
+      practice: [],              // practiced competences
+      startedAt: null,
+      updatedAt: null
+    };
+  }
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var s = JSON.parse(raw);
+        // 迁移：确保字段齐全
+        var base = createState();
+        for (var k in base) { if (!(k in s)) s[k] = base[k]; }
+        return s;
+      }
+    } catch (e) { /* ignore */ }
+    return createState();
+  }
+
+  function save() {
+    S.updatedAt = new Date().toISOString();
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); } catch (e) {}
+    syncUnifiedState();
+  }
+
+  // 把教练进度回写到统一数据层，让「我的探索记录」能回看并继续
+  function syncUnifiedState() {
+    if (!window.XYVCUnifiedDataManager || !window.XYVCUnifiedDataManager.saveToolState) return;
+    try {
+      var cur = MILESTONES[S.milestoneIndex] || null;
+      window.XYVCUnifiedDataManager.saveToolState(TOOL_ID, {
+        idea: S.idea,
+        stage: S.stage,
+        milestoneIndex: S.milestoneIndex,
+        currentMilestone: cur ? cur.id + "·" + cur.name : "",
+        artifacts: S.artifacts,
+        hypotheses: S.hypotheses,
+        evidence: S.evidence,
+        decisions: S.decisions,
+        practice: S.practice,
+        updatedAt: S.updatedAt
+      }, {
+        projectContext: {
+          oneLiner: S.idea,
+          stage: S.stage === "welcome" ? "" : (cur ? cur.name : ""),
+          track: "entrepreneurship"
+        }
+      });
+    } catch (e) { /* ignore */ }
+  }
+
+  // 清掉共享数据层里本工具的草稿/历史，避免「我的探索记录」残留旧进度
+  function clearUnifiedState() {
+    if (window.XYVCUnifiedDataManager && window.XYVCUnifiedDataManager.clearToolState) {
+      try { window.XYVCUnifiedDataManager.clearToolState(TOOL_ID); } catch (e) { /* ignore */ }
+    }
+  }
+
+  function reset() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    clearUnifiedState();
+    S = createState();
+  }
+
+  // 一键彻底重置：清掉本工具数据，并强制重新加载页面（绕过旧 JS 缓存）
+  function hardReset() {
+    if (!confirm("确定要彻底重置本工具吗？\n\n这会清空当前所有进度，并强制刷新页面（以加载最新版本）。其他工具不受影响。")) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    clearUnifiedState();
+    // 强制重新加载，绕过缓存的旧 JS
+    location.reload(true);
+  }
+
+  var S = load();
+
+  /* ============================================================
+   * 工具函数
+   * ============================================================ */
+  function milestone(i) { return MILESTONES[i]; }
+  function formOf(i) { return FORMS.find(function (f) { return f.milestoneId === MILESTONES[i].id; }); }
+  function expOf(i) { return EXPERIENCE.find(function (f) { return f.milestoneId === MILESTONES[i].id; }); }
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function uid(prefix) {
+    return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function toast(msg) {
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(el._t);
+    el._t = setTimeout(function () { el.classList.remove("show"); }, 2400);
+  }
+
+  /* ============================================================
+   * 语义化渲染管线（两阶段）
+   *   parseBlocks(text)  →  [{type:'title'|'list'|'kv'|'table'|'para', ...}]
+   *   renderBlocks(b)    → 统一 HTML（一套组件模板 + 一套 CSS class）
+   * 语义块类型只有 5 种，AI 无论什么写法都归一化到它们上，
+   * 因此 9 关的展示视觉统一，且后续新增格式只需在 parse 阶段加规则。
+   * ============================================================ */
+  function escMarkdown(text) {
+    var blocks = parseBlocks(text);
+    return renderBlocks(blocks);
+  }
+
+  // ── 阶段一：识别 + 归一化（输出语义块，不拼 HTML）─────────────────
+  function parseBlocks(text) {
+    var escaped = esc(text);
+    var lines = escaped.split("\n");
+    var blocks = [];
+
+    function push(type, data) { blocks.push(Object.assign({ type: type }, data)); }
+
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i].trim();
+      if (!l) continue;
+
+      // 表格
+      if (l.charAt(0) === "|") {
+        var rows = [];
+        while (i < lines.length && lines[i].trim().charAt(0) === "|") {
+          rows.push(parseTableRow(lines[i].trim()));
+          i++;
+        }
+        i--;
+        if (rows.length >= 1) push("table", { rows: rows });
+        continue;
+      }
+
+      var titleMatch = l.match(/^(#{1,3})\s+(.*)$/);
+      var ulMatch = l.match(/^[-*•]\s+(.*)$/);
+      // 有序列表标记：数字 + .）/、，但「数字.」后面紧跟数字（如 8.9、3.5分、4.5星）不当作列表标记（那是小数），否则会吞掉小数主体。
+      var olMatch = l.match(/^(?:(?:\d+\.(?![0-9]))|(?:\d+[\uFF09\u3001])|(?:[①②③④⑤⑥⑦⑧⑨])|(?:任务|步骤)\s*\d+)\s*[:：]?\s*(?:[-*•]\s+)?(.*)$/);
+      var blockMatch = l.match(/^【(.+?)】\s*(.*)$/);
+
+      if (titleMatch) {
+        push("title", { level: titleMatch[1].length, text: titleMatch[2] });
+      } else if (blockMatch) {
+        // 一行内多个【关键词】→ kv 块
+        var blockItems = splitBracketItems(l);
+        blockItems.forEach(function (bi) { push("kv", { head: bi.head, rest: bi.rest }); });
+      } else if (ulMatch) {
+        push("list", { ordered: false, items: [ulMatch[1]] });
+      } else if (olMatch) {
+        // 若行内其实有多个编号分项（如「① A；② B；③ C」），交给 splitInlineNumbered 拆成列表并保留前言；
+        // 只有单条（如「1. 方案」一行一条）才当作单个有序项。
+        var inlineSplit = splitInlineNumbered(l);
+        if (inlineSplit) {
+          if (inlineSplit.lead) push("para", { text: inlineSplit.lead });
+          push("list", { ordered: true, items: inlineSplit.items });
+        } else {
+          var runLen = 1;
+          while (i + runLen < lines.length && /^(?:(?:\d+\.(?![0-9]))|(?:\d+[\uFF09\u3001])|(?:[①②③④⑤⑥⑦⑧⑨])|(?:任务|步骤)\s*\d+)/.test(lines[i + runLen].trim())) runLen++;
+          if (runLen > 12) {
+            // 异常长编号堆砌 → 降级为段落
+            for (var r = 0; r < runLen; r++) push("para", { text: lines[i + r].trim() });
+            i += runLen - 1;
+          } else {
+            push("list", { ordered: true, items: [olMatch[1]] });
+          }
+        }
+      } else {
+        // 兜底：一行内多个中文分项 → 列表（保留前言）
+        var split = splitInlineNumbered(l);
+        if (split) {
+          if (split.lead) push("para", { text: split.lead });
+          push("list", { ordered: true, items: split.items });
+        } else {
+          // 数字开头的零散片段（如直接跟在列表项后的「8.9 元;」「14 天」）→ 并入上一个列表项，
+          // 避免它成为独立段落把 <ol> 拆开、破坏编号连续。
+          var prevBlk = blocks[blocks.length - 1];
+          if (prevBlk && prevBlk.type === "list" && /^\d+(?:\.\d+)?(?:\s|$)/.test(l)) {
+            var lastItemIdx = prevBlk.items.length - 1;
+            prevBlk.items[lastItemIdx] = (prevBlk.items[lastItemIdx] || "") + l;
+          } else {
+            push("para", { text: l });
+          }
+        }
+      }
+    }
+
+    // 合并相邻的同类 list（把分散的 li 聚合成一块，避免逐行 <ol>）
+    var merged = [];
+    for (var b = 0; b < blocks.length; b++) {
+      var cur = blocks[b];
+      if (cur.type === "list") {
+        var prev = merged[merged.length - 1];
+        if (prev && prev.type === "list" && prev.ordered === cur.ordered) {
+          prev.items = prev.items.concat(cur.items);
+          continue;
+        }
+      }
+      merged.push(cur);
+    }
+    return merged;
+  }
+
+  // ── 阶段二：统一渲染（一套组件 + 一套 class）──────────────────
+  function renderBlocks(blocks) {
+    var out = [];
+    for (var i = 0; i < blocks.length; i++) {
+      var b = blocks[i];
+      if (b.type === "title") {
+        var tag = b.level === 1 ? "h3" : b.level === 2 ? "h4" : "strong";
+        out.push("<" + tag + " class=\"blk-title\">" + inline(b.text) + "</" + tag + ">");
+      } else if (b.type === "list") {
+        var tag2 = b.ordered ? "ol" : "ul";
+        var lis = b.items.map(function (it) { return "<li>" + inline(it) + "</li>"; }).join("");
+        out.push("<" + tag2 + " class=\"blk-list\">" + lis + "</" + tag2 + ">");
+      } else if (b.type === "kv") {
+        out.push("<div class=\"blk-kv\"><strong class=\"blk-kv-head\">" + inline(b.head) + "</strong>" +
+          (b.rest ? "<span class=\"blk-kv-rest\">：" + inline(b.rest) + "</span>" : "") + "</div>");
+      } else if (b.type === "table") {
+        out.push(buildTable(b.rows));
+      } else {
+        out.push("<p class=\"blk-para\">" + inline(b.text) + "</p>");
+      }
+    }
+    return out.join("");
+  }
+
+  function parseTableRow(line) {
+    // 去掉首尾 |，按 | 拆分
+    var inner = line.replace(/^\|/, "").replace(/\|$/, "");
+    return inner.split("|").map(function (x) { return x.trim(); });
+  }
+  function isSepRow(row) {
+    // 分隔符行：如 |---|---| 或 |:--|:--:|
+    if (row.length === 0) return false;
+    var joined = row.join("|");
+    return /^[\s:\-|]+$/.test(joined) && joined.indexOf("-") !== -1;
+  }
+  function buildTable(rows) {
+    // rows[0] 是表头；若是分隔符行则跳过
+    var header = rows[0];
+    var bodyStart = 1;
+    if (rows[1] && isSepRow(rows[1])) bodyStart = 2;
+    if (bodyStart >= rows.length) bodyStart = 1;
+    var h = "<table class=\"blk-table\"><thead><tr>";
+    for (var j = 0; j < header.length; j++) h += "<th>" + inline(header[j]) + "</th>";
+    h += "</tr></thead><tbody>";
+    for (var r = bodyStart; r < rows.length; r++) {
+      h += "<tr>";
+      for (var c = 0; c < rows[r].length; c++) h += "<td>" + inline(rows[r][c]) + "</td>";
+      h += "</tr>";
+    }
+    h += "</tbody></table>";
+    return h;
+  }
+
+    // 把一行里连续出现的【关键词】说明 拆成多个 {head, rest}；不足 2 个时返回仅该行。
+    function splitBracketItems(line) {
+      var re = /【([^】]+)】\s*([^【]*?)(?=【|$)/g;
+      var items = [];
+      var m;
+      while ((m = re.exec(line)) !== null) {
+        items.push({ head: m[1], rest: m[2].replace(/[:：]?\s*$/, "").trim() });
+      }
+      if (items.length === 0) {
+        // 无【】则作为单个块
+        var bm = line.match(/^【(.+?)】\s*(.*)$/);
+        if (bm) items.push({ head: bm[1], rest: bm[2].trim() });
+        else items.push({ head: line, rest: "" });
+      }
+      return items;
+    }
+
+    // 把一个段落里连续的分项拆成 { lead, items }。识别类型：
+    //   - 数字序号：1）1. 1、①；任务N/步骤N（也认 ASCII 半角 ")"，如 1) 2) 8)）
+    //   - 中文序数：第一/第二/…第十（可后接 组/点/项/方面/类）
+    //   - 中文字面分项：假设组N、已知、假设（常见于 M2）
+    // 每个标记映射一个整数序号；只有当整段标记是「连续 1..N」时才拆成列表。
+    // 否则返回 null（整段保留为段落）——避免小数（8.9 元）或尾注里的数字（建议：1、2、5）把真列表拆碎。
+    // 返回 { lead, items }：lead 是第一个分项之前的前言（若有），避免被静默丢弃。
+    var SPLIT_CN = { "一":1,"二":2,"三":3,"四":4,"五":5,"六":6,"七":7,"八":8,"九":9,"十":10 };
+    var SPLIT_CIRC = { "\u2460":1,"\u2461":2,"\u2462":3,"\u2463":4,"\u2464":5,"\u2465":6,"\u2466":7,"\u2467":8,"\u2468":9 };
+    var SPLIT_MARKER =
+      "(?:\\d+(?:\\.(?![0-9])|\\)|[\\uFF09\\u3001]))" +
+      "|(?:[\\u2460\\u2461\\u2462\\u2463\\u2464\\u2465\\u2466\\u2467\\u2468])" +
+      "|(?:任务|步骤)\\s*\\d+" +
+      "|(?:第[一二三四五六七八九十]+\\s*(?:组|点|项|方面|类))" +
+      "|(?:假设\\s*组\\s*\\d+)" +
+      "|(?:已知|假设)\\s*[:：]";
+    function sv(text) {
+      var m = text.match(/^\s*(\d+)/);
+      if (m) return parseInt(m[1], 10);
+      var t = text.match(/^(?:任务|步骤)\s*(\d+)/);
+      if (t) return parseInt(t[1], 10);
+      var h = text.match(/^(?:假设\s*组\s*)(\d+)/);
+      if (h) return parseInt(h[1], 10);
+      var c = text.match(/^([\u2460-\u2468])/);
+      if (c) return SPLIT_CIRC[c[1]];
+      var o = text.match(/^第([一二三四五六七八九十]+)/);
+      if (o) {
+        var s = o[1];
+        if (s === "十") return 10;
+        if (s.indexOf("十") !== -1) {
+          var p = s.split("十"), tens = p[0] ? SPLIT_CN[p[0]] : 1, ones = p[1] ? SPLIT_CN[p[1]] : 0;
+          return tens * 10 + ones;
+        }
+        return SPLIT_CN[s];
+      }
+      if (/^(?:已知|假设)\s*[:：]/.test(text)) return text[0] === "已" ? 1 : 2;
+      return null;
+    }
+    function splitInlineNumbered(line) {
+      var re = new RegExp(SPLIT_MARKER, "g");
+      var found = [];
+      var m;
+      while ((m = re.exec(line)) !== null) {
+        var prev = line.slice(0, m.index).trim().slice(-1);
+        if (prev === "\uFF08" || prev === "(") continue; // 括号内引用，跳过
+        var text = m[0];
+        // 「已知/假设」只在该行没有其它强标记（数字/圆圈/序数/任务）时才作为分项，
+        // 否则它们只是句中标注（如「（假设：…待验证）」），会污染真正的连续数字列表。
+        if (/^(?:已知|假设)\s*[:：]/.test(text)) {
+          found.push({ index: m.index, text: text, soft: true });
+        } else {
+          found.push({ index: m.index, text: text, soft: false });
+        }
+      }
+      if (found.length < 2) return null;
+      // 若存在强标记，则丢弃所有 soft（已知/假设）标记。
+      var hasStrong = found.some(function (f) { return !f.soft; });
+      if (hasStrong) found = found.filter(function (f) { return !f.soft; });
+      if (found.length < 2) return null;
+      var seqs = [];
+      for (var i = 0; i < found.length; i++) {
+        var v = sv(found[i].text);
+        if (v === null) return null;
+        seqs.push(v);
+      }
+      // 只拆「连续 1..N」的整段标记；任一断档/重启 → 保留为段落
+      for (var j = 0; j < seqs.length; j++) { if (seqs[j] !== j + 1) return null; }
+      var lead = line.slice(0, found[0].index).trim();
+      var out = [];
+      for (var k = 0; k < found.length; k++) {
+        var start = found[k].index;
+        var end = k + 1 < found.length ? found[k + 1].index : line.length;
+        var seg = line.slice(start, end).trim();
+        seg = seg.replace(new RegExp("^(?:" + SPLIT_MARKER + ")"), "");
+        seg = seg.replace(/^\s*[:：]\s*/, "");
+        if (seg) out.push(seg);
+      }
+      return out.length >= 2 ? { lead: lead, items: out } : null;
+    }
+
+    function inline(s) {
+      return s
+        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+        .replace(/`([^`]+)`/g, "<code>$1</code>");
+    }
+
+  function stripJson(text) {
+    if (!text) return text;
+    var fenced = text.match(/```json\s*([\s\S]*?)```/i);
+    if (fenced) return fenced[1].trim();
+    var first = text.indexOf("{");
+    var last = text.lastIndexOf("}");
+    if (first !== -1 && last !== -1 && last > first) return text.slice(first, last + 1);
+    return text;
+  }
+
+  /* ============================================================
+   * GLM 调用
+   * ============================================================ */
+  async function callGLM(messages) {
+    var lastErr = null;
+    for (var i = 0; i < API_CANDIDATES.length; i++) {
+      var endpoint = API_CANDIDATES[i];
+      var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+      var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 60000) : null;
+      try {
+        var res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: messages, stream: false }),
+          signal: ctrl ? ctrl.signal : undefined
+        });
+        if (timer) clearTimeout(timer);
+        var json = await res.json();
+        if (!res.ok || (!json.choices && !json.ok)) {
+          throw new Error(json.error || ("接口错误 " + res.status));
+        }
+        // 两种返回形态：choices 或 {ok, ...}
+        if (json.choices && json.choices[0] && json.choices[0].message) {
+          return json.choices[0].message.content;
+        }
+        if (json.content) return json.content;
+        if (json.result) return json.result;
+        throw new Error("接口返回了未知结构");
+      } catch (err) {
+        if (timer) clearTimeout(timer);
+        lastErr = err;
+      }
+    }
+    throw lastErr || new Error("没有可用的 AI 接口");
+  }
+
+  /* ============================================================
+   * AI 教练循环
+   * ============================================================ */
+  function coachSystemPrompt(i) {
+    var m = milestone(i);
+    var form = formOf(i);
+    var fieldSpec = form.fields.map(function (f) {
+      return '    "' + f.id + '": "' + f.hint + '"';
+    }).join(",\n");
+    return [
+      "你是 EntreCoach，一个 AI-first 的创业教练。你遵循火种节 9 里程碑方法论。",
+      "",
+      "当前里程碑：第 " + (i + 1) + " 关「" + m.name + "」（" + m.ability + "）",
+      "目标：" + m.goal,
+      "",
+      "核心规则：AI 先做 80%，学生只做判断（接受 / 在此基础上修改 / 换一版），绝不让学生面对空白表单。",
+      "你必须输出一个严格的 JSON 对象，不要输出任何 JSON 之外的解释文字。JSON 的字段如下（每个字段的值用中文，要具体、可直接用）：",
+      "{",
+      fieldSpec,
+      "}",
+      "",
+      "要求：",
+      "1. 每个字段都要给出有内容的草稿，不要留空、不要写「待定」。",
+      "2. 基于学生的创业想法和已完成的里程碑上下文来写，保持连贯。",
+      "3. 任何推测都必须诚实：如果是未经验证的假设，在字段内容里用「（假设，待验证）」标注。",
+      "4. 只输出 JSON 对象本身，可以带 ```json 围栏，但除此之外不要有任何多余文字。"
+    ].join("\n");
+
+    // M9 复盘：额外注入 EntreComp 视角指令
+    if (m.id === "M9") {
+      return systemBase(i) + [
+        "",
+        "这是第 9 关「复盘」。请特别从 EntreComp（欧盟创业能力框架）的角度撰写成长报告：",
+        "- 回顾学生这一路练习并运用的 EntreComp 能力（见下方「已练习的能力」）。",
+        "- 明确指出哪些能力有明显成长、哪些还只是初步练习（练习 ≠ 掌握）。",
+        "- 在 changed_belief 里写清：最初相信什么、什么证据/反馈改变了想法、发生了什么出乎意料的事。",
+        "- 在 effective_method 里提炼一个最值得复用、最有效的动作。",
+        "- 在 next_round 里给出下一轮最高杠杆的一个行动，而不是泛泛建议。",
+        "",
+        "禁止写空泛感想；要具体到这一次创业经历本身。"
+      ].join("\n");
+    }
+    return systemBase(i);
+  }
+
+  function systemBase(i) {
+    var m = milestone(i);
+    var form = formOf(i);
+    var fieldSpec = form.fields.map(function (f) {
+      return '    "' + f.id + '": "' + f.hint + '"';
+    }).join(",\n");
+    return [
+      "你是 EntreCoach，一个 AI-first 的创业教练。你遵循火种节 9 里程碑方法论。",
+      "当前里程碑：第 " + (i + 1) + " 关「" + m.name + "」（" + m.ability + "）",
+      "目标：" + m.goal,
+      "核心规则：AI 先做 80%，学生只做判断（接受 / 在此基础上修改 / 换一版），绝不让学生面对空白表单。",
+      "你必须输出一个严格的 JSON 对象，不要输出任何 JSON 之外的解释文字。JSON 的字段如下（每个字段的值用中文，要具体、可直接用）：",
+      "{",
+      fieldSpec,
+      "}",
+      "要求：",
+      "1. 每个字段都要给出有内容的草稿，不要留空、不要写「待定」。",
+      "2. 基于学生的创业想法和已完成的里程碑上下文来写，保持连贯。",
+      "3. 任何推测都必须诚实：如果是未经验证的假设，在字段内容里用「（假设，待验证）」标注。",
+      "4. 字段内容一定要用 Markdown 结构化排版，让学生一眼看懂。绝对规则（必须遵守）：",
+      "   - 每一条要点、方案、分组，都必须**独占一行**，且行首用 `- `（无序）或 `1. `（有序）开头。",
+      "   - **禁止**把多个要点用中文序号（如 1）2）3））挤在同一行；一行只写一个 `- ` 条目。",
+      "   - 关键结论、重要字段名：用 `**加粗**` 或 `### 小标题` 突出。",
+      "   - 编号必须**严格对应用户真正列出的项数**；介绍语、总结语不要编号（这类放普通段落即可）。",
+      "5. 只输出 JSON 对象本身，可以带 ```json 围栏，但除此之外不要有任何多余文字。",
+      "",
+      milestoneFormatRule(i)
+    ].join("\n");
+  }
+
+  // 按里程碑定制的格式强规（解决 M4/M5 的编号/矩阵误判）
+  function milestoneFormatRule(i) {
+    var m = milestone(i);
+    if (m.id === "M4") {
+      return "【M4 发散方案·crazy8 专用格式】\n" +
+        "- 必须给出恰好 8 个方案，每行一个，格式：`- **方案N「短名」**：一句话说明`。\n" +
+        "- 行首序号只到 8，**绝不允许出现 9、10、11、12 这类额外编号**。\n" +
+        "- 若要对 8 个方案做归类总结，用普通段落或 `- ` 列表，不要用数字编号。";
+    }
+    if (m.id === "M5") {
+      return "【M5 决定方案·solution_matrix 专用格式】\n" +
+        "- solution_matrix 必须用 Markdown 表格：`| 方案 | 用户价值 | 可实现性 | 评语 |`，第二行 `|---|---|---|---|`，再每一行一个方案。\n" +
+        "- 写在表里的方案要精简，最多 4-6 个（聚焦），不要 10 个以上。\n" +
+        "- **禁止**把评分数据写成 `1. xxx 2. xxx` 的长编号列表。";
+    }
+    if (m.id === "M6") {
+      return "【M6 制作原型 专用格式】\n" +
+        "- prototype_script（用户体验脚本）每一项单独一行：`- 步骤N：描述`。\n" +
+        "- prototype_scope、validation_target 用**加粗讲清关键点**即可，不要堆长段落。";
+    }
+    if (m.id === "M7") {
+      return "【M7 验证原型 专用格式】\n" +
+        "- test_users、test_tasks、feedback_summary 每一条单独一行：`- 项目：说明`。\n" +
+        "- **禁止**写「任务1 任务2 任务3」而不分行——每个任务必须独占一行，行首 `- `。\n" +
+        "- 没有真实测试时，feedback_summary 明确写「模拟示例，未真实验证」。";
+    }
+    if (m.id === "M8") {
+      return "【M8 路演 专用格式】\n" +
+        "- pitch 用**分段**呈现（问题/方案/原型/证据/下一步），每段内部要点用 `- ` 列表。\n" +
+        "- ask 给出 2-3 个清晰的选择，每行一个 `- `；避免长段落堆砌。";
+    }
+    if (m.id === "M9") {
+      return "【M9 复盘·EntreComp 专用格式】\n" +
+        "- changed_belief、effective_method、next_round 每关聚焦要点，用 `- ` 或 `1. ` 列条目。\n" +
+        "- 禁止空泛感想；具体到这一次经历。";
+    }
+    return "";
+  }
+
+  function contextSummary() {
+    var lines = [];
+    if (S.idea) lines.push("学生的一句话创业想法：" + S.idea);
+    // 已接受的里程碑答案
+    var accepted = [];
+    for (var i = 0; i < S.milestoneIndex; i++) {
+      var m = milestone(i);
+      var ans = S.answers[m.id];
+      if (ans) {
+        var fields = [];
+        for (var k in ans) { if (ans[k]) fields.push(k + "=" + ans[k]); }
+        if (fields.length) accepted.push(m.name + "：{ " + fields.join("；") + " }");
+      }
+    }
+    if (accepted.length) {
+      lines.push("已完成的里程碑：");
+      accepted.forEach(function (x) { lines.push("  - " + x); });
+    }
+    // 已练习的 EntreComp 能力
+    var practiced = S.practice || [];
+    if (practiced.length) {
+      lines.push("学生在这趟旅程中练习过的 EntreComp 能力（练习 ≠ 掌握）：");
+      practiced.forEach(function (c) { lines.push("  - " + (ENTRECOMP_NAMES[c] || c)); });
+    }
+    // 已获得的成果卡
+    var artNames = [];
+    for (var ai = 0; ai < MILESTONES.length; ai++) {
+      var aa = S.artifacts[MILESTONES[ai].id];
+      if (aa) artNames.push(MILESTONES[ai].name + "：" + aa.title);
+    }
+    if (artNames.length) {
+      lines.push("已获得的成果卡：");
+      artNames.forEach(function (x) { lines.push("  - " + x); });
+    }
+    return lines.join("\n");
+  }
+
+  async function generateDraft() {
+    var i = S.milestoneIndex;
+    var m = milestone(i);
+    var form = formOf(i);
+    var messages = [
+      { role: "system", content: coachSystemPrompt(i) },
+      { role: "user", content: "请为第 " + (i + 1) + " 关「" + m.name + "」生成草稿。\n\n" + contextSummary() }
+    ];
+    var content = await callGLM(messages);
+    var jsonText = stripJson(content);
+    var parsed;
+    try {
+      parsed = JSON.parse(jsonText);
+    } catch (e) {
+      // 退化为纯文本兜底：把整段内容作为第一个字段的值
+      parsed = {};
+      var firstField = form.fields[0].id;
+      parsed[firstField] = content.trim();
+    }
+    var draft = {};
+    form.fields.forEach(function (f) {
+      var v = parsed[f.id];
+      draft[f.id] = (v == null || v === "") ? "" : String(v).trim();
+    });
+    // 若 AI 完全没给任何字段值，报错
+    var hasAny = form.fields.some(function (f) { return draft[f.id]; });
+    if (!hasAny) throw new Error("AI 没有返回有效内容");
+    S.drafts[m.id] = draft;
+    save();
+    return draft;
+  }
+
+  /* ============================================================
+   * 成果卡 & HECD & EntreComp
+   * ============================================================ */
+  function buildArtifactContent(i) {
+    var m = milestone(i);
+    var exp = expOf(i);
+    var ans = S.answers[m.id] || {};
+    var lines = [];
+    exp.artifactFields.forEach(function (pair) {
+      var key = pair[0], label = pair[1];
+      var val = ans[key] || "";
+      // 标题独占一行 + 值另起一行：否则「**标题**：值」会粘在同一行，
+      // 让 renderer 把它当成一段长文字，无法识别列表/表格等结构，造成太长难读。
+      lines.push("**" + label + "**：");
+      lines.push(val || "（未填写）");
+    });
+    return lines.join("\n");
+  }
+
+  function acceptMilestone() {
+    var i = S.milestoneIndex;
+    var m = milestone(i);
+    var exp = expOf(i);
+    var draft = S.drafts[m.id] || {};
+    // draft → answers（接受即定稿）
+    S.answers[m.id] = Object.assign({}, S.answers[m.id] || {}, draft);
+    S.artifacts[m.id] = {
+      title: exp.artifactName,
+      reward: exp.reward,
+      content: buildArtifactContent(i),
+      kind: "simulation",
+      acceptedAt: new Date().toISOString()
+    };
+    // EntreComp practice
+    var mm = milestone(i);
+    (mm.entrecomp || []).forEach(function (c) {
+      if (S.practice.indexOf(c) === -1) S.practice.push(c);
+    });
+    // HECD：M3 记录问题定义假设；M5 记录最高风险假设
+    if (m.id === "M3" && draft.problem_statement) {
+      S.hypotheses.push({ id: uid("H"), statement: draft.problem_statement, status: "testing", importance: 8, uncertainty: 8 });
+    }
+    if (m.id === "M5" && draft.key_risk) {
+      S.hypotheses.push({ id: uid("H"), statement: draft.key_risk, status: "testing", importance: 8, uncertainty: 8 });
+    }
+    S.milestoneIndex += 1;
+    if (S.milestoneIndex >= MILESTONES.length) {
+      S.stage = "finished";
+    }
+    save();
+    appendHistory();
+    return exp;
+  }
+
+  function appendHistory() {
+    if (window.XYVCUnifiedDataManager && window.XYVCUnifiedDataManager.appendToolHistory) {
+      try {
+        window.XYVCUnifiedDataManager.appendToolHistory(TOOL_ID, {
+          inputSnapshot: { idea: S.idea, milestoneIndex: S.milestoneIndex },
+          outputSnapshot: { artifacts: S.artifacts }
+        });
+      } catch (e) { /* ignore */ }
+    }
+  }
+
+  /* ============================================================
+   * 渲染
+   * ============================================================ */
+  var app = document.getElementById("app");
+
+  // 当前屏幕正在查看的关卡索引（默认 = 真实进度；跳转查看旧关卡时不改变真进度）
+  var viewIndex = -1;
+
+  function curIndex() {
+    if (viewIndex >= 0 && viewIndex < MILESTONES.length) return viewIndex;
+    return S.milestoneIndex;
+  }
+
+  function goTo(i) {
+    // 只能跳到已走过的关卡（0..milestoneIndex）；正在看的未来关不算已走过
+    if (i < 0 || i > S.milestoneIndex) return;
+    viewIndex = i;
+    if (viewIndex === S.milestoneIndex) viewIndex = -1; // 回到当前进度
+    render();
+  }
+
+  function render() {
+    var progressCard = document.getElementById("progressCard");
+    if (S.stage === "welcome") {
+      progressCard.style.display = "none";
+      renderWelcome();
+    } else {
+      progressCard.style.display = "block";
+      renderProgress();
+      if (S.stage === "finished") renderFinished();
+      else renderMilestone();
+    }
+    renderDrawer();
+  }
+
+  function renderWelcome() {
+    app.innerHTML = [
+      '<div class="card welcome">',
+      '  <h2>把你的创业想法，走成 9 步</h2>',
+      '  <p>AI 教练会一步步带你走完火种节 9 个里程碑（组队 → 理解需求 → … → 复盘）。',
+      '每关 AI 先给你一份完整草稿，你只需要判断：✅ 接受（就用这版）· ✏️ 在此基础上修改（告诉我改哪里）· 🙅 换一版（不要这稿，换个思路重来）。</p>',
+      '  <input class="idea-input" id="ideaInput" type="text" placeholder="先写下你的一句话创业想法，例如：帮助大学生找到 AI 行业的实习机会" />',
+      '  <div style="text-align:center;">',
+      '    <button class="btn btn-primary" id="startBtn">开始闯关 🚀</button>',
+      '  </div>',
+      '</div>'
+    ].join("");
+    var ideaInput = document.getElementById("ideaInput");
+    if (S.idea) ideaInput.value = S.idea;
+    ideaInput.addEventListener("input", function () { S.idea = ideaInput.value.trim(); save(); });
+    document.getElementById("startBtn").addEventListener("click", function () {
+      S.idea = (S.idea || ideaInput.value).trim();
+      if (!S.idea) { toast("先写下一句话想法，哪怕很粗糙也行"); return; }
+      S.stage = "coaching";
+      S.startedAt = S.startedAt || new Date().toISOString();
+      save();
+      render();
+      autoDraft();
+    });
+  }
+
+  function renderProgress() {
+    var cur = curIndex();
+    var m = milestone(Math.min(cur, MILESTONES.length - 1));
+    document.getElementById("progressLabel").textContent = "第 " + (cur + 1) + " 关 · " + m.name;
+    document.getElementById("progressCount").textContent = S.milestoneIndex + "/9";
+    document.getElementById("progressFill").style.width = Math.round(S.milestoneIndex / 9 * 100) + "%";
+
+    // 可点击步骤条
+    var nav = document.getElementById("progressNav");
+    if (!nav) return;
+    var html = MILESTONES.map(function (mm, idx) {
+      var done = idx < S.milestoneIndex || !!S.artifacts[mm.id];
+      var isCur = idx === cur;
+      var reachable = idx <= S.milestoneIndex;
+      var cls = "pstep" + (isCur ? " cur" : "") + (done ? " done" : "") + (!reachable ? " locked" : "");
+      return '<button class="' + cls + '" data-go="' + idx + '" ' + (!reachable ? 'disabled' : '') + ' title="' + esc(mm.name) + '">' +
+        (idx + 1) + '</button>';
+    }).join("");
+    nav.innerHTML = html;
+    nav.querySelectorAll("[data-go]").forEach(function (btn) {
+      if (btn.disabled) return;
+      btn.addEventListener("click", function () {
+        goTo(parseInt(btn.getAttribute("data-go"), 10));
+      });
+    });
+  }
+
+  function renderMilestone() {
+    var i = curIndex();
+    var m = milestone(i);
+    var exp = expOf(i);
+    var form = formOf(i);
+    var draft = S.drafts[m.id] || null;
+    // 回头看已通过的关卡（viewIndex < 进度）
+    var reviewing = i < S.milestoneIndex;
+
+    var html = [];
+    html.push('<div class="card">');
+    if (reviewing) {
+      html.push('  <div class="m-review">📖 正在回看「' + esc(m.name) + '」· 已通过' +
+        ' <button class="btn btn-primary btn-sm" id="backToCurrent">回到当前进度</button></div>');
+    }
+    html.push('  <div class="m-head">');
+    html.push('    <span class="m-badge">第 ' + (i + 1) + ' 关</span>');
+    html.push('    <span class="m-name">' + esc(m.name) + '</span>');
+    html.push('    <span class="m-ability">· ' + esc(m.ability) + '</span>');
+    html.push('  </div>');
+    html.push('  <div class="m-goal">' + esc(m.goal) + '</div>');
+    html.push('  <div class="m-hecd">💡 ' + esc(exp.hecdCue) + '</div>');
+
+    if (!draft) {
+      html.push('  <div class="state-line"><span class="spinner"></span>AI 教练正在生成「' + esc(exp.artifactName) + '」草稿…</div>');
+    } else {
+      html.push('  <div style="font-weight:700;margin-bottom:10px;">📄 ' + esc(exp.artifactName) + (reviewing ? '（已定稿）' : '（AI 草稿）') + '</div>');
+      form.fields.forEach(function (f) {
+        // 回看已完成关：显示定稿答案；当前关：显示草稿
+        var val = reviewing
+          ? ((S.answers[m.id] && S.answers[m.id][f.id]) || "")
+          : (draft[f.id] || "");
+        html.push('  <div class="field">');
+        html.push('    <div class="field-q">' + esc(f.question) + '</div>');
+        html.push('    <div class="field-a is-ai' + (reviewing ? ' is-done' : '') + '">' + escMarkdown(val) + '</div>');
+        html.push('  </div>');
+      });
+      // 只在当前进度且未定稿时给三选一
+      if (!reviewing && draft) {
+        html.push('  <div class="choices">');
+        html.push('    <button class="btn btn-accept" data-choice="accept">✅ 接受</button>');
+        html.push('    <button class="btn btn-modify" data-choice="modify">✏️ 在此基础上修改</button>');
+        html.push('    <button class="btn btn-disagree" data-choice="disagree">🙅 换一版</button>');
+        html.push('  </div>');
+        html.push('  <div class="choices-hint">接受＝定稿进入下一关 · 在此基础上修改＝保留这版，告诉 AI 改哪里 · 换一版＝不要这稿，换个思路重来</div>');
+      }
+      if (!reviewing) {
+        html.push('  <div class="compose" id="composeBox" style="display:none;">');
+        html.push('    <div class="field-q">在这版基础上，告诉 AI 要改哪里：</div>');
+        html.push('    <textarea id="modifyText" placeholder="例如：目标客户更像计算机专业大二学生，而不是泛指大学生"></textarea>');
+        html.push('    <div class="choices">');
+        html.push('      <button class="btn btn-primary" id="submitModify">按我的意见重新生成</button>');
+        html.push('      <button class="btn btn-ghost" id="cancelModify">取消</button>');
+        html.push('    </div>');
+        html.push('  </div>');
+      }
+    }
+    html.push('</div>');
+
+    app.innerHTML = html.join("");
+
+    // 回看「回到当前进度」按钮
+    var backBtn = document.getElementById("backToCurrent");
+    if (backBtn) backBtn.addEventListener("click", function () {
+      viewIndex = -1;
+      render();
+    });
+
+    if (!draft) return;
+
+    var choiceButtons = app.querySelectorAll("[data-choice]");
+    choiceButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var choice = btn.getAttribute("data-choice");
+        if (choice === "accept") {
+          var expResult = acceptMilestone();
+          toast("已获得「" + expResult.artifactName + "」" + (S.stage === "finished" ? " · 全部完成！" : ""));
+          render();
+          // 推进到下一关后，立即为下一关生成草稿
+          if (S.stage !== "finished") autoDraft();
+        } else if (choice === "modify") {
+          document.getElementById("composeBox").style.display = "block";
+        } else if (choice === "disagree") {
+          if (confirm("确定不要这一稿吗？AI 会换一个思路重新生成。")) {
+            S.drafts[m.id] = null;
+            save();
+            render();
+            autoDraft(true);
+          }
+        }
+      });
+    });
+
+    var composeBox = document.getElementById("composeBox");
+    if (composeBox) {
+      document.getElementById("submitModify").addEventListener("click", function () {
+        var instruction = document.getElementById("modifyText").value.trim();
+        if (!instruction) { toast("先写下要改什么"); return; }
+        autoDraft(true, instruction);
+      });
+      document.getElementById("cancelModify").addEventListener("click", function () {
+        composeBox.style.display = "none";
+      });
+    }
+  }
+
+  function renderFinished() {
+    var practice = S.practice.map(function (c) { return ENTRECOMP_NAMES[c] || c; });
+    var html = [];
+    html.push('<div class="card">');
+    html.push('  <div style="text-align:center;padding:10px 0;">');
+    html.push('    <div style="font-size:40px;">🎉</div>');
+    html.push('    <h2 style="margin:8px 0;">火种节 9 步全部完成！</h2>');
+    html.push('    <p style="color:#6b7280;">你把一个想法，走成了「' + esc(S.idea) + '」的完整创业闭环。</p>');
+    html.push('  </div>');
+    if (practice.length) {
+      html.push('  <div class="m-hecd" style="text-align:left;">🎯 这一路你练习过的 EntreComp 创业能力：');
+      html.push('    <div style="margin-top:8px;">' + practice.map(function (p) {
+        return '<span class="ec-chip">' + esc(p) + '</span>';
+      }).join("") + '</div>');
+      html.push('    <div style="margin-top:8px;font-size:12px;color:#a16207;">练习 ≠ 掌握——只有把某一步真正落到现实里（真实访谈、真实测试、真实路演），才算拥有了可证明的能力。</div>');
+      html.push('  </div>');
+    }
+    html.push('  <div class="choices">');
+    html.push('    <button class="btn btn-outline" id="viewArtifactsBtn">📇 查看全部成果卡</button>');
+    html.push('    <button class="btn btn-primary" id="restartBtn">再来一轮</button>');
+    html.push('  </div>');
+    html.push('</div>');
+    app.innerHTML = html.join("");
+    document.getElementById("viewArtifactsBtn").addEventListener("click", openDrawer);
+    document.getElementById("restartBtn").addEventListener("click", function () {
+      if (confirm("确定重新开始吗？当前进度会被清空。")) { reset(); render(); }
+    });
+  }
+
+  /* ============================================================
+   * AI 草稿生成（含加载态与错误兜底）
+   * ============================================================ */
+  // 生成锁：防止并发生成/修改导致 milestoneIndex 漂移后写入错误关卡
+  var generating = false;
+
+  async function autoDraft(force, instruction) {
+    var i = S.milestoneIndex;
+    if (i >= MILESTONES.length) return;
+    var m = milestone(i);
+    var existing = S.drafts[m.id];
+    if (existing && !force) { render(); return; }
+    if (generating) return; // 已在生成中，忽略重复触发
+
+    // 显示加载态
+    var stateLine = app.querySelector(".state-line");
+    if (!stateLine) {
+      render();
+      stateLine = app.querySelector(".state-line");
+    }
+    generating = true;
+    try {
+      var content;
+      if (force && instruction) {
+        var prevDraft = S.drafts[m.id] || {};
+        var form = formOf(i);
+        var messages = [
+          { role: "system", content: coachSystemPrompt(i) },
+          { role: "user", content: "上一稿如下：\n" + JSON.stringify(prevDraft, null, 2) + "\n\n学生要求修改：\"" + instruction + "\"\n请只输出修改后的完整 JSON。" }
+        ];
+        content = await callGLM(messages);
+        // 关键：修改期间若进度已变化（用户点了接受/跳转），放弃本次落盘，避免写到错误关卡
+        if (S.milestoneIndex !== i) return;
+        var parsed;
+        try { parsed = JSON.parse(stripJson(content)); } catch (e) { parsed = null; }
+        var draft = {};
+        form.fields.forEach(function (f) {
+          var v = parsed ? parsed[f.id] : "";
+          draft[f.id] = (v == null || v === "") ? "" : String(v).trim();
+        });
+        var hasAny = form.fields.some(function (f) { return draft[f.id]; });
+        if (!hasAny) throw new Error("AI 没有返回有效内容");
+        S.drafts[m.id] = draft;
+      } else {
+        // 普通生成同样校验：期间进度变化则放弃
+        var before = S.milestoneIndex;
+        await generateDraft();
+        if (S.milestoneIndex !== before) return;
+      }
+      save();
+      render();
+    } catch (err) {
+      var msg = (err && err.message) || String(err);
+      if (/Failed to fetch|网络|跨域/i.test(msg)) {
+        msg = "AI 服务连接失败，请检查网络后重试。";
+      }
+      // 兜底：显示一个可重试的加载态
+      var box = app.querySelector(".state-line");
+      if (box) {
+        box.innerHTML = '<div style="color:#b91c1c;">⚠️ ' + esc(msg) + '</div>' +
+          '<button class="btn btn-outline" style="margin-top:12px;" onclick="location.reload()">重试</button>';
+      }
+    } finally {
+      generating = false;
+    }
+  }
+
+  /* ============================================================
+   * 成果卡抽屉
+   * ============================================================ */
+  var drawer = document.getElementById("drawer");
+  var drawerScrim = document.getElementById("drawerScrim");
+  var drawerBody = document.getElementById("drawerBody");
+  var openCard = null;
+
+  function openDrawer() { drawer.classList.add("open"); drawerScrim.classList.add("open"); }
+  function closeDrawer() { drawer.classList.remove("open"); drawerScrim.classList.remove("open"); }
+  document.getElementById("artifactsBtn").addEventListener("click", openDrawer);
+  document.getElementById("drawerClose").addEventListener("click", closeDrawer);
+  drawerScrim.addEventListener("click", closeDrawer);
+
+  function renderDrawer() {
+    var html = [];
+    if (S.stage === "welcome" || Object.keys(S.artifacts).length === 0) {
+      html.push('<div class="drawer-empty">还没有成果卡。<br>开始闯关后，每过一关就会在这里生成一张卡。</div>');
+    } else {
+      html.push('<div class="a-proj">');
+      html.push('  <div class="a-proj-name">我的火种节项目</div>');
+      html.push('  <div class="a-proj-meta">' + esc(S.idea) + ' · ' + Object.keys(S.artifacts).length + '/9 关已完成</div>');
+      MILESTONES.forEach(function (m) {
+        var art = S.artifacts[m.id];
+        var open = openCard === m.id;
+        html.push('  <div class="a-card">');
+        html.push('    <button class="a-card-head" ' + (art ? '' : 'disabled') + ' data-card="' + m.id + '">');
+        html.push('      <span class="a-idx">' + m.id + '</span>');
+        html.push('      <span class="a-title">' + esc(art ? art.title : m.name + '（未定稿）') + '</span>');
+        if (art) {
+          html.push('      <span class="a-badge">' + (art.kind === "real" ? "真实证据" : "模拟") + '</span>');
+          html.push('      <span class="a-chev ' + (open ? "open" : "") + '">▸</span>');
+        }
+        html.push('    </button>');
+        if (open && art) {
+          html.push('    <div class="a-body">');
+          html.push('      <div class="a-reward">' + esc(art.reward) + '</div>');
+          html.push('      <div class="a-markdown">' + escMarkdown(art.content) + '</div>');
+          html.push('    </div>');
+        }
+        html.push('  </div>');
+      });
+      html.push('</div>');
+    }
+    drawerBody.innerHTML = html.join("");
+    drawerBody.querySelectorAll("[data-card]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-card");
+        openCard = openCard === id ? null : id;
+        renderDrawer();
+      });
+    });
+  }
+
+  /* ============================================================
+   * 启动
+   * ============================================================ */
+  render();
+  if (S.stage === "coaching" && S.milestoneIndex < MILESTONES.length) {
+    autoDraft();
+  }
+  if (window.XYVCUnifiedDataManager && window.XYVCUnifiedDataManager.track) {
+    try { window.XYVCUnifiedDataManager.track(TOOL_ID, "view", { stage: S.stage }); } catch (e) {}
+  }
+
+  // 一键彻底重置按钮
+  var hardResetBtn = document.getElementById("hardResetBtn");
+  if (hardResetBtn) hardResetBtn.addEventListener("click", hardReset);
+})();
+    </script>
+  </body>
+</html>

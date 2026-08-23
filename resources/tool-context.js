@@ -14,8 +14,8 @@
     "find-your-idea": "发现你的创业想法",
     "find-what-you-want": "如何找到你想做的事",
     "hard-tech-check": "硬科技创业自检",
-    "ai-ready-check": "AI 员工准备度自检",
     "ai-opportunity": "AI 创业机会探索器",
+    "entrecoach": "创业教练",
   };
 
   function nowIso() {
@@ -468,6 +468,20 @@
     return writeWorkspace(workspace);
   }
 
+  function clearToolState(toolId) {
+    var workspace = readWorkspace();
+    if (workspace.tools[toolId]) {
+      workspace.tools[toolId] = normalizeToolBucket(toolId);
+    }
+    if (
+      workspace.userProfile &&
+      workspace.userProfile.lastActiveTool === toolId
+    ) {
+      workspace.userProfile.lastActiveTool = "";
+    }
+    return writeWorkspace(workspace);
+  }
+
   function appendToolHistory(toolId, entry, maxEntries) {
     var workspace = readWorkspace();
     var tool = ensureToolBucket(workspace, toolId);
@@ -697,6 +711,7 @@
     getWorkspace: readWorkspace,
     writeContext: writeContext,
     saveToolState: saveToolState,
+    clearToolState: clearToolState,
     getToolState: getToolState,
     appendToolHistory: appendToolHistory,
     getToolHistory: getToolHistory,
@@ -722,6 +737,7 @@
     write: writeContext,
     getWorkspace: readWorkspace,
     saveToolState: saveToolState,
+    clearToolState: clearToolState,
     appendToolHistory: appendToolHistory,
     createShareSnapshot: createShareSnapshot,
     readShareSnapshotFromLocation: readShareSnapshotFromLocation,

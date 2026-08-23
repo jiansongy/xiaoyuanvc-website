@@ -4,14 +4,12 @@ const TOOL_ID_STUDENT_STARTUP_SELF_CHECK = "student-startup-self-check";
 const TOOL_ID_FIND_YOUR_IDEA = "find-your-idea";
 const TOOL_ID_FIND_WHAT_YOU_WANT = "find-what-you-want";
 const TOOL_ID_HARD_TECH_CHECK = "hard-tech-check";
-const TOOL_ID_AI_READY_CHECK = "ai-ready-check";
 const TOOL_ID_AI_OPPORTUNITY = "ai-opportunity";
 const KNOWN_TOOL_IDS = [
   TOOL_ID_STUDENT_STARTUP_SELF_CHECK,
   TOOL_ID_FIND_YOUR_IDEA,
   TOOL_ID_FIND_WHAT_YOU_WANT,
   TOOL_ID_HARD_TECH_CHECK,
-  TOOL_ID_AI_READY_CHECK,
   TOOL_ID_AI_OPPORTUNITY,
 ];
 
@@ -169,7 +167,6 @@ function buildToolWorkspace(payload) {
 module.exports = {
   KNOWN_TOOL_IDS,
   TOOL_ID_AI_OPPORTUNITY,
-  TOOL_ID_AI_READY_CHECK,
   TOOL_ID_FIND_WHAT_YOU_WANT,
   TOOL_ID_FIND_YOUR_IDEA,
   TOOL_ID_HARD_TECH_CHECK,

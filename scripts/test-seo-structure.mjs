@@ -70,26 +70,23 @@ for (const [path, canonical, needsDescription] of metadata) {
   });
 }
 
-check("AI 员工面试指南已收录到资源中心与 ItemList", () => {
-  const index = read("resources/index.html");
-  const matches = index.match(/ai-employee-interview-guide/g) || [];
-  assert.ok(matches.length >= 2, "至少应有一个可见入口和一个结构化数据条目");
-  assert.match(index, /AI员工面试：6分钟找到最适合你的3个AI员工/);
-});
-
-check("AI 员工工具页和相关主题文章链接到指南", () => {
-  assert.match(read("resources/ai-ready-check.html"), /href=["'](?:\.\/)?ai-employee-interview-guide["']/);
-  assert.match(
-    read("resources/ai-era-entrepreneurship-skills.html"),
-    /href=["']ai-employee-interview-guide["']/,
+check("AI 员工面试工具与指南文章已下架并干净移除", () => {
+  assert.ok(!existsSync(join(root, "resources/ai-ready-check.html")), "ai-ready-check 工具页应移除");
+  assert.ok(!existsSync(join(root, "resources/ai-employee-interview-guide.html")), "指南文章应移除");
+  assert.doesNotMatch(read("resources/index.html"), /ai-employee-interview-guide/);
+  assert.doesNotMatch(read("llms.txt"), /ai-employee-interview-guide/);
+  assert.ok(
+    !/href=["']ai-employee-interview-guide["']/.test(
+      read("resources/ai-era-entrepreneurship-skills.html"),
+    ),
+    "相关主题文章不应再链接到已下架指南",
   );
 });
 
-check("指南已加入 llms.txt", () => {
-  assert.match(
-    read("llms.txt"),
-    /https:\/\/xiaoyuanvc\.com\/resources\/ai-employee-interview-guide/,
-  );
+check("AI 员工面试与指南旧链接已 301 重定向到资源中心", () => {
+  const rules = read("_redirects");
+  assert.match(rules, /\/resources\/ai-ready-check\s+\/resources\/\s+301/);
+  assert.match(rules, /\/resources\/ai-employee-interview-guide\s+\/resources\/\s+301/);
 });
 
 check("生产构建会从页面索引信号生成 sitemap", () => {
@@ -104,7 +101,6 @@ check("教程入口直接指向真实课程页", () => {
   const files = [
     "404.html",
     "llms.txt",
-    "resources/ai-employee-interview-guide.html",
     "resources/ai-startup-roadmap.html",
     "resources/digital-entrepreneurship-platforms.html",
     "resources/digital-nomad-skills.html",
@@ -136,9 +132,7 @@ check("源码内链直接指向规范 URL", () => {
   assert.doesNotMatch(read("llms.txt"), /xiaoyuanvc\.com\/(?:student\.html|learn\/)(?:[)\s：]|$)/m);
 
   const files = [
-    "resources/ai-employee-interview-guide.html",
     "resources/ai-opportunity.js",
-    "resources/ai-ready-check.html",
     "resources/ai-startup-roadmap.html",
     "resources/digital-entrepreneurship-platforms.html",
     "resources/digital-nomad-skills.html",
@@ -207,7 +201,6 @@ if (!existsSync(join(root, "dist/index.html"))) {
     const actual = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]));
     assert.deepEqual(actual, expected);
     assert.ok(actual.size >= 46, `预期至少 46 条，实际 ${actual.size} 条`);
-    assert.ok(actual.has("https://xiaoyuanvc.com/resources/ai-employee-interview-guide"));
     assert.ok(![...actual].some((url) => url.includes("camp-3")));
     assert.doesNotMatch(sitemap, /<lastmod>/);
   });

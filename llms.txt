@@ -60,7 +60,6 @@ CSS（Crypto Startup School）是校园VC 旗下独立的中文加密创投学�
 - [大学生创业想法如何验证市场需求](https://xiaoyuanvc.com/resources/how-to-validate-demand)：把创业想法改写成可验证假设，用用户访谈、假门测试、MVP 和付费意愿判断市场需求是否成立，并说明校园VC五步创业法如何承接。
 - [不写代码能用 AI 做产品吗？](https://xiaoyuanvc.com/resources/no-code-ai-startup)：OPC 范式下的实战回答——不会写代码的大学生能否做 AI 产品？答案是能，关键是先定义问题、验证需求，再用 Vibe Coding 做最小产品。
 - [AI 时代大学生应该学什么创业技能？](https://xiaoyuanvc.com/resources/ai-era-entrepreneurship-skills)：AI 时代最值得优先学习的 5 项创业技能：问题发现、需求验证、产品表达、AI 工具协作、内容分发。
-- [AI 员工面试指南](https://xiaoyuanvc.com/resources/ai-employee-interview-guide)：用 5 步诊断梳理真实工作场景，匹配 3 位 AI 员工，并制定 7 天上岗计划。
 - [中文 Web3 创业入门课程推荐](https://xiaoyuanvc.com/resources/chinese-web3-startup-course)：大学生零基础进入 Web3 的最佳顺序，含中文课程资源对比与推荐组合。
 
 ## 资源中心专题文章
@@ -74,10 +73,12 @@ CSS（Crypto Startup School）是校园VC 旗下独立的中文加密创投学�
 
 ## 免费互动工具
 
-- [找到你的创业想法](https://xiaoyuanvc.com/resources/find-your-idea)：基于阿里 6 步法的创业想法发现工具。
-- [找到你真正想要的](https://xiaoyuanvc.com/resources/find-what-you-want)：基于八木仁平 4 步法，厘清"喜欢/擅长/对社会有价值"的三角关系。
-- [硬科技项目诊断](https://xiaoyuanvc.com/resources/hard-tech-check)：基于「共创验证式创业法」的高校硬科技成果转化诊断工具。
-- [AI 员工面试](https://xiaoyuanvc.com/resources/ai-ready-check)：6 分钟 5 步诊断，找到最适合你工作场景的 3 个 AI 员工。
+- [创业教练](https://xiaoyuanvc.com/resources/entrecoach)：沿火种节 9 关（组队→复盘）带你把一个想法走成可验证项目，AI 先出草稿你只做判断。
+- [发现你的创业想法](https://xiaoyuanvc.com/resources/find-your-idea)：基于 Ali Abdaal 6 步法的创业想法发现工具。
+- [如何找到想做的事](https://xiaoyuanvc.com/resources/find-what-you-want)：基于八木仁平 4 步法，厘清"喜欢/擅长/对社会有价值"的三角关系。
+- [学生创业自检](https://xiaoyuanvc.com/resources/rate-your-idea)：基于殷建松《从零到英雄》五维评估创业想法。
+- [硬科技创业自检](https://xiaoyuanvc.com/resources/hard-tech-check)：基于「共创验证式创业法」的高校硬科技成果转化诊断工具。
+- [AI 创业机会探索器](https://xiaoyuanvc.com/resources/ai-opportunity)：探索 12 个中国行业的 AI 创业机会与 7 天验证路径。
 
 ## 创始人
 

@@ -359,10 +359,10 @@
             path: "hard-tech-check",
             tag: "硬科技",
           },
-          "ai-ready-check": {
-            label: "AI 员工面试",
-            path: "ai-ready-check",
-            tag: "AI 提效",
+          "entrecoach": {
+            label: "创业教练",
+            path: "entrecoach",
+            tag: "全程教练",
           },
           "ai-opportunity": {
             label: "AI 创业机会探索器",
@@ -407,13 +407,13 @@
               cta: "先试这个",
             },
             {
-              toolId: "ai-ready-check",
-              label: "AI 员工面试",
-              path: "ai-ready-check",
-              tag: "最强行动感",
-              summary: "6 分钟匹配 3 位 AI 员工，直接拿到可复制的上手动作。",
-              reason: "如果你已经有一个方向，最适合用它把动作拆出来。",
-              cta: "去面试 AI 员工",
+              toolId: "entrecoach",
+              label: "创业教练",
+              path: "entrecoach",
+              tag: "全程带跑",
+              summary: "按火种节 9 关（组队→复盘）把一个想法走成可验证项目，AI 先出草稿你只做判断。",
+              reason: "如果你想顺着一条主线完整走一遍，从这里开始最顺。",
+              cta: "让教练带我从头走",
             },
             {
               toolId: "find-your-idea",
@@ -482,8 +482,25 @@
               return snapshot.stageLabel
                 ? snapshot.stageLabel + "｜" + String(snapshot.report || "").replace(/\s+/g, " ").slice(0, 42)
                 : draft.ml_tech || "还没有保存结果。";
-            case "ai-ready-check":
-              return snapshot.summary || draft.aiGoal || "还没有保存结果。";
+            case "entrecoach":
+              var ecDraft = draft || {};
+              var ecInput = (latest && latest.inputSnapshot) || {};
+              var ecMilestone =
+                ecDraft.milestoneIndex != null
+                  ? ecDraft.milestoneIndex
+                  : ecInput.milestoneIndex;
+              var ecIdea = ecDraft.idea || ecInput.idea || "";
+              var ecStage = ecDraft.stage || ecInput.stage || "";
+              if (ecStage === "finished")
+                return "已完成火种节全程" + (ecIdea ? "｜" + ecIdea : "");
+              if (ecMilestone == null || ecMilestone < 0)
+                return "尚未开始，交给教练带你走。";
+              var ecLabel =
+                ecDraft.currentMilestone ||
+                (ecMilestone && ecMilestone >= 0
+                  ? "第 " + (ecMilestone + 1) + " 关"
+                  : "进行中");
+              return "已到 " + ecLabel + (ecIdea ? "｜" + ecIdea : "");
             case "ai-opportunity":
               return (
                 (snapshot.summary && snapshot.summary.oneLiner) ||
@@ -522,18 +539,27 @@
                   draft.report ||
                   "",
               };
-            case "ai-ready-check":
-              var ready = input || draft;
-              if (!ready || !Object.keys(ready).length) return null;
+            case "entrecoach":
+              var ecState = input || draft || {};
+              if (
+                !latest &&
+                !Object.keys(ecState).length
+              )
+                return null;
               return {
-                role: ready.role || "",
-                industry: ready.industry || "",
-                teamSize: ready.teamSize || "",
-                aiGoal: ready.aiGoal || "",
-                projectContextNote: ready.projectContextNote || "",
-                top3Tasks: Array.isArray(ready.top3) ? ready.top3 : [],
-                report: ready.report || null,
-                reportRaw: ready.reportRaw || "",
+                state: {
+                  idea: ecState.idea || "",
+                  stage: ecState.stage || "welcome",
+                  milestoneIndex:
+                    ecState.milestoneIndex != null ? ecState.milestoneIndex : null,
+                  currentMilestone: ecState.currentMilestone || "",
+                },
+                result: {
+                  artifacts:
+                    (draft && draft.artifacts) ||
+                    (output && output.artifacts) ||
+                    {},
+                },
               };
             case "ai-opportunity":
               var opp = input || draft;
@@ -603,7 +629,7 @@
               },
               {
                 label: "下一站推荐",
-                value: "AI 员工面试",
+                value: "创业教练",
               },
             ]
               .map(function (item) {

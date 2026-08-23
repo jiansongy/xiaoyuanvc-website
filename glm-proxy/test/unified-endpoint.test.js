@@ -28,8 +28,8 @@ test("all five AI tools use the unified endpoint and no client selects a model",
     "find-your-idea.html",
     "find-what-you-want.html",
     "hard-tech-check.html",
-    "ai-ready-check.html",
     "rate-your-idea.html",
+    "entrecoach.html",
   ];
 
   for (const name of resourceFiles) {

@@ -26,6 +26,7 @@ echo "==> [2/7] 复制主站静态资源到 dist/"
 ( cd "$ROOT" && tar -cf - \
     --exclude="./dist" \
     --exclude="./node_modules" \
+    --exclude="./.npm-cache" \
     --exclude="./.git" \
     --exclude="./.omc" \
     --exclude="./.omx" \
@@ -41,6 +42,10 @@ echo "==> [2/7] 复制主站静态资源到 dist/"
     . ) | ( cd "$DIST" && tar -xf - )
 
 echo "==> [3/7] 构建 VitePress 子站 (learn-src)"
+# 部分环境(如本机沙箱)不允许写默认 ~/.npm 缓存，改用项目内可写缓存，避免 EPERM 导致安装失败。
+# 注意：用 npm run build 调用时父进程会注入 npm_config_cache=~/.npm，这里必须强制覆盖，否则 `${var:-}` 兜底不生效。
+# 该目录会被 git/tar 排除，不会进入发布产物。
+export npm_config_cache="$ROOT/.npm-cache"
 cd "$LEARN_SRC"
 if [ -f package-lock.json ]; then
   npm ci

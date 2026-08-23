@@ -111,3 +111,11 @@
 
 # 媒体报道页 canonical 统一
 /about/media.html /about/media 301
+
+# AI 员工面试已从互动工具中下架（转由攻略文章承载方法），链接承接到资源中心
+/resources/ai-ready-check /resources/ 301
+/resources/ai-ready-check.html /resources/ 301
+
+# AI 员工面试指南文章已下架，旧链接承接到资源中心
+/resources/ai-employee-interview-guide /resources/ 301
+/resources/ai-employee-interview-guide.html /resources/ 301

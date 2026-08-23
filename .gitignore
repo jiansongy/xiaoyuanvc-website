@@ -26,6 +26,7 @@ assets/hero-illustration-sketch.png
 
 # Node.js
 node_modules/
+.npm-cache/
 
 # Tingwu task tracking (temp)
 resources/data/tingwu-tasks.json
