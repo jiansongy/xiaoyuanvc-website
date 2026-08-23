@@ -28,6 +28,12 @@ if grep -Fq 'XYVC_NODE_VERSION' "$SYNC"; then
   echo "Node version must not be overridden from the server environment." >&2
   exit 1
 fi
+grep -Fq 'apply_www_redirects' "$SYNC"
+grep -Fq 'xyvc-www-redirects.conf' "$SYNC"
+grep -Fq 'nginx -t' "$SYNC"
+grep -Fq 'resources/ai-ready-check' "$SYNC"
+grep -Fq 'resources/ai-employee-interview-guide' "$SYNC"
+grep -Fq 'verify_redirect_nonfatal' "$SYNC"
 
 grep -Fq 'scripts/xyvc-sync.sh' "$DEPLOY"
 grep -Fq 'uses: actions/checkout@v6' "$DEPLOY"
@@ -40,6 +46,8 @@ fi
 grep -Fq 'https://www.xiaoyuanvc.com/learn/crypto-vc/' "$DEPLOY"
 grep -Fq 'https://www.xiaoyuanvc.com/learn/digital-startup/' "$DEPLOY"
 grep -Fq "grep -Fqi 'server: nginx'" "$DEPLOY"
+grep -Fq 'resources/ai-ready-check' "$DEPLOY"
+grep -Fq 'resources/ai-employee-interview-guide' "$DEPLOY"
 
 grep -Fq 'https://www.xiaoyuanvc.com/learn/crypto-vc/' "$CHECK"
 grep -Fq 'https://www.xiaoyuanvc.com/learn/digital-startup/' "$CHECK"

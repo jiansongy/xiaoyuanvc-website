@@ -100,6 +100,41 @@ UptimeRobot SSL and domain expiry checks are locked behind a paid plan on the cu
 
 Existing certbot renewal remains the first line of defense. The monitor is only the alarm.
 
+## www nginx Redirects (automated)
+
+`_redirects` is honored by the Cloudflare Pages origin (`xiaoyuanvc.com`) but **not** by the `www`
+Alibaba Cloud nginx origin. `scripts/xyvc-sync.sh` therefore applies the `www` redirects directly
+to the nginx server block on every deploy (idempotent, and it reverts on `nginx -t` failure so it
+never leaves the origin down).
+
+The sync script:
+- Locates the nginx config that declares `server_name www.xiaoyuanvc.com`.
+- Writes `/etc/nginx/xyvc-www-redirects.conf` (a `location`-only include) and injects
+  `include /etc/nginx/xyvc-www-redirects.conf;` into that `server` block.
+- Runs `nginx -t`; on success it reloads nginx, on failure it rolls the include back and keeps the
+  origin serving the previous config.
+- Logs `[nginx-redirects] ...` lines so the deploy output shows whether the rules were applied.
+
+Do not hand-edit `/etc/nginx/xyvc-www-redirects.conf` — the sync script rewrites it each deploy.
+
+Reference snippet (what the sync script writes):
+
+```nginx
+location = /resources/ai-ready-check              { return 301 /resources/; }
+location = /resources/ai-ready-check.html         { return 301 /resources/; }
+location = /resources/ai-employee-interview-guide { return 301 /resources/; }
+location = /resources/ai-employee-interview-guide.html { return 301 /resources/; }
+```
+
+Verify after a deploy:
+
+```bash
+curl --noproxy '*' -sI https://www.xiaoyuanvc.com/resources/ai-ready-check | grep -i '^location'
+curl --noproxy '*' -sI https://www.xiaoyuanvc.com/resources/ai-employee-interview-guide | grep -i '^location'
+```
+
+Expected: each returns `Location: https://www.xiaoyuanvc.com/resources/` with HTTP 301.
+
 ## Manual Verification
 
 ```bash
