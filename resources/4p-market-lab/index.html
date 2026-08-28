@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="校园VC 4P 市场实验室内部体验版：完成两轮营销决策，观察市场结果并根据证据修改策略。" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="4p-api-base" content="https://approval.xiaoyuanvc.com/4p" />
+    <title>4P 市场实验室｜校园VC</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="https://xiaoyuanvc.com" aria-label="返回校园VC首页">
+        <span class="brand-mark">XY</span>
+        <span>校园VC</span>
+      </a>
+      <div class="header-actions">
+        <span class="prototype-badge">内部体验版</span>
+        <button class="ghost-button" id="reset-button" type="button">重新开始</button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="lab-heading" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Marketing Simulation · 单团队原型</p>
+          <h1 id="page-title">4P 市场实验室</h1>
+          <p class="lede">经营一款进入大学校园的 0 糖提神气泡茶。先做决定，再用市场证据修正判断。</p>
+        </div>
+        <div class="team-card">
+          <span>当前团队</span>
+          <strong id="team-alias">载入中…</strong>
+        </div>
+      </section>
+
+      <nav class="progress" id="progress" aria-label="体验进度"></nav>
+
+      <div class="mobile-tabs" role="tablist" aria-label="移动端页面区域">
+        <button class="mobile-tab is-active" data-mobile-panel="workspace" role="tab" aria-selected="true">决策台</button>
+        <button class="mobile-tab" data-mobile-panel="coach" role="tab" aria-selected="false">角色访谈</button>
+      </div>
+
+      <div class="lab-layout">
+        <section class="panel workspace-panel is-mobile-active" id="workspace-panel" aria-live="polite"></section>
+
+        <aside class="panel coach-panel" id="coach-panel" aria-label="AI 角色访谈">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">ROLE INTERVIEW</p>
+              <h2>角色访谈</h2>
+            </div>
+            <span class="mode-badge" id="coach-mode">待开始</span>
+          </div>
+
+          <div class="role-tabs" id="role-tabs" role="tablist" aria-label="选择访谈角色"></div>
+          <div class="role-boundary" id="role-boundary"></div>
+          <div class="chat-log" id="chat-log" aria-live="polite"></div>
+          <form class="chat-composer" id="chat-form">
+            <label class="sr-only" for="chat-input">向当前角色提问</label>
+            <textarea id="chat-input" rows="3" maxlength="500" placeholder="问问他在意什么、为什么犹豫……"></textarea>
+            <div class="composer-footer">
+              <span id="chat-hint">AI 只提供角色信息，不决定市场结果。</span>
+              <button class="primary-button compact" type="submit">发送</button>
+            </div>
+          </form>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>本页不收集姓名、学校或手机号。请勿输入个人敏感信息。</p>
+      <p>市场结果来自固定规则 v1；角色回复可能由 AI 或预设降级内容生成。</p>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
