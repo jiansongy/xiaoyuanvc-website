@@ -95,6 +95,15 @@ check("生产构建会从页面索引信号生成 sitemap", () => {
   assert.match(read("build.sh"), /test-seo-structure\.mjs/);
 });
 
+check("4P 实验室路径允许连接独立 API", () => {
+  const headers = read("_headers");
+  assert.match(
+    headers,
+    /\/resources\/4p-market-lab\/\*[\s\S]*?Content-Security-Policy:[^\n]*connect-src[^;]*https:\/\/approval\.xiaoyuanvc\.com/,
+    "CSP 会在浏览器发请求前拦截 4P 体验码验证",
+  );
+});
+
 check("教程入口直接指向真实课程页", () => {
   assert.doesNotMatch(read("_redirects"), /\/student#courses/);
   assert.match(read("_redirects"), /^\/learn\/? \/learn\/digital-startup\/ 301$/m);
