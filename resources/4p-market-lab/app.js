@@ -1,4 +1,5 @@
 import { evaluateMarket } from "./market-engine.js";
+import { fetchWithTimeout } from "./http.js";
 
 const STORAGE_KEY = "xyvc-4p-market-lab-v1";
 const API_BASE = document.querySelector('meta[name="4p-api-base"]')?.content.replace(/\/$/, "") || "";
@@ -142,34 +143,56 @@ function renderBrief() {
     </div>
     <div class="callout"><strong>正式结果由固定规则计算。</strong> AI 角色只能提供有限信息和追问，不能改变销量、利润或评分。</div>
     <form class="experience-code" id="experience-code-form">
-      <div class="field"><label for="experience-code">内部体验码</label><input id="experience-code" type="password" maxlength="40" autocomplete="off" placeholder="请输入同事体验码" value="${hasCode ? "••••••" : ""}" /></div>
+      <div class="field">
+        <label for="experience-code">内部体验码</label>
+        <div class="code-input-row">
+          <input id="experience-code" type="password" maxlength="40" autocomplete="off" placeholder="请输入同事体验码" value="${hasCode ? "••••••" : ""}" />
+          <button class="code-visibility" id="code-visibility" type="button" aria-pressed="false">显示</button>
+        </div>
+      </div>
       <button class="secondary-button" type="submit">${hasCode ? "更新体验码" : "验证体验码"}</button>
       <span id="code-status">${hasCode ? "本次会话已验证" : "请输入同事体验码后开始"}</span>
     </form>
     <div class="button-row"><button class="primary-button" id="start-research" type="button" ${hasCode ? "" : "disabled"}>开始市场调研</button></div>
   `;
+  const codeInput = document.querySelector("#experience-code");
+  const visibilityButton = document.querySelector("#code-visibility");
+  visibilityButton.addEventListener("click", () => {
+    const willShow = codeInput.type === "password";
+    codeInput.type = willShow ? "text" : "password";
+    visibilityButton.textContent = willShow ? "隐藏" : "显示";
+    visibilityButton.setAttribute("aria-pressed", String(willShow));
+  });
   document.querySelector("#experience-code-form").addEventListener("submit", async (event) => {
     event.preventDefault();
-    const input = document.querySelector("#experience-code");
+    const input = codeInput;
     const candidate = input.value === "••••••" ? sessionStorage.getItem("xyvc-4p-code") : input.value.trim();
     const status = document.querySelector("#code-status");
     if (!candidate) return;
     status.textContent = "正在验证…";
     try {
-      const response = await fetch(`${API_BASE}/api/access`, {
+      const response = await fetchWithTimeout(`${API_BASE}/api/access`, {
         method: "POST",
         headers: { "X-Experience-Code": candidate },
-        signal: AbortSignal.timeout(8000),
-      });
-      if (!response.ok) throw new Error("invalid code");
+      }, 8000);
+      if (response.status === 401) {
+        status.textContent = "体验码不正确。可点击“显示”检查输入后重试";
+        sessionStorage.removeItem("xyvc-4p-code");
+        document.querySelector("#start-research").disabled = true;
+        return;
+      }
+      if (response.status === 429) {
+        status.textContent = "尝试过于频繁，请稍后再试";
+        return;
+      }
+      if (!response.ok) throw new Error(`access service returned ${response.status}`);
       sessionStorage.setItem("xyvc-4p-code", candidate);
       status.textContent = "验证成功，仅保存在本次浏览器会话";
       input.value = "••••••";
       document.querySelector("#start-research").disabled = false;
     } catch {
       sessionStorage.removeItem("xyvc-4p-code");
-      status.textContent = "验证失败，请检查体验码或稍后重试";
-      input.value = "";
+      status.textContent = "没有连接到验证服务，请检查网络后重试";
       document.querySelector("#start-research").disabled = true;
     }
   });
@@ -404,7 +427,7 @@ function fallbackReply(role, message) {
 }
 
 async function requestCoach(message) {
-  const response = await fetch(`${API_BASE}/api/coach`, {
+  const response = await fetchWithTimeout(`${API_BASE}/api/coach`, {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Experience-Code": sessionStorage.getItem("xyvc-4p-code") || "" },
     body: JSON.stringify({
@@ -415,8 +438,7 @@ async function requestCoach(message) {
       decision: state.stage >= 4 ? state.round1 : null,
       result: state.stage >= 4 ? state.result1 : null,
     }),
-    signal: AbortSignal.timeout(12000),
-  });
+  }, 12000);
   if (!response.ok) throw new Error("coach unavailable");
   const payload = await response.json();
   if (typeof payload.reply !== "string" || !payload.reply.trim()) throw new Error("invalid coach response");
@@ -468,12 +490,11 @@ async function submitFeedback(event) {
   }
   let feedbackId = `LOCAL-${Date.now().toString(36).toUpperCase()}`;
   try {
-    const response = await fetch(`${API_BASE}/api/feedback`, {
+    const response = await fetchWithTimeout(`${API_BASE}/api/feedback`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-Experience-Code": sessionStorage.getItem("xyvc-4p-code") || "" },
       body: JSON.stringify(feedback),
-      signal: AbortSignal.timeout(8000),
-    });
+    }, 8000);
     if (!response.ok) throw new Error("feedback unavailable");
     const payload = await response.json();
     feedbackId = payload.feedbackId || feedbackId;
