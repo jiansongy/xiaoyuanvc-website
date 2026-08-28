@@ -99,7 +99,7 @@ check("4P 实验室路径允许连接独立 API", () => {
   const headers = read("_headers");
   assert.match(
     headers,
-    /\/resources\/4p-market-lab\/\*[\s\S]*?Content-Security-Policy:[^\n]*connect-src[^;]*https:\/\/approval\.xiaoyuanvc\.com/,
+    /\/resources\/4p-market-lab\/\*[\s\S]*?! Content-Security-Policy[\s\S]*?Content-Security-Policy:[^\n]*connect-src[^;]*https:\/\/approval\.xiaoyuanvc\.com/,
     "CSP 会在浏览器发请求前拦截 4P 体验码验证",
   );
 });
