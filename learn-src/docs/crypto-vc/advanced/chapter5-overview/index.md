@@ -235,7 +235,7 @@ https://www.bittensor.com/
 
 **Bittensor 是一个让不同的人竞争生产 AI 资源，并按照贡献获得 Token 奖励的开放市场。** Bittensor 官方现在把这些 AI 资源称为 **Digital Commodities（数字商品）**。这些商品可以是：AI 推理、GPU 算力、数据、模型、搜索、存储、预测、Agent 服务等。创始人是：https://x.com/const_reborn
 
-Bittensor 并不是一个 ChatGPT，也不是一个大模型。它更像：AI 世界里的“开放市场 + 激励协议”**。**官方对自己的描述也是：不同的 Subnet 生产 compute、inference、storage、prediction 等数字商品，网络根据参与者创造的价值，用 TAO 奖励他们。
+Bittensor 并不是一个 ChatGPT，也不是一个大模型。它更像：AI 世界里的“开放市场 + 激励协议”。官方对自己的描述也是：不同的 Subnet 生产 compute、inference、storage、prediction 等数字商品，网络根据参与者创造的价值，用 TAO 奖励他们。
 
 ### 为什么需要 Bittensor？
 
