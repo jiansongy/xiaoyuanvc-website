@@ -4,7 +4,7 @@ const round1 = (value) => Math.round(value * 10) / 10;
 
 const SEGMENTS = {
   exam: {
-    label: "考试周学生",
+    label: "备考中学生",
     baseUnits: 460,
     baseWtp: 6.3,
     priceSensitivity: 0.17,

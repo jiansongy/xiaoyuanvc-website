@@ -1,4 +1,4 @@
-import { calculateUnitProductCost, evaluateMarket } from "./market-engine.js";
+import { calculateUnitProductCost, evaluateMarket } from "./market-engine.js?v=20260829-1";
 import { fetchWithTimeout } from "./http.js";
 
 const STORAGE_KEY = "xyvc-4p-market-lab-v1.1";
@@ -7,8 +7,8 @@ const STAGES = ["任务", "调研", "第一轮", "结果", "解释", "第二轮"
 
 const ROLES = {
   customerExam: {
-    label: "考试周学生",
-    boundary: "只表达考试周场景中的需要、顾虑和购买习惯，不代表全部学生。",
+    label: "备考中学生",
+    boundary: "只表达备考中学生的需要、顾虑和购买习惯，不代表全部学生。",
     greeting: "我最近在准备考试，下午最容易困。你可以问我看重什么、预算大概多少、在哪里看到新品。",
   },
   customerHealth: {
@@ -152,7 +152,7 @@ function renderBrief() {
       <p>你们有 800 罐首批库存，需要决定为谁升级哪些产品属性、定什么价格、传播什么价值、在哪里卖。没有随机事件，也没有隐藏骰子。</p>
     </div>
     <div class="scenario-grid">
-      <article class="scenario-card"><h3>考试周学生 · 35%</h3><p>需要快速提神、购买方便，对价格比较敏感，也担心影响睡眠。</p></article>
+      <article class="scenario-card"><h3>备考中学生 · 35%</h3><p>需要快速提神、购买方便，对价格比较敏感，也担心影响睡眠。</p></article>
       <article class="scenario-card"><h3>健康管理学生 · 40%</h3><p>关注无糖、成分透明和日常负担，便利店是主要购买场景。</p></article>
       <article class="scenario-card"><h3>社交尝新人群 · 25%</h3><p>在意包装、口味和朋友推荐，愿意为有记忆点的新品多付一点。</p></article>
       <article class="scenario-card"><h3>统一约束</h3><p>渠道预算 40 点、推广预算 60 点；基础成本 ¥3.2，产品升级会增加单位成本，首批库存 800 罐。</p></article>
@@ -242,7 +242,7 @@ function decisionFormMarkup(round) {
     <form class="decision-form" id="decision-form" data-round="${round}">
       <div class="form-row">
         <div class="field"><label for="targetSegment">目标顾客</label><select id="targetSegment" name="targetSegment">
-          <option value="exam" ${decision.targetSegment === "exam" ? "selected" : ""}>考试周学生</option>
+          <option value="exam" ${decision.targetSegment === "exam" ? "selected" : ""}>备考中学生</option>
           <option value="health" ${decision.targetSegment === "health" ? "selected" : ""}>健康管理学生</option>
           <option value="social" ${decision.targetSegment === "social" ? "selected" : ""}>社交尝新人群</option>
         </select></div>
