@@ -599,6 +599,25 @@
   content: "\26A0"; /* warning triangle */
 }
 
+/* --- Media & Activity Timeline --- */
+.media-item__figure {
+  margin: var(--space-lg) 0 var(--space-md);
+}
+
+.media-item__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.media-item__figure figcaption {
+  margin-top: var(--space-xs);
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
 /* --- CTA Banner --- */
 .cta-banner {
   max-width: 800px;
