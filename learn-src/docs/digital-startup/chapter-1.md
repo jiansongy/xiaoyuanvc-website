@@ -104,9 +104,9 @@ order: 1
 
 拥有长期饭票（手艺）的创业者，才能坚持留在创业的牌桌上，不断下注，坚持到意外出现，就像被闪电击中。
 
-今天社会需要的手艺，就是你身上的技能**。**据我观察，有两大软技能：**销售、协作，**和三大硬技能：**写作、英语和编程。**
+今天社会需要的手艺，就是你身上的技能。据我观察，有两大软技能：**销售、协作**，和三大硬技能：**写作、英语和编程。**
 
-互联网上有大量技能学习资源，比如图文类小红书（**推特**）、视频类 B 站（**油管**）、音频类<text underline="true">小宇宙</text>（**播客**）。
+互联网上有大量技能学习资源，比如图文类小红书（**推特**）、视频类 B 站（**油管**）、音频类小宇宙（**播客**）。
 
 ## 如何学数字创业？
 
@@ -179,7 +179,7 @@ order: 1
 
 ![](/images/digital-startup/chapter-1/9.png)
 
-1. **Daily**：我每天上午在飞书中，让<text underline="true">**龙虾（OpenClaw）**</text>调用日报技能，来生成在校园VC官网上的每日[数创日报](https://xiaoyuanvc.com/assets/daily/scb-daily-latest.png)和每日[加密日报](https://xiaoyuanvc.com/assets/daily/css-daily-latest.png)的新闻图片，很多用户已经养成了每天浏览这些日报笔记图、快速获取信息的习惯。
+1. **Daily**：我每天上午在飞书中，让**龙虾（OpenClaw**）调用日报技能，来生成在校园VC官网上的每日[数创日报](https://xiaoyuanvc.com/assets/daily/scb-daily-latest.png)和每日[加密日报](https://xiaoyuanvc.com/assets/daily/css-daily-latest.png)的新闻图片，很多用户已经养成了每天浏览这些日报笔记图、快速获取信息的习惯。
 
 ![](/images/digital-startup/chapter-1/10.png)
 
@@ -211,7 +211,7 @@ order: 1
 
 但是我点燃了他学习的热情，还教了他一个自学方法：RSA（Read、Search、Ask）。其实任何领域的“概念术语”，其实都是纸老虎。首先不要怕、多多阅读，其次用好豆包（请用中学生或80岁老太太能理解的话给我解释下）等工具去获取答案，最后再有难题找我问
 
-通过数创班的创业实践，我希望你建立一份能学会任何东西的自信。以前的学习是 Just in case（以备万一）；AI 时代的学习是 Just in time（及时学习）。原来的 RSA 已经演变为 **RSAV**，即**：**
+通过数创班的创业实践，我希望你建立一份能学会任何东西的自信。以前的学习是 Just in case（以备万一）；AI 时代的学习是 Just in time（及时学习）。原来的 RSA 已经演变为 **RSAV**，即：
 
 1. **R**ead：先啃一手资料，建立判断标准
 1. **S**earch/AI：用 LLM 做情境化问答，但姿势要对——索要框架和原理，不要完整答案
