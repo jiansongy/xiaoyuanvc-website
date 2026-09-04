@@ -14,7 +14,7 @@ order: 0
 数创方向包含 4 个产品：
 
 - 📘 **数创教程**（你正在看，免费）—— 自学起步
-- 🚀 **[大创社群](https://xiaoyuanvc.com/dachuang)**（¥499/年起，数创主推）—— 含创享会·开放日·火种节·校园VC 播客提问权
+- 🚀 **[大创社群](https://xiaoyuanvc.com/dachuang)**（¥299/年起）—— 含创享会·开放日·火种节·校园VC 播客提问权
 - 🎓 **[数创班](https://xiaoyuanvc.com/teacher/shuchuangban)**（高校合作 + 学生通道）—— 6 周线上创业实战课
 - 🎧 **[校园VC 播客](https://www.xiaoyuzhoufm.com/podcast/621ef071dade2c0f9ef1a6ab)**（免费收听，会员可提问）—— 殷建松回答创业者具体问题
 
