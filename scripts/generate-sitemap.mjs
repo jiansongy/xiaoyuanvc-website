@@ -35,7 +35,17 @@ function isNoindex(html) {
   });
 }
 
-const urls = new Set();
+function dateModifiedFrom(html) {
+  const value = html.match(/"dateModified"\s*:\s*"(\d{4}-\d{2}-\d{2})"/)?.[1];
+  if (!value) return undefined;
+
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value
+    ? undefined
+    : value;
+}
+
+const pages = new Map();
 for (const file of listHtmlFiles(outputRoot)) {
   const html = readFileSync(file, "utf8");
   if (isNoindex(html)) continue;
@@ -50,10 +60,10 @@ for (const file of listHtmlFiles(outputRoot)) {
   if (url.hash || url.search || url.pathname.endsWith(".html")) {
     throw new Error(`canonical 不是规范 URL：${canonical}（${file}）`);
   }
-  urls.add(url.href);
+  pages.set(url.href, dateModifiedFrom(html));
 }
 
-const ordered = [...urls].sort((a, b) => {
+const ordered = [...pages.keys()].sort((a, b) => {
   if (a === `${siteOrigin}/`) return -1;
   if (b === `${siteOrigin}/`) return 1;
   return a.localeCompare(b, "zh-CN");
@@ -62,7 +72,11 @@ const ordered = [...urls].sort((a, b) => {
 const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...ordered.map((url) => `  <url><loc>${url.replaceAll("&", "&amp;")}</loc></url>`),
+  ...ordered.map((url) => {
+    const lastmod = pages.get(url);
+    const lastmodTag = lastmod ? `<lastmod>${lastmod}</lastmod>` : "";
+    return `  <url><loc>${url.replaceAll("&", "&amp;")}</loc>${lastmodTag}</url>`;
+  }),
   "</urlset>",
   "",
 ].join("\n");

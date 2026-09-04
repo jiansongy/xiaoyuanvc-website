@@ -95,6 +95,15 @@ check("生产构建会从页面索引信号生成 sitemap", () => {
   assert.match(read("build.sh"), /test-seo-structure\.mjs/);
 });
 
+check("XYVC Organization JSON-LD 使用统一实体 ID", () => {
+  const sources = ["index.html", "about.html", "teacher.html", "about/media.html"];
+  for (const file of sources) {
+    const html = read(file);
+    assert.doesNotMatch(html, /https:\/\/xiaoyuanvc\.com\/#organization/);
+  }
+  assert.match(read("teacher.html"), /https:\/\/xiaoyuanvc\.com\/#org/);
+});
+
 check("4P 实验室路径允许连接独立 API", () => {
   const headers = read("_headers");
   assert.match(
@@ -211,7 +220,14 @@ if (!existsSync(join(root, "dist/index.html"))) {
     assert.deepEqual(actual, expected);
     assert.ok(actual.size >= 46, `预期至少 46 条，实际 ${actual.size} 条`);
     assert.ok(![...actual].some((url) => url.includes("camp-3")));
-    assert.doesNotMatch(sitemap, /<lastmod>/);
+    assert.match(
+      sitemap,
+      /<loc>https:\/\/xiaoyuanvc\.com\/resources\/china-hackathon-statistics<\/loc><lastmod>2026-09-04<\/lastmod>/,
+    );
+    assert.match(
+      sitemap,
+      /<loc>https:\/\/xiaoyuanvc\.com\/learn\/crypto-vc\/<\/loc><lastmod>2026-08-13<\/lastmod>/,
+    );
   });
 
   check("构建产物 404 与旧招生页状态正确", () => {
