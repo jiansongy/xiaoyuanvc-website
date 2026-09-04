@@ -16,7 +16,7 @@ order: 3
 
 2）才：为什么是你？你有独特优势吗？
 
-<whiteboard token="KfRVwzdpUhYy2fbnmEkcvQRenGU" width="705" height="482"/>
+![内外碰撞法：财=贝+才](/images/digital-startup/chapter-3/collision-method.png)
 
 ## 创业是空白考卷
 

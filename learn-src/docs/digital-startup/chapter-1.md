@@ -92,7 +92,7 @@ order: 1
 
 ## 做有手艺的创业者
 
-<whiteboard token="OYDIwrr5jhsALObT9KPcDCslnhd"/>
+![做有手艺的创业者：Task Monkey / Problem Solver / System Builder](/images/digital-startup/chapter-1/skilled-craftsman.png)
 
 - 大学生毕业找不到工作（就业难），是因为在做 Task Monkey（任务猴子），而这种不动脑子的工作岗位，已经面临着 AI 的冲击。
 - 社会需要的人才是 Problem Solver（解决问题者）。所以犹太人妈妈当孩子从幼儿园回来时会问孩子：“今天你提出了什么好问题？” 期待大家挑战自己，在数创班上踊跃提出好问题。
@@ -140,7 +140,7 @@ order: 1
 
 因此科学家预测，我们即将进入一个脑力大爆发的新纪元，你有3倍甚至10倍的脑力生产效率的提升。
 
-<whiteboard token="UuxiwsHJzhEBi3bFVJuc4ZohnHb"/>
+![人工智能带来脑力大爆发](/images/digital-startup/chapter-1/brainpower-explosion.png)
 
 ## 从聊天机器人到编程智能体
 

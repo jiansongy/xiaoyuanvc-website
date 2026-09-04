@@ -68,7 +68,7 @@ order: 2
 
 [Eric Ries](https://x.com/ericries) 提出了经典的精益创业理论，强调“开发、测量、学习”的循环。而精益创业专家 [Ash Maurya](https://leanspark.ai/) 在推广“**演示-销售-构建**”的循环，本质是“先卖后产”，因为真实客户的预购订单，是对市场需求最好的验证。
 
-<whiteboard token="HCxVwaaluhODGWbG0kqcarMFnad" width="624" height="217"/>
+![精益创业：演示-销售-构建循环](/images/digital-startup/chapter-2/lean-startup.png)
 
 该原则建议在实际构建完整产品之前，先销售产品演示版，以吸引付费客户。这种方法旨在将问题/解决方案的匹配度在 3 个月内实现，而不是 9 个月。
 
@@ -99,7 +99,7 @@ order: 2
 
 它相当于**毛泽东**写的抗战明灯《**论持久战**》，透彻掌握阶段论，我们就能具备战略洞察、气定神闲。
 
-<whiteboard token="BavEwFP2Hh9vCQbxbWUcMRRunnh"/>
+![精益创业各阶段的关键假设](/images/digital-startup/chapter-2/key-assumptions.png)
 
 1. **用户需求**：我们的产品是否真有需求？是真需求还是伪需求？最好的验证是预售
 1. **解决方案**：我们的解决方案，真能解决用户的痛点吗？还是一踹就趴下、经不起考验？

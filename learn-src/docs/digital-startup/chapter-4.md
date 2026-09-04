@@ -295,7 +295,7 @@ order: 4
 
 左岸是创始团队 IP 的“说人话”，右岸是社群活动的“聚铁粉”，中间是日常流淌的内容运营。
 
-<whiteboard token="ELv4wdUsThjBHsbeTiRcn1NDnHh"/>
+![河床模型：左岸 IP、右岸社群、中间内容运营](/images/digital-startup/chapter-4/riverbed-model.png)
 
 # 第五节 营销心理学
 
