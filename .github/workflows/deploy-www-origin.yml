@@ -5,6 +5,15 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      operation:
+        description: "Operation to run on the www origin"
+        required: true
+        default: deploy
+        type: choice
+        options:
+          - deploy
+          - renew-certificate
 
 permissions:
   contents: read
@@ -23,6 +32,7 @@ jobs:
       ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
       ALIYUN_INSTANCE_ID: ${{ secrets.ALIYUN_INSTANCE_ID }}
       ALIYUN_REGION_ID: ${{ vars.ALIYUN_REGION_ID }}
+      XYVC_OPERATION: ${{ inputs.operation || 'deploy' }}
     steps:
       - uses: actions/checkout@v6
 
@@ -57,24 +67,41 @@ jobs:
             sleep 5
           done
 
-      - name: Trigger www sync via Command Assistant
+      - name: Run selected www operation via Command Assistant
         id: run_command
         run: |
           set -euo pipefail
           REGION="${ALIYUN_REGION_ID:-cn-beijing}"
-          SYNC_SCRIPT_B64="$(gzip -c scripts/xyvc-sync.sh | base64 -w0)"
-          COMMAND_CONTENT="$(cat <<EOF
-          set -euo pipefail
-          sync_script=\$(mktemp /tmp/xyvc-sync-command.XXXXXX)
-          cleanup() {
-            rm -f "\$sync_script"
-          }
-          trap cleanup EXIT
-          printf '%s' "$SYNC_SCRIPT_B64" | base64 -d | gzip -d > "\$sync_script"
-          bash -n "\$sync_script"
-          XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_REPOSITORY="$GITHUB_REPOSITORY" bash "\$sync_script"
-          EOF
-          )"
+          case "$XYVC_OPERATION" in
+            deploy)
+              SYNC_SCRIPT_B64="$(gzip -c scripts/xyvc-sync.sh | base64 -w0)"
+              COMMAND_CONTENT="$(cat <<EOF
+              set -euo pipefail
+              sync_script=\$(mktemp /tmp/xyvc-sync-command.XXXXXX)
+              cleanup() {
+                rm -f "\$sync_script"
+              }
+              trap cleanup EXIT
+              printf '%s' "$SYNC_SCRIPT_B64" | base64 -d | gzip -d > "\$sync_script"
+              bash -n "\$sync_script"
+              XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_REPOSITORY="$GITHUB_REPOSITORY" bash "\$sync_script"
+              EOF
+              )"
+              ;;
+            renew-certificate)
+              COMMAND_CONTENT="$(cat <<'EOF'
+              set -euo pipefail
+              command -v certbot
+              certbot renew --deploy-hook 'systemctl reload nginx'
+              certbot certificates
+              EOF
+              )"
+              ;;
+            *)
+              echo "Unsupported www operation: $XYVC_OPERATION" >&2
+              exit 2
+              ;;
+          esac
           response="$(aliyun swas-open run-command \
             --region "$REGION" \
             --biz-region-id "$REGION" \

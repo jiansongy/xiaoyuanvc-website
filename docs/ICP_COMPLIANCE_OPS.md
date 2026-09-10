@@ -100,6 +100,12 @@ UptimeRobot SSL and domain expiry checks are locked behind a paid plan on the cu
 
 Existing certbot renewal remains the first line of defense. The monitor is only the alarm.
 
+If the certificate warning fires, run **Deploy www origin** manually and select
+`renew-certificate`. It uses the existing Alibaba Cloud Command Assistant permissions to run
+the fixed `certbot renew` command and reload nginx only when a certificate was renewed; it does
+not publish site files. Check that the workflow prints the new certificate expiry before closing
+the alert.
+
 ## www nginx Redirects (automated)
 
 `_redirects` is honored by the Cloudflare Pages origin (`xiaoyuanvc.com`) but **not** by the `www`
