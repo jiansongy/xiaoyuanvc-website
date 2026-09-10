@@ -72,30 +72,34 @@ jobs:
         run: |
           set -euo pipefail
           REGION="${ALIYUN_REGION_ID:-cn-beijing}"
+          deploy_command() {
+          cat <<EOF
+          set -euo pipefail
+          sync_script=\$(mktemp /tmp/xyvc-sync-command.XXXXXX)
+          cleanup() {
+            rm -f "\$sync_script"
+          }
+          trap cleanup EXIT
+          printf '%s' "$SYNC_SCRIPT_B64" | base64 -d | gzip -d > "\$sync_script"
+          bash -n "\$sync_script"
+          XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_REPOSITORY="$GITHUB_REPOSITORY" bash "\$sync_script"
+          EOF
+          }
+          certificate_renewal_command() {
+          cat <<'EOF'
+          set -euo pipefail
+          command -v certbot
+          certbot renew --deploy-hook 'systemctl reload nginx'
+          certbot certificates
+          EOF
+          }
           case "$XYVC_OPERATION" in
             deploy)
               SYNC_SCRIPT_B64="$(gzip -c scripts/xyvc-sync.sh | base64 -w0)"
-              COMMAND_CONTENT="$(cat <<EOF
-              set -euo pipefail
-              sync_script=\$(mktemp /tmp/xyvc-sync-command.XXXXXX)
-              cleanup() {
-                rm -f "\$sync_script"
-              }
-              trap cleanup EXIT
-              printf '%s' "$SYNC_SCRIPT_B64" | base64 -d | gzip -d > "\$sync_script"
-              bash -n "\$sync_script"
-              XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_REPOSITORY="$GITHUB_REPOSITORY" bash "\$sync_script"
-              EOF
-              )"
+              COMMAND_CONTENT="$(deploy_command)"
               ;;
             renew-certificate)
-              COMMAND_CONTENT="$(cat <<'EOF'
-              set -euo pipefail
-              command -v certbot
-              certbot renew --deploy-hook 'systemctl reload nginx'
-              certbot certificates
-              EOF
-              )"
+              COMMAND_CONTENT="$(certificate_renewal_command)"
               ;;
             *)
               echo "Unsupported www operation: $XYVC_OPERATION" >&2
