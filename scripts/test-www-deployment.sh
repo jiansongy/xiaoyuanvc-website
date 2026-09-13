@@ -52,5 +52,10 @@ grep -Fq 'resources/ai-employee-interview-guide' "$DEPLOY"
 grep -Fq 'https://www.xiaoyuanvc.com/learn/crypto-vc/' "$CHECK"
 grep -Fq 'https://www.xiaoyuanvc.com/learn/digital-startup/' "$CHECK"
 grep -Fq "grep -Fqi 'server: nginx'" "$CHECK"
-grep -Fq 'for attempt in {1..3}' "$CHECK"
-grep -Fq 'DNS lookup returned no A record' "$CHECK"
+grep -Fq 'ariadne.ns.cloudflare.com' "$CHECK"
+grep -Fq 'dante.ns.cloudflare.com' "$CHECK"
+grep -Fq 'DNS lookup returned no valid A record' "$CHECK"
+if grep -Fq '@223.5.5.5' "$CHECK"; then
+  echo "Origin check must query the authoritative DNS servers, not AliDNS public DNS." >&2
+  exit 1
+fi

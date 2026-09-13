@@ -22,19 +22,27 @@ jobs:
         run: |
           set -euo pipefail
 
-          ip=""
-          for attempt in {1..3}; do
-            ip="$(dig +time=3 +tries=1 +short www.xiaoyuanvc.com A @223.5.5.5 | tail -1 || true)"
-            if [[ -n "$ip" ]]; then
-              break
-            fi
-            echo "DNS lookup returned no A record (attempt $attempt/3)." >&2
-            if [[ "$attempt" -lt 3 ]]; then
-              sleep 2
-            fi
+          expected_ip="39.106.61.204"
+          dns_answered=0
+          authoritative_servers=(ariadne.ns.cloudflare.com dante.ns.cloudflare.com)
+          for nameserver in "${authoritative_servers[@]}"; do
+            for attempt in 1 2; do
+              ips="$(dig +time=3 +tries=1 +short www.xiaoyuanvc.com A @"$nameserver" 2>/dev/null \
+                | grep -E '^[0-9]+(\.[0-9]+){3}$' || true)"
+              if [[ -n "$ips" ]]; then
+                dns_answered=1
+                unexpected_ips="$(grep -Fvx "$expected_ip" <<<"$ips" || true)"
+                if [[ -n "$unexpected_ips" ]]; then
+                  echo "Unexpected www A record from $nameserver: $unexpected_ips" >&2
+                  exit 1
+                fi
+                break
+              fi
+              echo "DNS lookup returned no valid A record from $nameserver (attempt $attempt/2)." >&2
+            done
           done
-          if [[ "$ip" != "39.106.61.204" ]]; then
-            echo "Unexpected www A record from AliDNS: $ip" >&2
+          if (( dns_answered == 0 )); then
+            echo "No authoritative DNS server returned a valid www A record." >&2
             exit 1
           fi
 
