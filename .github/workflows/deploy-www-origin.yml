@@ -36,6 +36,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Test command submission recovery
+        run: python3 scripts/test-www-command-retry.py
+
       - name: Install Alibaba Cloud CLI
         run: |
           set -euo pipefail
@@ -106,7 +109,28 @@ jobs:
               exit 2
               ;;
           esac
-          response="$(aliyun swas-open run-command \
+          # A lost response may hide an accepted request. Serialize and remember
+          # the result for this run/attempt before allowing submission retries.
+          operation_b64="$(printf '%s' "$COMMAND_CONTENT" | base64 -w0)"
+          COMMAND_CONTENT="$(cat <<EOF
+          set -euo pipefail
+          state_dir=/var/lib/xyvc-operations
+          mkdir -p "\$state_dir"
+          chmod 700 "\$state_dir"
+          exec 9>"\$state_dir/operation.lock"
+          flock -w 850 9
+          result="\$state_dir/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.result"
+          if [[ -f "\$result" ]]; then
+            echo 'Operation already executed; returning stored result.'
+            exit "\$(cat "\$result")"
+          fi
+          operation_status=0
+          printf '%s' "$operation_b64" | base64 -d | bash || operation_status=\$?
+          printf '%s\\n' "\$operation_status" > "\$result"
+          exit "\$operation_status"
+          EOF
+          )"
+          response="$(bash scripts/submit-www-command.sh \
             --region "$REGION" \
             --biz-region-id "$REGION" \
             --instance-id "$ALIYUN_INSTANCE_ID" \
