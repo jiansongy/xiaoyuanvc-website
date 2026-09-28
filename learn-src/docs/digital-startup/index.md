@@ -67,6 +67,12 @@ PMF、妈妈测试、产品思维、Y 模型与 Claude Code 接入实战。
 - 建议按章节顺序学习，每章配套 ORID 反思与个人实践
 - 与本教程配套的项目实践、Office Hour 反馈等课堂内容仅在飞书原文档中保留
 
+## 从一个真实问题开始
+
+如果你想做第一个 AI 产品，可以先读[需求验证指南](https://xiaoyuanvc.com/resources/how-to-validate-demand)，和目标用户聊他们现在怎么解决问题；再用手工服务或简单原型试一次，最后按[第一批真实用户指南](https://xiaoyuanvc.com/resources/how-to-find-first-users)观察是否有人持续使用。
+
+[第四章](/digital-startup/chapter-4)记录了一个课堂例子：一位做女性合租公寓的创业学生想开发社交小程序，殷建松建议她先用微信群和共享表格组织住户活动。这个建议说明如何先验证参与需求，并不代表项目已有成功结果。
+
 ## 适合人群
 
 - 想用 AI 工具做出第一个产品的大学生与初学者
