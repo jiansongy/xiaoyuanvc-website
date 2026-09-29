@@ -218,7 +218,8 @@ jobs:
           # 下架资源重定向：非致命，仅告警，避免阻断内容部署
           for redirect_url in \
             "https://www.xiaoyuanvc.com/resources/ai-ready-check" \
-            "https://www.xiaoyuanvc.com/resources/ai-employee-interview-guide"; do
+            "https://www.xiaoyuanvc.com/resources/ai-employee-interview-guide" \
+            "https://www.xiaoyuanvc.com/resources/china-hackathon-calendar"; do
             redirect_status="$(curl --noproxy '*' -sS -o /dev/null -w '%{http_code}' "$redirect_url")"
             if [[ "$redirect_status" != "301" ]]; then
               echo "WARN: expected HTTP 301 for $redirect_url, got $redirect_status." >&2

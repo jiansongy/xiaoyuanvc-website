@@ -130,6 +130,7 @@ location = /resources/ai-ready-check              { return 301 /resources/; }
 location = /resources/ai-ready-check.html         { return 301 /resources/; }
 location = /resources/ai-employee-interview-guide { return 301 /resources/; }
 location = /resources/ai-employee-interview-guide.html { return 301 /resources/; }
+location = /resources/china-hackathon-calendar { return 301 /resources/china-hackathon-statistics; }
 ```
 
 Verify after a deploy:
