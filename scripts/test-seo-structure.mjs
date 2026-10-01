@@ -222,7 +222,7 @@ if (!existsSync(join(root, "dist/index.html"))) {
     assert.ok(![...actual].some((url) => url.includes("camp-3")));
     assert.match(
       sitemap,
-      /<loc>https:\/\/xiaoyuanvc\.com\/resources\/china-hackathon-statistics<\/loc><lastmod>2026-09-04<\/lastmod>/,
+      /<loc>https:\/\/xiaoyuanvc\.com\/resources\/china-hackathon-statistics<\/loc><lastmod>2026-10-01<\/lastmod>/,
     );
     assert.match(
       sitemap,
