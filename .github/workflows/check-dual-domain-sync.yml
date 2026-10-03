@@ -1,0 +1,56 @@
+name: Check dual-domain sync
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dual-domain-sync
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify www and apex serve the same commit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Wait for both domains to deploy this commit
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          domains=(
+            "https://xiaoyuanvc.com"
+            "https://www.xiaoyuanvc.com"
+          )
+
+          for attempt in $(seq 1 30); do
+            all_ready=1
+            echo "Attempt $attempt/30; expecting $EXPECTED_SHA"
+
+            for domain in "${domains[@]}"; do
+              url="${domain}/.well-known/deploy-sha.txt?sha=${EXPECTED_SHA}&attempt=${attempt}"
+              served_sha="$(curl -fsS --max-time 10 "$url" 2>/dev/null | tr -d '\r\n' || true)"
+              echo "$domain -> ${served_sha:-unavailable}"
+
+              if [[ "$served_sha" != "$EXPECTED_SHA" ]]; then
+                all_ready=0
+              fi
+            done
+
+            if (( all_ready == 1 )); then
+              echo "Both domains are serving commit $EXPECTED_SHA"
+              exit 0
+            fi
+
+            sleep 20
+          done
+
+          echo "The two domains did not converge on commit $EXPECTED_SHA within 10 minutes." >&2
+          exit 1
