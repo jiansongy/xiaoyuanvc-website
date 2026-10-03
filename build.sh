@@ -41,6 +41,14 @@ echo "==> [2/7] 复制主站静态资源到 dist/"
     --exclude="./.DS_Store" \
     . ) | ( cd "$DIST" && tar -xf - )
 
+# 写入本次部署对应的 Git commit，供双域名同步检查使用。
+DEPLOY_SHA="${XYVC_GITHUB_SHA:-${CF_PAGES_COMMIT_SHA:-${GITHUB_SHA:-}}}"
+if [[ -z "$DEPLOY_SHA" ]] && git -C "$ROOT" rev-parse --verify HEAD >/dev/null 2>&1; then
+  DEPLOY_SHA="$(git -C "$ROOT" rev-parse HEAD)"
+fi
+mkdir -p "$DIST/.well-known"
+printf '%s\n' "${DEPLOY_SHA:-unknown}" > "$DIST/.well-known/deploy-sha.txt"
+
 echo "==> [3/7] 构建 VitePress 子站 (learn-src)"
 # 部分环境(如本机沙箱)不允许写默认 ~/.npm 缓存，改用项目内可写缓存，避免 EPERM 导致安装失败。
 # 注意：用 npm run build 调用时父进程会注入 npm_config_cache=~/.npm，这里必须强制覆盖，否则 `${var:-}` 兜底不生效。
