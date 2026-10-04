@@ -154,7 +154,7 @@
 
       .audience-card--teacher .audience-card__icon {
         background: rgba(245, 158, 11, 0.12);
-        color: var(--color-accent-gold);
+        color: var(--color-accent-gold-text);
       }
 
       .audience-card--resources .audience-card__icon {
@@ -230,7 +230,7 @@
 
       .audience-card--teacher .audience-chip:hover {
         background: rgba(245, 158, 11, 0.14);
-        color: var(--color-accent-gold);
+        color: var(--color-accent-gold-text);
         border-color: rgba(245, 158, 11, 0.24);
       }
 
@@ -270,7 +270,9 @@
         padding: 0.8rem 1rem;
         font-size: 0.9375rem;
         font-weight: 700;
-        color: #fff;
+        color: var(--color-brand);
+        background: var(--color-bg-card);
+        border: 1px solid var(--color-brand-light);
         text-decoration: none;
         border-radius: var(--radius-md);
         transition: transform var(--duration-fast) var(--ease-out),
@@ -278,19 +280,9 @@
                     filter var(--duration-fast) var(--ease-out);
       }
 
-      .audience-card--student .audience-card__cta {
-        background: var(--color-brand);
-      }
-
-      .audience-card--teacher .audience-card__cta {
-        background: var(--color-accent-gold);
-      }
-
       .audience-card__cta:hover {
-        color: #fff;
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-        filter: brightness(1.05);
+        color: var(--color-brand-active);
+        background: var(--color-brand-light);
       }
 
       @media (max-width: 900px) {
@@ -558,8 +550,8 @@
                 x-lab，面向学生提供免费的 AI 创业与加密创投课程，面向高校提供数创班、火种节和创业教育智慧系统。已服务 19 万+ 名大学生，覆盖数百所高校。
               </p>
               <div class="hero__actions">
-                <a href="https://www.xiaoyuanvc.com/dachuang" class="btn btn-primary" data-analytics="hero_path_click" data-analytics-label="student-dachuang">学生了解大创社群 →</a>
-                <a href="/teacher/huozhong" class="btn btn-secondary" data-analytics="hero_path_click" data-analytics-label="teacher-huozhong">老师了解火种节 →</a>
+                <a href="/student" class="btn btn-primary" data-analytics="hero_path_click" data-analytics-label="student-center">学生开始学习 →</a>
+                <a href="/teacher" class="btn btn-secondary" data-analytics="hero_path_click" data-analytics-label="teacher-center">老师了解合作 →</a>
               </div>
             </div>
             <div class="hero__image fade-in">
@@ -574,55 +566,7 @@
         </div>
       </section>
 
-      <!-- ====== Section 2: Daily 日报（前置 — 立即可领的免费价值） ====== -->
-      <section class="section" id="daily">
-        <div class="container">
-          <div class="section-header fade-in">
-            <h2 class="section-title">每日创投日报</h2>
-            <p class="section-subtitle">加入学习群，每天早上免费获取两份精选日报</p>
-          </div>
-
-          <div class="daily__grid fade-in">
-            <div class="daily__item">
-              <div class="daily__label">数字创业日报</div>
-              <img src="assets/daily/scb-daily-latest.png" alt="数字创业日报样本" class="daily__image" loading="lazy" />
-            </div>
-            <div class="daily__item">
-              <div class="daily__label">加密创投日报</div>
-              <img src="assets/daily/css-daily-latest.png" alt="加密创投日报样本" class="daily__image" loading="lazy" />
-            </div>
-          </div>
-
-          <div class="daily__cta fade-in">
-            <a href="#contact" class="btn btn-primary">加入学习群、免费看日报 →</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== Section 3: Video（火种节 — 真实活动信任证据） ====== -->
-      <section class="video-section section section--alt" id="video">
-        <div class="container">
-          <div class="section-header fade-in">
-            <h2 class="section-title">校园VC清华火种节</h2>
-            <p class="section-subtitle">连续 8 年大学生创业盛会 · 看视频感受清华创新课堂</p>
-          </div>
-          <div class="video__wrapper fade-in">
-            <video
-              controls
-              muted
-              preload="metadata"
-              playsinline
-              poster="assets/event-video-poster.jpg"
-              title="校园VC清华火种节"
-            >
-              <source src="assets/event-video.mp4" type="video/mp4" />
-              <p>您的浏览器不支持视频播放。<a href="assets/event-video.mp4">点击下载视频</a>。</p>
-            </video>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== Section 4: 学生 vs 教师 双路径 ====== -->
+      <!-- ====== Section 2: 学生 vs 教师 双路径 ====== -->
       <section class="section" id="paths">
         <div class="container">
           <div class="section-header fade-in">
@@ -712,15 +656,63 @@
         </div>
       </section>
 
-      <!-- ====== Section 5: 团队（创始人 + 核心团队 合并） ====== -->
+      <!-- ====== Section 3: Daily 日报 ====== -->
+      <section class="section" id="daily">
+        <div class="container">
+          <div class="section-header fade-in">
+            <h2 class="section-title">每日创投日报</h2>
+            <p class="section-subtitle">加入学习群，每天早上免费获取两份精选日报</p>
+          </div>
+
+          <div class="daily__grid fade-in">
+            <div class="daily__item">
+              <div class="daily__label">数字创业日报</div>
+              <img src="assets/daily/scb-daily-latest.png" alt="数字创业日报样本" class="daily__image" loading="lazy" />
+            </div>
+            <div class="daily__item">
+              <div class="daily__label">加密创投日报</div>
+              <img src="assets/daily/css-daily-latest.png" alt="加密创投日报样本" class="daily__image" loading="lazy" />
+            </div>
+          </div>
+
+          <div class="daily__cta fade-in">
+            <a href="#contact" class="btn btn-secondary">加入学习群、免费看日报 →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== Section 4: Video（火种节 — 真实活动信任证据） ====== -->
+      <section class="video-section section section--alt" id="video">
+        <div class="container">
+          <div class="section-header fade-in">
+            <h2 class="section-title">校园VC清华火种节</h2>
+            <p class="section-subtitle">连续 8 年大学生创业盛会 · 看视频感受清华创新课堂</p>
+          </div>
+          <div class="video__wrapper fade-in">
+            <video
+              controls
+              muted
+              preload="metadata"
+              playsinline
+              poster="assets/event-video-poster.jpg"
+              title="校园VC清华火种节"
+            >
+              <source src="assets/event-video.mp4" type="video/mp4" />
+              <p>您的浏览器不支持视频播放。<a href="assets/event-video.mp4">点击下载视频</a>。</p>
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== Section 5: 创始人简介 ====== -->
       <section class="section section--alt" id="founder">
         <div class="container">
           <div class="section-header fade-in">
-            <h2 class="section-title">团队介绍</h2>
+            <h2 class="section-title">创始人介绍</h2>
             <p class="section-subtitle">著名企业家、教育专家、助力于大学生创业教育</p>
           </div>
 
-          <div class="founder__grid">
+          <div class="founder__grid founder__grid--summary">
             <!-- Founder Card -->
             <div class="founder-card fade-in">
               <div class="founder-card__header">
@@ -738,96 +730,16 @@
                 <li>1997 年 MBA 毕业于荷兰马斯特里赫特管理学院</li>
                 <li>1993 年本科毕业于对外经济贸易大学国际金融专业</li>
               </ul>
-              <div class="founder-card__wechat">
-                <div class="founder-card__wechat-qr">
-                  <img src="assets/qrcode/wechat-jason-chuangye.jpg" alt="Jason创业布道师 微信公众号二维码" loading="lazy" />
-                </div>
-                <div class="founder-card__wechat-info">
-                  <p class="founder-card__wechat-title">Jason创业布道师</p>
-                  <p class="founder-card__wechat-desc">关注微信公众号，获取更多创业干货与行业洞察</p>
-                </div>
-              </div>
-            </div>
+              <p><a href="/about#team">了解完整团队 →</a></p>
 
-            <!-- Book Card -->
-            <div class="book-card fade-in">
-              <div class="book-card__cover">
-                <img src="assets/book-cover.png" alt="《从零到英雄》书籍封面" loading="lazy" />
-              </div>
-              <h3 class="book-card__title">《从零到英雄》</h3>
-              <p class="book-card__author">殷建松 著 · <span class="tag tag--gold">畅销创业教材</span></p>
-              <p class="book-card__desc">
-                校园VC在清华大学 x-lab 的创业营教材，由北京出版社出版，<strong class="name-highlight">李开复</strong>、<strong class="name-highlight">俞敏洪</strong>对本书全力举荐。
-              </p>
-              <a href="resources/" class="product-card__cta">阅读详情 →</a>
             </div>
           </div>
 
-          <!-- 核心团队 -->
-          <div class="section-header fade-in" style="margin-top: 3.5rem; margin-bottom: 2rem;">
-            <h3 class="section-title" style="font-size: 1.5rem;">核心团队</h3>
-          </div>
-
-          <div class="team__grid">
-            <div class="team-card fade-in">
-              <div class="team-card__avatar">
-                <img src="assets/team/xiang-fangwei.png" alt="项方伟照片" loading="lazy" />
-              </div>
-              <h3 class="team-card__name">项方伟</h3>
-              <p class="team-card__role">项目孵化合伙人</p>
-              <p class="team-card__desc">种子投资孵化专家；系列创业者，现居浙江</p>
-            </div>
-
-            <div class="team-card fade-in">
-              <div class="team-card__avatar">
-                <img src="assets/team/zheng-yuxuan.png" alt="郑羽轩照片" loading="lazy" />
-              </div>
-              <h3 class="team-card__name">郑羽轩</h3>
-              <p class="team-card__role">社会创新合伙人</p>
-              <p class="team-card__desc">大创社群负责人，校园文化学者</p>
-            </div>
-
-            <div class="team-card fade-in">
-              <div class="team-card__avatar">
-                <img src="assets/team/li-pengtong.png" alt="李朋桐照片" loading="lazy" />
-              </div>
-              <h3 class="team-card__name">李朋桐</h3>
-              <p class="team-card__role">加密创投合伙人</p>
-              <p class="team-card__desc">加密创投负责人，CSS主理人，Web3创业者</p>
-            </div>
-
-            <div class="team-card fade-in">
-              <div class="team-card__avatar">
-                <img src="assets/team/yin-jiaao.png" alt="殷嘉傲照片" loading="lazy" />
-              </div>
-              <h3 class="team-card__name">殷嘉傲</h3>
-              <p class="team-card__role">创意人才孵化总监</p>
-              <p class="team-card__desc">伦敦艺术大学毕业，策展人</p>
-            </div>
-
-            <div class="team-card fade-in">
-              <div class="team-card__avatar">
-                <img src="assets/team/gui-xiangmei.png" alt="桂香梅照片" loading="lazy" />
-              </div>
-              <h3 class="team-card__name">桂香梅 Keke</h3>
-              <p class="team-card__role">合伙人</p>
-              <p class="team-card__desc">睿基国际执行董事；麦肯锡前外部顾问，企业战略部署专家</p>
-            </div>
-
-            <div class="team-card fade-in">
-              <div class="team-card__avatar">
-                <img src="assets/team/zhou-qi.png" alt="周琦照片" loading="lazy" />
-              </div>
-              <h3 class="team-card__name">周琦（大妈）</h3>
-              <p class="team-card__role">合伙人</p>
-              <p class="team-card__desc">25年Python全栈经验；CPyUG联合创始人，技术社区领袖</p>
-            </div>
-          </div>
 
         </div>
       </section>
 
-      <!-- ====== Section 6: Gallery（精选 8 张含 logo） ====== -->
+      <!-- ====== Section 6: Gallery（精选 4 张） ====== -->
       <section class="section" id="gallery">
         <div class="container">
           <div class="section-header fade-in">
@@ -840,10 +752,6 @@
             <div class="gallery__item"><img src="assets/gallery/huozhong-04.webp" alt="校园VC全球峰会 · 百人合影" loading="lazy" /></div>
             <div class="gallery__item"><img src="assets/gallery/scb-06.webp" alt="校园VC全球峰会 · 学员合影" loading="lazy" /></div>
             <div class="gallery__item"><img src="assets/gallery/huozhong-03.webp" alt="新春创业沙龙 · 10年推动100万大学生创业" loading="lazy" /></div>
-            <div class="gallery__item"><img src="assets/gallery/huozhong-01.webp" alt="殷建松 火种节现场授课" loading="lazy" /></div>
-            <div class="gallery__item"><img src="assets/gallery/event-02.webp" alt="校园VC 大型分享会群像" loading="lazy" /></div>
-            <div class="gallery__item"><img src="assets/gallery/huozhong-06.webp" alt="数创班学员举校园VC旗合影" loading="lazy" /></div>
-            <div class="gallery__item"><img src="assets/gallery/huozhong-08.webp" alt="校园VC × 极客帮创投合作伙伴合影" loading="lazy" /></div>
           </div>
         </div>
       </section>
@@ -963,7 +871,7 @@
             <h2 class="final-cta__title">立即加入校园VC</h2>
             <p class="final-cta__desc">从零到英雄，寻找改变世界的疯子</p>
             <div class="final-cta__actions">
-              <a href="/student" class="btn btn-primary">我是学生，开始学习 →</a>
+              <a href="/student" class="btn btn-secondary">我是学生，开始学习 →</a>
               <a href="/teacher" class="btn btn-secondary">我是教师，了解合作 →</a>
             </div>
           </div>

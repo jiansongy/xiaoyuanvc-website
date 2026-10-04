@@ -24,6 +24,7 @@
 
   /* Accent */
   --color-accent-gold: #f59e0b;
+  --color-accent-gold-text: #903300;
   --color-accent-green: #10b981;
   --color-accent-purple: #8b5cf6;
 
@@ -2035,4 +2036,11 @@ body.site-search-lock {
 
 .product-card__icon--purple {
   background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+}
+
+/* §2.4: compact founder summary on the homepage. */
+.founder__grid--summary {
+  grid-template-columns: 1fr;
+  max-width: 680px;
+  margin: 0 auto var(--space-lg);
 }
