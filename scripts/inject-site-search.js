@@ -19,8 +19,10 @@ function walk(dir, files = []) {
 function inject(file) {
   let html = fs.readFileSync(file, "utf8");
   if (html.includes("/assets/site-search.js")) return false;
-  if (!/<\/body>/i.test(html)) return false;
-  html = html.replace(/<\/body>/i, `  ${SCRIPT}\n</body>`);
+  if (/<meta\b[^>]*name="robots"[^>]*content="noindex/i.test(html)) return false;
+  const bodyEnd = html.toLowerCase().lastIndexOf("</body>");
+  if (bodyEnd < 0) return false;
+  html = html.slice(0, bodyEnd) + `  ${SCRIPT}\n` + html.slice(bodyEnd);
   fs.writeFileSync(file, html);
   return true;
 }

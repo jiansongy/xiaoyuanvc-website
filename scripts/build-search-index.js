@@ -112,6 +112,7 @@ function typeForUrl(url) {
 function buildEntry(file) {
   const html = fs.readFileSync(file, "utf8");
   const url = urlFromFile(file, html);
+  if (/noindex/i.test(matchMeta(html, "robots"))) return null;
   if (url === "/404" || url === "/resources.html") return null;
 
   const title = titleFromHtml(html).replace(/\s*[|｜—-]\s*校园VC.*$/, "");

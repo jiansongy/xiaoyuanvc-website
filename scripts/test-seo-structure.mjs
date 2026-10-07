@@ -218,7 +218,13 @@ if (!existsSync(join(root, "dist/index.html"))) {
     const sitemap = read("dist/sitemap.xml");
     const actual = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]));
     assert.deepEqual(actual, expected);
-    assert.ok(actual.size >= 46, `预期至少 46 条，实际 ${actual.size} 条`);
+    assert.ok(actual.size >= 44, `预期至少 44 条，实际 ${actual.size} 条`);
+    const searchIndex = read("dist/assets/site-search-index.json");
+    for (const slug of ["tools-presentation", "my-explorations", "ai-opportunity"]) {
+      assert.ok(!actual.has(`https://xiaoyuanvc.com/resources/${slug}`));
+      assert.ok(!searchIndex.includes(`/resources/${slug}`));
+      assert.match(read(`dist/resources/${slug}.html`), /noindex/);
+    }
     assert.ok(![...actual].some((url) => url.includes("camp-3")));
     assert.match(
       sitemap,
