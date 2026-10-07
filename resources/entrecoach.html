@@ -169,6 +169,25 @@
 
       /* ── Artifact fields ── */
       .field { margin-bottom: 14px; }
+      /* 当前关以答案/接受为主，自己改和复制为次要操作（§2.1、§2.8）。
+         沿用现有字体、间距与圆角；表格滚动限于容器内（§3.3.1）。 */
+      .field-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+      .field-head .field-q { flex: 1; }
+      .field-head .btn { flex: none; min-height: 44px; }
+      .field-editor { margin-top: 8px; }
+      .field-editor textarea {
+        width: 100%; min-height: 120px; padding: 10px 12px;
+        border: 1px solid #d1d5db; border-radius: var(--radius-sm);
+        font: inherit; resize: vertical;
+      }
+      .field-editor textarea:focus { outline: 2px solid var(--green); }
+      .field-a { overflow-wrap: anywhere; }
+      .table-scroll { max-width: 100%; overflow-x: auto; }
+      .table-scroll:focus-visible { outline: 2px solid var(--green); }
+      .table-scroll .blk-table { min-width: 420px; }
+      .table-hint { color: var(--gray); font-size: 12px; margin: 4px 0; }
+      .state-line.is-error { color: #b91c1c; }
+      .state-line.is-success { color: var(--green-dark); padding: 10px 0; }
       .field-q { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
       .field-a {
         background: #f9fafb;
@@ -609,6 +628,12 @@
     try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
     clearUnifiedState();
     S = createState();
+    requestSerial += 1;
+    generating = false;
+    aiStatus = null;
+    lastAttempt = null;
+    editField = null;
+    viewIndex = -1;
   }
 
   // 一键彻底重置：清掉本工具数据，并强制重新加载页面（绕过旧 JS 缓存）
@@ -621,6 +646,11 @@
   }
 
   var S = load();
+  var generating = false;
+  var requestSerial = 0;
+  var aiStatus = null;
+  var lastAttempt = null;
+  var editField = null;
 
   /* ============================================================
    * 工具函数
@@ -654,7 +684,10 @@
    * 语义块类型只有 5 种，AI 无论什么写法都归一化到它们上，
    * 因此 9 关的展示视觉统一，且后续新增格式只需在 parse 阶段加规则。
    * ============================================================ */
-  function escMarkdown(text) {
+  function escMarkdown(text, fieldId) {
+    if (fieldId === "problem_statement") {
+      return '<p class="blk-para">' + inline(esc(text).replace(/[【】]/g, "")) + '</p>';
+    }
     var blocks = parseBlocks(text);
     return renderBlocks(blocks);
   }
@@ -792,7 +825,7 @@
     var bodyStart = 1;
     if (rows[1] && isSepRow(rows[1])) bodyStart = 2;
     if (bodyStart >= rows.length) bodyStart = 1;
-    var h = "<table class=\"blk-table\"><thead><tr>";
+    var h = '<div class="table-scroll" role="region" aria-label="方案对比表，可左右滑动" tabindex="0"><table class="blk-table"><thead><tr>';
     for (var j = 0; j < header.length; j++) h += "<th>" + inline(header[j]) + "</th>";
     h += "</tr></thead><tbody>";
     for (var r = bodyStart; r < rows.length; r++) {
@@ -800,7 +833,7 @@
       for (var c = 0; c < rows[r].length; c++) h += "<td>" + inline(rows[r][c]) + "</td>";
       h += "</tr>";
     }
-    h += "</tbody></table>";
+    h += '</tbody></table></div><p class="table-hint">表格较宽时，可左右滑动查看。</p>';
     return h;
   }
 
@@ -930,7 +963,7 @@
         var res = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: messages, stream: false }),
+          body: JSON.stringify({ messages: messages, stream: false, response_format: { type: "json_object" } }),
           signal: ctrl ? ctrl.signal : undefined
         });
         if (timer) clearTimeout(timer);
@@ -940,6 +973,9 @@
         }
         // 两种返回形态：choices 或 {ok, ...}
         if (json.choices && json.choices[0] && json.choices[0].message) {
+          if (json.choices[0].finish_reason === "length") {
+            throw new Error("AI 未生成完整结果，请重试。");
+          }
           return json.choices[0].message.content;
         }
         if (json.content) return json.content;
@@ -958,113 +994,35 @@
    * ============================================================ */
   function coachSystemPrompt(i) {
     var m = milestone(i);
-    var form = formOf(i);
-    var fieldSpec = form.fields.map(function (f) {
-      return '    "' + f.id + '": "' + f.hint + '"';
+    var fields = formOf(i).fields.map(function (f) {
+      return '"' + f.id + '": "' + f.hint + '"';
     }).join(",\n");
     return [
-      "你是 EntreCoach，一个 AI-first 的创业教练。你遵循火种节 9 里程碑方法论。",
-      "",
-      "当前里程碑：第 " + (i + 1) + " 关「" + m.name + "」（" + m.ability + "）",
-      "目标：" + m.goal,
-      "",
-      "核心规则：AI 先做 80%，学生只做判断（接受 / 在此基础上修改 / 换一版），绝不让学生面对空白表单。",
-      "你必须输出一个严格的 JSON 对象，不要输出任何 JSON 之外的解释文字。JSON 的字段如下（每个字段的值用中文，要具体、可直接用）：",
-      "{",
-      fieldSpec,
-      "}",
-      "",
-      "要求：",
-      "1. 每个字段都要给出有内容的草稿，不要留空、不要写「待定」。",
-      "2. 基于学生的创业想法和已完成的里程碑上下文来写，保持连贯。",
-      "3. 任何推测都必须诚实：如果是未经验证的假设，在字段内容里用「（假设，待验证）」标注。",
-      "4. 只输出 JSON 对象本身，可以带 ```json 围栏，但除此之外不要有任何多余文字。"
-    ].join("\n");
-
-    // M9 复盘：额外注入 EntreComp 视角指令
-    if (m.id === "M9") {
-      return systemBase(i) + [
-        "",
-        "这是第 9 关「复盘」。请特别从 EntreComp（欧盟创业能力框架）的角度撰写成长报告：",
-        "- 回顾学生这一路练习并运用的 EntreComp 能力（见下方「已练习的能力」）。",
-        "- 明确指出哪些能力有明显成长、哪些还只是初步练习（练习 ≠ 掌握）。",
-        "- 在 changed_belief 里写清：最初相信什么、什么证据/反馈改变了想法、发生了什么出乎意料的事。",
-        "- 在 effective_method 里提炼一个最值得复用、最有效的动作。",
-        "- 在 next_round 里给出下一轮最高杠杆的一个行动，而不是泛泛建议。",
-        "",
-        "禁止写空泛感想；要具体到这一次创业经历本身。"
-      ].join("\n");
-    }
-    return systemBase(i);
-  }
-
-  function systemBase(i) {
-    var m = milestone(i);
-    var form = formOf(i);
-    var fieldSpec = form.fields.map(function (f) {
-      return '    "' + f.id + '": "' + f.hint + '"';
-    }).join(",\n");
-    return [
-      "你是 EntreCoach，一个 AI-first 的创业教练。你遵循火种节 9 里程碑方法论。",
-      "当前里程碑：第 " + (i + 1) + " 关「" + m.name + "」（" + m.ability + "）",
-      "目标：" + m.goal,
-      "核心规则：AI 先做 80%，学生只做判断（接受 / 在此基础上修改 / 换一版），绝不让学生面对空白表单。",
-      "你必须输出一个严格的 JSON 对象，不要输出任何 JSON 之外的解释文字。JSON 的字段如下（每个字段的值用中文，要具体、可直接用）：",
-      "{",
-      fieldSpec,
-      "}",
-      "要求：",
-      "1. 每个字段都要给出有内容的草稿，不要留空、不要写「待定」。",
-      "2. 基于学生的创业想法和已完成的里程碑上下文来写，保持连贯。",
-      "3. 任何推测都必须诚实：如果是未经验证的假设，在字段内容里用「（假设，待验证）」标注。",
-      "4. 字段内容一定要用 Markdown 结构化排版，让学生一眼看懂。绝对规则（必须遵守）：",
-      "   - 每一条要点、方案、分组，都必须**独占一行**，且行首用 `- `（无序）或 `1. `（有序）开头。",
-      "   - **禁止**把多个要点用中文序号（如 1）2）3））挤在同一行；一行只写一个 `- ` 条目。",
-      "   - 关键结论、重要字段名：用 `**加粗**` 或 `### 小标题` 突出。",
-      "   - 编号必须**严格对应用户真正列出的项数**；介绍语、总结语不要编号（这类放普通段落即可）。",
-      "5. 只输出 JSON 对象本身，可以带 ```json 围栏，但除此之外不要有任何多余文字。",
-      "",
+      "你是校园VC创业教练，遵循火种节9步。AI先给草稿，学生判断、修改或换一版。",
+      "当前第" + (i + 1) + "关：" + m.name + "。目标：" + m.goal,
+      "只输出严格JSON对象，顶层键必须且只能是：" + formOf(i).fields.map(function (f) { return f.id; }).join("、") + "。禁止用answer、content、result包裹，禁止把整个JSON写进字符串。字段值均为中文字符串：{\n" + fields + "\n}",
+      "每个字段都要完整、非空。JSON字符串内换行写为\\n，双引号按JSON转义，不使用围栏。保持与想法和已完成关卡连贯，不重复已知背景。",
+      "简练优先：一般字段用1—2句，结论在前，只保留一个关键理由。普通单句尽量20—60字；复杂任务按下方规则，不机械截断。",
+      "不写开场白、总结、重复的按钮操作说明；多个要点每项单独一行。",
+      "不得把AI猜测写成事实。没有访谈或测试时，写清假设待验证、尚未收集证据，不编造人数、反馈、收入或成长。",
+      "保留作判断所需的理由、关键假设和可执行下一步；不是越短越好。",
       milestoneFormatRule(i)
     ].join("\n");
   }
 
-  // 按里程碑定制的格式强规（解决 M4/M5 的编号/矩阵误判）
   function milestoneFormatRule(i) {
-    var m = milestone(i);
-    if (m.id === "M4") {
-      return "【M4 发散方案·crazy8 专用格式】\n" +
-        "- 必须给出恰好 8 个方案，每行一个，格式：`- **方案N「短名」**：一句话说明`。\n" +
-        "- 行首序号只到 8，**绝不允许出现 9、10、11、12 这类额外编号**。\n" +
-        "- 若要对 8 个方案做归类总结，用普通段落或 `- ` 列表，不要用数字编号。";
-    }
-    if (m.id === "M5") {
-      return "【M5 决定方案·solution_matrix 专用格式】\n" +
-        "- solution_matrix 必须用 Markdown 表格：`| 方案 | 用户价值 | 可实现性 | 评语 |`，第二行 `|---|---|---|---|`，再每一行一个方案。\n" +
-        "- 写在表里的方案要精简，最多 4-6 个（聚焦），不要 10 个以上。\n" +
-        "- **禁止**把评分数据写成 `1. xxx 2. xxx` 的长编号列表。";
-    }
-    if (m.id === "M6") {
-      return "【M6 制作原型 专用格式】\n" +
-        "- prototype_script（用户体验脚本）每一项单独一行：`- 步骤N：描述`。\n" +
-        "- prototype_scope、validation_target 用**加粗讲清关键点**即可，不要堆长段落。";
-    }
-    if (m.id === "M7") {
-      return "【M7 验证原型 专用格式】\n" +
-        "- test_users、test_tasks、feedback_summary 每一条单独一行：`- 项目：说明`。\n" +
-        "- **禁止**写「任务1 任务2 任务3」而不分行——每个任务必须独占一行，行首 `- `。\n" +
-        "- 没有真实测试时，feedback_summary 明确写「模拟示例，未真实验证」。";
-    }
-    if (m.id === "M8") {
-      return "【M8 路演 专用格式】\n" +
-        "- pitch 用**分段**呈现（问题/方案/原型/证据/下一步），每段内部要点用 `- ` 列表。\n" +
-        "- ask 给出 2-3 个清晰的选择，每行一个 `- `；避免长段落堆砌。";
-    }
-    if (m.id === "M9") {
-      return "【M9 复盘·EntreComp 专用格式】\n" +
-        "- changed_belief、effective_method、next_round 每关聚焦要点，用 `- ` 或 `1. ` 列条目。\n" +
-        "- 禁止空泛感想；具体到这一次经历。";
-    }
-    return "";
+    var rules = {
+      M1: "队名用短名，角色只写必要分工，一句话想法不加模板括号。",
+      M2: "candidate_needs恰好3组，每组一行：客户、痛点、场景，尽量40—60字。known_vs_assumed区分学生提供的信息与猜测，不重复3组全文。",
+      M3: "目标客户、核心问题、场景各一句；优先原因只写最关键的一点。一句话定义用普通完整句子，不加【】、标题或列表。全关正文尽量250字以内。",
+      M4: "crazy8恰好8个明显不同的方案，每行格式：- **短名**：一句说明（尽量20—35字）。不加归类、总结或第9个方案。",
+      M5: "solution_matrix用Markdown表格：|方案|用户价值|可做性|依据|，下一行|---|---|---|---|。比较前关全部8方案，每行短名、1—5暂估分、一个短理由（尽量12字）。表前标明暂估待验证；单元格不含竖线或换行。不把评分当证据。chosen_solution只选一个最值得先验证的方案并给一句理由；key_risk写一句可被证据推翻的假设，不擅设人数或流失率门槛。全关正文尽量450字以内。",
+      M6: "prototype_scope只保留验证关键假设必需的内容；prototype_script分3—5步，每步一行，尽量20—35字；validation_target只写一个关键假设。",
+      M7: "测试对象写3名或3类可接触的人，任务各一行。没有真实测试时feedback_summary写尚未验证、要收集什么证据，hecd_decision写先验证再决定，不能编模拟结果代替事实。",
+      M8: "pitch是可直接口述的1分钟路演稿，约180—240字，问题→方案→原型→证据→下一步，不改成长篇分析。ask只选一个具体请求。",
+      M9: "每个字段聚焦一个判断或动作。changed_belief写原判断、改变它的证据；没有证据就说明仅流程演练。effective_method写一个可复用动作，next_round写下一步做什么；练习不等于掌握。"
+    };
+    return rules[milestone(i).id];
   }
 
   function contextSummary() {
@@ -1104,36 +1062,44 @@
     return lines.join("\n");
   }
 
-  async function generateDraft() {
-    var i = S.milestoneIndex;
-    var m = milestone(i);
-    var form = formOf(i);
-    var messages = [
-      { role: "system", content: coachSystemPrompt(i) },
-      { role: "user", content: "请为第 " + (i + 1) + " 关「" + m.name + "」生成草稿。\n\n" + contextSummary() }
-    ];
-    var content = await callGLM(messages);
-    var jsonText = stripJson(content);
-    var parsed;
-    try {
-      parsed = JSON.parse(jsonText);
-    } catch (e) {
-      // 退化为纯文本兜底：把整段内容作为第一个字段的值
-      parsed = {};
-      var firstField = form.fields[0].id;
-      parsed[firstField] = content.trim();
+  function validateDraft(i, parsed) {
+    var fields = formOf(i).fields;
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      throw new Error("AI 返回的格式不正确，请重试。");
+    }
+    var keys = fields.map(function (f) { return f.id; });
+    if (Object.keys(parsed).some(function (k) { return keys.indexOf(k) === -1; })) {
+      throw new Error("AI 返回的字段不正确，请重试。");
     }
     var draft = {};
-    form.fields.forEach(function (f) {
-      var v = parsed[f.id];
-      draft[f.id] = (v == null || v === "") ? "" : String(v).trim();
+    fields.forEach(function (f) {
+      if (typeof parsed[f.id] !== "string" || !parsed[f.id].trim()) {
+        throw new Error("AI 返回的内容不完整，请重试。");
+      }
+      draft[f.id] = parsed[f.id].trim();
     });
-    // 若 AI 完全没给任何字段值，报错
-    var hasAny = form.fields.some(function (f) { return draft[f.id]; });
-    if (!hasAny) throw new Error("AI 没有返回有效内容");
-    S.drafts[m.id] = draft;
-    save();
     return draft;
+  }
+
+  function parseDraft(i, content) {
+    var parsed;
+    try { parsed = JSON.parse(stripJson(content)); }
+    catch (e) { throw new Error("AI 返回的内容无法读取，请重试。"); }
+    return validateDraft(i, parsed);
+  }
+
+  function completeDraft(i, draft) {
+    try { validateDraft(i, draft); return true; }
+    catch (e) { return false; }
+  }
+
+  async function generateDraft(i) {
+    var m = milestone(i);
+    var messages = [
+      { role: "system", content: coachSystemPrompt(i) },
+      { role: "user", content: "请为第" + (i + 1) + "关「" + m.name + "」生成草稿。\n\n" + contextSummary() }
+    ];
+    return parseDraft(i, await callGLM(messages));
   }
 
   /* ============================================================
@@ -1150,7 +1116,7 @@
       // 标题独占一行 + 值另起一行：否则「**标题**：值」会粘在同一行，
       // 让 renderer 把它当成一段长文字，无法识别列表/表格等结构，造成太长难读。
       lines.push("**" + label + "**：");
-      lines.push(val || "（未填写）");
+      lines.push(pair[0] === "problem_statement" ? val.replace(/[【】]/g, "") : (val || "（未填写）"));
     });
     return lines.join("\n");
   }
@@ -1160,6 +1126,7 @@
     var m = milestone(i);
     var exp = expOf(i);
     var draft = S.drafts[m.id] || {};
+    if (generating || !completeDraft(i, draft)) return null;
     // draft → answers（接受即定稿）
     S.answers[m.id] = Object.assign({}, S.answers[m.id] || {}, draft);
     S.artifacts[m.id] = {
@@ -1217,6 +1184,7 @@
   function goTo(i) {
     // 只能跳到已走过的关卡（0..milestoneIndex）；正在看的未来关不算已走过
     if (i < 0 || i > S.milestoneIndex) return;
+    editField = null;
     viewIndex = i;
     if (viewIndex === S.milestoneIndex) viewIndex = -1; // 回到当前进度
     render();
@@ -1294,9 +1262,11 @@
     var m = milestone(i);
     var exp = expOf(i);
     var form = formOf(i);
-    var draft = S.drafts[m.id] || null;
-    // 回头看已通过的关卡（viewIndex < 进度）
+    // 回头看时使用定稿答案，兼容没有保留草稿的旧存档。
     var reviewing = i < S.milestoneIndex;
+    var draft = (reviewing ? S.answers[m.id] : S.drafts[m.id]) || null;
+    var busy = generating;
+    var disabled = busy ? " disabled" : "";
 
     var html = [];
     html.push('<div class="card">');
@@ -1312,9 +1282,14 @@
     html.push('  <div class="m-goal">' + esc(m.goal) + '</div>');
     html.push('  <div class="m-hecd">💡 ' + esc(exp.hecdCue) + '</div>');
 
-    if (!draft) {
-      html.push('  <div class="state-line"><span class="spinner"></span>AI 教练正在生成「' + esc(exp.artifactName) + '」草稿…</div>');
-    } else {
+    if (!reviewing && aiStatus && aiStatus.index === i) {
+      html.push('<div class="state-line is-' + aiStatus.kind + '" role="status" aria-live="polite">' +
+        (aiStatus.kind === "loading" ? '<span class="spinner"></span>' : '') + esc(aiStatus.message) + '</div>');
+      if (aiStatus.kind === "error") {
+        html.push('<button class="btn btn-outline" id="retryDraft">重试</button>');
+      }
+    }
+    if (draft) {
       html.push('  <div style="font-weight:700;margin-bottom:10px;">📄 ' + esc(exp.artifactName) + (reviewing ? '（已定稿）' : '（AI 草稿）') + '</div>');
       form.fields.forEach(function (f) {
         // 回看已完成关：显示定稿答案；当前关：显示草稿
@@ -1322,25 +1297,33 @@
           ? ((S.answers[m.id] && S.answers[m.id][f.id]) || "")
           : (draft[f.id] || "");
         html.push('  <div class="field">');
-        html.push('    <div class="field-q">' + esc(f.question) + '</div>');
-        html.push('    <div class="field-a is-ai' + (reviewing ? ' is-done' : '') + '">' + escMarkdown(val) + '</div>');
+        html.push('    <div class="field-head"><div class="field-q">' + esc(f.question) + '</div>');
+        if (!reviewing) html.push('<button class="btn btn-ghost btn-sm" data-edit="' + f.id + '"' + disabled + '>自己改</button>');
+        html.push('</div>');
+        html.push('    <div class="field-a is-ai' + (reviewing ? ' is-done' : '') + '">' + escMarkdown(val || "（旧稿未填写，可自己改或换一版）", f.id) + '</div>');
+        if (!reviewing && editField === f.id) {
+          html.push('<div class="field-editor"><label for="fieldEditText">修改这一项：</label>');
+          html.push('<textarea id="fieldEditText">' + esc(val) + '</textarea>');
+          html.push('<div class="choices"><button class="btn btn-primary" id="saveFieldEdit">保存这一项</button>' +
+            '<button class="btn btn-ghost" id="cancelFieldEdit">取消</button></div></div>');
+        }
         html.push('  </div>');
       });
       // 只在当前进度且未定稿时给三选一
       if (!reviewing && draft) {
         html.push('  <div class="choices">');
-        html.push('    <button class="btn btn-accept" data-choice="accept">✅ 接受</button>');
-        html.push('    <button class="btn btn-modify" data-choice="modify">✏️ 在此基础上修改</button>');
-        html.push('    <button class="btn btn-disagree" data-choice="disagree">🙅 换一版</button>');
+        html.push('    <button class="btn btn-accept" data-choice="accept"' + (busy || editField || !completeDraft(i, draft) ? ' disabled' : '') + '>✅ 接受</button>');
+        html.push('    <button class="btn btn-modify" data-choice="modify"' + (busy || editField ? ' disabled' : '') + '>✏️ 在此基础上修改</button>');
+        html.push('    <button class="btn btn-disagree" data-choice="disagree"' + (busy || editField ? ' disabled' : '') + '>🙅 换一版</button>');
         html.push('  </div>');
-        html.push('  <div class="choices-hint">接受＝定稿进入下一关 · 在此基础上修改＝保留这版，告诉 AI 改哪里 · 换一版＝不要这稿，换个思路重来</div>');
+        html.push('  <div class="choices-hint">接受＝定稿进入下一关 · 自己改＝只改这一项 · AI 修改＝重新生成整关 · 换一版＝换个思路</div>');
       }
       if (!reviewing) {
         html.push('  <div class="compose" id="composeBox" style="display:none;">');
-        html.push('    <div class="field-q">在这版基础上，告诉 AI 要改哪里：</div>');
+        html.push('    <div class="field-q">告诉 AI 这关要改哪里（将重新生成整关）：</div>');
         html.push('    <textarea id="modifyText" placeholder="例如：目标客户更像计算机专业大二学生，而不是泛指大学生"></textarea>');
         html.push('    <div class="choices">');
-        html.push('      <button class="btn btn-primary" id="submitModify">按我的意见重新生成</button>');
+        html.push('      <button class="btn btn-primary" id="submitModify">按意见重新生成这关</button>');
         html.push('      <button class="btn btn-ghost" id="cancelModify">取消</button>');
         html.push('    </div>');
         html.push('  </div>');
@@ -1357,14 +1340,47 @@
       render();
     });
 
+    var retryBtn = document.getElementById("retryDraft");
+    if (retryBtn) retryBtn.addEventListener("click", function () {
+      if (lastAttempt) autoDraft(lastAttempt.force, lastAttempt.instruction);
+      else autoDraft(true);
+    });
     if (!draft) return;
+
+    app.querySelectorAll("[data-edit]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (generating) return;
+        editField = btn.getAttribute("data-edit");
+        render();
+        document.getElementById("fieldEditText").focus();
+      });
+    });
+    var saveEditBtn = document.getElementById("saveFieldEdit");
+    if (saveEditBtn) {
+      saveEditBtn.addEventListener("click", function () {
+        if (generating || i !== S.milestoneIndex) return;
+        var value = document.getElementById("fieldEditText").value.trim();
+        if (!value) { toast("这一项不能留空"); return; }
+        S.drafts[m.id] = Object.assign({}, S.drafts[m.id]);
+        S.drafts[m.id][editField] = value;
+        editField = null;
+        aiStatus = null;
+        save();
+        render();
+        toast("已保存这一项，其他内容保持原样");
+      });
+      document.getElementById("cancelFieldEdit").addEventListener("click", function () { editField = null; render(); });
+    }
 
     var choiceButtons = app.querySelectorAll("[data-choice]");
     choiceButtons.forEach(function (btn) {
       btn.addEventListener("click", function () {
+        if (generating || editField || i !== S.milestoneIndex) return;
         var choice = btn.getAttribute("data-choice");
         if (choice === "accept") {
           var expResult = acceptMilestone();
+          if (!expResult) return;
+          aiStatus = null;
           toast("已获得「" + expResult.artifactName + "」" + (S.stage === "finished" ? " · 全部完成！" : ""));
           render();
           // 推进到下一关后，立即为下一关生成草稿
@@ -1373,9 +1389,6 @@
           document.getElementById("composeBox").style.display = "block";
         } else if (choice === "disagree") {
           if (confirm("确定不要这一稿吗？AI 会换一个思路重新生成。")) {
-            S.drafts[m.id] = null;
-            save();
-            render();
             autoDraft(true);
           }
         }
@@ -1414,11 +1427,13 @@
     }
     html.push('  <div class="choices">');
     html.push('    <button class="btn btn-outline" id="viewArtifactsBtn">📇 查看全部成果卡</button>');
+    html.push('    <button class="btn btn-outline" id="copyFinishedBtn">复制已定稿成果</button>');
     html.push('    <button class="btn btn-primary" id="restartBtn">再来一轮</button>');
     html.push('  </div>');
     html.push('</div>');
     app.innerHTML = html.join("");
     document.getElementById("viewArtifactsBtn").addEventListener("click", openDrawer);
+    document.getElementById("copyFinishedBtn").addEventListener("click", copyArtifacts);
     document.getElementById("restartBtn").addEventListener("click", function () {
       if (confirm("确定重新开始吗？当前进度会被清空。")) { reset(); render(); }
     });
@@ -1427,67 +1442,72 @@
   /* ============================================================
    * AI 草稿生成（含加载态与错误兜底）
    * ============================================================ */
-  // 生成锁：防止并发生成/修改导致 milestoneIndex 漂移后写入错误关卡
-  var generating = false;
-
   async function autoDraft(force, instruction) {
     var i = S.milestoneIndex;
-    if (i >= MILESTONES.length) return;
+    if (i >= MILESTONES.length || generating) return;
     var m = milestone(i);
     var existing = S.drafts[m.id];
     if (existing && !force) { render(); return; }
-    if (generating) return; // 已在生成中，忽略重复触发
-
-    // 显示加载态
-    var stateLine = app.querySelector(".state-line");
-    if (!stateLine) {
-      render();
-      stateLine = app.querySelector(".state-line");
-    }
+    var state = S;
+    var request = ++requestSerial;
+    lastAttempt = { force: !!force, instruction: instruction || "" };
     generating = true;
+    editField = null;
+    aiStatus = { index: i, kind: "loading", message: existing ? "更新中，请稍等…原稿会保留到更新成功。" : "AI 教练正在生成草稿，请稍等…" };
+    render();
     try {
-      var content;
+      var draft;
       if (force && instruction) {
-        var prevDraft = S.drafts[m.id] || {};
-        var form = formOf(i);
         var messages = [
           { role: "system", content: coachSystemPrompt(i) },
-          { role: "user", content: "上一稿如下：\n" + JSON.stringify(prevDraft, null, 2) + "\n\n学生要求修改：\"" + instruction + "\"\n请只输出修改后的完整 JSON。" }
+          { role: "user", content: contextSummary() + "\n\n上一稿：\n" + JSON.stringify(existing || {}) +
+            "\n学生修改意见：" + instruction + "\n只修改与意见有关的内容，其他字段尽量原样保留。输出修改后的完整JSON。" }
         ];
-        content = await callGLM(messages);
-        // 关键：修改期间若进度已变化（用户点了接受/跳转），放弃本次落盘，避免写到错误关卡
-        if (S.milestoneIndex !== i) return;
-        var parsed;
-        try { parsed = JSON.parse(stripJson(content)); } catch (e) { parsed = null; }
-        var draft = {};
-        form.fields.forEach(function (f) {
-          var v = parsed ? parsed[f.id] : "";
-          draft[f.id] = (v == null || v === "") ? "" : String(v).trim();
-        });
-        var hasAny = form.fields.some(function (f) { return draft[f.id]; });
-        if (!hasAny) throw new Error("AI 没有返回有效内容");
-        S.drafts[m.id] = draft;
+        draft = parseDraft(i, await callGLM(messages));
       } else {
-        // 普通生成同样校验：期间进度变化则放弃
-        var before = S.milestoneIndex;
-        await generateDraft();
-        if (S.milestoneIndex !== before) return;
+        draft = await generateDraft(i);
       }
+      // 校验通过且请求仍属于当前关卡，才落盘，过期响应不得污染状态。
+      if (request !== requestSerial || S !== state || S.milestoneIndex !== i) return;
+      S.drafts[m.id] = draft;
       save();
-      render();
+      aiStatus = { index: i, kind: "success", message: existing ? "已更新。请检查后再接受。" : "草稿已生成，请判断。" };
     } catch (err) {
-      var msg = (err && err.message) || String(err);
-      if (/Failed to fetch|网络|跨域/i.test(msg)) {
-        msg = "AI 服务连接失败，请检查网络后重试。";
-      }
-      // 兜底：显示一个可重试的加载态
-      var box = app.querySelector(".state-line");
-      if (box) {
-        box.innerHTML = '<div style="color:#b91c1c;">⚠️ ' + esc(msg) + '</div>' +
-          '<button class="btn btn-outline" style="margin-top:12px;" onclick="location.reload()">重试</button>';
-      }
+      if (request !== requestSerial || S !== state || S.milestoneIndex !== i) return;
+      var msg = (err && err.message) || "生成失败，请重试。";
+      if (/Failed to fetch|网络|跨域/i.test(msg)) msg = "AI 服务连接失败，请检查网络后重试。";
+      if (/AbortError|aborted/i.test(msg)) msg = "AI 响应超时，请重试。";
+      aiStatus = { index: i, kind: "error", message: msg + (existing ? " 原稿已保留。" : "") };
     } finally {
-      generating = false;
+      if (request === requestSerial) {
+        generating = false;
+        render();
+      }
+    }
+  }
+
+  async function copyArtifacts() {
+    var text = ["我的火种节项目：" + S.idea];
+    MILESTONES.forEach(function (m) {
+      var art = S.artifacts[m.id];
+      if (art) text.push("\n" + m.id + " · " + art.title + "（" + (art.kind === "real" ? "真实证据" : "模拟 / 待验证") + "）\n" + art.content);
+    });
+    if (text.length === 1) { toast("还没有已定稿成果"); return; }
+    try {
+      await navigator.clipboard.writeText(text.join("\n"));
+      toast("已复制已定稿成果，可粘贴到文档或聊天中");
+    } catch (e) {
+      // 部分浏览器未开放剪贴板API，降级为选中文本供手动复制。
+      var box = document.createElement("textarea");
+      box.value = text.join("\n");
+      box.setAttribute("aria-label", "已定稿成果，选中后复制");
+      drawerBody.appendChild(box);
+      openDrawer();
+      box.style.width = "100%";
+      box.style.minHeight = "120px";
+      box.focus();
+      box.select();
+      toast("请复制已选中的成果文字");
     }
   }
 
@@ -1513,6 +1533,7 @@
       html.push('<div class="a-proj">');
       html.push('  <div class="a-proj-name">我的火种节项目</div>');
       html.push('  <div class="a-proj-meta">' + esc(S.idea) + ' · ' + Object.keys(S.artifacts).length + '/9 关已完成</div>');
+      html.push('<button class="btn btn-outline" id="copyArtifactsBtn">复制已定稿成果</button>');
       MILESTONES.forEach(function (m) {
         var art = S.artifacts[m.id];
         var open = openCard === m.id;
@@ -1536,6 +1557,8 @@
       html.push('</div>');
     }
     drawerBody.innerHTML = html.join("");
+    var copyBtn = document.getElementById("copyArtifactsBtn");
+    if (copyBtn) copyBtn.addEventListener("click", copyArtifacts);
     drawerBody.querySelectorAll("[data-card]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var id = btn.getAttribute("data-card");
