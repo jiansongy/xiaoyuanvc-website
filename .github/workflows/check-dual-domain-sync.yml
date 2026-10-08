@@ -1,9 +1,10 @@
 name: Check dual-domain sync
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Deploy www origin"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -16,12 +17,30 @@ concurrency:
 jobs:
   verify:
     name: Verify www and apex serve the same commit
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Wait for both domains to deploy this commit
+      - name: Select deployed commit and skip superseded releases
+        id: release
         env:
-          EXPECTED_SHA: ${{ github.sha }}
+          EXPECTED_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          current_sha="$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)"
+          if [[ "$EXPECTED_SHA" != "$current_sha" ]]; then
+            echo "A newer main commit supersedes $EXPECTED_SHA; skipping this old release."
+            echo "current=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Wait for both domains to deploy this commit
+        if: steps.release.outputs.current == 'true'
+        env:
+          EXPECTED_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
         run: |
           set -euo pipefail
 

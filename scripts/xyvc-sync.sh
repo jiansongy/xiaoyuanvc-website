@@ -14,6 +14,25 @@ if [[ ! "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]; then
   exit 2
 fi
 
+# Keep both downloads within the 900-second remote command budget.
+download_release_file() {
+  local label="$1" url="$2" destination="$3" limit="$4"
+  local started=$SECONDS status
+  echo "[download] $label started $(date -u +%FT%TZ)"
+  if curl -fsSL --connect-timeout 20 --max-time "$limit" \
+    --speed-limit 1024 --speed-time 30 \
+    --retry 1 --retry-delay 3 --retry-connrefused \
+    --retry-max-time "$((limit * 2 + 10))" \
+    --write-out '[download] http=%{http_code} bytes=%{size_download} speed=%{speed_download}B/s connect=%{time_connect}s first_byte=%{time_starttransfer}s transfer=%{time_total}s\n' \
+    "$url" -o "$destination"; then
+    echo "[download] $label completed elapsed=$((SECONDS - started))s"
+  else
+    status=$?
+    echo "[download] $label failed status=$status elapsed=$((SECONDS - started))s" >&2
+    return "$status"
+  fi
+}
+
 WORK_DIR="$(mktemp -d /tmp/xyvc-sync.XXXXXX)"
 RELEASE_DIR="$DEPLOY_PARENT/.xyvc-release-${GITHUB_SHA}-$$"
 BACKUP_DIR="$DEPLOY_PARENT/.xyvc-backup-${GITHUB_SHA}-$$"
@@ -194,7 +213,7 @@ esac
 
 node_archive="node-${NODE_VERSION}-linux-${node_arch}.tar.gz"
 node_base_url="https://nodejs.org/dist/${NODE_VERSION}"
-curl -fsSL "$node_base_url/$node_archive" -o "$WORK_DIR/$node_archive"
+download_release_file "Node.js" "$node_base_url/$node_archive" "$WORK_DIR/$node_archive" 90
 (
   cd "$WORK_DIR"
   printf '%s  %s\n' "$node_sha256" "$node_archive" | sha256sum -c -
@@ -208,10 +227,11 @@ echo "[3/8] Download exact source SHA: $GITHUB_SHA"
 archive="$WORK_DIR/source.tar.gz"
 source_parent="$WORK_DIR/source"
 mkdir -p "$source_parent"
-curl -fsSL \
-  "https://codeload.github.com/${REPOSITORY}/tar.gz/${GITHUB_SHA}" \
-  -o "$archive"
+source_started=$SECONDS
+download_release_file "source archive" \
+  "https://codeload.github.com/${REPOSITORY}/tar.gz/${GITHUB_SHA}" "$archive" 300
 tar -xzf "$archive" -C "$source_parent"
+echo "[timing] source download and extraction elapsed=$((SECONDS - source_started))s"
 
 source_dir="$(find "$source_parent" -mindepth 1 -maxdepth 1 -type d -print -quit)"
 if [[ -z "$source_dir" || ! -f "$source_dir/build.sh" || ! -f "$source_dir/learn-src/package-lock.json" ]]; then
@@ -220,10 +240,12 @@ if [[ -z "$source_dir" || ! -f "$source_dir/build.sh" || ! -f "$source_dir/learn
 fi
 
 echo "[4/8] Build complete dist tree"
+build_started=$SECONDS
 (
   cd "$source_dir"
   bash build.sh
 )
+echo "[timing] build elapsed=$((SECONDS - build_started))s"
 
 echo "[5/8] Validate build output"
 required_files=(

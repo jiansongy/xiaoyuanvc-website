@@ -11,6 +11,10 @@ This repo publishes two origins:
 
 `.github/workflows/deploy-www-origin.yml` runs on every push to `main` and can also be run manually from GitHub Actions.
 
+`Check dual-domain sync` starts after a successful `Deploy www origin` run, or by manual dispatch. It checks the deployed run's `head_sha`, and skips commits superseded on `main`; it no longer spends its 10-minute convergence window while www is still building.
+
+Downloads use a 20-second connection timeout, abort after 30 seconds below 1 KiB/s, and retry once on transient failures. Node transfers have a 90-second per-attempt limit; source transfers have a 300-second limit. The two download budgets fit within the existing 900-second remote command limit, leaving time for the build. Logs report elapsed time, bytes, speed, connection time, and first-byte wait, plus source extraction and build elapsed time. A failed download exits before the live-directory swap, preserving the current release. This bounds waiting; it does not guarantee faster network throughput.
+
 It does not use SSH. Public TCP 22 can stay closed. The workflow calls Alibaba Cloud Simple Application Server Command Assistant `RunCommand`, then polls `DescribeInvocationResult` until the server-side command exits successfully.
 
 The workflow downloads the versioned deployment script from the exact pushed commit and runs it with
