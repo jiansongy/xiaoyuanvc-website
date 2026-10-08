@@ -13,7 +13,7 @@ This repo publishes two origins:
 
 `Check dual-domain sync` starts after a successful `Deploy www origin` run, or by manual dispatch. It checks the deployed run's `head_sha`, and skips commits superseded on `main`; it no longer spends its 10-minute convergence window while www is still building.
 
-Downloads use a 20-second connection timeout, abort after 30 seconds below 1 KiB/s, and retry once on transient failures. Node transfers have a 90-second per-attempt limit; source transfers have a 300-second limit. The two download budgets fit within the existing 900-second remote command limit, leaving time for the build. Logs report elapsed time, bytes, speed, connection time, and first-byte wait, plus source extraction and build elapsed time. A failed download exits before the live-directory swap, preserving the current release. This bounds waiting; it does not guarantee faster network throughput.
+Node downloads use a 20-second connection timeout, a 90-second per-attempt limit, and one transient retry. Git fetches have a 300-second per-attempt limit and one retry. Both stop transfers below 1 KiB/s for 30 seconds and fit within the existing 900-second remote command limit, leaving time for the build. Logs report Node transfer details, Git cache reuse/growth and export elapsed time, and build elapsed time. Failed synchronization exits before the live-directory swap, preserving the current release. These limits bound waiting; they do not guarantee network throughput.
 
 It does not use SSH. Public TCP 22 can stay closed. The workflow calls Alibaba Cloud Simple Application Server Command Assistant `RunCommand`, then polls `DescribeInvocationResult` until the server-side command exits successfully.
 
@@ -24,9 +24,11 @@ The workflow downloads the versioned deployment script from the exact pushed com
 scripts/xyvc-sync.sh
 ```
 
-The script snapshots the current server state, downloads that exact source archive, runs `bash build.sh`,
+The script snapshots the current server state, prepares the exact source commit from a persistent Git cache, runs `bash build.sh`,
 validates the complete `dist/` tree and filing numbers, then swaps `/var/www/xiaoyuanvc`. A failed
 post-swap local smoke test restores the previous release.
+
+Source objects persist in a bare Git repository at `/var/cache/xyvc-deploy/source.git`, outside the nginx document root. The first deployment populates this cache; later deployments use shallow incremental fetches and reuse unchanged objects. Deploying an already cached commit does not contact GitHub for source. A cache lock serializes preparation. `git archive` exports the requested SHA into a new temporary build directory; cache files and prior build output never enter the release. Cleanup removes temporary build directories but preserves the cache. There is no full GitHub source archive download or automatic archive fallback.
 
 The server does not require a global Node.js installation. Each run downloads the pinned Node.js 22 LTS
 binary into the temporary work directory, verifies it against the architecture-specific SHA-256 digest

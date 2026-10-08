@@ -14,7 +14,7 @@ if [[ ! "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]; then
   exit 2
 fi
 
-# Keep both downloads within the 900-second remote command budget.
+# Bound Node download and Git fetch within the 900-second remote command budget.
 download_release_file() {
   local label="$1" url="$2" destination="$3" limit="$4"
   local started=$SECONDS status
@@ -31,6 +31,47 @@ download_release_file() {
     echo "[download] $label failed status=$status elapsed=$((SECONDS - started))s" >&2
     return "$status"
   fi
+}
+
+# The cache is outside nginx's web root. Export only the requested commit.
+prepare_release_source() {
+  local cache="$1" repository_url="$2" sha="$3" destination="$4"
+  mkdir -p "$(dirname "$cache")"
+  (
+    flock -w 60 9
+    local started=$SECONDS before=0 attempt status=0
+    if [[ -d "$cache" ]]; then
+      [[ "$(git -C "$cache" rev-parse --is-bare-repository)" == "true" ]] || return 1
+      before=$(du -sk "$cache" | cut -f1)
+      echo "[source-cache] reusing persistent Git objects"
+    else
+      git init --bare "$cache"
+      echo "[source-cache] initializing persistent Git cache"
+    fi
+    if git -C "$cache" cat-file -e "$sha^{commit}" 2>/dev/null; then
+      echo "[source-cache] exact commit already cached; no source network transfer"
+    else
+      for attempt in 1 2; do
+        echo "[source-cache] incremental fetch attempt=$attempt SHA=$sha"
+        if timeout --kill-after=10s 300s git -C "$cache" \
+          -c http.lowSpeedLimit=1024 -c http.lowSpeedTime=30 \
+          fetch --progress --no-tags --depth=1 "$repository_url" "$sha"; then
+          status=0
+          break
+        else
+          status=$?
+          echo "[source-cache] fetch failed status=$status" >&2
+        fi
+        if [[ "$attempt" == 1 ]]; then sleep 3; fi
+      done
+      if (( status != 0 )); then return "$status"; fi
+    fi
+    git -C "$cache" cat-file -e "$sha^{commit}"
+    git -C "$cache" update-ref refs/xyvc/current "$sha"
+    mkdir -p "$destination"
+    git -C "$cache" archive "$sha" | tar -x -C "$destination"
+    echo "[source-cache] exported exact SHA=$sha elapsed=$((SECONDS - started))s cache_added_kib=$(( $(du -sk "$cache" | cut -f1) - before ))"
+  ) 9>"$cache.lock"
 }
 
 WORK_DIR="$(mktemp -d /tmp/xyvc-sync.XXXXXX)"
@@ -223,19 +264,12 @@ export PATH="$WORK_DIR/node-${NODE_VERSION}-linux-${node_arch}/bin:$PATH"
 node --version
 npm --version
 
-echo "[3/8] Download exact source SHA: $GITHUB_SHA"
-archive="$WORK_DIR/source.tar.gz"
-source_parent="$WORK_DIR/source"
-mkdir -p "$source_parent"
-source_started=$SECONDS
-download_release_file "source archive" \
-  "https://codeload.github.com/${REPOSITORY}/tar.gz/${GITHUB_SHA}" "$archive" 300
-tar -xzf "$archive" -C "$source_parent"
-echo "[timing] source download and extraction elapsed=$((SECONDS - source_started))s"
-
-source_dir="$(find "$source_parent" -mindepth 1 -maxdepth 1 -type d -print -quit)"
-if [[ -z "$source_dir" || ! -f "$source_dir/build.sh" || ! -f "$source_dir/learn-src/package-lock.json" ]]; then
-  echo "Downloaded source archive does not contain the expected project structure." >&2
+echo "[3/8] Prepare exact source SHA from persistent Git cache: $GITHUB_SHA"
+source_dir="$WORK_DIR/source"
+prepare_release_source "/var/cache/xyvc-deploy/source.git" \
+  "https://github.com/${REPOSITORY}.git" "$GITHUB_SHA" "$source_dir"
+if [[ ! -f "$source_dir/build.sh" || ! -f "$source_dir/learn-src/package-lock.json" ]]; then
+  echo "Cached commit does not contain the expected project structure." >&2
   exit 1
 fi
 

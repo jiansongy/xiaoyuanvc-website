@@ -1,5 +1,6 @@
 """Test download failure boundaries and the real workflow's commit selection."""
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import tempfile
@@ -35,6 +36,61 @@ class DeployGuardTests(unittest.TestCase):
                     self.assertIn('failed status=28', result.stderr)
                 else:
                     self.assertIn('completed elapsed=', result.stdout)
+
+    def test_persistent_git_cache_and_exact_export(self):
+        source = (ROOT / 'scripts/xyvc-sync.sh').read_text()
+        self.assertNotIn('codeload.github.com', source)
+        helper = source[source.index('prepare_release_source() {'):source.index('WORK_DIR=')]
+        with tempfile.TemporaryDirectory() as folder:
+            directory = Path(folder)
+            upstream = directory / 'upstream'
+            upstream.mkdir()
+            def git(*args):
+                return subprocess.check_output(['git', '-C', str(upstream), *args], text=True).strip()
+            git('init', '-q')
+            git('config', 'user.name', 'test')
+            git('config', 'user.email', 'test@example.test')
+            (upstream / 'large.bin').write_bytes(os.urandom(2 * 1024 * 1024))
+            (upstream / 'page.html').write_text('first version')
+            git('add', '.')
+            git('commit', '-qm', 'first')
+            first = git('rev-parse', 'HEAD')
+            env = dict(os.environ)
+            if not shutil.which('flock'):
+                # macOS lacks flock; GitHub Ubuntu exercises the real cache lock.
+                stub = directory / 'flock'
+                stub.write_text('#!/bin/bash\nexit 0\n')
+                stub.chmod(0o755)
+                env['PATH'] = folder + ':' + env['PATH']
+            cache = directory / 'cache.git'
+            def export(sha, output, url=None):
+                return subprocess.run(['bash', '-c', 'set -euo pipefail\n' + helper +
+                    '\nprepare_release_source "$1" "$2" "$3" "$4"', '_', str(cache),
+                    url or upstream.as_uri(), sha, str(directory / output)], env=env,
+                    text=True, capture_output=True)
+            result = export(first, 'first')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            before = sum(p.stat().st_size for p in cache.rglob('*') if p.is_file())
+            (cache / 'not-source.txt').write_text('must not enter export')
+            (upstream / 'page.html').write_text('second version')
+            git('add', '.')
+            git('commit', '-qm', 'second')
+            second = git('rev-parse', 'HEAD')
+            result = export(second, 'second')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            after = sum(p.stat().st_size for p in cache.rglob('*') if p.is_file())
+            self.assertLess(after - before, 128 * 1024, 'tiny change must reuse the large cached blob')
+            self.assertEqual((directory / 'second/page.html').read_text(), 'second version')
+            self.assertFalse((directory / 'second/not-source.txt').exists())
+            self.assertFalse((directory / 'second/.git').exists())
+            result = export(first, 'rollback', 'file:///nonexistent-upstream')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('no source network transfer', result.stdout)
+            self.assertEqual((directory / 'rollback/page.html').read_text(), 'first version')
+            result = export('f' * 40, 'failed', 'file:///nonexistent-upstream')
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse((directory / 'failed').exists())
+            self.assertEqual((directory / 'second/page.html').read_text(), 'second version')
 
     def test_workflow_skips_superseded_commit(self):
         workflow = (ROOT / '.github/workflows/check-dual-domain-sync.yml').read_text()
