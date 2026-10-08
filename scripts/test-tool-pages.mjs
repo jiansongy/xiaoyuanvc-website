@@ -25,3 +25,11 @@ for (const shared of ["tool-session.js", "tool-shell.js"]) {
   new Script(readFileSync(resolve(root, "dist/resources", shared), "utf8"), { filename: shared });
 }
 console.log("PASS shared tool session and shell scripts parse");
+
+const redirectRules = readFileSync(resolve(root, "_redirects"), "utf8");
+const originSync = readFileSync(resolve(root, "scripts/xyvc-sync.sh"), "utf8");
+for (const tool of tools) {
+  assert.ok(redirectRules.includes(`/resources/${tool}/ /resources/${tool} 301`));
+  assert.ok(originSync.includes(`location = /resources/${tool}/ { return 301 /resources/${tool}$is_args$args; }`));
+}
+console.log("PASS five trailing-slash links normalize on both origins and retain query parameters");

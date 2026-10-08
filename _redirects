@@ -15,6 +15,11 @@
 /resources/podcast.html /resources/ 301
 /resources/podcast /resources/ 301
 /resources/china-hackathon-calendar /resources/china-hackathon-statistics 301
+/resources/find-what-you-want/ /resources/find-what-you-want 301
+/resources/find-your-idea/ /resources/find-your-idea 301
+/resources/rate-your-idea/ /resources/rate-your-idea 301
+/resources/hard-tech-check/ /resources/hard-tech-check 301
+/resources/entrecoach/ /resources/entrecoach 301
 /resources/:slug.html /resources/:slug 301
 
 # 第三期招生已结束，旧链接统一承接到加密方向常驻入口
