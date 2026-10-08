@@ -23,6 +23,7 @@
     </script>
 
     <!-- 共享数据层：统一的工具草稿/历史/快照（我的探索记录 依赖它） -->
+    <script src="./tool-session.js"></script>
     <script src="./tool-context.js"></script>
 
     <style>
@@ -580,7 +581,8 @@
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        var s = JSON.parse(raw);
+        var s = window.XYVCToolSession.read(STORAGE_KEY);
+        if (!s) return createState();
         // 迁移：确保字段齐全
         var base = createState();
         for (var k in base) { if (!(k in s)) s[k] = base[k]; }
@@ -592,7 +594,7 @@
 
   function save() {
     S.updatedAt = new Date().toISOString();
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); } catch (e) {}
+    try { if (!window.XYVCToolSession.write(STORAGE_KEY, S)) return; } catch (e) {}
     syncUnifiedState();
   }
 
@@ -630,25 +632,9 @@
   }
 
   function reset() {
-    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-    clearUnifiedState();
-    S = createState();
-    requestSerial += 1;
-    generating = false;
-    aiStatus = null;
-    lastAttempt = null;
-    editField = null;
-    viewIndex = -1;
+    return window.XYVCToolSession.reset(TOOL_ID, STORAGE_KEY, createState(), "重新开始会清除本工具这次的输入、AI草稿、成果卡、假设和证据。其他工具资料会保留。请先复制需要保留的成果，确定继续吗？");
   }
-
-  // 一键彻底重置：清掉本工具数据，并强制重新加载页面（绕过旧 JS 缓存）
-  function hardReset() {
-    if (!confirm("确定要彻底重置本工具吗？\n\n这会清空当前所有进度，并强制刷新页面（以加载最新版本）。其他工具不受影响。")) return;
-    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-    clearUnifiedState();
-    // 强制重新加载，绕过缓存的旧 JS
-    location.reload(true);
-  }
+  function hardReset() { return reset(); }
 
   var S = load();
   var generating = false;
@@ -959,13 +945,14 @@
    * GLM 调用
    * ============================================================ */
   async function callGLM(messages) {
+          const requestToken = window.XYVCToolSession.token();
     var lastErr = null;
     for (var i = 0; i < API_CANDIDATES.length; i++) {
       var endpoint = API_CANDIDATES[i];
       var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
       var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 60000) : null;
       try {
-        var res = await fetch(endpoint, {
+        var res = await window.XYVCToolSession.fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ messages: messages, stream: false, response_format: { type: "json_object" } }),
@@ -973,6 +960,7 @@
         });
         if (timer) clearTimeout(timer);
         var json = await res.json();
+            window.XYVCToolSession.assertCurrent(requestToken);
         if (!res.ok || (!json.choices && !json.ok)) {
           throw new Error(json.error || ("接口错误 " + res.status));
         }
@@ -988,7 +976,8 @@
         throw new Error("接口返回了未知结构");
       } catch (err) {
         if (timer) clearTimeout(timer);
-        lastErr = err;
+        window.XYVCToolSession.assertCurrent(requestToken);
+              lastErr = err;
       }
     }
     throw lastErr || new Error("没有可用的 AI 接口");
@@ -1440,7 +1429,7 @@
     document.getElementById("viewArtifactsBtn").addEventListener("click", openDrawer);
     document.getElementById("copyFinishedBtn").addEventListener("click", copyArtifacts);
     document.getElementById("restartBtn").addEventListener("click", function () {
-      if (confirm("确定重新开始吗？当前进度会被清空。")) { reset(); render(); }
+      reset();
     });
   }
 

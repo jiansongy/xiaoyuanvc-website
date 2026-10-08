@@ -91,6 +91,7 @@
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
     ></script>
+    <script src="./tool-session.js"></script>
     <script src="./tool-context.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -1988,7 +1989,7 @@
           if (!S.phase) return;
           try {
             var snap = Object.assign({ v: 1, phase: S.phase, cardIndex: S.cardIndex, swipeHistory: S.swipeHistory }, buildSerializableState());
-            localStorage.setItem(SAVE_KEY, JSON.stringify(snap));
+            if (!window.XYVCToolSession.write(SAVE_KEY, snap)) return;
           } catch (e) { /* storage may be unavailable */ }
         }
 
@@ -2002,7 +2003,7 @@
           try {
             var raw = localStorage.getItem(SAVE_KEY);
             if (!raw) return null;
-            var data = JSON.parse(raw);
+            var data = window.XYVCToolSession.read(SAVE_KEY);
             if (!data || data.v !== 1 || !data.phase || data.phase < 1)
               return null;
             return data;
@@ -2090,9 +2091,7 @@
         };
 
         window.clearAndStart = function () {
-          if (!confirm("重新开始会清空本工具当前进度。其他工具不受影响，确定继续吗？")) return;
-          clearSavedProgress();
-          window.startApp();
+          return window.XYVCToolSession.reset(TOOL_ID, SAVE_KEY, Object.assign({ v: 1 }, createInitialState()));
         };
 
         // Show resume section on welcome page if save exists
@@ -2448,6 +2447,7 @@
           wantsStream,
           shouldContinue,
         ) {
+          const readToken = window.XYVCToolSession.token();
           var canContinue =
             typeof shouldContinue === "function"
               ? shouldContinue
@@ -2456,6 +2456,7 @@
                 };
           if (!wantsStream) {
             var json = await res.json();
+            window.XYVCToolSession.assertCurrent(readToken);
             if (!canContinue()) return "";
             var text =
               (((json || {}).choices || [])[0] || {}).message?.content || "";
@@ -2475,6 +2476,7 @@
 
           while (true) {
             var chunk = await reader.read();
+            window.XYVCToolSession.assertCurrent(readToken);
             if (chunk.done) break;
             pending += decoder.decode(chunk.value, { stream: true });
             var lines = pending.split("\n");
@@ -2500,6 +2502,7 @@
         }
 
         async function fetchAIResult(prompt, bodyEl, shouldContinue) {
+          const requestToken = window.XYVCToolSession.token();
           var wantsStream =
             typeof ReadableStream !== "undefined" &&
             typeof TextDecoder !== "undefined";
@@ -2517,7 +2520,7 @@
                 }, 25000)
               : null;
             try {
-              let res = await fetch(endpoint, {
+              let res = await window.XYVCToolSession.fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -2540,6 +2543,7 @@
               return text;
             } catch (err) {
               if (timer) clearTimeout(timer);
+              window.XYVCToolSession.assertCurrent(requestToken);
               lastErr = err;
             }
           }

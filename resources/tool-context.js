@@ -295,7 +295,8 @@
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return migrateLegacyWorkspace();
-      return normalizeWorkspace(JSON.parse(raw));
+      var saved = window.XYVCToolSession ? window.XYVCToolSession.read(STORAGE_KEY) : JSON.parse(raw);
+      return normalizeWorkspace(saved || {});
     } catch (e) {
       return migrateLegacyWorkspace();
     }
@@ -305,9 +306,11 @@
     var normalized = normalizeWorkspace(workspace);
     normalized.updatedAt = nowIso();
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+      if (window.XYVCToolSession) {
+        if (!window.XYVCToolSession.write(STORAGE_KEY, normalized)) throw new Error("共享记录未能保存");
+      } else localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
     } catch (e) {
-      return normalized;
+      throw e;
     }
     return normalized;
   }

@@ -1242,6 +1242,7 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
+    <script src="./tool-session.js"></script>
     <script src="./tool-context.js"></script>
     <script>
       (function () {
@@ -1376,6 +1377,7 @@
         }
 
         async function fetchToolResult(payload) {
+          const requestToken = window.XYVCToolSession.token();
           let lastErr = null;
           for (let idx = 0; idx < TOOL_API_CANDIDATES.length; idx++) {
             const endpoint = TOOL_API_CANDIDATES[idx];
@@ -1389,7 +1391,7 @@
                 }, 65000)
               : null;
             try {
-              const res = await fetch(endpoint, {
+              const res = await window.XYVCToolSession.fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
@@ -1397,6 +1399,7 @@
               });
               if (timer) clearTimeout(timer);
               const json = await res.json();
+              window.XYVCToolSession.assertCurrent(requestToken);
               if (!res.ok || !json.ok) {
                 throw new Error(json.error || "接口错误 " + res.status);
               }
@@ -1404,6 +1407,7 @@
               return json;
             } catch (err) {
               if (timer) clearTimeout(timer);
+              window.XYVCToolSession.assertCurrent(requestToken);
               lastErr = err;
             }
           }
@@ -1632,7 +1636,7 @@
 
         function persistState(silent) {
           try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+            if (!window.XYVCToolSession.write(STORAGE_KEY, S)) return;
             syncUnifiedWorkspace();
             if (!silent) {
               if (window.XYVCUnifiedDataManager) {
@@ -1662,7 +1666,8 @@
           try {
             const raw = localStorage.getItem(STORAGE_KEY);
             if (raw) {
-              S = migrateLegacyState(JSON.parse(raw));
+              const saved = window.XYVCToolSession.read(STORAGE_KEY);
+              if (saved) S = migrateLegacyState(saved);
             }
             if (window.XYVCUnifiedDataManager) {
               S.toolHistory = mergeHistoryLists(
@@ -2393,34 +2398,12 @@
           renderHistoryList();
         };
 
-        window.tryAnother = function () {
-          S.result = null;
-          S.toolState.draftData = Object.assign({}, S.toolState.draftData, {
-            product: "",
-            audience: "",
-            model: "",
-            stage: "只有想法",
-            team: "",
-            validationPlan: "",
-          });
-          S.selectedHistoryVersionId = null;
-          S.compareVersionId = null;
-          S.toolState.updatedAt = new Date().toISOString();
-          persistState(true);
-          showScreen(1, true);
-          syncStateToFields();
-        };
-
         window.resetAll = function () {
-          if (!confirm("重新开始会清空本工具的当前填写内容。其他工具不受影响，确定继续吗？")) return;
-          S = createInitialState();
-          try {
-            localStorage.removeItem(STORAGE_KEY);
-          } catch (e) {
-            /* ignore */
-          }
-          showScreen(0, true);
+          const fresh = createInitialState();
+          fresh.toolHistory = clone(S.toolHistory || []);
+          return window.XYVCToolSession.reset(TOOL_ID, STORAGE_KEY, fresh);
         };
+        window.tryAnother = window.resetAll;
 
         function boot() {
           loadState();

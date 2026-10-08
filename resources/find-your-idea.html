@@ -1326,6 +1326,7 @@
       </button>
     </div>
 
+    <script src="./tool-session.js"></script>
     <script src="./tool-context.js"></script>
     <script>
       (function () {
@@ -1420,13 +1421,14 @@
         };
         let contextSyncState = null;
 
+        const initialToolState = JSON.parse(JSON.stringify(S));
         // ══════════════════════════════════════════════
         // PERSISTENCE
         // ══════════════════════════════════════════════
         function save() {
           syncCurrent();
           try {
-            localStorage.setItem(SK, JSON.stringify(S));
+            if (!window.XYVCToolSession.write(SK, S)) return;
           } catch (e) {}
           if (window.XYVCToolContext) {
             window.XYVCToolContext.write(TOOL_ID, {
@@ -1516,7 +1518,8 @@
           try {
             const raw = localStorage.getItem(SK);
             if (raw) {
-              const parsed = JSON.parse(raw);
+              const parsed = window.XYVCToolSession.read(SK);
+              if (!parsed) return;
               // Validate step is a valid number in range
               if (
                 typeof parsed.step !== "number" ||
@@ -1530,7 +1533,7 @@
           } catch (e) {
             // Corrupted data — clear it
             try {
-              localStorage.removeItem(SK);
+              window.XYVCToolSession.notice("记录未能恢复，原始内容已保留，请先备份。", "error");
             } catch (e2) {}
           }
         }
@@ -2232,8 +2235,10 @@
         }
 
         async function readAIResponse(res, bodyEl, wantsStream) {
+          const readToken = window.XYVCToolSession.token();
           if (!wantsStream) {
             const json = await res.json();
+            window.XYVCToolSession.assertCurrent(readToken);
             const text = json?.choices?.[0]?.message?.content || "";
             bodyEl.innerHTML = renderMd(text);
             return text;
@@ -2251,6 +2256,7 @@
 
           while (true) {
             const { done, value } = await reader.read();
+            window.XYVCToolSession.assertCurrent(readToken);
             if (done) break;
             pending += decoder.decode(value, { stream: true });
             const lines = pending.split("\n");
@@ -2275,6 +2281,7 @@
         }
 
         async function fetchAIResult(prompt, bodyEl) {
+          const requestToken = window.XYVCToolSession.token();
           const wantsStream =
             typeof ReadableStream !== "undefined" &&
             typeof TextDecoder !== "undefined";
@@ -2292,7 +2299,7 @@
               : null;
 
             try {
-              const res = await fetch(endpoint, {
+              const res = await window.XYVCToolSession.fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -2312,6 +2319,7 @@
               return text;
             } catch (err) {
               if (timer) clearTimeout(timer);
+              window.XYVCToolSession.assertCurrent(requestToken);
               lastErr = err;
             }
           }
@@ -2538,9 +2546,7 @@ ${rows || "（暂无填写）"}
         // RESET
         // ══════════════════════════════════════════════
         window.resetApp = function () {
-          if (!confirm("确认重新开始？所有填写内容将被清空。")) return;
-          localStorage.removeItem(SK);
-          location.reload();
+          return window.XYVCToolSession.reset(TOOL_ID, SK, JSON.parse(JSON.stringify(initialToolState)));
         };
 
         window.safePrint = function () {
@@ -2779,7 +2785,7 @@ ${rows || "（暂无填写）"}
           // Boot failed — reset to welcome screen
           console.error("Boot error, resetting:", e);
           try {
-            localStorage.removeItem(SK);
+            window.XYVCToolSession.notice("记录未能恢复，原始内容已保留，请先备份。", "error");
           } catch (e2) {}
           S.step = 0;
           document.querySelectorAll(".screen").forEach(function (el) {

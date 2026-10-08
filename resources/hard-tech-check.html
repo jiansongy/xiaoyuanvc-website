@@ -714,6 +714,7 @@
     <nav class="tool-shell-nav" aria-label="工具导航">
       <a href="/resources/#tools">← 资源中心</a>
       <span>硬科技创业自检</span>
+      <button type="button" onclick="window.resetApp()">重新开始</button>
     </nav>
     <!-- ── Header ── -->
     <header class="header">
@@ -1697,6 +1698,7 @@
       ></div>
     </div>
 
+    <script src="./tool-session.js"></script>
     <script src="./tool-context.js"></script>
     <script>
       (function () {
@@ -1820,9 +1822,10 @@
         window.S = S;
 
         // ── PERSISTENCE ──
+        const initialToolState = JSON.parse(JSON.stringify(S));
         function save() {
           try {
-            localStorage.setItem(SK, JSON.stringify(S));
+            if (!window.XYVCToolSession.write(SK, S)) return;
           } catch (e) {
             /* localStorage may be unavailable in incognito */
           }
@@ -1857,7 +1860,8 @@
           try {
             var raw = localStorage.getItem(SK);
             if (raw) {
-              var p = JSON.parse(raw);
+              var p = window.XYVCToolSession.read(SK);
+              if (!p) return;
               if (typeof p.step !== "number" || p.step < 0 || p.step > 8)
                 p.step = 0;
               S = Object.assign(S, p);
@@ -1865,7 +1869,7 @@
             }
           } catch (e) {
             try {
-              localStorage.removeItem(SK);
+              window.XYVCToolSession.notice("记录未能恢复，原始内容已保留，请先备份。", "error");
             } catch (e2) {}
           }
         }
@@ -2108,6 +2112,9 @@
         document.addEventListener("input", save);
         document.addEventListener("change", save);
 
+        window.resetApp = function () {
+          return window.XYVCToolSession.reset(TOOL_ID, SK, JSON.parse(JSON.stringify(initialToolState)));
+        };
         window.goHome = function () {
           save();
           document.querySelectorAll(".screen").forEach(function (el) {
@@ -2587,6 +2594,7 @@
         }
 
         async function readAIResponse(res, bodyEl) {
+          const readToken = window.XYVCToolSession.token();
           var wantsStream =
             typeof ReadableStream !== "undefined" &&
             typeof TextDecoder !== "undefined";
@@ -2596,6 +2604,7 @@
             typeof res.body.getReader !== "function"
           ) {
             var json = await res.json();
+            window.XYVCToolSession.assertCurrent(readToken);
             var text = json?.choices?.[0]?.message?.content || "";
             bodyEl.innerHTML = renderMd(text);
             return text;
@@ -2606,6 +2615,7 @@
             pending = "";
           while (true) {
             var chunk = await reader.read();
+            window.XYVCToolSession.assertCurrent(readToken);
             if (chunk.done) break;
             pending += decoder.decode(chunk.value, { stream: true });
             var lines = pending.split("\n");
@@ -2633,6 +2643,7 @@
         }
 
         async function fetchAIResult(prompt, bodyEl) {
+          const requestToken = window.XYVCToolSession.token();
           var wantsStream = typeof ReadableStream !== "undefined";
           var lastErr = null;
           for (var ei = 0; ei < AI_PROXY_CANDIDATES.length; ei++) {
@@ -2647,7 +2658,7 @@
                 }, 30000)
               : null;
             try {
-              var res = await fetch(endpoint, {
+              var res = await window.XYVCToolSession.fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -2663,6 +2674,7 @@
               return text;
             } catch (err) {
               if (timer) clearTimeout(timer);
+              window.XYVCToolSession.assertCurrent(requestToken);
               lastErr = err;
             }
           }
@@ -3109,6 +3121,7 @@
           if (S.step <= 6) render(S.step);
           else if (S.step === 7) renderConfirm();
           else if (S.step === 8 && S.report) showSavedReport();
+          else if (S.step === 8) { S.step = 7; showStep(7); renderConfirm(); window.XYVCToolSession.notice("上次生成未完成，填写内容已保留，可重新生成。"); }
         }
       })();
 
