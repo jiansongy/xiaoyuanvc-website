@@ -2128,8 +2128,8 @@
           document.body.appendChild(ta);
           ta.select();
           try {
-            document.execCommand("copy");
-            showToast("已复制到剪贴板");
+            if (document.execCommand("copy")) showToast("已复制到剪贴板");
+            else showToast("复制失败，请选中结果文字手动复制");
           } catch (e) {
             showToast("复制失败，请手动复制");
           }
@@ -2150,6 +2150,7 @@
           else window.goInput();
         };
         window.goInput = function () {
+          if (rateGenerating) { window.XYVCToolSession.invalidate(); rateGenerating = false; clearLoadingPhaseTimers(); updateScoreBtn(); }
           showScreen(1);
           syncStateToFields();
         };

@@ -1556,6 +1556,8 @@
         // NAVIGATION
         // ══════════════════════════════════════════════
         window.nav = function (dir) {
+          window.XYVCToolSession.invalidate();
+          document.querySelectorAll('[id^="aiBtn"]').forEach(btn => { if (btn.disabled) { btn.disabled = false; btn.textContent = "重新生成AI建议"; } });
           if (dir > 0 && !validateCurrentStep()) return;
           save();
           const next = S.step + dir;
@@ -2601,8 +2603,10 @@ ${rows || "（暂无填写）"}
             ta.value = text;
             document.body.appendChild(ta);
             ta.select();
-            document.execCommand("copy");
+            var copied = false; try { copied = document.execCommand("copy"); } catch (e) {}
             document.body.removeChild(ta);
+            if (!copied) { window.XYVCToolUI.message("复制失败，请选中结果文字手动复制。"); return; }
+            window.XYVCToolUI.message("结果已复制。");
             btn.textContent = "✅ 已复制！";
             setTimeout(function () {
               btn.textContent = "📋 复制分析";
@@ -2657,15 +2661,15 @@ ${rows || "（暂无填写）"}
             window.XYVCToolUI.message("分享链接已复制。");
           };
           if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(snapshot.url).then(onCopied);
+            navigator.clipboard.writeText(snapshot.url).then(onCopied).catch(function () { window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。"); });
           } else {
             var ta = document.createElement("textarea");
             ta.value = snapshot.url;
             document.body.appendChild(ta);
             ta.select();
-            document.execCommand("copy");
+            var copied = false; try { copied = document.execCommand("copy"); } catch (e) {}
             document.body.removeChild(ta);
-            onCopied();
+            if (copied) onCopied(); else window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。");
           }
         };
 
@@ -2822,7 +2826,7 @@ ${rows || "（暂无填写）"}
             if (S.outputStale) state.hint = "填写内容已改变，原AI建议需重新生成后再使用。";
             return state;
           },
-          steps: () => Array.from({ length: furthestStep }, (_, i) => ({ label: "回看：" + STEP_NAMES[i], run: () => { resultMode = false; S.step = i + 1; showStep(S.step); render(S.step); save(); } })),
+          steps: () => Array.from({ length: furthestStep }, (_, i) => ({ label: "回看：" + STEP_NAMES[i], run: () => { window.XYVCToolSession.invalidate(); document.querySelectorAll('[id^="aiBtn"]').forEach(btn => { if (btn.disabled) { btn.disabled = false; btn.textContent = "重新生成AI建议"; } }); resultMode = false; S.step = i + 1; showStep(S.step); render(S.step); save(); } })),
           more: state => state.view === "result" && !S.outputStale ? [{ label: "保存当前版本", run: () => window.saveVersion() }, { label: "复制分享链接", run: () => window.copyShareLink() }, { label: "打印结果", run: () => window.safePrint() }] : [],
           inputChanged: function () { var pending = [...document.querySelectorAll('[id^="aiBtn"]')].filter(btn => btn.disabled); if (pending.length) { window.XYVCToolSession.invalidate(); pending.forEach(btn => { btn.disabled = false; btn.textContent = "重新生成AI建议"; }); } if (S.ai4 || S.ai5 || S.ai6) { S.outputStale = true; save(); } }
         });

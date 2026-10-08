@@ -1174,6 +1174,7 @@
   function goTo(i) {
     // 只能跳到已走过的关卡（0..milestoneIndex）；正在看的未来关不算已走过
     if (i < 0 || i > S.milestoneIndex) return;
+    requestSerial++; generating = false; aiStatus = null; window.XYVCToolSession.invalidate();
     editField = null;
     viewIndex = i;
     if (viewIndex === S.milestoneIndex) viewIndex = -1; // 回到当前进度

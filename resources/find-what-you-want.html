@@ -2187,6 +2187,7 @@
         window.showPhase = showPhase;
 
         window.nav = function (dir) {
+          if (selfRequestPhase) { window.XYVCToolSession.invalidate(); selfRequestPhase = 0; }
           if (dir === 1 && S.phase === 4) {
             // User clicked "完成" on the last phase — return to welcome screen
             window.goWelcome();
@@ -3215,7 +3216,7 @@
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(snapshot.url).then(function () {
               window.XYVCToolUI.message("分享链接已复制。");
-            });
+            }).catch(function () { window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。"); });
           }
         };
 
@@ -3343,7 +3344,7 @@
             if (S.outputStale && !selfRequestPhase) state.hint = "填写内容已改变，原AI建议需重新生成后再使用。";
             return state;
           },
-          steps: () => Array.from({ length: Math.min(furthestPhase, 3) }, (_, i) => ({ label: "回看：" + PHASE_NAMES[i], run: () => { showPhase(i + 1); if (i === 0) renderCard(); else if (i === 1) renderPhase2(); else restorePhase3UI(); } })),
+          steps: () => Array.from({ length: Math.min(furthestPhase, 3) }, (_, i) => ({ label: "回看：" + PHASE_NAMES[i], run: () => { window.XYVCToolSession.invalidate(); selfRequestPhase = 0; showPhase(i + 1); if (i === 0) renderCard(); else if (i === 1) renderPhase2(); else restorePhase3UI(); } })),
           more: () => S.phase === 4 && S.chosenIndex >= 0 ? [{ label: "保存当前版本", run: () => window.saveVersion() }, { label: "复制分享链接", run: () => window.copyShareLink() }, { label: "打印结果", run: () => window.printResult() }] : [],
           inputChanged: function (event) { if (event.target.id === "experienceInput") S.phase2AI = ""; if (/^v[1-5]$/.test(event.target.id)) { S.allKeywords = []; S.selectedKeywords = []; S.phase3AI = ""; document.getElementById("keywordsSection").style.display = "none"; document.getElementById("outwardBox").style.display = "none"; } if (selfRequestPhase) { window.XYVCToolSession.invalidate(); selfRequestPhase = 0; window.XYVCToolUI.message("填写内容已改变，请重新生成。"); } if (S.phase1AI || S.phase2AI || S.phase3AI || S.finalCandidates.length) { S.outputStale = true; saveProgress(); } }
         });

@@ -2144,6 +2144,7 @@
         }
 
         window.nav = function (dir) {
+          if (hardGenerating) { window.XYVCToolSession.invalidate(); hardGenerating = false; }
           save();
           if (dir === 1 && S.step >= 1 && S.step <= 6) {
             var validationMessage = getStepValidationMessage(S.step);
@@ -3055,8 +3056,10 @@
             el.style.opacity = "0";
             document.body.appendChild(el);
             el.select();
-            document.execCommand("copy");
+            var copied = false; try { copied = document.execCommand("copy"); } catch (e) {}
             document.body.removeChild(el);
+            if (!copied) { window.XYVCToolUI.message("复制失败，请选中报告文字手动复制。"); return; }
+            window.XYVCToolUI.message("结果已复制。");
             btn.textContent = "✅ 已复制";
             setTimeout(function () {
               btn.textContent = "📋 复制报告";
@@ -3081,7 +3084,7 @@
             window.XYVCToolUI.message("分享链接已复制。");
           };
           if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(snapshot.url).then(onCopied);
+            navigator.clipboard.writeText(snapshot.url).then(onCopied).catch(function () { window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。"); });
           } else {
             var el = document.createElement("textarea");
             el.value = snapshot.url;
@@ -3089,9 +3092,9 @@
             el.style.opacity = "0";
             document.body.appendChild(el);
             el.select();
-            document.execCommand("copy");
+            var copied = false; try { copied = document.execCommand("copy"); } catch (e) {}
             document.body.removeChild(el);
-            onCopied();
+            if (copied) onCopied(); else window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。");
           }
         };
 
@@ -3150,7 +3153,7 @@
             if (S.outputStale) state.hint = "填写内容已改变，请重新生成自检，原报告暂不代表当前填写。";
             return state;
           },
-          steps: () => Array.from({ length: Math.min(furthestStep, 7) }, (_, i) => ({ label: "回看：" + (STEP_NAMES[i] || "确认填写"), run: () => { S.step = i + 1; showStep(S.step); if (S.step <= 6) render(S.step); else renderConfirm(); save(); } })),
+          steps: () => Array.from({ length: Math.min(furthestStep, 7) }, (_, i) => ({ label: "回看：" + (STEP_NAMES[i] || "确认填写"), run: () => { window.XYVCToolSession.invalidate(); hardGenerating = false; S.step = i + 1; showStep(S.step); if (S.step <= 6) render(S.step); else renderConfirm(); save(); } })),
           more: () => S.step === 8 && S.report && !S.outputStale ? [{ label: "保存当前版本", run: () => window.saveVersion() }, { label: "复制分享链接", run: () => window.copyShareLink() }, { label: "打印结果", run: () => window.safePrint() }] : [],
           inputChanged: function () { if (hardGenerating) { window.XYVCToolSession.invalidate(); hardGenerating = false; } if (S.report) { S.outputStale = true; save(); } }
         });
