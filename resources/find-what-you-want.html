@@ -1042,8 +1042,13 @@
         * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       }
     </style>
+    <link rel="stylesheet" href="./tool-shell.css" />
   </head>
-  <body>
+  <body data-tool="find-what-you-want">
+    <nav class="tool-shell-nav" aria-label="工具导航">
+      <a href="/resources/#tools">← 资源中心</a>
+      <span>如何找到想做的事</span>
+    </nav>
     <!-- 进度条 -->
     <div class="progress-wrap" id="progressWrap">
       <div class="progress-info">
@@ -1053,7 +1058,7 @@
           <button
             id="homeBtn"
             onclick="window.goWelcome()"
-            aria-label="返回首页"
+            aria-label="回工具首页"
             style="
               background: rgba(124, 58, 237, 0.1);
               border: none;
@@ -1076,7 +1081,7 @@
     <div id="s0" class="screen on">
       <div class="welcome-header" style="position: relative">
         <a
-          href="https://xiaoyuanvc.com"
+          href="/"
           style="
             position: absolute;
             top: 16px;
@@ -1122,27 +1127,7 @@
           <div class="formula">想做的事 = 喜欢的事 × 擅长的事</div>
           <div class="formula-sub">价值观是底座，让答案真正属于你</div>
         </div>
-        <div
-          class="meta-box"
-          aria-label="预计8到10分钟，4次AI分析，专为大学生设计"
-        >
-          <span aria-hidden="true">⏱</span> 预计 8-10 分钟 &nbsp;|&nbsp;
-          <span aria-hidden="true">🤖</span> 4 次 AI 分析 &nbsp;|&nbsp;
-          <span aria-hidden="true">💜</span>
-          专为大学生设计
-        </div>
-        <p
-          style="
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.7;
-            margin-bottom: 20px;
-          "
-        >
-          你是否正感到迷茫，不知道自己想做什么？别慌——不是你没有方向，是你还没系统认识过自己。给我
-          8-10 分钟，带你从喜欢、擅长、价值观三个维度做一轮高密度探索，最后由 AI
-          帮你整合出真正属于你的方向。
-        </p>
+        <p class="tool-start-summary">还不知道想做什么？梳理喜欢、擅长和价值观，得到几个可尝试的方向。AI建议是探索起点，仍需在现实中尝试。</p>
         <details
           style="
             background: white;
@@ -1248,7 +1233,7 @@
           </div>
         </div>
         <a
-          href="./"
+          href="/resources/#tools"
           class="back-link"
           style="display: flex; justify-content: center; margin-top: 16px"
           >← 返回资源中心</a
@@ -1266,7 +1251,7 @@
             return false;
           "
           class="back-link"
-          >← 重新开始</a
+          >← 回工具首页</a
         >
         <div class="phase-header">
           <div class="phase-badge">第一步 · 喜欢的事</div>
@@ -1811,7 +1796,7 @@
             <div class="ai-body" id="historyBox"></div>
           </div>
           <a
-            href="./"
+            href="/resources/#tools"
             style="
               display: block;
               text-align: center;
@@ -2000,27 +1985,11 @@
         // Progress save / restore (localStorage)
         // ══════════════════════════════════════════════
         function saveProgress() {
+          if (!S.phase) return;
           try {
-            var snap = {
-              v: 1,
-              phase: S.phase,
-              likes: S.likes,
-              followupAnswer: S.followupAnswer,
-              phase1AI: S.phase1AI,
-              experience: S.experience,
-              angles: S.angles,
-              phase2AI: S.phase2AI,
-              valueAnswers: S.valueAnswers,
-              allKeywords: S.allKeywords,
-              selectedKeywords: S.selectedKeywords,
-              phase3AI: S.phase3AI,
-              valueStatements: S.valueStatements,
-              outwardValue: S.outwardValue,
-            };
+            var snap = Object.assign({ v: 1, phase: S.phase, cardIndex: S.cardIndex, swipeHistory: S.swipeHistory }, buildSerializableState());
             localStorage.setItem(SAVE_KEY, JSON.stringify(snap));
-          } catch (e) {
-            /* ignore */
-          }
+          } catch (e) { /* storage may be unavailable */ }
         }
 
         function clearSavedProgress() {
@@ -2034,7 +2003,7 @@
             var raw = localStorage.getItem(SAVE_KEY);
             if (!raw) return null;
             var data = JSON.parse(raw);
-            if (!data || data.v !== 1 || !data.phase || data.phase < 2)
+            if (!data || data.v !== 1 || !data.phase || data.phase < 1)
               return null;
             return data;
           } catch (e) {
@@ -2110,35 +2079,18 @@
 
         window.resumeProgress = function () {
           var saved = loadSavedProgress();
-          if (!saved) {
-            window.startApp();
-            return;
-          }
-          Object.assign(S, createInitialState());
-          S.phase = saved.phase;
-          S.likes = saved.likes || [];
-          S.followupAnswer = saved.followupAnswer || "";
-          S.phase1AI = saved.phase1AI || "";
-          S.experience = saved.experience || "";
-          S.angles = saved.angles || S.angles;
-          S.phase2AI = saved.phase2AI || "";
-          S.valueAnswers = saved.valueAnswers || ["", "", "", "", ""];
-          S.allKeywords = saved.allKeywords || [];
-          S.selectedKeywords = saved.selectedKeywords || [];
-          S.phase3AI = saved.phase3AI || "";
-          S.valueStatements = saved.valueStatements || [];
-          S.outwardValue = saved.outwardValue || "";
-          S.cardIndex = CARDS.length; // cards already done
-          if (S.phase >= 3 && S.allKeywords.length > 0) {
-            showPhase(3);
-            restorePhase3UI();
-          } else {
-            showPhase(2);
-            renderPhase2();
-          }
+          if (!saved) { window.startApp(); return; }
+          Object.assign(S, createInitialState(), saved);
+          S.cardIndex = typeof saved.cardIndex === "number" ? saved.cardIndex : CARDS.length;
+          showPhase(saved.phase);
+          if (saved.phase === 1) renderCard();
+          else if (saved.phase === 2) renderPhase2();
+          else if (saved.phase === 3) restorePhase3UI();
+          else { renderResults(); if (S.chosenIndex >= 0) window.selectResult(S.chosenIndex); }
         };
 
         window.clearAndStart = function () {
+          if (!confirm("重新开始会清空本工具当前进度。其他工具不受影响，确定继续吗？")) return;
           clearSavedProgress();
           window.startApp();
         };
@@ -2257,15 +2209,20 @@
         };
 
         window.startApp = function () {
+          if (loadSavedProgress()) { window.resumeProgress(); return; }
           resetAppState();
           showPhase(1);
           renderCard();
         };
 
         window.goWelcome = function () {
-          resetAppState();
+          saveProgress();
           showPhase(0);
+          if (loadSavedProgress()) document.getElementById("resumeSection").style.display = "block";
         };
+        window.addEventListener("pagehide", saveProgress);
+        document.addEventListener("input", debouncedSave);
+        document.addEventListener("click", debouncedSave);
 
         function updateSwipeControls() {
           var undoBtn = document.getElementById("undoSwipeBtn");
@@ -3046,9 +3003,7 @@
         function renderNextToolSuggestions() {
           var box = document.getElementById("nextToolBox");
           if (!box) return;
-          box.innerHTML =
-            '<a href="./find-your-idea" style="display:block;padding:12px 14px;border:1px solid #ddd6fe;border-radius:12px;background:#f5f3ff;color:#5b21b6;text-decoration:none;margin-bottom:10px"><strong>发现你的创业想法</strong><br><span style="font-size:12px;color:#6d28d9">把今天选出的方向继续收敛成“谁、什么问题、为什么值得做”。</span></a>' +
-            '<a href="./rate-your-idea" style="display:block;padding:12px 14px;border:1px solid #bbf7d0;border-radius:12px;background:#f0fdf4;color:#166534;text-decoration:none"><strong>学生创业自检</strong><br><span style="font-size:12px;color:#15803d">当你已经有一个清晰方向后，下一步要判断它是否靠谱、是否值得投入。</span></a>';
+          box.innerHTML = '<p>选一个方向，今天做一次小尝试，记录自己愿不愿意继续、能帮助谁。</p><a href="./find-your-idea">想把方向变成创业点子？发现你的创业想法 →</a>';
         }
 
         function renderHistoryList() {

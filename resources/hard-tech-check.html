@@ -708,8 +708,13 @@
         * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       }
     </style>
+    <link rel="stylesheet" href="./tool-shell.css" />
   </head>
-  <body>
+  <body data-tool="hard-tech-check">
+    <nav class="tool-shell-nav" aria-label="工具导航">
+      <a href="/resources/#tools">← 资源中心</a>
+      <span>硬科技创业自检</span>
+    </nav>
     <!-- ── Header ── -->
     <header class="header">
       <span style="font-size: 22px">🔬</span>
@@ -732,10 +737,10 @@
           font-family: inherit;
         "
       >
-        🏠 首页
+        回工具首页
       </button>
       <a
-        href="https://xiaoyuanvc.com"
+        href="/"
         target="_blank"
         style="
           display: flex;
@@ -792,7 +797,23 @@
               行动建议。
             </p>
           </div>
-          <div class="intro-body">
+          <div class="tool-intro-start"><p>项目来自实验室、技术成果或专利？回答六个问题，整理技术、产权、团队和客户验证的下一步。</p>
+<button
+              class="btn btn-primary btn-full"
+              onclick="startApp()"
+              style="
+                width: 100%;
+                justify-content: center;
+                margin-top: 0;
+                padding: 13px;
+                font-size: 15px;
+              "
+            >
+              开始自检 →
+            </button>
+</div>
+            <details class="tool-method"><summary>了解方法与步骤</summary>
+<div class="intro-body">
             <div class="steps-grid">
               <div class="s-preview">
                 <div class="sn">Step 1</div>
@@ -829,20 +850,9 @@
               ⏱ 预计 3-5 分钟 &nbsp;|&nbsp; 🤖 1 次 AI 诊断 &nbsp;|&nbsp; 🔬
               专为高校硬科技创业设计
             </div>
-            <button
-              class="btn btn-primary btn-full"
-              onclick="startApp()"
-              style="
-                width: 100%;
-                justify-content: center;
-                margin-top: 0;
-                padding: 13px;
-                font-size: 15px;
-              "
-            >
-              开始自检 →
-            </button>
+
           </div>
+</details>
         </div>
       </div>
       <div class="attribution">
@@ -2085,14 +2095,18 @@
 
         // ── NAVIGATION ──
         window.startApp = function () {
-          S.step = 1;
+          S.step = S.step || 1;
           if (!contextSyncState) {
             refreshContextSyncState();
           }
           save();
-          showStep(1);
-          render(1);
+          showStep(S.step);
+          render(S.step);
         };
+
+        window.addEventListener("pagehide", save);
+        document.addEventListener("input", save);
+        document.addEventListener("change", save);
 
         window.goHome = function () {
           save();
@@ -2885,19 +2899,11 @@
               border: "#bfdbfe",
               text: "#1d4ed8",
             });
-            ctas.push({
-              href: "./rate-your-idea",
-              title: "用学生创业自检补商业判断",
-              desc: "把技术项目放到更一般的创业视角再看一遍，能更快暴露验证和团队短板。",
-              color: "#fef3c7",
-              border: "#fcd34d",
-              text: "#92400e",
-            });
           } else {
             ctas.push({
               href: "./entrecoach",
               title: "交给创业教练，走完火种节全程",
-              desc: "如果你已经进入试点或转化阶段，下一步让教练带你把这一关走成一个可验证、可路演的项目。",
+              desc: "如果你已经进入试点或转化阶段，可以用教练整理下一轮方案，再去现实中验证。",
               color: "#eff6ff",
               border: "#bfdbfe",
               text: "#1d4ed8",
@@ -2906,7 +2912,8 @@
 
           card.innerHTML =
             '<div style="background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;padding:16px">' +
-            '<div style="font-size:14px;font-weight:700;color:#1f2937;margin-bottom:10px">做完这份诊断后，下一步去哪</div>' +
+            '<div style="font-size:14px;font-weight:700;color:#1f2937;margin-bottom:10px">先做一次真实核实</div>' +
+            '<p style="font-size:13px;line-height:1.7;color:#475569;margin-bottom:12px">从报告中选一个最大断点，联系一位能核实它的人，记录反馈后再决定下一步。</p>' +
             ctas
               .map(function (cta) {
                 return (

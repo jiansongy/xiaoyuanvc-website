@@ -881,15 +881,20 @@
         * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       }
     </style>
+    <link rel="stylesheet" href="./tool-shell.css" />
   </head>
-  <body>
+  <body data-tool="rate-your-idea">
+    <nav class="tool-shell-nav" aria-label="工具导航">
+      <a href="/resources/#tools">← 资源中心</a>
+      <span>学生创业自检</span>
+    </nav>
     <!-- Header -->
     <div class="header">
       <div class="header-left">
         <h1>学生创业自检</h1>
         <p>AI 从 5 个维度评估你的创业想法</p>
       </div>
-      <a href="https://xiaoyuanvc.com">
+      <a href="/">
         <img src="../assets/logo-color.png" alt="校园VC" class="header-logo" />
       </a>
     </div>
@@ -918,7 +923,18 @@
                 方法论基于殷建松《从零到英雄》
               </p>
             </div>
-            <div class="intro-body">
+            <div class="tool-intro-start"><p>已有点子？描述产品、用户和验证计划，找出五个方面的薄弱假设。AI分数仅供自检，不代表成功概率。</p>
+<button
+                class="btn-start"
+                onclick="window.goInput()"
+                data-ai-action="start"
+                aria-label="开始自检评估"
+              >
+                开始自检
+              </button>
+</div>
+            <details class="tool-method"><summary>了解方法与步骤</summary>
+<div class="intro-body">
               <div class="steps-grid">
                 <div class="s-preview">
                   <div class="sn">维度 1</div>
@@ -953,15 +969,9 @@
                 ⏱ 填写约 2 分钟 &nbsp;|&nbsp; 🤖 AI 即时自检 &nbsp;|&nbsp; 🎯
                 专为校园创业设计
               </div>
-              <button
-                class="btn-start"
-                onclick="window.goInput()"
-                data-ai-action="start"
-                aria-label="开始自检评估"
-              >
-                开始自检
-              </button>
+
             </div>
+</details>
           </div>
         </div>
       </div>
@@ -972,7 +982,7 @@
           href="javascript:void(0)"
           class="back-link"
           onclick="window.goWelcome()"
-          >← 返回首页</a
+          >← 回工具首页</a
         >
 
         <div class="card">
@@ -1177,6 +1187,7 @@
             </div>
           </div>
 
+          <p class="tool-result-note">AI分数仅供自检。先选一个最薄弱的假设，找真实用户核实；重新评分不能代替真实反馈。</p>
           <!-- Action buttons -->
           <div class="btn-row">
             <button
@@ -1334,14 +1345,14 @@
           loadingPhaseTimers.push(
             setTimeout(function () {
               loadingText.textContent =
-                "AI 正在深度思考中，我们会先自动重试一次。内容已保存，不会丢失。";
+                "AI 正在深度思考中，我们会先自动重试一次。当前页面内容仍在，请稍后重试。";
             }, 3500),
           );
 
           loadingPhaseTimers.push(
             setTimeout(function () {
               loadingText.textContent =
-                "主模型还没稳定返回，将自动切到精简建议。内容已保存，不会丢失。";
+                "主模型还没稳定返回，将自动切到精简建议。当前页面内容仍在，请稍后重试。";
             }, 9000),
           );
 
@@ -1632,7 +1643,12 @@
               flashSavedState();
             }
           } catch (e) {
-            /* ignore */
+            const el = document.getElementById("saveStateText");
+            if (el) {
+              if (saveToastTimer) clearTimeout(saveToastTimer);
+              el.textContent = "未能保存到浏览器，请保持页面打开并复制内容备份。";
+              el.classList.remove("hidden");
+            }
           }
         }
 
@@ -1672,6 +1688,7 @@
         function flashSavedState() {
           const el = document.getElementById("saveStateText");
           if (!el) return;
+          el.textContent = "已自动保存";
           el.classList.remove("hidden");
           if (saveToastTimer) clearTimeout(saveToastTimer);
           saveToastTimer = setTimeout(function () {
@@ -2210,7 +2227,7 @@
             if (aiBody) {
               aiBody.innerHTML =
                 '<p style="color: var(--red);">评估失败：' +
-                renderMd(normalizeToolError(err) + " 内容已保存，不会丢失，请稍后重试。") +
+                renderMd(normalizeToolError(err) + " 当前页面内容仍在，请稍后重试。") +
                 "</p>";
             }
             if (aiStatusLabel) aiStatusLabel.textContent = "自检失败";
@@ -2395,6 +2412,7 @@
         };
 
         window.resetAll = function () {
+          if (!confirm("重新开始会清空本工具的当前填写内容。其他工具不受影响，确定继续吗？")) return;
           S = createInitialState();
           try {
             localStorage.removeItem(STORAGE_KEY);

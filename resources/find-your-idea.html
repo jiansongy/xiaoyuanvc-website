@@ -794,8 +794,13 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="./tool-shell.css" />
   </head>
-  <body>
+  <body data-tool="find-your-idea">
+    <nav class="tool-shell-nav" aria-label="工具导航">
+      <a href="/resources/#tools">← 资源中心</a>
+      <span>发现你的创业想法</span>
+    </nav>
     <!-- ══════════════ HEADER ══════════════ -->
     <header class="header">
       <span style="font-size: 22px">🔍</span>
@@ -817,10 +822,10 @@
           font-family: inherit;
         "
       >
-        🏠 首页
+        回工具首页
       </button>
       <a
-        href="https://xiaoyuanvc.com"
+        href="/"
         target="_blank"
         style="
           display: flex;
@@ -869,10 +874,26 @@
                   margin-bottom: 12px;
                 "
               />
-              <h2>找到你的盈利创业想法</h2>
+              <h2>发现待验证的创业想法</h2>
               <p>通过 6 个步骤，从零开始发现你真正适合做的创业方向</p>
             </div>
-            <div class="intro-body">
+            <div class="tool-intro-start"><p>想创业但还没有点子？写下你的技能和观察到的问题，整理三个待验证的候选方向。</p>
+<button
+                class="btn btn-primary"
+                style="
+                  width: 100%;
+                  justify-content: center;
+                  margin-top: 0;
+                  padding: 13px;
+                  font-size: 15px;
+                "
+                onclick="startApp()"
+              >
+                开始探索 →
+              </button>
+</div>
+            <details class="tool-method"><summary>了解方法与步骤</summary>
+<div class="intro-body">
               <div class="steps-grid">
                 <div class="s-preview">
                   <div class="sn">Step 1</div>
@@ -961,7 +982,7 @@
                   <p style="margin-bottom: 8px">
                     YouTube 创作者 Ali Abdaal
                     在自己从医生转型创业的过程中，总结出一套 6
-                    步定位法，帮你从"不知道做什么"到"找到可盈利的创业方向"：
+                    步定位法，帮你从"不知道做什么"到"整理待验证的创业方向"：
                   </p>
                   <ol style="padding-left: 18px; margin-bottom: 8px">
                     <li>
@@ -987,20 +1008,9 @@
                   </p>
                 </div>
               </details>
-              <button
-                class="btn btn-primary"
-                style="
-                  width: 100%;
-                  justify-content: center;
-                  margin-top: 0;
-                  padding: 13px;
-                  font-size: 15px;
-                "
-                onclick="startApp()"
-              >
-                开始探索 →
-              </button>
+
             </div>
+</details>
           </div>
         </div>
       </div>
@@ -1531,11 +1541,11 @@
         // ══════════════════════════════════════════════
 
         window.startApp = function () {
-          S.step = 1;
+          S.step = S.step || 1;
           save();
-          history.replaceState(null, "", "#step=1");
-          showStep(1);
-          render(1);
+          history.replaceState(null, "", "#step=" + S.step);
+          showStep(S.step);
+          render(S.step);
         };
 
         // ══════════════════════════════════════════════
@@ -2156,12 +2166,7 @@
         function renderNextToolSuggestions() {
           const box = document.getElementById("nextToolBox");
           if (!box) return;
-          box.innerHTML =
-            '<div style="display:grid;gap:10px">' +
-            '<a href="./rate-your-idea" style="display:block;padding:12px 14px;border:1px solid #d1fae5;border-radius:12px;background:#f0fdf4;color:#14532d;text-decoration:none"><strong>学生创业自检</strong><br><span style="font-size:12px;color:#166534">当你已经有了 1-2 个方向，下一步先判断哪个更靠谱。</span></a>' +
-            '<a href="./entrecoach" style="display:block;padding:12px 14px;border:1px solid #dbeafe;border-radius:12px;background:#eff6ff;color:#1d4ed8;text-decoration:none"><strong>创业教练 · 沿火种节走到底</strong><br><span style="font-size:12px;color:#1e40af">如果你想把这个方向一步步走成可验证项目，交给教练带你完成 9 关。</span></a>' +
-            '<a href="./hard-tech-check" style="display:block;padding:12px 14px;border:1px solid #ffedd5;border-radius:12px;background:#fff7ed;color:#c2410c;text-decoration:none"><strong>硬科技创业自检</strong><br><span style="font-size:12px;color:#9a3412">如果你的方向更偏实验室、技术转化或师生共创，走这条专业路径。</span></a>' +
-            "</div>";
+          box.innerHTML = '<p>选一个方向，找一位你能联系到的人，问清他最近一次遇到这个问题时怎样解决。记录事实，再决定是否继续。</p><a href="./rate-your-idea">学生创业自检：整理下一步需要验证的假设 →</a>';
         }
 
         function renderHistoryList() {
@@ -2651,6 +2656,9 @@ ${rows || "（暂无填写）"}
             onCopied();
           }
         };
+
+        window.addEventListener("pagehide", save);
+        document.addEventListener("input", save);
 
         window.goHome = function () {
           save();

@@ -1,0 +1,19 @@
+/* Shared tool navigation; existing light theme and brand blue. */
+.tool-shell-nav { position: sticky; top: 0; z-index: 110; height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 16px; background: #fff; color: #1a1a2e; border-bottom: 1px solid #e5e7eb; font: 14px/1.5 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.tool-shell-nav a { display: inline-flex; align-items: center; min-height: 44px; flex-shrink: 0; color: #2563eb; text-decoration: none; font-weight: 600; }
+.tool-shell-nav span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.tool-shell-nav a:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; border-radius: 4px; }
+body > .header { position: relative; top: auto; }
+.progress-wrap { top: 56px; }
+.tool-intro-start { padding: 16px 24px; }
+.tool-intro-start p { margin: 0 0 12px; color: #475569; font-size: 14px; line-height: 1.7; }
+.tool-method { margin: 0 24px 20px; border-top: 1px solid #e5e7eb; }
+.tool-method > summary { padding: 12px 0; cursor: pointer; color: #475569; font-size: 14px; }
+.intro-head > img { max-width: 96px !important; margin-bottom: 12px !important; }
+.tool-result-note { padding: 12px 16px; margin: 12px 0; color: #475569; background: #f8fafc; border-radius: 8px; font-size: 13px; line-height: 1.7; }
+body[data-tool="find-what-you-want"] .welcome-header { padding: 20px 16px; }
+body[data-tool="find-what-you-want"] .welcome-header > img { max-width: 96px !important; margin-bottom: 12px !important; }
+body[data-tool="find-what-you-want"] #s0 .formula-box { display: none; }
+body[data-tool="find-what-you-want"] #s0 .tool-start-summary { margin: 12px 0; color: #475569; font-size: 14px; line-height: 1.7; }
+@media (max-width: 600px) { .tool-shell-nav { gap: 12px; font-size: 13px; } .tool-intro-start { padding: 16px; } .tool-method { margin: 0 16px 16px; } .intro-wrap { padding-top: 16px; } .intro-head { padding: 16px; } }
+@media print { .tool-shell-nav, .tool-method { display: none !important; } .progress-wrap { top: 0; } }

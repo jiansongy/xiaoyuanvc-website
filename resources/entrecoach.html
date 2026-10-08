@@ -408,8 +408,13 @@
 
       .footer-note { text-align: center; color: #9ca3af; font-size: 12px; margin-top: 20px; }
     </style>
+    <link rel="stylesheet" href="./tool-shell.css" />
   </head>
-  <body>
+  <body data-tool="entrecoach">
+    <nav class="tool-shell-nav" aria-label="工具导航">
+      <a href="/resources/#tools">← 资源中心</a>
+      <span>创业教练</span>
+    </nav>
     <div class="header">
       <span class="logo">校园VC</span>
       <div>
@@ -1209,10 +1214,10 @@
       '<div class="card welcome">',
       '  <h2>把你的创业想法，走成 9 步</h2>',
       '  <p>AI 教练会一步步带你走完火种节 9 个里程碑（组队 → 理解需求 → … → 复盘）。',
-      '每关 AI 先给你一份完整草稿，你只需要判断：✅ 接受（就用这版）· ✏️ 在此基础上修改（告诉我改哪里）· 🙅 换一版（不要这稿，换个思路重来）。</p>',
+      '每关 AI 先给一份待验证的草稿，你来判断接受、修改或换一版。接受草稿不代表已完成真实行动。</p>',
       '  <input class="idea-input" id="ideaInput" type="text" placeholder="先写下你的一句话创业想法，例如：帮助大学生找到 AI 行业的实习机会" />',
       '  <div style="text-align:center;">',
-      '    <button class="btn btn-primary" id="startBtn">开始闯关 🚀</button>',
+      '    <button class="btn btn-primary" id="startBtn">开始整理方案 →</button>',
       '  </div>',
       '</div>'
     ].join("");
@@ -1414,8 +1419,8 @@
     html.push('<div class="card">');
     html.push('  <div style="text-align:center;padding:10px 0;">');
     html.push('    <div style="font-size:40px;">🎉</div>');
-    html.push('    <h2 style="margin:8px 0;">火种节 9 步全部完成！</h2>');
-    html.push('    <p style="color:#6b7280;">你把一个想法，走成了「' + esc(S.idea) + '」的完整创业闭环。</p>');
+    html.push('    <h2 style="margin:8px 0;">已完成九步方案草稿</h2>');
+    html.push('    <p style="color:#6b7280;">你把一个想法，走成了「' + esc(S.idea) + '」的九步方案草稿。真实访谈、制作、测试和交付仍需你亲自完成。</p>');
     html.push('  </div>');
     if (practice.length) {
       html.push('  <div class="m-hecd" style="text-align:left;">🎯 这一路你练习过的 EntreComp 创业能力：');
