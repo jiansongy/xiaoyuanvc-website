@@ -24,6 +24,7 @@
 
     <!-- 共享数据层：统一的工具草稿/历史/快照（我的探索记录 依赖它） -->
     <script src="./tool-session.js"></script>
+    <script src="./tool-shell.js"></script>
     <script src="./tool-context.js"></script>
 
     <style>
@@ -437,8 +438,8 @@
       </div>
       <div id="app"></div>
       <div class="footer-note">
-        进度保存在本浏览器 · 由 GLM 驱动草稿生成 · 火种节方法论来源 xiaoyuanvc.com/teacher/huozhong<br>
-        <button class="btn btn-ghost btn-sm" id="hardResetBtn" style="margin-top:8px;">🔄 重置本工具（清空进度并彻底刷新）</button>
+        进度保存在当前浏览器。AI草稿需要结合真实行动验证。<br>
+        <button class="btn btn-ghost btn-sm" id="hardResetBtn" style="margin-top:8px;">重新开始</button>
       </div>
     </div>
 
@@ -637,6 +638,7 @@
   function hardReset() { return reset(); }
 
   var S = load();
+  var showingIntro = false;
   var generating = false;
   var requestSerial = 0;
   var aiStatus = null;
@@ -660,13 +662,7 @@
     return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   }
 
-  function toast(msg) {
-    var el = document.getElementById("toast");
-    el.textContent = msg;
-    el.classList.add("show");
-    clearTimeout(el._t);
-    el._t = setTimeout(function () { el.classList.remove("show"); }, 2400);
-  }
+  function toast(msg) { window.XYVCToolUI.message(msg); }
 
   /* ============================================================
    * 语义化渲染管线（两阶段）
@@ -1186,7 +1182,7 @@
 
   function render() {
     var progressCard = document.getElementById("progressCard");
-    if (S.stage === "welcome") {
+    if (S.stage === "welcome" || showingIntro) {
       progressCard.style.display = "none";
       renderWelcome();
     } else {
@@ -1212,8 +1208,11 @@
     ].join("");
     var ideaInput = document.getElementById("ideaInput");
     if (S.idea) ideaInput.value = S.idea;
+    ideaInput.readOnly = S.stage !== "welcome";
     ideaInput.addEventListener("input", function () { S.idea = ideaInput.value.trim(); save(); });
     document.getElementById("startBtn").addEventListener("click", function () {
+      if (S.stage !== "welcome") { showingIntro = false; render(); if (S.stage === "coaching") autoDraft(); return; }
+      showingIntro = false;
       S.idea = (S.idea || ideaInput.value).trim();
       if (!S.idea) { toast("先写下一句话想法，哪怕很粗糙也行"); return; }
       S.stage = "coaching";
@@ -1228,7 +1227,7 @@
     var cur = curIndex();
     var m = milestone(Math.min(cur, MILESTONES.length - 1));
     document.getElementById("progressLabel").textContent = "第 " + (cur + 1) + " 关 · " + m.name;
-    document.getElementById("progressCount").textContent = S.milestoneIndex + "/9";
+    document.getElementById("progressCount").textContent = (cur + 1) + "/9";
     document.getElementById("progressFill").style.width = Math.round(S.milestoneIndex / 9 * 100) + "%";
 
     // 可点击步骤条
@@ -1269,7 +1268,7 @@
         ' <button class="btn btn-primary btn-sm" id="backToCurrent">回到当前进度</button></div>');
     }
     html.push('  <div class="m-head">');
-    html.push('    <span class="m-badge">第 ' + (i + 1) + ' 关</span>');
+    html.push('    <span class="m-badge">第 ' + (i + 1) + ' 阶段</span>');
     html.push('    <span class="m-name">' + esc(m.name) + '</span>');
     html.push('    <span class="m-ability">· ' + esc(m.ability) + '</span>');
     html.push('  </div>');
@@ -1306,11 +1305,11 @@
       // 只在当前进度且未定稿时给三选一
       if (!reviewing && draft) {
         html.push('  <div class="choices">');
-        html.push('    <button class="btn btn-accept" data-choice="accept"' + (busy || editField || !completeDraft(i, draft) ? ' disabled' : '') + '>✅ 接受</button>');
+        html.push('    <button class="btn btn-accept" data-choice="accept"' + (busy || editField || !completeDraft(i, draft) ? ' disabled' : '') + '>确认草稿并继续</button>');
         html.push('    <button class="btn btn-modify" data-choice="modify"' + (busy || editField ? ' disabled' : '') + '>✏️ 在此基础上修改</button>');
         html.push('    <button class="btn btn-disagree" data-choice="disagree"' + (busy || editField ? ' disabled' : '') + '>🙅 换一版</button>');
         html.push('  </div>');
-        html.push('  <div class="choices-hint">接受＝定稿进入下一关 · 自己改＝只改这一项 · AI 修改＝重新生成整关 · 换一版＝换个思路</div>');
+        html.push('  <div class="choices-hint">确认草稿并继续＝定稿进入下一阶段 · 自己改＝只改这一项 · AI 修改＝重新生成整关 · 换一版＝换个思路</div>');
       }
       if (!reviewing) {
         html.push('  <div class="compose" id="composeBox" style="display:none;">');
@@ -1422,7 +1421,7 @@
     html.push('  <div class="choices">');
     html.push('    <button class="btn btn-outline" id="viewArtifactsBtn">📇 查看全部成果卡</button>');
     html.push('    <button class="btn btn-outline" id="copyFinishedBtn">复制已定稿成果</button>');
-    html.push('    <button class="btn btn-primary" id="restartBtn">再来一轮</button>');
+    html.push('    <button class="btn btn-primary" id="restartBtn">重新开始</button>');
     html.push('  </div>');
     html.push('</div>');
     app.innerHTML = html.join("");
@@ -1511,10 +1510,12 @@
   var drawer = document.getElementById("drawer");
   var drawerScrim = document.getElementById("drawerScrim");
   var drawerBody = document.getElementById("drawerBody");
-  var openCard = null;
+  var openCard = null, drawerTrigger = null;
+  drawer.inert = true; drawer.setAttribute("role", "dialog"); drawer.setAttribute("aria-modal", "true"); drawer.setAttribute("aria-label", "成果卡");
 
-  function openDrawer() { drawer.classList.add("open"); drawerScrim.classList.add("open"); }
-  function closeDrawer() { drawer.classList.remove("open"); drawerScrim.classList.remove("open"); }
+  function openDrawer() { drawerTrigger = document.activeElement; drawer.inert = false; drawer.classList.add("open"); drawerScrim.classList.add("open"); document.getElementById("drawerClose").focus(); }
+  function closeDrawer() { drawer.classList.remove("open"); drawerScrim.classList.remove("open"); drawer.inert = true; if (drawerTrigger && drawerTrigger.isConnected) drawerTrigger.focus(); }
+  document.addEventListener("keydown", function (event) { if (event.key === "Escape" && drawer.classList.contains("open")) closeDrawer(); });
   document.getElementById("artifactsBtn").addEventListener("click", openDrawer);
   document.getElementById("drawerClose").addEventListener("click", closeDrawer);
   drawerScrim.addEventListener("click", closeDrawer);
@@ -1576,6 +1577,23 @@
   // 一键彻底重置按钮
   var hardResetBtn = document.getElementById("hardResetBtn");
   if (hardResetBtn) hardResetBtn.addEventListener("click", hardReset);
+
+  window.XYVCToolUI.register({
+    startLabel: "开始整理方案", startButton: () => document.getElementById("startBtn"), hasProgress: () => S.stage !== "welcome",
+    home: function () { save(); showingIntro = true; requestSerial++; generating = false; aiStatus = null; window.XYVCToolSession.invalidate(); render(); }, reset: reset,
+    state: function () {
+      if (S.stage === "welcome" || showingIntro) return { view: "welcome" };
+      if (S.stage === "finished") return { view: "result", position: "九步方案草稿 · 已完成", primary: { label: "复制成果", run: copyArtifacts } };
+      var i = curIndex(), previous = i > 0 ? { run: () => goTo(i - 1) } : null;
+      var accept = document.querySelector('[data-choice="accept"]');
+      if (i !== S.milestoneIndex) return { view: "working", position: "回看第" + (i + 1) + "/9阶段 · " + milestone(i).name, previous: previous, primary: { label: "继续当前阶段", run: () => goTo(S.milestoneIndex) } };
+      return { view: "working", position: "第" + (i + 1) + "/9阶段 · " + milestone(i).name, previous: previous,
+        primary: { label: generating ? "正在生成…" : accept ? (i === 8 ? "完成九步草稿" : "确认草稿并继续") : "重新生成草稿", disabled: generating || !!editField || !!(accept && accept.disabled), run: () => accept ? accept.click() : autoDraft(true) },
+        hint: generating ? "AI正在生成，返回会保留填写内容；回来后可重试。" : editField ? "先保存或取消这一项修改，再继续。" : accept && accept.disabled ? "草稿尚不完整，请修改缺项或重新生成。" : "确认草稿只代表方案定稿，真实访谈、测试和交付仍需完成。" };
+    },
+    steps: () => MILESTONES.slice(0, Math.min(S.milestoneIndex + 1, 9)).map((m, i) => ({ label: "回看：" + m.name, run: () => { showingIntro = false; goTo(i); } })),
+    more: () => S.stage !== "welcome" ? [{ label: "成果卡", run: openDrawer }, { label: "复制已定稿成果", run: copyArtifacts }] : []
+  });
 })();
     </script>
   </body>

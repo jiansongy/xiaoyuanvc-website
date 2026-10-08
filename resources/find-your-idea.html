@@ -1327,6 +1327,7 @@
     </div>
 
     <script src="./tool-session.js"></script>
+    <script src="./tool-shell.js"></script>
     <script src="./tool-context.js"></script>
     <script>
       (function () {
@@ -1590,7 +1591,7 @@
               dots.appendChild(d);
             }
             document.getElementById("pLabel").textContent =
-              `Step ${n}：${STEP_NAMES[n - 1]}`;
+              `第${n}步：${STEP_NAMES[n - 1]}`;
             document.getElementById("pCount").textContent = `${n} / 6`;
 
             // nav buttons
@@ -1638,7 +1639,7 @@
           });
           if (hasIdea) return true;
 
-          window.alert("请先写下至少一个你想关注的人群和需求，再进入下一步。");
+          window.XYVCToolUI.error("请先写下至少一个你想关注的人群和需求。", document.querySelector("#ideasBox input"));
           const firstInput = document.querySelector("#ideasBox input");
           if (firstInput) {
             firstInput.setAttribute("aria-invalid", "true");
@@ -2328,6 +2329,7 @@
         }
 
         window.callAI = async function (step) {
+          const operationToken = window.XYVCToolSession.token();
           const btnId = `aiBtn${step}`;
           const cardId = `aiCard${step}`;
           const bodyId = `aiBody${step}`;
@@ -2350,12 +2352,15 @@
 
           try {
             const full = await fetchAIResult(prompt, body);
+            if (!window.XYVCToolSession.current(operationToken)) return;
+            if (step === 6) S.outputStale = false;
 
             if (step === 4) S.ai4 = full;
             else if (step === 5) S.ai5 = full;
             else S.ai6 = full;
             save();
           } catch (err) {
+            if (!window.XYVCToolSession.current(operationToken)) return;
             body.innerHTML = renderMd(
               `⚠️ AI 暂时连不上，没关系——不用 AI 也能完成练习。\n\n可以稍后再试，或直接跳过继续下一步。\n\n*（技术原因：${esc(normalizeAIError(err))}）*`,
             );
@@ -2554,7 +2559,7 @@ ${rows || "（暂无填写）"}
           var isInApp =
             /MicroMessenger|BytedanceWebview|Douyin|ToutiaoMicroApp/i.test(ua);
           if (isInApp) {
-            window.alert(
+            window.XYVCToolUI.message(
               "当前浏览器不支持打印功能。\n\n请点击「📋 复制分析」保存结果，或截图保存本页内容。",
             );
             return;
@@ -2562,7 +2567,7 @@ ${rows || "（暂无填写）"}
           try {
             window.print();
           } catch (e) {
-            window.alert(
+            window.XYVCToolUI.message(
               "当前浏览器不支持直接打印，请使用浏览器菜单中的「分享 → 打印」或截图保存。",
             );
           }
@@ -2575,7 +2580,7 @@ ${rows || "（暂无填写）"}
             parts.push("【你的 Top 3 定位】\n" + summary.textContent.trim());
           }
           var aiBody = document.getElementById("aiBody6");
-          if (aiBody && aiBody.textContent.trim()) {
+          if (aiBody && aiBody.textContent.trim() && !S.outputStale) {
             parts.push("【AI 验证方案】\n" + aiBody.textContent.trim());
           }
           if (!parts.length) return;
@@ -2585,11 +2590,12 @@ ${rows || "（暂无填写）"}
           var btn = document.getElementById("copyAnalysisBtn");
           if (navigator.clipboard) {
             navigator.clipboard.writeText(text).then(function () {
+              window.XYVCToolUI.message("结果已复制。");
               btn.textContent = "✅ 已复制！";
               setTimeout(function () {
                 btn.textContent = "📋 复制分析";
               }, 2000);
-            });
+            }).catch(function () { window.XYVCToolUI.message("复制失败，请选中结果文字手动复制。"); });
           } else {
             var ta = document.createElement("textarea");
             ta.value = text;
@@ -2606,7 +2612,7 @@ ${rows || "（暂无填写）"}
 
         window.saveVersion = function () {
           if (!hasMeaningfulTop3() || !window.XYVCUnifiedDataManager) {
-            window.alert("请先至少填出一个明确的定位，再保存版本。");
+            window.XYVCToolUI.message("请先至少填出一个明确的定位，再保存版本。");
             return;
           }
           var history = window.XYVCUnifiedDataManager.appendToolHistory(TOOL_ID, {
@@ -2619,7 +2625,7 @@ ${rows || "（暂无填写）"}
           S.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
           save();
           renderHistoryList();
-          window.alert("当前版本已保存。");
+          window.XYVCToolUI.message("当前版本已保存。");
         };
 
         window.openSavedVersion = function (versionId) {
@@ -2633,7 +2639,7 @@ ${rows || "（暂无填写）"}
 
         window.copyShareLink = function () {
           if (!hasMeaningfulTop3() || !window.XYVCUnifiedDataManager) {
-            window.alert("请先完成你的 Top 3，再生成分享链接。");
+            window.XYVCToolUI.message("请先完成你的 Top 3，再生成分享链接。");
             return;
           }
           var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
@@ -2648,7 +2654,7 @@ ${rows || "（暂无填写）"}
             },
           );
           var onCopied = function () {
-            window.alert("分享链接已复制。");
+            window.XYVCToolUI.message("分享链接已复制。");
           };
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(snapshot.url).then(onCopied);
@@ -2667,6 +2673,7 @@ ${rows || "（暂无填写）"}
         document.addEventListener("input", save);
 
         window.goHome = function () {
+          window.XYVCToolSession.invalidate();
           save();
           history.replaceState(
             null,
@@ -2800,6 +2807,25 @@ ${rows || "（暂无填写）"}
           var sb = document.getElementById("settingsBtn");
           if (sb) sb.style.display = "none";
         }
+
+        let resultMode = false, furthestStep = S.step;
+        window.XYVCToolUI.register({
+          startLabel: "开始探索", startButton: () => document.querySelector('#s0 button[onclick*="startApp"]'), hasProgress: () => S.step > 0,
+          home: () => window.goHome(), reset: () => window.resetApp(),
+          state: function () {
+            furthestStep = Math.max(furthestStep, S.step);
+            if (document.getElementById("s0").classList.contains("on")) return { view: "welcome" };
+            var state = { view: resultMode ? "result" : "working", position: resultMode ? "探索结果 · 你的Top 3" : "第" + S.step + "/6步 · " + STEP_NAMES[S.step - 1] };
+            if (S.step > 1) state.previous = { label: resultMode ? "返回填写" : "上一步", run: () => { if (resultMode) resultMode = false; else window.nav(-1); } };
+            state.primary = resultMode ? { label: "复制结果", run: () => window.copyAnalysis() } : { label: S.step === 6 ? "查看结果" : "下一步", run: () => { if (S.step < 6) window.nav(1); else if (!hasMeaningfulTop3()) window.XYVCToolUI.error("先填出至少一个定位的目标用户或问题。", document.querySelector('#medalGrid input')); else { save(); resultMode = true; window.scrollTo(0, 0); } } };
+            if (S.step === 1 && !S.ideas.some(x => x.trim())) state.hint = "先写下一个你想关注的人群和需求。";
+            if (S.outputStale) state.hint = "填写内容已改变，原AI建议需重新生成后再使用。";
+            return state;
+          },
+          steps: () => Array.from({ length: furthestStep }, (_, i) => ({ label: "回看：" + STEP_NAMES[i], run: () => { resultMode = false; S.step = i + 1; showStep(S.step); render(S.step); save(); } })),
+          more: state => state.view === "result" && !S.outputStale ? [{ label: "保存当前版本", run: () => window.saveVersion() }, { label: "复制分享链接", run: () => window.copyShareLink() }, { label: "打印结果", run: () => window.safePrint() }] : [],
+          inputChanged: function () { var pending = [...document.querySelectorAll('[id^="aiBtn"]')].filter(btn => btn.disabled); if (pending.length) { window.XYVCToolSession.invalidate(); pending.forEach(btn => { btn.disabled = false; btn.textContent = "重新生成AI建议"; }); } if (S.ai4 || S.ai5 || S.ai6) { S.outputStale = true; save(); } }
+        });
       })();
     </script>
   </body>

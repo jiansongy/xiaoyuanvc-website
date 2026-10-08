@@ -92,6 +92,7 @@
       src="https://www.googletagmanager.com/gtag/js?id=G-LP5EB2HW33"
     ></script>
     <script src="./tool-session.js"></script>
+    <script src="./tool-shell.js"></script>
     <script src="./tool-context.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -1988,7 +1989,7 @@
         function saveProgress() {
           if (!S.phase) return;
           try {
-            var snap = Object.assign({ v: 1, phase: S.phase, cardIndex: S.cardIndex, swipeHistory: S.swipeHistory }, buildSerializableState());
+            var snap = Object.assign({ v: 1, phase: S.phase, cardIndex: S.cardIndex, swipeHistory: S.swipeHistory, outputStale: S.outputStale || false }, buildSerializableState());
             if (!window.XYVCToolSession.write(SAVE_KEY, snap)) return;
           } catch (e) { /* storage may be unavailable */ }
         }
@@ -2109,6 +2110,7 @@
         })();
 
         const S = createInitialState();
+        var selfRequestPhase = 0;
         var _saveTimer = null;
 
         function debouncedSave() {
@@ -2191,7 +2193,7 @@
             return;
           }
           if (dir === 1 && S.phase === 1 && S.likes.length < 1) {
-            window.alert("请至少选择 1 个你喜欢的方向，再进入下一步。");
+            window.XYVCToolUI.message("请至少选择 1 个你喜欢的方向，再进入下一步。");
             return;
           }
           var next = S.phase + dir;
@@ -2215,6 +2217,8 @@
         };
 
         window.goWelcome = function () {
+          window.XYVCToolSession.invalidate();
+          selfRequestPhase = 0;
           saveProgress();
           showPhase(0);
           if (loadSavedProgress()) document.getElementById("resumeSection").style.display = "block";
@@ -2577,6 +2581,10 @@
         // callAI dispatcher
         // ══════════════════════════════════════════════
         async function callAI(phase) {
+          const operationToken = window.XYVCToolSession.token();
+          selfRequestPhase = phase;
+          window.XYVCToolUI.update();
+          try {
           if (phase === 1) {
             var phase1Nonce = ++S.phase1AnalysisNonce;
             var isCurrentPhase1Request = function () {
@@ -2594,7 +2602,10 @@
             card.classList.remove("revealed");
             void card.offsetWidth;
             card.classList.add("revealed");
-            S.phase1AI = await streamAI(prompt, body, isCurrentPhase1Request);
+            var phaseOutput = await streamAI(prompt, body, isCurrentPhase1Request);
+            if (!window.XYVCToolSession.current(operationToken)) return;
+            S.phase1AI = phaseOutput;
+            S.outputStale = false;
             if (!isCurrentPhase1Request()) return;
             document.getElementById("followupBox").style.display = "block";
             document.getElementById("p1NextBtn").style.display = "block";
@@ -2615,7 +2626,10 @@
             card2.classList.remove("revealed");
             void card2.offsetWidth;
             card2.classList.add("revealed");
-            S.phase2AI = await streamAI(prompt2, body2);
+            var phaseOutput = await streamAI(prompt2, body2);
+            if (!window.XYVCToolSession.current(operationToken)) return;
+            S.phase2AI = phaseOutput;
+            S.outputStale = false;
           } else if (phase === 3) {
             var valText = S.valueAnswers
               .map(function (a, i) {
@@ -2643,6 +2657,7 @@
             ks.classList.add("revealed");
             var body3 = document.getElementById("aiBody3");
             var raw = await streamAI(prompt3, body3);
+          if (!window.XYVCToolSession.current(operationToken)) return;
             S.allKeywords = raw
               .split(/[、,，\s]+/)
               .map(function (k) {
@@ -2690,9 +2705,13 @@
             document.body.appendChild(tempDiv);
             var full = await streamAI(prompt4, tempDiv);
             document.body.removeChild(tempDiv);
+            if (!window.XYVCToolSession.current(operationToken)) return;
             S.finalCandidates = parseCandidates(full);
+            S.outputStale = false;
             renderResults();
+            saveProgress();
           }
+          } finally { if (window.XYVCToolSession.current(operationToken)) selfRequestPhase = 0; window.XYVCToolUI.update(); }
         }
 
         // ══════════════════════════════════════════════
@@ -2760,6 +2779,7 @@
         };
 
         window.submitPhase2 = async function () {
+          const operationToken = window.XYVCToolSession.token();
           for (var i = 1; i <= 8; i++) {
             S.angles["q" + i] = document.getElementById("a" + i).value.trim();
           }
@@ -2767,6 +2787,7 @@
           document.getElementById("p2SubmitBtn").innerHTML =
             '<div class="pulse"><span></span><span></span><span></span></div> AI 分析中…';
           await callAI(2);
+          if (!window.XYVCToolSession.current(operationToken)) return;
           document.getElementById("p2SubmitBtn").style.display = "none";
           document.getElementById("p2NextBtn").style.display = "block";
         };
@@ -2837,13 +2858,16 @@
         }
 
         window.submitPhase3 = async function () {
+          const operationToken = window.XYVCToolSession.token();
           document.getElementById("p3SubmitBtn").disabled = true;
           document.getElementById("p3SubmitBtn").innerHTML =
             '<div class="pulse"><span></span><span></span><span></span></div> AI 提炼中…';
           await callAI(3);
+          if (!window.XYVCToolSession.current(operationToken)) return;
         };
 
         window.selectKeyword = function (el, keyword) {
+          window.XYVCToolSession.invalidate(); selfRequestPhase = 0; S.phase3AI = "";
           var already = el.classList.contains("selected");
           if (!already && S.selectedKeywords.length >= 5) return;
           el.classList.toggle("selected", !already);
@@ -2866,6 +2890,9 @@
         };
 
         async function showValueConfirm() {
+          const operationToken = window.XYVCToolSession.token();
+          selfRequestPhase = 3; window.XYVCToolUI.update();
+          try {
           var card = document.getElementById("aiCard3confirm");
           var body = document.getElementById("aiBody3confirm");
           card.style.display = "block";
@@ -2880,7 +2907,10 @@
             "\n- 擅长的才能：" +
             S.phase2AI +
             "\n\n请用1-2句话确认用户的价值观底座，让用户感到「被看见」。不超过60字。";
-          S.phase3AI = await streamAI(confirmPrompt, body);
+          var phaseOutput = await streamAI(confirmPrompt, body);
+            if (!window.XYVCToolSession.current(operationToken)) return;
+            S.phase3AI = phaseOutput;
+            S.outputStale = false;
 
           // Generate 3 value statement candidates for user to choose from
           var stmtCard = document.getElementById("aiValueStmtCard");
@@ -2903,6 +2933,7 @@
             "要求：只输出3句话，每句单独一行，不加序号和其他文字，每句20-40字。\n" +
             "示例：我想帮迷茫的大学生，通过系统化的自我探索，找到真正属于自己的方向。";
           var stmtRaw = await streamAI(stmtPrompt, stmtBody);
+          if (!window.XYVCToolSession.current(operationToken)) return;
           S.valueStatements = stmtRaw
             .split("\n")
             .map(function (s) {
@@ -2929,6 +2960,7 @@
           document.getElementById("outwardBox").style.display = "block";
           document.getElementById("p3NextBtn").style.display = "block";
           saveProgress();
+          } finally { if (window.XYVCToolSession.current(operationToken)) selfRequestPhase = 0; window.XYVCToolUI.update(); }
         }
 
         window.selectValueStmt = function (i) {
@@ -2953,8 +2985,10 @@
         window.goPhase4 = function () {
           S.outwardValue = document.getElementById("outwardInput").value.trim();
           S.selectedHistoryVersionId = "";
-          clearSavedProgress(); // completed the full flow — clear stale save
+          S.finalCandidates = []; S.chosenIndex = -1;
           showPhase(4);
+          document.getElementById("p4Loading").style.display = "block";
+          saveProgress();
           callAI(4);
         };
 
@@ -3123,17 +3157,18 @@
             c.step +
             "\n\n—— 通过「如何找到想做的事」互动工具 @ 校园VC";
           navigator.clipboard.writeText(text).then(function () {
-            var btn = document.querySelector(".btn-secondary");
+            window.XYVCToolUI.message("结果已复制。");
+            var btn = document.querySelector('[onclick="window.copyResult()"]');
             btn.textContent = "✅ 已复制！";
             setTimeout(function () {
               btn.textContent = "📋 复制结果";
             }, 2000);
-          });
+          }).catch(function () { window.XYVCToolUI.message("复制失败，请选中结果文字手动复制。"); });
         };
 
         window.saveVersion = function () {
           if (S.chosenIndex < 0 || !window.XYVCUnifiedDataManager) {
-            window.alert("请先选择一个结果，再保存版本。");
+            window.XYVCToolUI.message("请先选择一个结果，再保存版本。");
             return;
           }
           var history = window.XYVCUnifiedDataManager.appendToolHistory(
@@ -3149,7 +3184,7 @@
           );
           S.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
           renderHistoryList();
-          window.alert("当前版本已保存。");
+          window.XYVCToolUI.message("当前版本已保存。");
         };
 
         window.openSavedVersion = function (versionId) {
@@ -3163,7 +3198,7 @@
 
         window.copyShareLink = function () {
           if (S.chosenIndex < 0 || !window.XYVCUnifiedDataManager) {
-            window.alert("请先选择一个结果，再生成分享链接。");
+            window.XYVCToolUI.message("请先选择一个结果，再生成分享链接。");
             return;
           }
           var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
@@ -3179,7 +3214,7 @@
           );
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(snapshot.url).then(function () {
-              window.alert("分享链接已复制。");
+              window.XYVCToolUI.message("分享链接已复制。");
             });
           }
         };
@@ -3205,12 +3240,12 @@
             navigator.clipboard
               .writeText(copyText)
               .then(function () {
-                window.alert(
+                window.XYVCToolUI.message(
                   "已复制结果到剪贴板！\n请打开备忘录粘贴保存，或直接截图保存本页。",
                 );
               })
               .catch(function () {
-                window.alert("请截图保存本页结果。");
+                window.XYVCToolUI.message("请截图保存本页结果。");
               });
             return;
           }
@@ -3259,10 +3294,10 @@
             navigator.clipboard
               .writeText(fallbackText)
               .then(function () {
-                window.alert("已复制到剪贴板（浏览器阻止了新窗口）");
+                window.XYVCToolUI.message("已复制到剪贴板（浏览器阻止了新窗口）");
               })
               .catch(function () {
-                window.alert("请截图保存结果");
+                window.XYVCToolUI.message("请截图保存结果");
               });
           }
         };
@@ -3289,6 +3324,29 @@
           delete window.__FWYW_RESTORE_PHASE__;
           window.resumeProgress();
         })();
+
+        let furthestPhase = S.phase;
+        window.XYVCToolUI.register({
+          startLabel: "开始探索", startButton: () => document.querySelector('#s0 button[onclick="window.startApp()"]') || document.querySelector('#s0 button[onclick="startApp()"]'),
+          hasProgress: () => !!loadSavedProgress(), home: () => window.goWelcome(), reset: () => window.clearAndStart(),
+          state: function () {
+            furthestPhase = Math.max(furthestPhase, S.phase);
+            if (!S.phase) return { view: "welcome" };
+            var state = { view: S.phase === 4 ? "result" : "working", position: S.phase === 4 ? "探索结果 · 选择一个想尝试的方向" : "第" + S.phase + "/4阶段 · " + PHASE_NAMES[S.phase - 1], detail: S.phase === 1 ? "卡片 " + Math.min(S.cardIndex + 1, CARDS.length) + "/" + CARDS.length : "" };
+            if (S.phase > 1) state.previous = { run: () => window.nav(-1) };
+            if (selfRequestPhase) { state.primary = { label: "正在生成…", disabled: true }; state.hint = "AI正在生成，返回会保留填写内容；回来后可重试。"; }
+            else if (S.phase === 1) { state.primary = { label: "下一步", disabled: S.likes.length < 1, run: () => window.nav(1) }; if (S.likes.length < 1) state.hint = "先选择至少一项喜欢的事，再进入下一阶段。"; }
+            else if (S.phase === 2) { var needsAnalysis = !S.phase2AI; state.primary = { label: needsAnalysis ? "生成才能分析" : "下一步", disabled: needsAnalysis && S.experience.trim().length < 60, run: () => needsAnalysis ? window.submitPhase2() : window.nav(1) }; if (state.primary.disabled) state.hint = "请描述一次充实的经历，至少60字。"; }
+            else if (S.phase === 3) { var needsKeywords = !S.allKeywords.length; state.primary = { label: needsKeywords ? "生成价值观关键词" : "生成探索结果", disabled: needsKeywords ? S.valueAnswers.filter(v => v.length >= 10).length < 3 : S.selectedKeywords.length < 5, run: () => needsKeywords ? window.submitPhase3() : window.goPhase4() }; if (state.primary.disabled) state.hint = needsKeywords ? "至少回答三个问题，每个不少于10字。" : "请先选择五个最能代表你的关键词。"; }
+            else if (!S.finalCandidates.length || S.outputStale) { state.primary = { label: "重新生成探索结果", run: () => window.goPhase4() }; state.hint = S.outputStale ? "填写内容已改变，请重新生成探索结果。" : "上次生成未完成，填写内容已保留，可重新生成。"; }
+            else { state.primary = { label: "复制结果", disabled: S.chosenIndex < 0, run: () => window.copyResult() }; if (S.chosenIndex < 0) state.hint = "先选择一个方向，再复制结果。"; }
+            if (S.outputStale && !selfRequestPhase) state.hint = "填写内容已改变，原AI建议需重新生成后再使用。";
+            return state;
+          },
+          steps: () => Array.from({ length: Math.min(furthestPhase, 3) }, (_, i) => ({ label: "回看：" + PHASE_NAMES[i], run: () => { showPhase(i + 1); if (i === 0) renderCard(); else if (i === 1) renderPhase2(); else restorePhase3UI(); } })),
+          more: () => S.phase === 4 && S.chosenIndex >= 0 ? [{ label: "保存当前版本", run: () => window.saveVersion() }, { label: "复制分享链接", run: () => window.copyShareLink() }, { label: "打印结果", run: () => window.printResult() }] : [],
+          inputChanged: function (event) { if (event.target.id === "experienceInput") S.phase2AI = ""; if (/^v[1-5]$/.test(event.target.id)) { S.allKeywords = []; S.selectedKeywords = []; S.phase3AI = ""; document.getElementById("keywordsSection").style.display = "none"; document.getElementById("outwardBox").style.display = "none"; } if (selfRequestPhase) { window.XYVCToolSession.invalidate(); selfRequestPhase = 0; window.XYVCToolUI.message("填写内容已改变，请重新生成。"); } if (S.phase1AI || S.phase2AI || S.phase3AI || S.finalCandidates.length) { S.outputStale = true; saveProgress(); } }
+        });
       })();
     </script>
   </body>

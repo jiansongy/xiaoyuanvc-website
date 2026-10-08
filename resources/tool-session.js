@@ -1,7 +1,7 @@
 /* Shared persistence and request lifetime. Each tool owns its workflow. */
 (function () {
   "use strict";
-  var epoch = 0, resetting = false, controllers = new Set(), damaged = new Set();
+  var epoch = 0, resetting = false, controllers = new Set(), damaged = new Set(), failedKey = "";
   function notice(text, kind) {
     var el = document.getElementById("tool-session-status");
     if (!el) {
@@ -17,10 +17,11 @@
   function failed() { notice("未能保存到浏览器，请保持页面打开并复制内容备份。", "error"); }
   function write(key, value) {
     if (resetting || damaged.has(key)) return false;
-    try { localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value)); return true; }
-    catch (e) { failed(); return false; }
+    try { localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value)); if (failedKey === key) { failedKey = ""; notice("已保存到本浏览器。"); } return true; }
+    catch (e) { failedKey = key; failed(); return false; }
   }
   function read(key) {
+    if (damaged.has(key)) return null;
     try {
       var raw = localStorage.getItem(key); if (!raw) return null;
       try { return JSON.parse(raw); }

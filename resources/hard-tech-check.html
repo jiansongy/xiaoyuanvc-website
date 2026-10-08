@@ -1699,6 +1699,7 @@
     </div>
 
     <script src="./tool-session.js"></script>
+    <script src="./tool-shell.js"></script>
     <script src="./tool-context.js"></script>
     <script>
       (function () {
@@ -1797,6 +1798,7 @@
         };
 
         // ── STATE ──
+        var hardGenerating = false;
         var S = {
           step: 0,
           ml_tech: "",
@@ -2019,7 +2021,7 @@
 
         window.saveVersion = function () {
           if (!S.report || !window.XYVCUnifiedDataManager) {
-            window.alert("请先生成诊断报告，再保存版本。");
+            window.XYVCToolUI.message("请先生成诊断报告，再保存版本。");
             return;
           }
           var history = window.XYVCUnifiedDataManager.appendToolHistory(
@@ -2036,7 +2038,7 @@
           S.selectedHistoryVersionId = history[0] ? history[0].versionId : "";
           save();
           renderHistoryList();
-          window.alert("当前版本已保存。");
+          window.XYVCToolUI.message("当前版本已保存。");
         };
 
         window.openSavedVersion = function (versionId) {
@@ -2116,6 +2118,8 @@
           return window.XYVCToolSession.reset(TOOL_ID, SK, JSON.parse(JSON.stringify(initialToolState)));
         };
         window.goHome = function () {
+          window.XYVCToolSession.invalidate();
+          hardGenerating = false;
           save();
           document.querySelectorAll(".screen").forEach(function (el) {
             el.classList.remove("on");
@@ -2960,6 +2964,7 @@
 
         // ── GENERATE REPORT ──
         window.generateReport = function () {
+          const operationToken = window.XYVCToolSession.token();
           var validationMessage = "";
           for (var step = 1; step <= 6; step++) {
             validationMessage = getStepValidationMessage(step);
@@ -2972,7 +2977,9 @@
               return;
             }
           }
+          hardGenerating = true;
           S.step = 8;
+          S.report = "";
           save();
           showStep(8);
           document.getElementById("reportSubtitle").textContent =
@@ -2986,6 +2993,8 @@
           copyBtn.disabled = true;
           fetchAIResult(buildPrompt(), body)
             .then(function (text) {
+              if (!window.XYVCToolSession.current(operationToken)) return;
+              S.outputStale = false;
               S.report = text;
               S.selectedHistoryVersionId = "";
               save();
@@ -2999,6 +3008,7 @@
               copyBtn.disabled = false;
             })
             .catch(function (err) {
+              if (!window.XYVCToolSession.current(operationToken)) return;
               loading.style.display = "none";
               content.style.display = "block";
               body.innerHTML =
@@ -3006,7 +3016,7 @@
                 esc(normalizeAIError(err)) +
                 '</p><p style="color:var(--gray);font-size:13px;margin-top:8px">请检查网络后重试，或联系校园VC。</p>';
               copyBtn.disabled = false;
-            });
+            }).finally(function () { if (window.XYVCToolSession.current(operationToken)) hardGenerating = false; window.XYVCToolUI.update(); });
         };
 
         function showSavedReport() {
@@ -3032,11 +3042,12 @@
             "\n\n方法论来源：共创验证式创业法 · Roma@地球行走 · 清华经管学院";
           if (navigator.clipboard) {
             navigator.clipboard.writeText(text).then(function () {
+              window.XYVCToolUI.message("结果已复制。");
               btn.textContent = "✅ 已复制";
               setTimeout(function () {
                 btn.textContent = "📋 复制报告";
               }, 2000);
-            });
+            }).catch(function () { window.XYVCToolUI.message("复制失败，请选中报告文字手动复制。"); });
           } else {
             var el = document.createElement("textarea");
             el.value = text;
@@ -3055,7 +3066,7 @@
 
         window.copyShareLink = function () {
           if (!S.report || !window.XYVCUnifiedDataManager) {
-            window.alert("请先生成诊断报告，再复制分享链接。");
+            window.XYVCToolUI.message("请先生成诊断报告，再复制分享链接。");
             return;
           }
           var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
@@ -3067,7 +3078,7 @@
             },
           );
           var onCopied = function () {
-            window.alert("分享链接已复制。");
+            window.XYVCToolUI.message("分享链接已复制。");
           };
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(snapshot.url).then(onCopied);
@@ -3123,13 +3134,33 @@
           else if (S.step === 8 && S.report) showSavedReport();
           else if (S.step === 8) { S.step = 7; showStep(7); renderConfirm(); window.XYVCToolSession.notice("上次生成未完成，填写内容已保留，可重新生成。"); }
         }
+
+        let furthestStep = S.step;
+        window.XYVCToolUI.register({
+          startLabel: "开始自检", startButton: () => document.querySelector('#s0 button[onclick*="startApp"]'), hasProgress: () => S.step > 0,
+          home: () => window.goHome(), reset: () => window.resetApp(),
+          state: function () {
+            furthestStep = Math.max(furthestStep, S.step);
+            if (document.getElementById("s0").classList.contains("on")) return { view: "welcome" };
+            var state = { view: S.step === 8 ? "result" : "working", position: S.step <= 6 ? "第" + S.step + "/6步 · " + STEP_NAMES[S.step - 1] : S.step === 7 ? "确认填写 · 准备生成自检" : "硬科技自检结果" };
+            if (S.step > 1) state.previous = { label: S.step === 8 ? "返回填写" : "上一步", run: () => window.nav(-1) };
+            if (S.step < 7) { var reason = getStepValidationMessage(S.step); state.primary = { label: "下一步", disabled: !!reason, run: () => window.nav(1) }; state.hint = reason; }
+            else if (S.step === 7) state.primary = { label: "生成自检", run: () => window.generateReport() };
+            else { var busy = hardGenerating; state.primary = { label: busy ? "正在生成…" : S.report && !S.outputStale ? "复制结果" : "重新生成自检", disabled: busy, run: () => S.report && !S.outputStale ? window.copyReport() : window.generateReport() }; if (busy) state.hint = "AI正在生成，返回会保留填写内容；回来后可重试。"; }
+            if (S.outputStale) state.hint = "填写内容已改变，请重新生成自检，原报告暂不代表当前填写。";
+            return state;
+          },
+          steps: () => Array.from({ length: Math.min(furthestStep, 7) }, (_, i) => ({ label: "回看：" + (STEP_NAMES[i] || "确认填写"), run: () => { S.step = i + 1; showStep(S.step); if (S.step <= 6) render(S.step); else renderConfirm(); save(); } })),
+          more: () => S.step === 8 && S.report && !S.outputStale ? [{ label: "保存当前版本", run: () => window.saveVersion() }, { label: "复制分享链接", run: () => window.copyShareLink() }, { label: "打印结果", run: () => window.safePrint() }] : [],
+          inputChanged: function () { if (hardGenerating) { window.XYVCToolSession.invalidate(); hardGenerating = false; } if (S.report) { S.outputStale = true; save(); } }
+        });
       })();
 
       window.safePrint = function () {
         var ua = navigator.userAgent;
         var isInApp = /MicroMessenger|BytedanceWebview|Douyin|ToutiaoMicroApp/i.test(ua);
         if (isInApp) {
-          alert("请在浏览器中打开本页面，再使用打印/保存功能。");
+          window.XYVCToolUI.message("请在浏览器中打开本页面，再使用打印/保存功能。");
           return;
         }
         window.print();

@@ -926,7 +926,7 @@
             <div class="tool-intro-start"><p>已有点子？描述产品、用户和验证计划，找出五个方面的薄弱假设。AI分数仅供自检，不代表成功概率。</p>
 <button
                 class="btn-start"
-                onclick="window.goInput()"
+                onclick="window.startOrResume()"
                 data-ai-action="start"
                 aria-label="开始自检评估"
               >
@@ -1243,6 +1243,7 @@
     <div class="toast" id="toast"></div>
 
     <script src="./tool-session.js"></script>
+    <script src="./tool-shell.js"></script>
     <script src="./tool-context.js"></script>
     <script>
       (function () {
@@ -1315,6 +1316,7 @@
         }
 
         let S = createInitialState();
+        let rateGenerating = false;
 
         function clone(obj) {
           return JSON.parse(JSON.stringify(obj));
@@ -2116,15 +2118,7 @@
           };
         }
 
-        function showToast(msg) {
-          const toast = document.getElementById("toast");
-          if (!toast) return;
-          toast.textContent = msg;
-          toast.classList.add("show");
-          setTimeout(function () {
-            toast.classList.remove("show");
-          }, 2000);
-        }
+        function showToast(msg) { window.XYVCToolUI.message(msg); }
 
         function fallbackCopy(text) {
           const ta = document.createElement("textarea");
@@ -2143,9 +2137,18 @@
         }
 
         window.goWelcome = function () {
+          lastScreen = S.screen;
+          clearLoadingPhaseTimers();
+          rateGenerating = false;
+          window.XYVCToolSession.invalidate();
           showScreen(0);
         };
 
+        let lastScreen = 1;
+        window.startOrResume = function () {
+          if (lastScreen === 2 && S.result) { showScreen(2, true); renderResult(S.result); }
+          else window.goInput();
+        };
         window.goInput = function () {
           showScreen(1);
           syncStateToFields();
@@ -2164,6 +2167,9 @@
         };
 
         window.doScore = async function () {
+          const operationToken = window.XYVCToolSession.token();
+          S.result = null;
+          rateGenerating = true;
           saveState(true);
 
           const btnScore = document.querySelector(
@@ -2200,6 +2206,8 @@
 
           try {
             const response = await fetchToolResult(buildRequestPayload());
+            if (!window.XYVCToolSession.current(operationToken)) return;
+            S.outputStale = false;
             S.userProfile = response.userProfile || S.userProfile;
             S.toolState = response.toolState || S.toolState;
             S.toolHistory = Array.isArray(response.toolHistory)
@@ -2226,6 +2234,7 @@
               /* ignore */
             }
           } catch (err) {
+            if (!window.XYVCToolSession.current(operationToken)) return;
             clearLoadingPhaseTimers();
             if (loadingWrap) loadingWrap.style.display = "none";
             if (scoreSection) scoreSection.style.display = "block";
@@ -2239,6 +2248,9 @@
             if (scoreNum) scoreNum.textContent = "-";
             if (tierLabel) tierLabel.textContent = "暂未完成";
           } finally {
+            if (!window.XYVCToolSession.current(operationToken)) return;
+            rateGenerating = false;
+            window.XYVCToolUI.update();
             clearLoadingPhaseTimers();
             updateScoreBtn();
           }
@@ -2249,7 +2261,7 @@
           var isInApp =
             /MicroMessenger|BytedanceWebview|Douyin|ToutiaoMicroApp/i.test(ua);
           if (isInApp) {
-            window.alert(
+            window.XYVCToolUI.message(
               "当前浏览器不支持打印功能。\n\n请点击「复制自检单」保存结果，或截图保存本页内容。",
             );
             return;
@@ -2257,7 +2269,7 @@
           try {
             window.print();
           } catch (e) {
-            window.alert(
+            window.XYVCToolUI.message(
               "当前浏览器不支持直接打印，请使用浏览器菜单中的「分享 → 打印」或截图保存。",
             );
           }
@@ -2468,6 +2480,21 @@
         } else {
           boot();
         }
+
+        window.XYVCToolUI.register({
+          startLabel: "开始自检", startButton: () => document.querySelector('#s0 button[onclick*="startOrResume"]'), hasProgress: () => !!(getDraft().product || S.result),
+          home: () => window.goWelcome(), reset: () => window.resetAll(),
+          state: function () {
+            if (S.screen === 0) return { view: "welcome" };
+            var state = { view: S.screen === 1 ? "working" : "result", position: S.screen === 1 ? "填写中 · 描述你的想法与验证计划" : "学生创业自检结果" };
+            if (S.screen === 1) { var btn = document.getElementById("btnScore"); state.primary = { label: "生成自检", disabled: btn.disabled, run: () => window.doScore() }; if (btn.disabled) state.hint = "请用至少20字描述产品，再生成自检。"; }
+            else { var busy = rateGenerating; state.previous = { label: "返回填写", run: () => window.goInput() }; state.primary = { label: busy ? "正在生成…" : S.result && !S.outputStale ? "复制结果" : "重新生成自检", disabled: busy, run: () => S.result && !S.outputStale ? window.copyReport() : window.doScore() }; if (busy) state.hint = "AI正在生成，返回会保留填写内容；回来后可重试。"; }
+            if (S.outputStale) state.hint = "填写内容已改变，请重新生成自检，原评分暂不代表当前填写。";
+            return state;
+          },
+          more: () => S.result && !S.outputStale ? [{ label: "复制分享链接", run: () => window.copyShareLink() }, { label: "打印结果", run: () => window.safePrint() }] : [],
+          inputChanged: function () { if (rateGenerating) { window.XYVCToolSession.invalidate(); rateGenerating = false; clearLoadingPhaseTimers(); updateScoreBtn(); } if (S.result) { S.outputStale = true; persistState(true); } }
+        });
       })();
     </script>
   <footer style="text-align:center;padding:20px 12px;font-size:12px;color:#888;background:#f7f7f7;border-top:1px solid #eee;line-height:2"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" style="color:#888;margin:0 6px;text-decoration:none">京ICP备2021017602号-1</a><a href="https://www.beian.gov.cn/" target="_blank" rel="noopener" style="color:#888;margin:0 6px;text-decoration:none">京公网安备11010802035175号</a><br>© 北京校园维西科技有限公司</footer></body>
