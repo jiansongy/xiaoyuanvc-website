@@ -9,10 +9,9 @@ body > .header { position: relative; top: auto; }
 .tool-intro-start p { margin: 0 0 12px; color: #475569; font-size: 14px; line-height: 1.7; }
 .tool-method { margin: 0 24px 20px; border-top: 1px solid #e5e7eb; }
 .tool-method > summary { padding: 12px 0; cursor: pointer; color: #475569; font-size: 14px; }
-.intro-head > img { max-width: 96px !important; margin-bottom: 12px !important; }
+.tool-cover { display: block; width: 100%; max-width: min(400px, calc(100vw - 96px)); height: auto; aspect-ratio: 3 / 2; object-fit: contain; margin: 0 auto 16px; border-radius: 12px; }
 .tool-result-note { padding: 12px 16px; margin: 12px 0; color: #475569; background: #f8fafc; border-radius: 8px; font-size: 13px; line-height: 1.7; }
 body[data-tool="find-what-you-want"] .welcome-header { padding: 20px 16px; }
-body[data-tool="find-what-you-want"] .welcome-header > img { max-width: 96px !important; margin-bottom: 12px !important; }
 body[data-tool="find-what-you-want"] #s0 .formula-box { display: none; }
 body[data-tool="find-what-you-want"] #s0 .tool-start-summary { margin: 12px 0; color: #475569; font-size: 14px; line-height: 1.7; }
 @media (max-width: 600px) { .tool-shell-nav { gap: 12px; font-size: 13px; } .tool-intro-start { padding: 16px; } .tool-method { margin: 0 16px 16px; } .intro-wrap { padding-top: 16px; } .intro-head { padding: 16px; } }
