@@ -522,15 +522,15 @@
   ];
 
   var EXPERIENCE = [
-    { milestoneId: "M1", artifactName: "创业战队卡", reward: "你已经把一个模糊想法变成了一支可以行动的创业小队。", hecdCue: "现在不用想太多：这句话想法先当作一个还没被验证的猜测，后面我们会一步步看它成不成立。", artifactFields: [["team_name","队名"],["team_roles","成员 / 角色"],["one_line_idea","一句话创业想法"]] },
+    { milestoneId: "M1", artifactName: "创业战队卡", reward: "初步分工已整理，下一步可独自或与伙伴尝试一个小任务。", hecdCue: "现在不用想太多：这句话想法先当作一个还没被验证的猜测，后面我们会一步步看它成不成立。", artifactFields: [["team_name","队名"],["team_roles","成员 / 角色"],["one_line_idea","一句话创业想法"]] },
     { milestoneId: "M2", artifactName: "用户机会地图", reward: "你已经从「我想做什么」切换到「用户可能需要什么」。", hecdCue: "先问自己一句：哪些是我们真的知道的事实，哪些只是我们的猜测？我们凭什么相信？", artifactFields: [["candidate_needs","候选机会"],["known_vs_assumed","已知事实 vs 待验证假设"]] },
     { milestoneId: "M3", artifactName: "问题定义卡", reward: "你已经把一堆可能的问题，收敛成了这轮最值得解决的一个问题。", hecdCue: "这个问题定义还只是我们的判断。想一个能推翻它的证据：如果出现什么情况，就说明我们搞错了？", artifactFields: [["target_customer","目标客户"],["core_problem","核心问题"],["key_scenario","关键场景"],["selection_reason","为什么优先"],["problem_statement","一句话问题定义"]] },
     { milestoneId: "M4", artifactName: "Crazy 8 创意板", reward: "你已经把一个问题变成了多个可选择的解决方向，而不是被第一个点子绑住。", hecdCue: "先别急着选：这 8 个方案都还没被验证，每个背后都藏着一个「用户为什么会需要它」的问题。", artifactFields: [["crazy8","8 个明显不同的方案"]] },
     { milestoneId: "M5", artifactName: "创新矩阵 + Winner", reward: "你已经从「点子很多」走到了「为什么这一个最值得先做」。", hecdCue: "选出来的方案不是终点，而是下一关要去验证的猜测。想清楚：其中最不靠谱、最需要证明的一条是什么？", artifactFields: [["solution_matrix","创新矩阵"],["chosen_solution","Winner 方案"],["key_risk","最高风险假设"]] },
-    { milestoneId: "M6", artifactName: "最小原型蓝图", reward: "你已经把抽象点子压缩成一个别人能看、点、试的最小体验。", hecdCue: "做原型的目的是拿到真实反馈，不是做得好看。想清楚：这个原型到底要证明或推翻什么？", artifactFields: [["prototype_scope","最小原型范围"],["prototype_script","用户体验脚本"],["validation_target","要验证的关键假设"]] },
-    { milestoneId: "M7", artifactName: "验证证据地图", reward: "你开始让真实世界决定方向，而不是让团队内部意见决定方向。", hecdCue: "让真实用户来说话：如果反馈印证了我们的猜测，就继续；如果推翻了，就调整；发现和预期相反，是好消息，不是失败。", artifactFields: [["test_users","测试对象"],["test_tasks","测试任务与观察点"],["feedback_summary","真实反馈 / 模拟示例"],["hecd_decision","下一步决定"]] },
+    { milestoneId: "M6", artifactName: "最小原型蓝图", reward: "原型蓝图已形成，下一步可以动手做出最小体验。", hecdCue: "做原型的目的是拿到真实反馈，不是做得好看。想清楚：这个原型到底要证明或推翻什么？", artifactFields: [["prototype_scope","最小原型范围"],["prototype_script","用户体验脚本"],["validation_target","要验证的关键假设"]] },
+    { milestoneId: "M7", artifactName: "验证证据地图", reward: "验证计划已整理，下一步收集真实反馈，再决定方向。", hecdCue: "让真实用户来说话：如果反馈印证了我们的猜测，就继续；如果推翻了，就调整；发现和预期相反，是好消息，不是失败。", artifactFields: [["test_users","测试对象"],["test_tasks","测试任务与观察点"],["feedback_summary","真实反馈 / 模拟示例"],["hecd_decision","下一步决定"]] },
     { milestoneId: "M8", artifactName: "1 分钟路演卡", reward: "你已经把项目压缩成别人一分钟能听懂、能选择是否支持的故事。", hecdCue: "路演时的投票、追问、试用意愿，都是真实反馈；掌声不算数。", artifactFields: [["pitch","1 分钟 Pitch"],["ask","明确 Ask"]] },
-    { milestoneId: "M9", artifactName: "创业能力成长报告", reward: "你已经把一次创业过程沉淀成下一次可以复用的方法和能力。", hecdCue: "回头看看这一路：我们最开始相信了什么？哪些真实反馈改变了想法？出现了什么出乎意料的事？最后决定了什么？", artifactFields: [["changed_belief","被证据改变的认知"],["effective_method","最有效的方法"],["next_round","下一轮最高杠杆行动"]] }
+    { milestoneId: "M9", artifactName: "创业能力成长报告", reward: "复盘草稿已形成，下一轮用真实行动检验和积累这些方法。", hecdCue: "回头看看这一路：我们最开始相信了什么？哪些真实反馈改变了想法？出现了什么出乎意料的事？最后决定了什么？", artifactFields: [["changed_belief","被证据改变的认知"],["effective_method","最有效的方法"],["next_round","下一轮最高杠杆行动"]] }
   ];
 
   var ENTRECOMP_NAMES = {
@@ -1376,7 +1376,7 @@
           var expResult = acceptMilestone();
           if (!expResult) return;
           aiStatus = null;
-          toast("已获得「" + expResult.artifactName + "」" + (S.stage === "finished" ? " · 全部完成！" : ""));
+          toast("已获得「" + expResult.artifactName + "」" + (S.stage === "finished" ? " · 九步方案草稿已完成！" : ""));
           render();
           // 推进到下一关后，立即为下一关生成草稿
           if (S.stage !== "finished") autoDraft();
@@ -1529,7 +1529,8 @@
     } else {
       html.push('<div class="a-proj">');
       html.push('  <div class="a-proj-name">我的火种节项目</div>');
-      html.push('  <div class="a-proj-meta">' + esc(S.idea) + ' · ' + Object.keys(S.artifacts).length + '/9 关已完成</div>');
+      html.push('  <div class="a-proj-meta">' + esc(S.idea) + ' · ' + Object.keys(S.artifacts).length + '/9 关草稿已确认</div>');
+      html.push('  <p style="color:#6b7280;font-size:13px;line-height:1.6;">成果卡记录的是方案草稿，真实行动需自行验证。</p>');
       html.push('<button class="btn btn-outline" id="copyArtifactsBtn">复制已定稿成果</button>');
       MILESTONES.forEach(function (m) {
         var art = S.artifacts[m.id];

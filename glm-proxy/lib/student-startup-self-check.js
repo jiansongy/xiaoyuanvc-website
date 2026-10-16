@@ -97,31 +97,12 @@ function isSpecificEnough(text) {
 }
 
 function hasUserInterviewEvidence(snapshot) {
-  return (
-    ["已做用户访谈", "已做 MVP", "已有用户", "已有收入"].includes(snapshot.stage) ||
-    hasAnyKeyword(snapshot.product + " " + snapshot.validationPlan, [
-      "访谈",
-      "采访",
-      "调研",
-      "问卷",
-      "用户聊",
-    ])
-  );
+  // Free text may describe plans or missing evidence; only use the selected stage here.
+  return ["已做用户访谈", "已做 MVP", "已有用户", "已有收入"].includes(snapshot.stage);
 }
 
 function hasMvpEvidence(snapshot) {
-  return (
-    ["已做 MVP", "已有用户", "已有收入"].includes(snapshot.stage) ||
-    hasAnyKeyword(snapshot.product + " " + snapshot.validationPlan, [
-      "MVP",
-      "原型",
-      "demo",
-      "小程序",
-      "网站",
-      "试用版",
-      "测试版",
-    ])
-  );
+  return ["已做 MVP", "已有用户", "已有收入"].includes(snapshot.stage);
 }
 
 function hasTimeBoundPlan(snapshot) {
@@ -354,13 +335,13 @@ function buildHeuristicLayer(snapshot) {
   const triggeredRules = [
     {
       key: "interviews",
-      label: "已有真实用户访谈",
+      label: "阶段自报：访谈基础",
       hit: interviews,
       score: interviews ? 5 : 0,
     },
     {
       key: "mvp",
-      label: "已有 MVP 原型",
+      label: "阶段自报：MVP 基础",
       hit: mvp,
       score: mvp ? 5 : 0,
     },
@@ -650,7 +631,21 @@ async function maybeRecalibrateWithHistory(options) {
     latestHistory.outputSnapshot.scoring ||
     null;
 
-  if (!previousScores) {
+  const previousHeuristic = latestHistory.outputSnapshot.heuristicLayer;
+  const previousRules = previousHeuristic && Array.isArray(previousHeuristic.triggeredRules)
+    ? previousHeuristic.triggeredRules
+    : [];
+  const currentEvidenceFlags = {
+    interviews: hasUserInterviewEvidence(previousInput),
+    mvp: hasMvpEvidence(previousInput),
+  };
+  // Do not let exact reuse or near-match recalibration preserve obsolete evidence bonuses.
+  const compatibleEvidence = Object.keys(currentEvidenceFlags).every(function (key) {
+    const rule = previousRules.find(function (item) { return item && item.key === key; });
+    return rule && typeof rule.hit === "boolean" && rule.hit === currentEvidenceFlags[key];
+  });
+
+  if (!previousScores || !compatibleEvidence) {
     return {
       recalibrated: false,
       reusedPreviousScores: false,
