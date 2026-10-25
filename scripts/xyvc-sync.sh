@@ -2,76 +2,50 @@
 
 set -euo pipefail
 
-REPOSITORY="${XYVC_REPOSITORY:-jiansongy/xiaoyuanvc-website}"
 GITHUB_SHA="${XYVC_GITHUB_SHA:?XYVC_GITHUB_SHA is required}"
 LIVE_ROOT="/var/www/xiaoyuanvc"
 DEPLOY_PARENT="/var/www"
 MIN_FREE_KB=1048576
-NODE_VERSION="v22.23.1"
+ARTIFACT_URL="${XYVC_ARTIFACT_URL:?XYVC_ARTIFACT_URL is required}"
+ARTIFACT_SHA256="${XYVC_ARTIFACT_SHA256:?XYVC_ARTIFACT_SHA256 is required}"
+if [[ ! "$ARTIFACT_SHA256" =~ ^[0-9a-f]{64}$ || "$ARTIFACT_URL" != https://* ]]; then
+  echo "Expected an HTTPS artifact URL and lowercase SHA-256 digest." >&2
+  exit 2
+fi
 
 if [[ ! "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]; then
   echo "XYVC_GITHUB_SHA must be a 40-character lowercase commit SHA." >&2
   exit 2
 fi
 
-# Bound Node download and Git fetch within the 900-second remote command budget.
-download_release_file() {
-  local label="$1" url="$2" destination="$3" limit="$4"
-  local started=$SECONDS status
-  echo "[download] $label started $(date -u +%FT%TZ)"
-  if curl -fsSL --connect-timeout 20 --max-time "$limit" \
-    --speed-limit 1024 --speed-time 30 \
-    --retry 1 --retry-delay 3 --retry-connrefused \
-    --retry-max-time "$((limit * 2 + 10))" \
-    --write-out '[download] http=%{http_code} bytes=%{size_download} speed=%{speed_download}B/s connect=%{time_connect}s first_byte=%{time_starttransfer}s transfer=%{time_total}s\n' \
-    "$url" -o "$destination"; then
-    echo "[download] $label completed elapsed=$((SECONDS - started))s"
-  else
-    status=$?
-    echo "[download] $label failed status=$status elapsed=$((SECONDS - started))s" >&2
-    return "$status"
+# This server only downloads a prebuilt release. No Git, Node or npm required.
+prepare_release_artifact() {
+  local url="$1" digest="$2" sha="$3" destination="$4"
+  local archive="$WORK_DIR/release.tar.gz"
+  # Keep signed URLs out of output and disable user curl configuration.
+  curl -q --fail --silent --show-error --proto '=https' \
+    --connect-timeout 20 --max-time 240 \
+    --speed-limit 1024 --speed-time 60 \
+    --retry 1 --retry-delay 5 --retry-max-time 490 \
+    "$url" --output "$archive"
+  printf '%s  %s\n' "$digest" "$archive" | sha256sum -c -
+  # Reject unsafe paths and links before extracting as root.
+  tar -tzf "$archive" > "$WORK_DIR/archive-paths"
+  if ! awk 'BEGIN {ok=1} /^\// || /(^|\/)\.\.(\/|$)/ {ok=0} END {exit !ok}' "$WORK_DIR/archive-paths"; then
+    echo "Unsafe release archive path." >&2
+    return 1
   fi
-}
-
-# The cache is outside nginx's web root. Export only the requested commit.
-prepare_release_source() {
-  local cache="$1" repository_url="$2" sha="$3" destination="$4"
-  mkdir -p "$(dirname "$cache")"
-  (
-    flock -w 60 9
-    local started=$SECONDS before=0 attempt status=0
-    if [[ -d "$cache" ]]; then
-      [[ "$(git -C "$cache" rev-parse --is-bare-repository)" == "true" ]] || return 1
-      before=$(du -sk "$cache" | cut -f1)
-      echo "[source-cache] reusing persistent Git objects"
-    else
-      git init --bare "$cache"
-      echo "[source-cache] initializing persistent Git cache"
-    fi
-    if git -C "$cache" cat-file -e "$sha^{commit}" 2>/dev/null; then
-      echo "[source-cache] exact commit already cached; no source network transfer"
-    else
-      for attempt in 1 2; do
-        echo "[source-cache] incremental fetch attempt=$attempt SHA=$sha"
-        if timeout --kill-after=10s 300s git -C "$cache" \
-          -c http.lowSpeedLimit=1024 -c http.lowSpeedTime=30 \
-          fetch --progress --no-tags --depth=1 "$repository_url" "$sha"; then
-          status=0
-          break
-        else
-          status=$?
-          echo "[source-cache] fetch failed status=$status" >&2
-        fi
-        if [[ "$attempt" == 1 ]]; then sleep 3; fi
-      done
-      if (( status != 0 )); then return "$status"; fi
-    fi
-    git -C "$cache" cat-file -e "$sha^{commit}"
-    git -C "$cache" update-ref refs/xyvc/current "$sha"
-    mkdir -p "$destination"
-    git -C "$cache" archive "$sha" | tar -x -C "$destination"
-    echo "[source-cache] exported exact SHA=$sha elapsed=$((SECONDS - started))s cache_added_kib=$(( $(du -sk "$cache" | cut -f1) - before ))"
-  ) 9>"$cache.lock"
+  tar -tvzf "$archive" > "$WORK_DIR/archive-types"
+  if grep -qvE '^[-d]' "$WORK_DIR/archive-types"; then
+    echo "Release archive must contain only directories and regular files." >&2
+    return 1
+  fi
+  mkdir -p "$destination"
+  tar --no-same-owner --no-same-permissions -xzf "$archive" -C "$destination"
+  [[ "$(cat "$destination/.well-known/deploy-sha.txt")" == "$sha" ]] || {
+    echo "Artifact commit does not match requested release." >&2
+    return 1
+  }
 }
 
 WORK_DIR="$(mktemp -d /tmp/xyvc-sync.XXXXXX)"
@@ -215,77 +189,30 @@ NGINX
   fi
 }
 
-echo "[1/8] Snapshot current server state"
-docker ps || true
-npm list -g --depth=0 || true
-systemctl list-units --type=service --state=running --no-pager || true
-cat /etc/os-release || true
-ldd --version 2>&1 | head -1 || true
-node --version || true
-npm --version || true
+echo "[1/6] Check origin and free space"
 df -Pk "$DEPLOY_PARENT"
-
 available_kb="$(df -Pk "$DEPLOY_PARENT" | awk 'NR == 2 { print $4 }')"
 if [[ ! "$available_kb" =~ ^[0-9]+$ ]] || (( available_kb < MIN_FREE_KB )); then
   echo "At least 1 GiB of free space is required under $DEPLOY_PARENT." >&2
   exit 1
 fi
+[[ -d "$LIVE_ROOT" ]] || { echo "Missing live root: $LIVE_ROOT" >&2; exit 1; }
 
-if [[ ! -d "$LIVE_ROOT" ]]; then
-  echo "Expected nginx document root does not exist: $LIVE_ROOT" >&2
-  exit 1
+echo "[2/6] Download and verify prebuilt release SHA=$GITHUB_SHA"
+source_dir="$WORK_DIR/dist"
+if [[ -n "${XYVC_FILES_SCRIPT_B64:-}" ]]; then
+  printf '%s' "$XYVC_FILES_SCRIPT_B64" | base64 -d | gzip -d > "$WORK_DIR/receive-files.py"
+  python3 "$WORK_DIR/receive-files.py" "$ARTIFACT_URL" "${XYVC_MANIFEST_SHA256:?Missing manifest digest}" \
+    "$GITHUB_SHA" "$LIVE_ROOT" "$source_dir"
+else
+  prepare_release_artifact "$ARTIFACT_URL" "$ARTIFACT_SHA256" "$GITHUB_SHA" "$source_dir"
 fi
 
-echo "[2/8] Provision temporary Node.js $NODE_VERSION"
-case "$(uname -m)" in
-  x86_64)
-    node_arch="x64"
-    node_sha256="7a8cb04b4a1df4eaf432125324b81b29a088e73570a23259a8de1c65d07fc129"
-    ;;
-  aarch64|arm64)
-    node_arch="arm64"
-    node_sha256="543fa39e57d4c07855939459a323f4deb9a79dd1bb45e6e99458b0f2de10db8d"
-    ;;
-  *)
-    echo "Unsupported server architecture: $(uname -m)" >&2
-    exit 1
-    ;;
-esac
-
-node_archive="node-${NODE_VERSION}-linux-${node_arch}.tar.gz"
-node_base_url="https://nodejs.org/dist/${NODE_VERSION}"
-download_release_file "Node.js" "$node_base_url/$node_archive" "$WORK_DIR/$node_archive" 90
-(
-  cd "$WORK_DIR"
-  printf '%s  %s\n' "$node_sha256" "$node_archive" | sha256sum -c -
-  tar -xzf "$node_archive"
-)
-export PATH="$WORK_DIR/node-${NODE_VERSION}-linux-${node_arch}/bin:$PATH"
-node --version
-npm --version
-
-echo "[3/8] Prepare exact source SHA from persistent Git cache: $GITHUB_SHA"
-source_dir="$WORK_DIR/source"
-prepare_release_source "/var/cache/xyvc-deploy/source.git" \
-  "https://github.com/${REPOSITORY}.git" "$GITHUB_SHA" "$source_dir"
-if [[ ! -f "$source_dir/build.sh" || ! -f "$source_dir/learn-src/package-lock.json" ]]; then
-  echo "Cached commit does not contain the expected project structure." >&2
-  exit 1
-fi
-
-echo "[4/8] Build complete dist tree"
-build_started=$SECONDS
-(
-  cd "$source_dir"
-  bash build.sh
-)
-echo "[timing] build elapsed=$((SECONDS - build_started))s"
-
-echo "[5/8] Validate build output"
+echo "[3/6] Validate build output"
 required_files=(
-  "dist/index.html"
-  "dist/learn/crypto-vc/index.html"
-  "dist/learn/digital-startup/index.html"
+  "index.html"
+  "learn/crypto-vc/index.html"
+  "learn/digital-startup/index.html"
 )
 for required_file in "${required_files[@]}"; do
   if [[ ! -s "$source_dir/$required_file" ]]; then
@@ -293,15 +220,20 @@ for required_file in "${required_files[@]}"; do
     exit 1
   fi
 done
-grep -Fq '京ICP备2021017602号-1' "$source_dir/dist/index.html"
-grep -Fq '京公网安备11010802035175号' "$source_dir/dist/index.html"
+grep -Fq '京ICP备2021017602号-1' "$source_dir/index.html"
+grep -Fq '京公网安备11010802035175号' "$source_dir/index.html"
+
+if [[ "${XYVC_VALIDATE_ONLY:-0}" == "1" ]]; then
+  echo "DONE-VALIDATE SHA=$GITHUB_SHA; live directory unchanged."
+  exit 0
+fi
 
 mkdir "$RELEASE_DIR"
-cp -a "$source_dir/dist/." "$RELEASE_DIR/"
+cp -a "$source_dir/." "$RELEASE_DIR/"
 release_file_count="$(find "$RELEASE_DIR" -type f | wc -l | tr -d ' ')"
 echo "Prepared $release_file_count files for release."
 
-echo "[6/8] Replace nginx document root"
+echo "[4/6] Replace nginx document root"
 mv "$LIVE_ROOT" "$BACKUP_DIR"
 LIVE_MOVED=1
 mv "$RELEASE_DIR" "$LIVE_ROOT"
@@ -311,8 +243,8 @@ SWAPPED=1
 # 在新文档根生效后，注入 www 的下架重定向（幂等、失败回滚，绝不影响站点可用性）
 apply_www_redirects
 
-echo "[7/8] Verify local nginx origin"
-origin=(curl --noproxy '*' --silent --show-error --resolve www.xiaoyuanvc.com:443:127.0.0.1)
+echo "[5/6] Verify local nginx origin"
+origin=(curl -q --noproxy '*' --silent --show-error --connect-timeout 5 --max-time 20 --resolve www.xiaoyuanvc.com:443:127.0.0.1)
 
 verify_page() {
   local path="$1"
@@ -352,7 +284,7 @@ if [[ "$missing_status" != "404" ]]; then
   exit 1
 fi
 
-echo "[8/8] Finalize release"
+echo "[6/6] Finalize release"
 SWAPPED=0
 remove_managed_tree "$BACKUP_DIR"
 echo "DONE-SYNC SHA=$GITHUB_SHA FILES=$release_file_count"

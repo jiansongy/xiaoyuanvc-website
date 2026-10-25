@@ -14,9 +14,11 @@ on:
         options:
           - deploy
           - renew-certificate
+          - verify-delivery
 
 permissions:
   contents: read
+  actions: write
 
 concurrency:
   group: www-origin
@@ -26,13 +28,17 @@ jobs:
   sync-www:
     name: Sync www.xiaoyuanvc.com
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     env:
+      PYTHONDONTWRITEBYTECODE: "1"
       ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
       ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
       ALIYUN_INSTANCE_ID: ${{ secrets.ALIYUN_INSTANCE_ID }}
       ALIYUN_REGION_ID: ${{ vars.ALIYUN_REGION_ID }}
       XYVC_OPERATION: ${{ inputs.operation || 'deploy' }}
+      XYVC_RELAY_REGION: ap-southeast-7
+      XYVC_RELAY_INSTANCE_ID: b93cae9c2edb4346acdb7c012ea863dd
+      XYVC_RELAY_BASE_URL: https://approval.xiaoyuanvc.com/_xyvc-release
     steps:
       - uses: actions/checkout@v6
 
@@ -40,6 +46,38 @@ jobs:
         run: |
           python3 scripts/test-www-command-retry.py
           python3 scripts/test-www-deploy-guards.py
+          python3 scripts/test-www-artifact.py
+          python3 scripts/test-www-relay.py
+          bash scripts/test-www-deployment.sh
+
+      - uses: actions/setup-node@v6
+        if: env.XYVC_OPERATION != 'renew-certificate'
+        with:
+          node-version: '22.23.1'
+
+      - name: Build production pages on GitHub
+        if: env.XYVC_OPERATION != 'renew-certificate'
+        run: npm run build
+
+      - uses: actions/setup-python@v6
+        if: env.XYVC_OPERATION != 'renew-certificate'
+        with:
+          python-version: '3.12'
+
+      - name: Package exact production release
+        id: package
+        if: env.XYVC_OPERATION != 'renew-certificate'
+        run: python3 scripts/package-www-artifact.py
+
+      - uses: actions/upload-artifact@v7
+        id: upload
+        if: env.XYVC_OPERATION != 'renew-certificate'
+        with:
+          name: www-release-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ steps.package.outputs.path }}
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error
 
       - name: Install Alibaba Cloud CLI
         run: |
@@ -72,11 +110,27 @@ jobs:
             sleep 5
           done
 
+      - name: Stage release on Bangkok relay
+        id: artifact
+        if: env.XYVC_OPERATION != 'renew-certificate'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.upload.outputs.artifact-id }}
+          ARTIFACT_SHA256: ${{ steps.package.outputs.sha256 }}
+          MANIFEST_SHA256: ${{ steps.package.outputs.manifest_sha256 }}
+        run: python3 scripts/relay-www-artifact.py
+
       - name: Run selected www operation via Command Assistant
         id: run_command
+        env:
+          ARTIFACT_URL: ${{ steps.artifact.outputs.url }}
+          ARTIFACT_SHA256: ${{ steps.package.outputs.sha256 }}
+          MANIFEST_SHA256: ${{ steps.package.outputs.manifest_sha256 }}
         run: |
           set -euo pipefail
           REGION="${ALIYUN_REGION_ID:-cn-beijing}"
+          validate_only=0
+          [[ "$XYVC_OPERATION" != "verify-delivery" && "$GITHUB_REF" == "refs/heads/main" ]] || validate_only=1
           deploy_command() {
           cat <<EOF
           set -euo pipefail
@@ -87,7 +141,7 @@ jobs:
           trap cleanup EXIT
           printf '%s' "$SYNC_SCRIPT_B64" | base64 -d | gzip -d > "\$sync_script"
           bash -n "\$sync_script"
-          XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_REPOSITORY="$GITHUB_REPOSITORY" bash "\$sync_script"
+          XYVC_FILES_SCRIPT_B64="$FILES_SCRIPT_B64" XYVC_MANIFEST_SHA256="$MANIFEST_SHA256" XYVC_VALIDATE_ONLY="$validate_only" XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_ARTIFACT_URL="$ARTIFACT_URL" XYVC_ARTIFACT_SHA256="$ARTIFACT_SHA256" bash "\$sync_script"
           EOF
           }
           certificate_renewal_command() {
@@ -99,7 +153,8 @@ jobs:
           EOF
           }
           case "$XYVC_OPERATION" in
-            deploy)
+            deploy|verify-delivery)
+              FILES_SCRIPT_B64="$(gzip -c scripts/receive-www-files.py | base64 -w0)"
               SYNC_SCRIPT_B64="$(gzip -c scripts/xyvc-sync.sh | base64 -w0)"
               COMMAND_CONTENT="$(deploy_command)"
               ;;
@@ -132,6 +187,8 @@ jobs:
           exit "\$operation_status"
           EOF
           )"
+          echo "::add-mask::$operation_b64"
+          echo "::add-mask::$(printf '%s' "$COMMAND_CONTENT" | base64 -w0)"
           response="$(bash scripts/submit-www-command.sh \
             --region "$REGION" \
             --biz-region-id "$REGION" \
@@ -190,6 +247,7 @@ jobs:
           exit 1
 
       - name: Verify public www pages
+        if: env.XYVC_OPERATION == 'deploy' && github.ref == 'refs/heads/main'
         run: |
           set -euo pipefail
 
@@ -199,7 +257,7 @@ jobs:
             local body headers status
             body="$(mktemp)"
             headers="$(mktemp)"
-            status="$(curl --noproxy '*' -sS --max-redirs 0 -D "$headers" -o "$body" -w '%{http_code}' "$url")"
+            status="$(curl -q --noproxy '*' -sS --connect-timeout 10 --max-time 20 --max-redirs 0 -D "$headers" -o "$body" -w '%{http_code}' "$url")"
             if [[ "$status" != "200" ]]; then
               echo "Expected HTTP 200 for $url, got $status." >&2
               exit 1
@@ -217,20 +275,38 @@ jobs:
           verify_page "https://www.xiaoyuanvc.com/learn/crypto-vc/" "加密创投教程"
           verify_page "https://www.xiaoyuanvc.com/learn/digital-startup/" "数字创业教程"
 
+          served_sha="$(curl -q --noproxy '*' -fsS --connect-timeout 10 --max-time 20 \
+            "https://www.xiaoyuanvc.com/.well-known/deploy-sha.txt?sha=${GITHUB_SHA}")"
+          [[ "$served_sha" == "$GITHUB_SHA" ]] || { echo "Public origin serves a different commit" >&2; exit 1; }
+
           # 下架资源重定向：非致命，仅告警，避免阻断内容部署
           for redirect_url in \
             "https://www.xiaoyuanvc.com/resources/ai-ready-check" \
             "https://www.xiaoyuanvc.com/resources/ai-employee-interview-guide" \
             "https://www.xiaoyuanvc.com/resources/china-hackathon-calendar"; do
-            redirect_status="$(curl --noproxy '*' -sS -o /dev/null -w '%{http_code}' "$redirect_url")"
+            redirect_status="$(curl -q --noproxy '*' -sS --connect-timeout 10 --max-time 20 -o /dev/null -w '%{http_code}' "$redirect_url")"
             if [[ "$redirect_status" != "301" ]]; then
               echo "WARN: expected HTTP 301 for $redirect_url, got $redirect_status." >&2
             fi
           done
 
           missing_url="https://www.xiaoyuanvc.com/deployment-smoke-missing-${GITHUB_SHA}"
-          missing_status="$(curl --noproxy '*' -sS -o /dev/null -w '%{http_code}' "$missing_url")"
+          missing_status="$(curl -q --noproxy '*' -sS --connect-timeout 10 --max-time 20 -o /dev/null -w '%{http_code}' "$missing_url")"
           if [[ "$missing_status" != "404" ]]; then
             echo "Expected HTTP 404 for $missing_url, got $missing_status." >&2
             exit 1
           fi
+
+      - name: Remove temporary Bangkok release
+        if: always() && steps.artifact.outcome == 'success'
+        env:
+          ARTIFACT_SHA256: ${{ steps.package.outputs.sha256 }}
+          MANIFEST_SHA256: ${{ steps.package.outputs.manifest_sha256 }}
+        run: python3 scripts/relay-www-artifact.py --cleanup
+
+      - name: Delete this run's temporary GitHub artifact
+        if: always() && steps.upload.outputs.artifact-id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.upload.outputs.artifact-id }}
+        run: gh api --method DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID"
