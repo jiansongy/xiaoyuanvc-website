@@ -13,27 +13,49 @@ This repo publishes two origins:
 
 `Check dual-domain sync` starts after a successful `Deploy www origin` run, or by manual dispatch. It checks the deployed run's `head_sha`, and skips commits superseded on `main`; it no longer spends its 10-minute convergence window while www is still building.
 
-Node downloads use a 20-second connection timeout, a 90-second per-attempt limit, and one transient retry. Git fetches have a 300-second per-attempt limit and one retry. Both stop transfers below 1 KiB/s for 30 seconds and fit within the existing 900-second remote command limit, leaving time for the build. Logs report Node transfer details, Git cache reuse/growth and export elapsed time, and build elapsed time. Failed synchronization exits before the live-directory swap, preserving the current release. These limits bound waiting; they do not guarantee network throughput.
+GitHub Actions now runs `npm run build` with Node.js 22.23.1. It packages only the complete `dist/` tree and uploads it to a private OSS bucket in mainland China. Each object is named by commit SHA, run ID and run attempt, with overwrite protection. A one-hour signed HTTPS URL and the independently calculated SHA-256 digest are passed to Command Assistant. Signed URLs and encoded command payloads are masked in Actions logs.
 
-It does not use SSH. Public TCP 22 can stay closed. The workflow calls Alibaba Cloud Simple Application Server Command Assistant `RunCommand`, then polls `DescribeInvocationResult` until the server-side command exits successfully.
+The server only downloads and activates that prebuilt release. It does not fetch GitHub, install Node, run npm, or build pages. Public TCP 22 can stay closed; the existing Command Assistant submission, retry deduplication and polling mechanism is retained.
 
-The workflow downloads the versioned deployment script from the exact pushed commit and runs it with
-`XYVC_GITHUB_SHA` set to that commit:
+`scripts/xyvc-sync.sh` verifies the archive SHA-256, rejects unsafe archive paths and links, checks `.well-known/deploy-sha.txt` against the exact requested commit, and validates required pages and filing numbers before replacing `/var/www/xiaoyuanvc`. Failed download, hash, version or content checks leave the old live directory in place. A failed post-swap local smoke test restores the previous release. The public check also verifies the served SHA.
+
+Downloads have a 20-second connect timeout, a 240-second per-attempt limit and one retry. The remote command remains limited to 900 seconds; local smoke requests have explicit timeouts. The job has 35 minutes to cover the GitHub build and remote operation. Certificate renewal remains independent of Node, build output and OSS configuration.
+
+The former `/var/cache/xyvc-deploy/source.git` cache is no longer used. Do not delete it during migration; it can be removed separately after the new delivery path has been verified.
+
+### One-time OSS setup (before merging/enabling this workflow)
+
+The existing Command Assistant RAM policy is intentionally unchanged. Its permissions do not include OSS upload. Create or choose a **private** mainland-China bucket, preferably `cn-beijing`, block public access, and configure a lifecycle rule deleting `www-releases/` objects after one day. Do not make archives public or put long-lived cloud keys on the origin server. This adds OSS storage and transfer usage.
+
+Add repository variables:
+
+- `XYVC_OSS_BUCKET`: exact bucket name.
+- `XYVC_OSS_REGION`: bucket region, for example `cn-beijing`.
+
+Add separate repository secrets (never put credential values in commits, issues or chat):
+
+- `XYVC_OSS_ACCESS_KEY_ID`
+- `XYVC_OSS_ACCESS_KEY_SECRET`
+
+The dedicated OSS RAM principal needs only `oss:PutObject` and `oss:GetObject` on `acs:oss:*:*:<BUCKET>/www-releases/*`. No bucket listing, bucket creation, ACL changes or object deletion permissions are required by the workflow. The existing `ALIYUN_*` Command Assistant secrets and region variable remain required.
+
+If these values are absent the job fails before uploading or submitting a remote operation; it does not fall back to server-side source builds. Configure these values before merging this migration to `main`.
+
+### Verification
+
+Offline (no cloud calls or production writes):
 
 ```bash
-scripts/xyvc-sync.sh
+python3 scripts/test-www-command-retry.py
+python3 scripts/test-www-deploy-guards.py
+python3 scripts/test-www-artifact.py
+bash scripts/test-www-deployment.sh
+npm run build
 ```
 
-The script snapshots the current server state, prepares the exact source commit from a persistent Git cache, runs `bash build.sh`,
-validates the complete `dist/` tree and filing numbers, then swaps `/var/www/xiaoyuanvc`. A failed
-post-swap local smoke test restores the previous release.
+Tests cover artifact hashes and commit mismatch, unsafe paths and links, download failure preserving the live tree, successful activation, post-swap rollback, submission deduplication and superseded dual-domain checks. A production build is local output only; do not commit `dist/`.
 
-Source objects persist in a bare Git repository at `/var/cache/xyvc-deploy/source.git`, outside the nginx document root. The first deployment populates this cache; later deployments use shallow incremental fetches and reuse unchanged objects. Deploying an already cached commit does not contact GitHub for source. A cache lock serializes preparation. `git archive` exports the requested SHA into a new temporary build directory; cache files and prior build output never enter the release. Cleanup removes temporary build directories but preserves the cache. There is no full GitHub source archive download or automatic archive fallback.
-
-The server does not require a global Node.js installation. Each run downloads the pinned Node.js 22 LTS
-binary into the temporary work directory, verifies it against the architecture-specific SHA-256 digest
-pinned in `scripts/xyvc-sync.sh`, prepends that temporary binary directory to `PATH`, and removes it during
-cleanup.
+After OSS configuration and an authorized deployment, require `DONE-SYNC SHA=<expected>` and public `.well-known/deploy-sha.txt` equal to that SHA. Also verify the apex/www pages and redirects described below. A branch PR or passing offline tests alone does not prove cloud upload/download permissions or end-to-end deployment.
 
 The nginx root is currently a directory rather than a release symlink. Its same-filesystem swap uses two
 renames and can create a sub-second gap between the old and new directory names. Converting the existing
