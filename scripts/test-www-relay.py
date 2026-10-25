@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import tarfile
 import unittest
 from unittest.mock import patch
 import urllib.error
@@ -25,6 +26,7 @@ def module(name):
 relay = module('relay-www-artifact')
 receiver = module('receive-www-relay')
 setup = module('setup-www-relay')
+files_receiver = module('receive-www-files')
 
 
 class RelayTests(unittest.TestCase):
@@ -79,12 +81,71 @@ class RelayTests(unittest.TestCase):
         self.assertEqual(receiver.identity(data), '123-1-' + 'b' * 64 + '.tar.gz')
 
     def test_remote_scripts_remain_python36_compatible(self):
-        for name in ('receive-www-relay.py', 'setup-www-relay.py'):
+        for name in ('receive-www-relay.py', 'receive-www-files.py', 'setup-www-relay.py'):
             source = (ROOT / 'scripts' / name).read_text()
             ast.parse(source, feature_version=(3, 6))
             self.assertNotIn('capture_output=', source)
             self.assertNotIn('text=True', source)
             self.assertNotIn('missing_ok=', source)
+
+    def test_incremental_release_reuses_only_matching_bytes_and_removes_deleted_files(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            live = root / 'live'
+            live.mkdir()
+            (live / 'same.txt').write_bytes(b'keep')
+            (live / 'changed.txt').write_bytes(b'wrong')
+            (live / 'deleted.txt').write_bytes(b'delete')
+            payloads = {'same.txt': b'keep', 'changed.txt': b'fixed', 'new.txt': b'new'}
+            manifest = {'commit': 'a' * 40, 'files': [
+                {'path': name, 'size': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+                for name, data in payloads.items()]}
+            downloaded = []
+            def fetch(url, destination, max_size):
+                name = url.rsplit('/', 1)[1]
+                downloaded.append(name)
+                destination.write_bytes(payloads[name])
+            destination = root / 'next'
+            files_receiver.assemble(manifest, 'a' * 40, live, destination, 'https://relay.test/run', fetch)
+            self.assertEqual(set(downloaded), {'changed.txt', 'new.txt'})
+            self.assertFalse((destination / 'deleted.txt').exists())
+            self.assertEqual((live / 'changed.txt').read_bytes(), b'wrong')
+            for name, data in payloads.items():
+                self.assertEqual((destination / name).read_bytes(), data)
+
+    def test_incremental_rejects_corruption_and_unsafe_manifest(self):
+        entry = {'path': 'page.html', 'size': 3, 'sha256': hashlib.sha256(b'new').hexdigest()}
+        manifest = {'commit': 'a' * 40, 'files': [entry]}
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            live = root / 'live'
+            live.mkdir()
+            (live / 'page.html').write_bytes(b'old')
+            def corrupt(url, destination, limit):
+                destination.write_bytes(b'bad')
+            with self.assertRaises(ValueError):
+                files_receiver.assemble(manifest, 'a' * 40, live, root / 'next', 'https://relay.test/run', corrupt)
+            self.assertEqual((live / 'page.html').read_bytes(), b'old')
+        for path in ('../escape', '/absolute', 'a/../../escape', 'a\\b'):
+            with self.subTest(path=path), self.assertRaises(ValueError):
+                files_receiver.entries({'commit': 'a' * 40, 'files': [dict(entry, path=path)]}, 'a' * 40)
+        with self.assertRaises(ValueError):
+            files_receiver.entries(manifest, 'b' * 40)
+
+    def test_relay_unpacks_only_safe_tar_with_pinned_manifest(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            archive = root / 'site.tar.gz'
+            manifest = b'{"commit":"test","files":[]}'
+            with tarfile.open(archive, 'w:gz') as output:
+                for name, payload in [('index.html', b'page'), ('.xyvc-manifest.json', manifest)]:
+                    info = tarfile.TarInfo(name)
+                    info.size = len(payload)
+                    output.addfile(info, io.BytesIO(payload))
+            receiver.publish_files(archive, root / 'published', hashlib.sha256(manifest).hexdigest())
+            self.assertEqual((root / 'published/manifest.json').read_bytes(), manifest)
+            self.assertEqual((root / 'published/files/index.html').read_bytes(), b'page')
+            self.assertFalse((root / 'published/files/.xyvc-manifest.json').exists())
 
     def test_workflow_uses_bangkok_and_no_paid_oss_dependency(self):
         workflow = (ROOT / '.github/workflows/deploy-www-origin.yml').read_text()

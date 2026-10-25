@@ -117,6 +117,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           ARTIFACT_ID: ${{ steps.upload.outputs.artifact-id }}
           ARTIFACT_SHA256: ${{ steps.package.outputs.sha256 }}
+          MANIFEST_SHA256: ${{ steps.package.outputs.manifest_sha256 }}
         run: python3 scripts/relay-www-artifact.py
 
       - name: Run selected www operation via Command Assistant
@@ -124,6 +125,7 @@ jobs:
         env:
           ARTIFACT_URL: ${{ steps.artifact.outputs.url }}
           ARTIFACT_SHA256: ${{ steps.package.outputs.sha256 }}
+          MANIFEST_SHA256: ${{ steps.package.outputs.manifest_sha256 }}
         run: |
           set -euo pipefail
           REGION="${ALIYUN_REGION_ID:-cn-beijing}"
@@ -139,7 +141,7 @@ jobs:
           trap cleanup EXIT
           printf '%s' "$SYNC_SCRIPT_B64" | base64 -d | gzip -d > "\$sync_script"
           bash -n "\$sync_script"
-          XYVC_VALIDATE_ONLY="$validate_only" XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_ARTIFACT_URL="$ARTIFACT_URL" XYVC_ARTIFACT_SHA256="$ARTIFACT_SHA256" bash "\$sync_script"
+          XYVC_FILES_SCRIPT_B64="$FILES_SCRIPT_B64" XYVC_MANIFEST_SHA256="$MANIFEST_SHA256" XYVC_VALIDATE_ONLY="$validate_only" XYVC_GITHUB_SHA="$GITHUB_SHA" XYVC_ARTIFACT_URL="$ARTIFACT_URL" XYVC_ARTIFACT_SHA256="$ARTIFACT_SHA256" bash "\$sync_script"
           EOF
           }
           certificate_renewal_command() {
@@ -152,6 +154,7 @@ jobs:
           }
           case "$XYVC_OPERATION" in
             deploy|verify-delivery)
+              FILES_SCRIPT_B64="$(gzip -c scripts/receive-www-files.py | base64 -w0)"
               SYNC_SCRIPT_B64="$(gzip -c scripts/xyvc-sync.sh | base64 -w0)"
               COMMAND_CONTENT="$(deploy_command)"
               ;;
@@ -298,6 +301,7 @@ jobs:
         if: always() && steps.artifact.outcome == 'success'
         env:
           ARTIFACT_SHA256: ${{ steps.package.outputs.sha256 }}
+          MANIFEST_SHA256: ${{ steps.package.outputs.manifest_sha256 }}
         run: python3 scripts/relay-www-artifact.py --cleanup
 
       - name: Delete this run's temporary GitHub artifact

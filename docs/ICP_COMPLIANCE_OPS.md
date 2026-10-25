@@ -15,9 +15,9 @@ This repo publishes two origins:
 
 GitHub Actions runs `npm run build` with pinned Node.js 22.23.1 and packages only `dist/`. It uploads a temporary GitHub Actions artifact, obtains a fresh short-lived storage URL, and asks the existing Bangkok server to download it through Command Assistant. The GitHub token stays on the runner; only the signed storage URL is sent to Bangkok. A fresh URL is obtained on retry because GitHub download redirects expire quickly.
 
-Bangkok verifies the archive SHA-256 and serves it through the existing Caddy container at `https://approval.xiaoyuanvc.com/_xyvc-release/`. That path only accepts requests from the Beijing origin IP `39.106.61.204`; other addresses receive HTTP 403. The existing certificate, public ports, OpenClaw and approval routes are retained. No OSS bucket, OSS SDK, new VM, SSH key or long-lived GitHub token on either server is required.
+Bangkok verifies the archive SHA-256, safely expands it into files plus a pinned manifest, and serves them through the existing Caddy container at `https://approval.xiaoyuanvc.com/_xyvc-release/`. That path only accepts requests from the Beijing origin IP `39.106.61.204`; other addresses receive HTTP 403. The existing certificate, public ports, OpenClaw and approval routes are retained. No OSS bucket, OSS SDK, new VM, SSH key or long-lived GitHub token on either server is required.
 
-Beijing only receives and activates the prebuilt release: no GitHub fetch, Node install, npm or build. `scripts/xyvc-sync.sh` verifies SHA-256, archive paths/types, exact commit marker, required pages and filing numbers before replacing `/var/www/xiaoyuanvc`. A failed local smoke test restores the prior release. Public verification also checks the served SHA.
+Beijing only receives and activates the prebuilt release: no GitHub fetch, Node install, npm or build. It downloads the independently hashed manifest, reuses live files only when both size and SHA-256 match, and downloads changed/new files with up to 12 parallel transfers. Deleted files do not enter the next release. Every downloaded file must match its pinned digest before the live swap. This avoids sending the entire approximately 132 MB package across the slow Bangkok–Beijing link for small daily updates. `scripts/xyvc-sync.sh` verifies SHA-256, archive paths/types, exact commit marker, required pages and filing numbers before replacing `/var/www/xiaoyuanvc`. A failed local smoke test restores the prior release. Public verification also checks the served SHA.
 
 ### Existing host configuration
 
@@ -31,7 +31,7 @@ Beijing only receives and activates the prebuilt release: no GitHub fetch, Node 
 
 The existing `ALIYUN_ACCESS_KEY_ID`, `ALIYUN_ACCESS_KEY_SECRET`, `ALIYUN_INSTANCE_ID` and optional `ALIYUN_REGION_ID` remain in use. The existing RAM principal needs Command Assistant access in both Beijing and Bangkok; the documented `swas-open:RunCommand` / `DescribeInvocationResult` policy with resource `*` already covers both. No separate OSS or SSH credential is needed. GitHub's job token has `actions: write` to download and delete this run's temporary artifact, and `contents: read`.
 
-The workflow removes its own Bangkok file and GitHub artifact after the operation. GitHub also has a one-day retention fallback, and Bangkok expires recognized relay files older than one day during staging. It never deletes OpenClaw data, Caddy certificate storage, the old source Git cache or unrelated files. Both receivers require at least 1 GiB free; the file is limited to 512 MiB. The current package is approximately 132 MB compressed. Existing host bandwidth and GitHub Actions allowances still apply; avoiding OSS does not itself guarantee every usage charge is zero.
+The workflow removes its own Bangkok file and GitHub artifact after the operation. GitHub also has a one-day retention fallback, and Bangkok expires recognized relay trees older than one day during staging. It never deletes OpenClaw data, Caddy certificate storage, the old source Git cache or unrelated files. Both receivers require at least 1 GiB free; the file is limited to 512 MiB. The CI-to-Bangkok package is approximately 132 MB compressed; Beijing normally transfers only changed files. Each changed file has a bounded download/retry budget. A fresh host may need a longer initial seed; failure preserves the existing site. Existing host bandwidth and GitHub Actions allowances still apply; avoiding OSS does not itself guarantee every usage charge is zero.
 
 ### Verification and cutover
 
@@ -46,7 +46,7 @@ bash scripts/test-www-deployment.sh
 npm run build
 ```
 
-Delivery validation: run **Deploy www origin** manually with `operation=verify-delivery`. All non-main branches also force validation-only even if the UI offers only `deploy`. The complete GitHub → Bangkok → Beijing transfer and content checks run, but the live directory is unchanged. Require `RELAY-READY`, `DONE-VALIDATE SHA=<expected>` and successful temporary-file cleanup. Certificate renewal skips build and relay stages.
+Delivery validation: run **Deploy www origin** manually with `operation=verify-delivery`. All non-main branches also force validation-only even if the UI offers only `deploy`. The GitHub → Bangkok artifact transfer and complete Beijing file-manifest validation run, but the live directory is unchanged. Require `RELAY-READY`, `VERIFIED-FILES reused=... downloaded=... bytes=...`, `DONE-VALIDATE SHA=<expected>` and successful temporary-file cleanup. Certificate renewal skips build and relay stages.
 
 Only a main-branch `deploy` activates files. Require `DONE-SYNC SHA=<expected>`, successful public page tests and matching public `.well-known/deploy-sha.txt`. The dual-domain monitor then checks apex/www convergence. Do not commit `dist/` or generated search output. For main publication use `scripts/publish-main.sh` as described in AGENTS.md.
 

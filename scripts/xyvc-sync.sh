@@ -200,7 +200,13 @@ fi
 
 echo "[2/6] Download and verify prebuilt release SHA=$GITHUB_SHA"
 source_dir="$WORK_DIR/dist"
-prepare_release_artifact "$ARTIFACT_URL" "$ARTIFACT_SHA256" "$GITHUB_SHA" "$source_dir"
+if [[ -n "${XYVC_FILES_SCRIPT_B64:-}" ]]; then
+  printf '%s' "$XYVC_FILES_SCRIPT_B64" | base64 -d | gzip -d > "$WORK_DIR/receive-files.py"
+  python3 "$WORK_DIR/receive-files.py" "$ARTIFACT_URL" "${XYVC_MANIFEST_SHA256:?Missing manifest digest}" \
+    "$GITHUB_SHA" "$LIVE_ROOT" "$source_dir"
+else
+  prepare_release_artifact "$ARTIFACT_URL" "$ARTIFACT_SHA256" "$GITHUB_SHA" "$source_dir"
+fi
 
 echo "[3/6] Validate build output"
 required_files=(

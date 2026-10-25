@@ -99,7 +99,8 @@ def execute(data):
 
 def main():
     data = {'sha': os.environ['GITHUB_SHA'], 'digest': os.environ['ARTIFACT_SHA256'],
-            'run': os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT']}
+            'run': os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT'],
+            'manifest_digest': os.environ['MANIFEST_SHA256']}
     receiver = receiver_module()
     filename = receiver.identity(data)
     if '--cleanup' in sys.argv:
@@ -116,7 +117,7 @@ def main():
             if attempt:
                 raise
             print('Refreshing the short-lived artifact URL before retrying the relay.')
-    url = os.environ['XYVC_RELAY_BASE_URL'].rstrip('/') + '/' + filename
+    url = os.environ['XYVC_RELAY_BASE_URL'].rstrip('/') + '/' + filename[:-7] + '/manifest.json'
     with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
         output.write('url=' + url + '\n')
 
