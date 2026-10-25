@@ -23,7 +23,7 @@ if grep -Eq 'git .*fetch|bash build.sh|npm ci|nodejs.org' "$SYNC"; then
 fi
 grep -Fq 'npm run build' "$DEPLOY"
 grep -Fq "node-version: '22.23.1'" "$DEPLOY"
-grep -Fq 'upload-www-artifact.py' "$DEPLOY"
+grep -Fq 'relay-www-artifact.py' "$DEPLOY"
 grep -Fq 'apply_www_redirects' "$SYNC"
 grep -Fq 'xyvc-www-redirects.conf' "$SYNC"
 grep -Fq 'nginx -t' "$SYNC"

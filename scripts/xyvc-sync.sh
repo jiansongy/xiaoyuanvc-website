@@ -217,6 +217,11 @@ done
 grep -Fq '京ICP备2021017602号-1' "$source_dir/index.html"
 grep -Fq '京公网安备11010802035175号' "$source_dir/index.html"
 
+if [[ "${XYVC_VALIDATE_ONLY:-0}" == "1" ]]; then
+  echo "DONE-VALIDATE SHA=$GITHUB_SHA; live directory unchanged."
+  exit 0
+fi
+
 mkdir "$RELEASE_DIR"
 cp -a "$source_dir/." "$RELEASE_DIR/"
 release_file_count="$(find "$RELEASE_DIR" -type f | wc -l | tr -d ' ')"
