@@ -64,6 +64,8 @@ CSS（Crypto Startup School）是校园VC 旗下独立的中文加密创投学�
 
 ## 资源中心专题文章
 
+- [“找饥饿人群”的OPC创业陪跑](https://xiaoyuanvc.com/resources/opc-startup-hungry-crowd)：殷建松2026年10月30日文章，记录第十一期数创班“三真两方向”实践，用四个条件讨论需求强烈度与创业判断力。
+
 - [从零开始的 AI 创业学习路线图](https://xiaoyuanvc.com/resources/ai-startup-roadmap)：大学生零基础到独立完成 AI 创业项目的四阶段路线（认知构建→技能习得→产品上线→增长变现），基于数创班 10 期实践。
 - [什么是数字创业教育？](https://xiaoyuanvc.com/resources/what-is-digital-entrepreneurship-education)：数字创业教育的定义、与传统创业教育的区别、3C 数字资产框架（Content/Code/Crypto）。
 - [2026 年免费数字创业课程推荐](https://xiaoyuanvc.com/resources/free-digital-entrepreneurship-courses)：横向对比校园VC、Coursera、中国大学 MOOC、B 站、得到等 5 个平台。
