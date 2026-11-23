@@ -675,6 +675,16 @@ body.site-search-lock {
   background-clip: text;
 }
 
+.hero__title small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  line-height: 1.4;
+}
+
+.hero__note { margin-top: 1.25rem; }
+.hero__note a { color: var(--color-brand-active); text-decoration: underline; text-underline-offset: 0.2em; }
+
 .hero__subtitle {
   font-size: 1.5rem;
   font-weight: 600;
