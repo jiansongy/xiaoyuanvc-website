@@ -22,6 +22,7 @@ class ArtifactTests(unittest.TestCase):
         for name, body in {
             '.well-known/deploy-sha.txt': sha + '\n',
             'index.html': '京ICP备2021017602号-1 京公网安备11010802035175号',
+            'resources/index.html': '校园VC 资源中心',
             'learn/crypto-vc/index.html': '加密创投教程',
             'learn/digital-startup/index.html': '数字创业教程',
         }.items():
@@ -132,12 +133,16 @@ done
 if [[ " $* " == *example.test/release* ]]; then cp "$FIXTURE" "$output"; exit 0; fi
 if [[ "$SMOKE_FAILURE" == true ]]; then printf 500; exit 0; fi
 if [[ " $* " == *deployment-smoke-missing* ]]; then printf 404; exit 0; fi
-if [[ " $* " == *resources/* ]]; then printf 301; exit 0; fi
+case "${!#}" in
+  */resources/) cat "$LIVE_RESOURCES_INDEX" > "$output"; printf 200; exit 0 ;;
+  */resources.html|*/resources/*) printf 301; exit 0 ;;
+esac
 printf '京ICP备2021017602号-1 加密创投教程 数字创业教程' > "$output"
 printf 200
 ''')
                 curl.chmod(0o755)
                 env = dict(os.environ, PATH=str(bin_dir) + ':' + os.environ['PATH'], FIXTURE=str(archive),
+                           LIVE_RESOURCES_INDEX=str(live / 'resources/index.html'),
                            SMOKE_FAILURE=str(smoke_failure).lower(), XYVC_GITHUB_SHA=SHA,
                            XYVC_ARTIFACT_URL='https://example.test/release', XYVC_ARTIFACT_SHA256=digest)
                 result = subprocess.run(['bash', '-c', source], env=env, text=True, capture_output=True)
