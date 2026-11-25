@@ -2268,18 +2268,17 @@
           }
         };
 
-        window.copyReport = function () {
-          if (!S.result) return;
-          const draft = getDraft();
-          const scores = S.result.finalDimensionScores || {};
+        function buildTextReport(result, draft) {
+          const idea = String(draft.product || "");
+          const scores = result.finalDimensionScores || {};
           const lines = DIM_LABELS.map(function (dim) {
-            const val = Number(scores[dim.key] || 5);
-            let bar = "";
-            for (let i = 0; i < val; i++) bar += "\u2588";
+            const score = Number(scores[dim.key] ?? 5);
+            const val = Number.isFinite(score) ? Math.min(10, Math.max(0, score)) : 5;
+            const bar = "\u2588".repeat(Math.ceil(val));
             return dim.label + "：" + val + "/10 " + bar;
           });
-          const actions = Array.isArray(S.result.actions)
-            ? S.result.actions
+          const actions = Array.isArray(result.actions)
+            ? result.actions
                 .map(function (action) {
                   return (
                     action.priority +
@@ -2292,16 +2291,16 @@
                 .join("\n")
             : "";
 
-          const report =
+          return (
             "学生创业自检 — 校园VC\n" +
             "想法：" +
-            (draft.product || "").substring(0, 60) +
-            ((draft.product || "").length > 60 ? "..." : "") +
+            idea.substring(0, 60) +
+            (idea.length > 60 ? "..." : "") +
             "\n" +
             "总分：" +
-            Number(S.result.totalScore || 0) +
+            Number(result.totalScore || 0) +
             "/50（" +
-            (S.result.tier || getTier(Number(S.result.totalScore || 0))) +
+            (result.tier || getTier(Number(result.totalScore || 0))) +
             "）\n" +
             "━━━━━━━━━━━━━━━━\n" +
             lines.join("\n") +
@@ -2310,7 +2309,13 @@
               ? "━━━━━━━━━━━━━━━━\n本周优先动作\n" + actions + "\n"
               : "") +
             "━━━━━━━━━━━━━━━━\n" +
-            "来给你的想法打分：xiaoyuanvc.com/resources/rate-your-idea.html";
+            "来给你的想法打分：xiaoyuanvc.com/resources/rate-your-idea.html"
+          );
+        }
+
+        window.copyReport = function () {
+          if (!S.result) return;
+          const report = buildTextReport(S.result, getDraft());
 
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard
@@ -2326,47 +2331,24 @@
           }
         };
 
-        function buildShareSnapshotPayload() {
-          const entry = getSelectedHistoryEntry();
-          return {
-            draftData: clone(getDraft()),
-            result: clone(S.result || {}),
-            historyEntry: entry ? clone(entry) : null,
-          };
-        }
-
         window.copyShareLink = function () {
           if (!S.result || !window.XYVCUnifiedDataManager) {
             showToast("当前结果暂不支持生成分享链接");
             return;
           }
 
-          const entry = getSelectedHistoryEntry();
-          const snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+          window.XYVCUnifiedDataManager.copyShareLink(
             TOOL_ID,
-            buildShareSnapshotPayload(),
+            { report: buildTextReport(S.result, getDraft()) },
             {
               title: "学生创业自检结果",
-              baseUrl: window.location.href.split("#")[0],
-              versionId: entry ? entry.versionId : "",
+              onCopied: function () {
+                try {
+                  window.XYVCUnifiedDataManager.track(TOOL_ID, "share_snapshot_created", { portable: true });
+                } catch (e) { /* Copying does not require local analytics storage. */ }
+              },
             },
           );
-
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard
-              .writeText(snapshot.url)
-              .then(function () {
-                window.XYVCUnifiedDataManager.track(TOOL_ID, "share_snapshot_created", {
-                  portable: snapshot.portable,
-                });
-                showToast("分享链接已复制");
-              })
-              .catch(function () {
-                fallbackCopy(snapshot.url);
-              });
-          } else {
-            fallbackCopy(snapshot.url);
-          }
         };
 
         window.openHistoryVersion = function (versionId) {
@@ -2413,32 +2395,11 @@
         function boot() {
           loadState();
           if (window.XYVCUnifiedDataManager) {
-            const sharedSnapshot =
-              window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
-                window.location.href,
-              );
-            if (
-              sharedSnapshot &&
-              sharedSnapshot.toolId === TOOL_ID &&
-              sharedSnapshot.payload
-            ) {
-              const payload = sharedSnapshot.payload;
-              if (payload.draftData) {
-                S.toolState.draftData = Object.assign(
-                  {},
-                  S.toolState.draftData,
-                  payload.draftData,
-                );
-              }
-              if (payload.historyEntry) {
-                S.toolHistory = [payload.historyEntry];
-                S.selectedHistoryVersionId = payload.historyEntry.versionId;
-              }
-              if (payload.result) {
-                S.result = payload.result;
-                S.screen = 2;
-              }
-            }
+            window.XYVCUnifiedDataManager.watchSharedResult(TOOL_ID, function (payload) {
+              if (payload.report) return payload.report;
+              if (!payload.result) return "";
+              return [buildTextReport(payload.result, payload.draftData || {}), payload.result.analysisMarkdown].filter(Boolean).join("\n\n");
+            });
           }
           if (window.XYVCToolContext) {
             window.XYVCToolContext.write(TOOL_ID, {

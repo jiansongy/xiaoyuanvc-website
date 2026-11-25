@@ -2948,10 +2948,7 @@
         }
 
         function buildShareSnapshotPayload() {
-          return {
-            state: buildSerializableState(),
-            report: S.report,
-          };
+          return { report: S.report };
         }
 
         // ── GENERATE REPORT ──
@@ -3063,51 +3060,19 @@
             window.XYVCToolUI.message("请先生成诊断报告，再复制分享链接。");
             return;
           }
-          var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+          window.XYVCUnifiedDataManager.copyShareLink(
             TOOL_ID,
             buildShareSnapshotPayload(),
-            {
-              title: "硬科技创业诊断报告",
-              baseUrl: window.location.href.split("#")[0],
-            },
+            { title: "硬科技创业诊断报告" },
           );
-          var onCopied = function () {
-            window.XYVCToolUI.message("分享链接已复制。");
-          };
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(snapshot.url).then(onCopied).catch(function () { window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。"); });
-          } else {
-            var el = document.createElement("textarea");
-            el.value = snapshot.url;
-            el.style.position = "fixed";
-            el.style.opacity = "0";
-            document.body.appendChild(el);
-            el.select();
-            var copied = false; try { copied = document.execCommand("copy"); } catch (e) {}
-            document.body.removeChild(el);
-            if (copied) onCopied(); else window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。");
-          }
         };
 
         // ── BOOT ──
         load();
         if (window.XYVCUnifiedDataManager) {
-          var sharedSnapshot =
-            window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
-              window.location.href,
-            );
-          if (
-            sharedSnapshot &&
-            sharedSnapshot.toolId === TOOL_ID &&
-            sharedSnapshot.payload &&
-            sharedSnapshot.payload.state
-          ) {
-            S = Object.assign(S, sharedSnapshot.payload.state);
-            window.S = S;
-            if (sharedSnapshot.payload.report) {
-              S.report = sharedSnapshot.payload.report;
-            }
-          }
+          window.XYVCUnifiedDataManager.watchSharedResult(TOOL_ID, function (payload) {
+            return payload.report || (payload.state && payload.state.report) || "";
+          });
         }
         refreshContextSyncState();
         // Restore step from URL hash if present and valid

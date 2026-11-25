@@ -7,11 +7,18 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 REMOTE="${PUBLISH_REMOTE:-origin}"
 BRANCH="${PUBLISH_BRANCH:-main}"
 INCLUDE_UNTRACKED=0
+VERIFY_ARGS=()
 
 usage() {
   cat <<'EOF'
 Usage:
-  scripts/publish-main.sh [--include-untracked] "<intent subject>" ["body"]
+  scripts/publish-main.sh [--include-untracked] [verification options] "<intent subject>" ["body"]
+
+Verification options (run after push and wait for this release to become visible):
+  --verify-url URL
+  --verify-contains TEXT
+  --verify-asset 'URL|content-type'
+  --verify-wait SECONDS
 
 Environment overrides:
   PUBLISH_REMOTE      Git remote to push to. Default: origin
@@ -31,10 +38,33 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   exit 0
 fi
 
-if [[ "${1:-}" == "--include-untracked" ]]; then
-  INCLUDE_UNTRACKED=1
-  shift
-fi
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --include-untracked)
+      INCLUDE_UNTRACKED=1
+      shift
+      ;;
+    --verify-url)
+      VERIFY_ARGS+=(--url "${2:?--verify-url requires a URL}")
+      shift 2
+      ;;
+    --verify-contains)
+      VERIFY_ARGS+=(--contains "${2:?--verify-contains requires text}")
+      shift 2
+      ;;
+    --verify-asset)
+      VERIFY_ARGS+=(--asset "${2:?--verify-asset requires URL|content-type}")
+      shift 2
+      ;;
+    --verify-wait)
+      VERIFY_ARGS+=(--wait-seconds "${2:?--verify-wait requires seconds}")
+      shift 2
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
 
 SUBJECT="${1:-}"
 BODY="${2:-}"
@@ -116,3 +146,7 @@ if [[ "$LOCAL_HEAD" != "$REMOTE_HEAD" ]]; then
 fi
 
 echo "Published $REMOTE/$BRANCH at $LOCAL_HEAD"
+
+if [[ ${#VERIFY_ARGS[@]} -gt 0 ]]; then
+  "$ROOT/scripts/verify-live-release.sh" "${VERIFY_ARGS[@]}"
+fi

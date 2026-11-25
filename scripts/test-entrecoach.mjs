@@ -6,6 +6,7 @@ import vm from 'node:vm';
 
 const root = path.resolve(import.meta.dirname, '..');
 const html = fs.readFileSync(path.join(root, 'resources/entrecoach.html'), 'utf8');
+const sessionScript = fs.readFileSync(path.join(root, 'resources/tool-session.js'), 'utf8');
 
 function harness() {
   let source = html.slice(html.indexOf('(function () {'), html.lastIndexOf('</script>'));
@@ -15,12 +16,15 @@ function harness() {
       state: function () { return S; }, status: function () { return aiStatus; }, busy: function () { return generating; } };
     })();`;
   const storage = new Map();
-  const element = { addEventListener() {} };
+  const element = { addEventListener() {}, setAttribute() {} };
   const context = vm.createContext({
-    document: { getElementById() { return element; } }, window: {},
+    document: { getElementById() { return element; }, addEventListener() {} }, window: {},
     localStorage: { getItem(k) { return storage.get(k) || null; }, setItem(k, v) { storage.set(k, v); }, removeItem(k) { storage.delete(k); } },
-    setTimeout() { return 1; }, clearTimeout() {}, AbortController,
+    setTimeout() { return 1; }, clearTimeout() {}, AbortController, DOMException,
+    confirm() { return true; },
+    location: { pathname: '/resources/entrecoach', replace(next) { this.redirectedTo = next; } },
   });
+  vm.runInContext(sessionScript, context);
   vm.runInContext(source, context);
   const api = context.coach;
   api.state().stage = 'coaching';
@@ -89,16 +93,18 @@ test('accept and duplicate calls are blocked while a draft is updating', async (
 });
 
 test('a response from before reset cannot overwrite a new session', async () => {
-  const { api, context } = harness();
+  const { api, context, storage } = harness();
   let finish;
   context.fetch = () => new Promise(resolve => { finish = resolve; });
   const pending = api.autoDraft();
-  api.reset();
+  assert.equal(api.reset(), true);
   finish(response(JSON.stringify(first)));
   await pending;
   assert.equal(Object.keys(api.state().drafts).length, 0);
-  assert.equal(api.state().stage, 'welcome');
-  assert.equal(api.busy(), false);
+  const restarted = JSON.parse(storage.get('xyvc-entrecoach-v1'));
+  assert.equal(restarted.stage, 'welcome');
+  assert.deepEqual(restarted.drafts, {});
+  assert.equal(context.location.redirectedTo, '/resources/entrecoach');
 });
 
 test('a response cannot land after its milestone has changed', async () => {

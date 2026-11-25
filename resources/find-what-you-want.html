@@ -1930,13 +1930,13 @@
           };
         }
 
-        function buildResultSnapshot() {
-          var c = S.finalCandidates[S.chosenIndex] || {};
+        function buildResultSnapshot(state = S) {
+          var c = (state.finalCandidates || [])[state.chosenIndex] || {};
           return {
             title: c.title || "",
             why: c.why || "",
             step: c.step || "",
-            monetization: clone(S.monetization || {}),
+            monetization: clone(state.monetization || {}),
             generatedAt: new Date().toISOString(),
           };
         }
@@ -3171,22 +3171,11 @@
             window.XYVCToolUI.message("请先选择一个结果，再生成分享链接。");
             return;
           }
-          var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+          window.XYVCUnifiedDataManager.copyShareLink(
             TOOL_ID,
-            {
-              state: buildSerializableState(),
-              result: buildResultSnapshot(),
-            },
-            {
-              title: "如何找到想做的事",
-              baseUrl: window.location.href.split("#")[0],
-            },
+            { result: buildResultSnapshot() },
+            { title: "如何找到想做的事" },
           );
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(snapshot.url).then(function () {
-              window.XYVCToolUI.message("分享链接已复制。");
-            }).catch(function () { window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。"); });
-          }
         };
 
         window.printResult = function () {
@@ -3275,19 +3264,15 @@
         // FIX 5: apply hash-based phase restore after all functions are defined
         (function () {
           if (window.XYVCUnifiedDataManager) {
-            var sharedSnapshot =
-              window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
-                window.location.href,
-              );
-            if (
-              sharedSnapshot &&
-              sharedSnapshot.toolId === TOOL_ID &&
-              sharedSnapshot.payload &&
-              sharedSnapshot.payload.state
-            ) {
-              applySerializableState(sharedSnapshot.payload.state);
-              return;
-            }
+            window.XYVCUnifiedDataManager.watchSharedResult(TOOL_ID, function (payload) {
+              var result = payload.result || (payload.state && buildResultSnapshot(payload.state));
+              if (!result || !result.title) return "";
+              var monetization = result.monetization || {};
+              return [result.title, result.why, result.step && "第一步：" + result.step,
+                monetization.low && "低门槛尝试：" + monetization.low,
+                monetization.mid && "进阶尝试：" + monetization.mid,
+                monetization.high && "长期方向：" + monetization.high].filter(Boolean).join("\n\n");
+            });
           }
           var targetPhase = window.__FWYW_RESTORE_PHASE__;
           if (!targetPhase) return;

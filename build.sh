@@ -21,10 +21,13 @@ rm -rf "$DIST"
 mkdir -p "$DIST"
 
 echo "==> [2/7] 复制主站静态资源到 dist/"
-# 用 tar 流复制并排除大目录与构建产物；保留隐藏文件（_redirects、_headers、.cloudflare 等）
+# 用 tar 流复制并排除大目录、构建产物和 dotenv 配置；保留部署所需文件
 # CF Pages 容器没有 rsync，tar 更通用。
 ( cd "$ROOT" && tar -cf - \
     --exclude="./dist" \
+    --exclude="./docs" \
+    --exclude=".env" \
+    --exclude=".env.*" \
     --exclude="./node_modules" \
     --exclude="./.npm-cache" \
     --exclude="./.git" \

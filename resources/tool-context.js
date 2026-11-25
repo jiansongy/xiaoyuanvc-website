@@ -8,6 +8,7 @@
   var MAX_ANALYTICS_EVENTS = 200;
   var SHARE_PARAM = "xyvc_share";
   var SHARE_DATA_PARAM = "xyvc_share_data";
+  var MAX_PORTABLE_SHARE_LENGTH = 1800;
 
   var TOOL_LABELS = {
     "student-startup-self-check": "学生创业自检",
@@ -500,20 +501,6 @@
     return writeWorkspace(workspace).tools[toolId].history;
   }
 
-  function markHistoryEntryShared(toolId, versionId, shareId) {
-    var workspace = readWorkspace();
-    var tool = ensureToolBucket(workspace, toolId);
-    tool.history = (tool.history || []).map(function (entry) {
-      if (entry.versionId !== versionId) return entry;
-      var next = normalizeHistoryEntry(entry);
-      next.isShared = true;
-      next.shareId = shareId;
-      return next;
-    });
-    tool.lastShareId = shareId;
-    writeWorkspace(workspace);
-  }
-
   function encodeSharePayload(data) {
     try {
       return btoa(unescape(encodeURIComponent(JSON.stringify(data))))
@@ -526,31 +513,29 @@
   }
 
   function decodeSharePayload(encoded) {
+    if (!encoded) return null;
     try {
-      var normalized = String(encoded || "")
+      var normalized = encoded
         .replace(/-/g, "+")
         .replace(/_/g, "/");
       while (normalized.length % 4) normalized += "=";
-      return JSON.parse(decodeURIComponent(escape(atob(normalized))));
+      var decoded = JSON.parse(decodeURIComponent(escape(atob(normalized))));
+      return decoded && decoded.schemaVersion === 1 && typeof decoded.toolId === "string" &&
+        decoded.payload && typeof decoded.payload === "object" ? decoded : null;
     } catch (e) {
       return null;
     }
   }
 
-  function buildShareUrl(baseUrl, shareId, portableData) {
+  function buildShareUrl(baseUrl, portableData) {
     var url = new URL(baseUrl || window.location.href, window.location.href);
     url.searchParams.delete(SHARE_PARAM);
     url.searchParams.delete(SHARE_DATA_PARAM);
-    if (portableData) {
-      url.searchParams.set(SHARE_DATA_PARAM, portableData);
-    } else if (shareId) {
-      url.searchParams.set(SHARE_PARAM, shareId);
-    }
+    url.hash = SHARE_DATA_PARAM + "=" + portableData;
     return url.toString();
   }
 
   function createShareSnapshot(toolId, payload, options) {
-    var workspace = readWorkspace();
     var snapshot = normalizeShareSnapshot({
       shareId: createId("share"),
       toolId: toolId,
@@ -559,40 +544,95 @@
       createdAt: nowIso(),
     });
 
-    workspace.shareSnapshots[snapshot.shareId] = snapshot;
-    ensureToolBucket(workspace, toolId).lastShareId = snapshot.shareId;
-    writeWorkspace(workspace);
-
-    if (options && options.versionId) {
-      markHistoryEntryShared(toolId, options.versionId, snapshot.shareId);
-    }
-
-    var portablePayload = {
-      schemaVersion: 1,
-      shareId: snapshot.shareId,
-      toolId: snapshot.toolId,
-      title: snapshot.title,
-      createdAt: snapshot.createdAt,
-      payload: snapshot.payload,
-    };
+    var portablePayload = Object.assign({ schemaVersion: 1 }, snapshot);
     var encoded = encodeSharePayload(portablePayload);
-    var usePortable = encoded && encoded.length <= 1800;
+    var portable = Boolean(encoded) && encoded.length <= MAX_PORTABLE_SHARE_LENGTH;
 
     return {
       shareId: snapshot.shareId,
       snapshot: snapshot,
-      url: buildShareUrl(
-        options && options.baseUrl,
-        usePortable ? "" : snapshot.shareId,
-        usePortable ? encoded : "",
-      ),
-      portable: Boolean(usePortable),
+      url: portable ? buildShareUrl(options && options.baseUrl, encoded) : "",
+      portable: portable,
     };
   }
 
+  function createToolShareDialog(maxWidth) {
+    var dialog = document.createElement("dialog");
+    dialog.className = "tool-ui";
+    dialog.style.cssText = "position:fixed;inset:0;margin:auto;height:fit-content;max-height:calc(100% - 32px);box-sizing:border-box;padding:20px;border:1px solid #e2e8f0;border-radius:12px;color:#0f172a;background:#fff";
+    dialog.style.width = "min(" + maxWidth + "px, calc(100% - 32px))";
+    return dialog;
+  }
+
+  function copyShareLink(toolId, payload, options) {
+    var snapshot = createShareSnapshot(toolId, payload, options);
+    var message = window.XYVCToolUI.message;
+    if (!snapshot.portable) {
+      message("内容太长，无法生成跨设备链接。可以复制结果文字发送给对方。");
+      return;
+    }
+
+    if (document.getElementById("tool-share-dialog")) return;
+    var dialog = createToolShareDialog(420);
+    if (typeof dialog.showModal !== "function") {
+      message("当前浏览器无法复制分享链接。可以复制结果文字发送给对方。");
+      return;
+    }
+    var opener = document.activeElement;
+    dialog.id = "tool-share-dialog";
+    dialog.setAttribute("aria-labelledby", "tool-share-title");
+    dialog.setAttribute("aria-describedby", "tool-share-description");
+    dialog.innerHTML =
+      '<h2 id="tool-share-title" style="margin:0 0 8px;font-size:18px">分享这份结果？</h2>' +
+      '<p id="tool-share-description" style="margin:0 0 16px;color:#475569;font-size:14px;line-height:1.7">' +
+      '链接包含这份结果，也可能引用你填写的内容。拿到链接的人都能查看，请只发给你愿意分享这些内容的人。</p>' +
+      '<div data-manual-link hidden style="margin-bottom:16px">' +
+      '<label for="tool-share-address" role="status">自动复制失败，请手动复制下方链接。</label>' +
+      '<textarea id="tool-share-address" aria-label="分享链接" readonly rows="2" style="display:block;width:100%;margin-top:8px"></textarea></div>' +
+      '<div style="display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px">' +
+      '<button type="button" class="tool-ui-secondary" data-cancel autofocus>取消</button>' +
+      '<button type="button" class="tool-ui-primary" data-copy>复制分享链接</button></div>';
+    var copy = dialog.querySelector("[data-copy]");
+    var manual = dialog.querySelector("[data-manual-link]");
+    var address = dialog.querySelector("textarea");
+
+    function showManualLink() {
+      manual.hidden = false;
+      address.value = snapshot.url;
+      copy.disabled = false;
+      address.focus();
+      address.select();
+    }
+
+    dialog.querySelector("[data-cancel]").addEventListener("click", function () { dialog.close(); });
+    dialog.addEventListener("close", function () {
+      dialog.remove();
+      if (!opener || opener === document.body || !opener.getClientRects().length) {
+        var menuToggle = document.querySelector('[aria-controls="tool-ui-menu"]');
+        if (menuToggle) menuToggle.focus();
+      }
+    });
+    copy.addEventListener("click", function () {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        showManualLink();
+        return;
+      }
+      copy.disabled = true;
+      navigator.clipboard.writeText(snapshot.url).then(function () {
+        if (dialog.open) dialog.close();
+        message("分享链接已复制。");
+        if (options && options.onCopied) options.onCopied();
+      }, function () {
+        if (dialog.open) showManualLink();
+      });
+    });
+    document.body.appendChild(dialog);
+    dialog.showModal();
+  }
+
   function readShareSnapshot(shareId) {
-    var workspace = readWorkspace();
     if (!shareId) return null;
+    var workspace = readWorkspace();
     return workspace.shareSnapshots[shareId]
       ? normalizeShareSnapshot(workspace.shareSnapshots[shareId])
       : null;
@@ -601,15 +641,67 @@
   function readShareSnapshotFromLocation(loc) {
     try {
       var url = new URL(loc || window.location.href, window.location.href);
-      var encoded = url.searchParams.get(SHARE_DATA_PARAM);
-      if (encoded) {
-        return decodeSharePayload(encoded);
-      }
-      var shareId = url.searchParams.get(SHARE_PARAM);
-      return readShareSnapshot(shareId);
+      var fragment = new URLSearchParams(url.hash.slice(1));
+      return decodeSharePayload(fragment.get(SHARE_DATA_PARAM)) ||
+        decodeSharePayload(url.searchParams.get(SHARE_DATA_PARAM)) ||
+        readShareSnapshot(url.searchParams.get(SHARE_PARAM));
     } catch (e) {
       return null;
     }
+  }
+
+  function previewSharedResult(toolId, formatResult) {
+    var url = new URL(window.location.href);
+    var fragment = new URLSearchParams(url.hash.slice(1));
+    var hasSharedFragment = fragment.has(SHARE_DATA_PARAM);
+    if (!hasSharedFragment && !url.searchParams.has(SHARE_DATA_PARAM) && !url.searchParams.has(SHARE_PARAM)) return;
+    var snapshot = readShareSnapshotFromLocation(url.href);
+
+    url.searchParams.delete(SHARE_DATA_PARAM);
+    url.searchParams.delete(SHARE_PARAM);
+    if (hasSharedFragment) {
+      fragment.delete(SHARE_DATA_PARAM);
+      url.hash = fragment.toString();
+    }
+    history.replaceState(history.state, "", url.href);
+
+    var result = "";
+    if (snapshot && snapshot.toolId === toolId) {
+      try { result = safeTrim(formatResult(snapshot.payload)); }
+      catch (e) { /* A damaged shared result should not interrupt the tool. */ }
+    }
+    if (!result) {
+      window.XYVCToolUI.message("这份分享无法打开，请联系分享者重新发送。");
+      return;
+    }
+
+    var dialog = createToolShareDialog(600);
+    if (typeof dialog.showModal !== "function") {
+      window.XYVCToolUI.message("当前浏览器无法预览分享，请在其他浏览器打开链接。");
+      return;
+    }
+    dialog.setAttribute("aria-labelledby", "tool-shared-result-title");
+    dialog.innerHTML =
+      '<h2 id="tool-shared-result-title" style="margin:0 0 8px;font-size:18px"></h2>' +
+      '<p style="margin:0 0 16px;color:#475569;font-size:14px">朋友分享的结果。你的填写进度会保留。</p>' +
+      '<div data-result tabindex="0" role="region" aria-label="结果正文" style="max-height:min(48vh,420px);overflow:auto;overscroll-behavior:contain;padding:12px;background:#f8fafc;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7"></div>' +
+      '<div style="display:flex;justify-content:flex-end;margin-top:16px"><button type="button" class="tool-ui-primary">返回工具</button></div>';
+    dialog.querySelector("h2").textContent = snapshot.title || "分享结果";
+    dialog.querySelector("[data-result]").textContent = result
+      .replace(/^#{1,6}\s+/gm, "")
+      .replace(/\*\*([^*\n]+)\*\*/g, "$1");
+    dialog.querySelector("button").addEventListener("click", function () { dialog.close(); });
+    dialog.addEventListener("close", function () { dialog.remove(); });
+    document.body.appendChild(dialog);
+    dialog.showModal();
+  }
+
+  function watchSharedResult(toolId, formatResult) {
+    function openSharedResult() {
+      previewSharedResult(toolId, formatResult);
+    }
+    window.addEventListener("hashchange", openSharedResult);
+    openSharedResult();
   }
 
   function track(toolId, eventName, payload) {
@@ -719,6 +811,9 @@
     appendToolHistory: appendToolHistory,
     getToolHistory: getToolHistory,
     createShareSnapshot: createShareSnapshot,
+    copyShareLink: copyShareLink,
+    previewSharedResult: previewSharedResult,
+    watchSharedResult: watchSharedResult,
     readShareSnapshot: readShareSnapshot,
     readShareSnapshotFromLocation: readShareSnapshotFromLocation,
     track: track,

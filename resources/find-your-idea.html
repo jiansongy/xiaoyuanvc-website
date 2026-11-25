@@ -1496,10 +1496,11 @@
           render(6);
         }
 
-        function buildResultSnapshot() {
+        function buildResultSnapshot(state = S) {
           const top3 = ["gold", "silver", "bronze"].map(function (key, index) {
-            const item = S.medals[key] || {};
-            const fallback = [S.refs.top1, S.refs.top2, S.refs.top3][index] || "";
+            const item = (state.medals || {})[key] || {};
+            const refs = state.refs || {};
+            const fallback = [refs.top1, refs.top2, refs.top3][index] || "";
             return {
               rank: key,
               user: item.p || "",
@@ -1513,7 +1514,7 @@
           });
           return {
             top3: top3,
-            aiValidation: S.ai6 || "",
+            aiValidation: state.ai6 || "",
             generatedAt: new Date().toISOString(),
           };
         }
@@ -2649,31 +2650,11 @@ ${rows || "（暂无填写）"}
             window.XYVCToolUI.message("请先完成你的 Top 3，再生成分享链接。");
             return;
           }
-          var snapshot = window.XYVCUnifiedDataManager.createShareSnapshot(
+          window.XYVCUnifiedDataManager.copyShareLink(
             TOOL_ID,
-            {
-              state: buildSerializableState(),
-              result: buildResultSnapshot(),
-            },
-            {
-              title: "发现你的创业方向",
-              baseUrl: window.location.href.split("#")[0],
-            },
+            { result: buildResultSnapshot() },
+            { title: "发现你的创业方向" },
           );
-          var onCopied = function () {
-            window.XYVCToolUI.message("分享链接已复制。");
-          };
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(snapshot.url).then(onCopied).catch(function () { window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。"); });
-          } else {
-            var ta = document.createElement("textarea");
-            ta.value = snapshot.url;
-            document.body.appendChild(ta);
-            ta.select();
-            var copied = false; try { copied = document.execCommand("copy"); } catch (e) {}
-            document.body.removeChild(ta);
-            if (copied) onCopied(); else window.XYVCToolUI.message("复制失败，请重试或手动复制页面地址。");
-          }
         };
 
         window.addEventListener("pagehide", save);
@@ -2768,18 +2749,15 @@ ${rows || "（暂无填写）"}
         try {
           load();
           if (window.XYVCUnifiedDataManager) {
-            var sharedSnapshot =
-              window.XYVCUnifiedDataManager.readShareSnapshotFromLocation(
-                window.location.href,
-              );
-            if (
-              sharedSnapshot &&
-              sharedSnapshot.toolId === TOOL_ID &&
-              sharedSnapshot.payload &&
-              sharedSnapshot.payload.state
-            ) {
-              applySerializableState(sharedSnapshot.payload.state);
-            }
+            window.XYVCUnifiedDataManager.watchSharedResult(TOOL_ID, function (payload) {
+              var result = payload.result || (payload.state && buildResultSnapshot(payload.state));
+              if (!result) return "";
+              var directions = (result.top3 || []).map(function (item, index) {
+                if (!item.summary || item.summary === "（待填写）") return "";
+                return (index + 1) + ". " + item.summary + (item.firstStep ? "\n第一步：" + item.firstStep : "");
+              });
+              return directions.concat(result.aiValidation || "").filter(Boolean).join("\n\n");
+            });
           }
           refreshContextSyncState();
           // Restore step from URL hash if present (overrides localStorage step)

@@ -82,6 +82,7 @@
   // ---- Smooth scroll for nav links ----
   function initSmoothScroll() {
     document.addEventListener("click", function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var link = e.target.closest('a[href^="#"]');
       if (!link) return;
 
@@ -99,11 +100,10 @@
 
       window.scrollTo({
         top: target.offsetTop - navHeight,
-        behavior: "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
       });
-
-      // Close mobile menu if open
-      closeMobileMenu();
     });
   }
 
@@ -209,61 +209,101 @@
   }
 
   // ---- Mobile hamburger menu ----
-  var menuOpen = false;
-
-  function closeMobileMenu() {
-    var hamburger = document.getElementById("navHamburger");
-    var menu = document.getElementById("navMenu");
-    var overlay = document.getElementById("navOverlay");
-
-    if (hamburger) {
-      hamburger.classList.remove("open");
-      hamburger.setAttribute("aria-expanded", "false");
-    }
-    if (menu) menu.classList.remove("open");
-    if (overlay) overlay.classList.remove("open");
-    document.body.style.overflow = "";
-    menuOpen = false;
-  }
-
-  function toggleMobileMenu() {
-    var hamburger = document.getElementById("navHamburger");
-    var menu = document.getElementById("navMenu");
-    var overlay = document.getElementById("navOverlay");
-
-    if (!hamburger || !menu) return;
-
-    menuOpen = !menuOpen;
-
-    if (menuOpen) {
-      hamburger.classList.add("open");
-      hamburger.setAttribute("aria-expanded", "true");
-      menu.classList.add("open");
-      if (overlay) overlay.classList.add("open");
-      document.body.style.overflow = "hidden";
-    } else {
-      closeMobileMenu();
-    }
-  }
-
   function initMobileMenu() {
     var hamburger = document.getElementById("navHamburger");
+    var menu = document.getElementById("navMenu");
     var overlay = document.getElementById("navOverlay");
+    if (!hamburger || !menu) return;
 
-    if (hamburger) {
-      hamburger.addEventListener("click", toggleMobileMenu);
+    var mobile = window.matchMedia("(max-width: 768px)");
+    var menuOpen = false;
+    hamburger.setAttribute("aria-controls", menu.id);
+
+    function getTabStops() {
+      return [hamburger].concat(
+        Array.from(menu.querySelectorAll('a[href], button:not([disabled])')).filter(
+          function (element) {
+            return element.tabIndex >= 0 && element.getClientRects().length > 0 &&
+              getComputedStyle(element).visibility === "visible";
+          },
+        ),
+      );
     }
 
-    if (overlay) {
-      overlay.addEventListener("click", closeMobileMenu);
+    function setMenuOpen(open) {
+      menuOpen = open;
+      hamburger.classList.toggle("open", open);
+      hamburger.setAttribute("aria-expanded", String(open));
+      hamburger.setAttribute("aria-label", open ? "关闭导航菜单" : "打开导航菜单");
+      menu.classList.toggle("open", open);
+      menu.inert = mobile.matches && !open;
+      if (overlay) overlay.classList.toggle("open", open);
+      document.body.classList.toggle("mobile-nav-lock", open);
     }
 
-    // Close on Escape key
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && menuOpen) {
-        closeMobileMenu();
+    function closeMenu() {
+      hamburger.focus({ preventScroll: true });
+      setMenuOpen(false);
+    }
+
+    function restoreViewportNavigation() {
+      var focusWasInMenu = menu.contains(document.activeElement);
+      var focusWasOnHamburger = document.activeElement === hamburger;
+      if (mobile.matches && focusWasInMenu) hamburger.focus({ preventScroll: true });
+      setMenuOpen(false);
+      if (!mobile.matches && focusWasOnHamburger) {
+        var firstLink = menu.querySelector("a[href]");
+        if (firstLink) firstLink.focus({ preventScroll: true });
+      }
+    }
+
+    hamburger.addEventListener("click", function () {
+      if (!mobile.matches) return;
+      if (menuOpen) {
+        closeMenu();
+      } else {
+        setMenuOpen(true);
+        var firstLink = getTabStops()[1];
+        if (firstLink) firstLink.focus({ preventScroll: true });
       }
     });
+    if (overlay) overlay.addEventListener("click", closeMenu);
+
+    menu.addEventListener("click", function (event) {
+      var link = event.target.closest("a[href]");
+      if (!menuOpen || !link || event.defaultPrevented || event.button !== 0 ||
+          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      var samePage = link.origin === window.location.origin &&
+        link.pathname === window.location.pathname && link.search === window.location.search;
+      var target = samePage && link.hash ? document.getElementById(link.hash.slice(1)) : null;
+      closeMenu();
+      if (!target) return;
+      if (!target.hasAttribute("tabindex") && target.tabIndex < 0) {
+        target.setAttribute("tabindex", "-1");
+        target.addEventListener("blur", function () { target.removeAttribute("tabindex"); }, { once: true });
+      }
+      target.focus({ preventScroll: true });
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (!menuOpen || event.defaultPrevented || document.body.classList.contains("site-search-lock")) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+      } else if (event.key === "Tab") {
+        var stops = getTabStops();
+        var current = stops.indexOf(document.activeElement);
+        var boundary = event.shiftKey ? 0 : stops.length - 1;
+        if (current === -1 || current === boundary) {
+          event.preventDefault();
+          stops[event.shiftKey ? stops.length - 1 : 0].focus();
+        }
+      }
+    });
+
+    mobile.addEventListener("change", restoreViewportNavigation);
+    restoreViewportNavigation();
   }
 
   // ---- Auto-play video when scrolled into view ----
